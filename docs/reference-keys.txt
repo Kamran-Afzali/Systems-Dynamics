@@ -1,3 +1,9 @@
-systems-dynamics-an-introduction
-the-pool-of-tears
+differential-equations-and-systems-dynamics
+why-the-world-changes-an-introduction-to-differential-equations
+the-language-of-change
+from-coffee-to-cosmos
+getting-our-hands-dirty-solving-a-simple-example
+seeing-the-solution-in-action
+when-theory-meets-reality
+the-bigger-picture
 a-caucus-race-and-a-long-tale
