@@ -6,4 +6,13 @@ getting-our-hands-dirty-solving-a-simple-example
 seeing-the-solution-in-action
 when-theory-meets-reality
 the-bigger-picture
-a-caucus-race-and-a-long-tale
+solving-simple-differential-equations
+the-art-of-separation
+finding-the-missing-piece
+the-method-in-action
+beyond-simple-cooling-the-exponential-family
+when-variables-refuse-to-separate
+a-more-complex-example-mixing-problems
+the-power-and-limits-of-separation
+building-intuition
+whats-next
