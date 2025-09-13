@@ -23,7 +23,7 @@
 <meta name="author" content="Kamran Afzali" />
 
 
-<meta name="date" content="2025-09-09" />
+<meta name="date" content="2025-09-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="why-the-world-changes-an-introduction-to-differential-equations.html"/>
-
+<link rel="next" href="nonlinear-dynamics-in-one-dimension.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -162,6 +162,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
 <li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -222,58 +234,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="the-method-in-action" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> The Method in Action<a href="solving-simple-differential-equations.html#the-method-in-action" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s visualize this cooling process with R:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="solving-simple-differential-equations.html#cb4-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
-<span id="cb4-2"><a href="solving-simple-differential-equations.html#cb4-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb4-3"><a href="solving-simple-differential-equations.html#cb4-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="solving-simple-differential-equations.html#cb8-1" tabindex="-1"></a><span class="co"># Parameters</span></span>
-<span id="cb8-2"><a href="solving-simple-differential-equations.html#cb8-2" tabindex="-1"></a>T_room <span class="ot">&lt;-</span> <span class="dv">70</span>  <span class="co"># room temperature (°F)</span></span>
-<span id="cb8-3"><a href="solving-simple-differential-equations.html#cb8-3" tabindex="-1"></a>T_0 <span class="ot">&lt;-</span> <span class="dv">180</span>    <span class="co"># initial temperature (°F)</span></span>
-<span id="cb8-4"><a href="solving-simple-differential-equations.html#cb8-4" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.041</span>    <span class="co"># cooling constant (per minute)</span></span>
-<span id="cb8-5"><a href="solving-simple-differential-equations.html#cb8-5" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="solving-simple-differential-equations.html#cb8-6" tabindex="-1"></a><span class="co"># Create time vector</span></span>
-<span id="cb8-7"><a href="solving-simple-differential-equations.html#cb8-7" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
-<span id="cb8-8"><a href="solving-simple-differential-equations.html#cb8-8" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="solving-simple-differential-equations.html#cb8-9" tabindex="-1"></a><span class="co"># Calculate temperature over time</span></span>
-<span id="cb8-10"><a href="solving-simple-differential-equations.html#cb8-10" tabindex="-1"></a>T_t <span class="ot">&lt;-</span> T_room <span class="sc">+</span> (T_0 <span class="sc">-</span> T_room) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>k <span class="sc">*</span> t)</span>
-<span id="cb8-11"><a href="solving-simple-differential-equations.html#cb8-11" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="solving-simple-differential-equations.html#cb8-12" tabindex="-1"></a><span class="co"># Create data frame</span></span>
-<span id="cb8-13"><a href="solving-simple-differential-equations.html#cb8-13" tabindex="-1"></a>cooling_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb8-14"><a href="solving-simple-differential-equations.html#cb8-14" tabindex="-1"></a>  <span class="at">time =</span> t,</span>
-<span id="cb8-15"><a href="solving-simple-differential-equations.html#cb8-15" tabindex="-1"></a>  <span class="at">temperature =</span> T_t</span>
-<span id="cb8-16"><a href="solving-simple-differential-equations.html#cb8-16" tabindex="-1"></a>)</span>
-<span id="cb8-17"><a href="solving-simple-differential-equations.html#cb8-17" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="solving-simple-differential-equations.html#cb8-18" tabindex="-1"></a><span class="co"># Add key points</span></span>
-<span id="cb8-19"><a href="solving-simple-differential-equations.html#cb8-19" tabindex="-1"></a>key_points <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb8-20"><a href="solving-simple-differential-equations.html#cb8-20" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="fl">11.4</span>),</span>
-<span id="cb8-21"><a href="solving-simple-differential-equations.html#cb8-21" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">160</span>, <span class="dv">140</span>),</span>
-<span id="cb8-22"><a href="solving-simple-differential-equations.html#cb8-22" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Start: 180°F&quot;</span>, <span class="st">&quot;5 min: 160°F&quot;</span>, <span class="st">&quot;Drinkable: 140°F&quot;</span>)</span>
-<span id="cb8-23"><a href="solving-simple-differential-equations.html#cb8-23" tabindex="-1"></a>)</span>
-<span id="cb8-24"><a href="solving-simple-differential-equations.html#cb8-24" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="solving-simple-differential-equations.html#cb8-25" tabindex="-1"></a><span class="co"># Create the plot</span></span>
-<span id="cb8-26"><a href="solving-simple-differential-equations.html#cb8-26" tabindex="-1"></a><span class="fu">ggplot</span>(cooling_data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
-<span id="cb8-27"><a href="solving-simple-differential-equations.html#cb8-27" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;chocolate&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb8-28"><a href="solving-simple-differential-equations.html#cb8-28" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> key_points, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temperature), </span>
-<span id="cb8-29"><a href="solving-simple-differential-equations.html#cb8-29" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb8-30"><a href="solving-simple-differential-equations.html#cb8-30" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> key_points, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temperature, <span class="at">label =</span> label),</span>
-<span id="cb8-31"><a href="solving-simple-differential-equations.html#cb8-31" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb8-32"><a href="solving-simple-differential-equations.html#cb8-32" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> T_room, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb8-33"><a href="solving-simple-differential-equations.html#cb8-33" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-34"><a href="solving-simple-differential-equations.html#cb8-34" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Hot Chocolate Cooling Over Time&quot;</span>,</span>
-<span id="cb8-35"><a href="solving-simple-differential-equations.html#cb8-35" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time (minutes)&quot;</span>,</span>
-<span id="cb8-36"><a href="solving-simple-differential-equations.html#cb8-36" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Temperature (°F)&quot;</span>,</span>
-<span id="cb8-37"><a href="solving-simple-differential-equations.html#cb8-37" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Following Newton&#39;s Law of Cooling&quot;</span></span>
-<span id="cb8-38"><a href="solving-simple-differential-equations.html#cb8-38" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-39"><a href="solving-simple-differential-equations.html#cb8-39" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb8-40"><a href="solving-simple-differential-equations.html#cb8-40" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">60</span>, <span class="dv">190</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="solving-simple-differential-equations.html#cb3-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb3-2"><a href="solving-simple-differential-equations.html#cb3-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-3"><a href="solving-simple-differential-equations.html#cb3-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-4"><a href="solving-simple-differential-equations.html#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="solving-simple-differential-equations.html#cb3-5" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb3-6"><a href="solving-simple-differential-equations.html#cb3-6" tabindex="-1"></a>T_room <span class="ot">&lt;-</span> <span class="dv">70</span>  <span class="co"># room temperature (°F)</span></span>
+<span id="cb3-7"><a href="solving-simple-differential-equations.html#cb3-7" tabindex="-1"></a>T_0 <span class="ot">&lt;-</span> <span class="dv">180</span>    <span class="co"># initial temperature (°F)</span></span>
+<span id="cb3-8"><a href="solving-simple-differential-equations.html#cb3-8" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fl">0.041</span>    <span class="co"># cooling constant (per minute)</span></span>
+<span id="cb3-9"><a href="solving-simple-differential-equations.html#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="solving-simple-differential-equations.html#cb3-10" tabindex="-1"></a><span class="co"># Create time vector</span></span>
+<span id="cb3-11"><a href="solving-simple-differential-equations.html#cb3-11" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-12"><a href="solving-simple-differential-equations.html#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="solving-simple-differential-equations.html#cb3-13" tabindex="-1"></a><span class="co"># Calculate temperature over time</span></span>
+<span id="cb3-14"><a href="solving-simple-differential-equations.html#cb3-14" tabindex="-1"></a>T_t <span class="ot">&lt;-</span> T_room <span class="sc">+</span> (T_0 <span class="sc">-</span> T_room) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>k <span class="sc">*</span> t)</span>
+<span id="cb3-15"><a href="solving-simple-differential-equations.html#cb3-15" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="solving-simple-differential-equations.html#cb3-16" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb3-17"><a href="solving-simple-differential-equations.html#cb3-17" tabindex="-1"></a>cooling_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-18"><a href="solving-simple-differential-equations.html#cb3-18" tabindex="-1"></a>  <span class="at">time =</span> t,</span>
+<span id="cb3-19"><a href="solving-simple-differential-equations.html#cb3-19" tabindex="-1"></a>  <span class="at">temperature =</span> T_t</span>
+<span id="cb3-20"><a href="solving-simple-differential-equations.html#cb3-20" tabindex="-1"></a>)</span>
+<span id="cb3-21"><a href="solving-simple-differential-equations.html#cb3-21" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="solving-simple-differential-equations.html#cb3-22" tabindex="-1"></a><span class="co"># Add key points</span></span>
+<span id="cb3-23"><a href="solving-simple-differential-equations.html#cb3-23" tabindex="-1"></a>key_points <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-24"><a href="solving-simple-differential-equations.html#cb3-24" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="fl">11.4</span>),</span>
+<span id="cb3-25"><a href="solving-simple-differential-equations.html#cb3-25" tabindex="-1"></a>  <span class="at">temperature =</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">160</span>, <span class="dv">140</span>),</span>
+<span id="cb3-26"><a href="solving-simple-differential-equations.html#cb3-26" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;Start: 180°F&quot;</span>, <span class="st">&quot;5 min: 160°F&quot;</span>, <span class="st">&quot;Drinkable: 140°F&quot;</span>)</span>
+<span id="cb3-27"><a href="solving-simple-differential-equations.html#cb3-27" tabindex="-1"></a>)</span>
+<span id="cb3-28"><a href="solving-simple-differential-equations.html#cb3-28" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="solving-simple-differential-equations.html#cb3-29" tabindex="-1"></a><span class="co"># Create the plot</span></span>
+<span id="cb3-30"><a href="solving-simple-differential-equations.html#cb3-30" tabindex="-1"></a><span class="fu">ggplot</span>(cooling_data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb3-31"><a href="solving-simple-differential-equations.html#cb3-31" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;chocolate&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb3-32"><a href="solving-simple-differential-equations.html#cb3-32" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> key_points, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temperature), </span>
+<span id="cb3-33"><a href="solving-simple-differential-equations.html#cb3-33" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-34"><a href="solving-simple-differential-equations.html#cb3-34" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> key_points, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temperature, <span class="at">label =</span> label),</span>
+<span id="cb3-35"><a href="solving-simple-differential-equations.html#cb3-35" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-36"><a href="solving-simple-differential-equations.html#cb3-36" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> T_room, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-37"><a href="solving-simple-differential-equations.html#cb3-37" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-38"><a href="solving-simple-differential-equations.html#cb3-38" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Hot Chocolate Cooling Over Time&quot;</span>,</span>
+<span id="cb3-39"><a href="solving-simple-differential-equations.html#cb3-39" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time (minutes)&quot;</span>,</span>
+<span id="cb3-40"><a href="solving-simple-differential-equations.html#cb3-40" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Temperature (°F)&quot;</span>,</span>
+<span id="cb3-41"><a href="solving-simple-differential-equations.html#cb3-41" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Following Newton&#39;s Law of Cooling&quot;</span></span>
+<span id="cb3-42"><a href="solving-simple-differential-equations.html#cb3-42" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-43"><a href="solving-simple-differential-equations.html#cb3-43" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-44"><a href="solving-simple-differential-equations.html#cb3-44" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">60</span>, <span class="dv">190</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Notice the characteristic exponential decay curve. The temperature drops quickly at first when the difference between chocolate and room temperature is large, then slows as it approaches room temperature.</p>
 </div>
 <div id="beyond-simple-cooling-the-exponential-family" class="section level2 hasAnchor" number="3.4">
@@ -333,33 +338,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>After 20 minutes:</p>
 <p><span class="math display">\[S(20) = 200(1 - e^{-3(20)/100}) = 200(1 - e^{-0.6}) \approx 200(1 - 0.549) \approx 90.2 \text{ pounds}\]</span></p>
 <p>Let’s visualize this approach to equilibrium:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="solving-simple-differential-equations.html#cb9-1" tabindex="-1"></a><span class="co"># Parameters for mixing problem</span></span>
-<span id="cb9-2"><a href="solving-simple-differential-equations.html#cb9-2" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb9-3"><a href="solving-simple-differential-equations.html#cb9-3" tabindex="-1"></a>S_t <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">*</span>t<span class="sc">/</span><span class="dv">100</span>))</span>
-<span id="cb9-4"><a href="solving-simple-differential-equations.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="solving-simple-differential-equations.html#cb9-5" tabindex="-1"></a><span class="co"># Create data frame</span></span>
-<span id="cb9-6"><a href="solving-simple-differential-equations.html#cb9-6" tabindex="-1"></a>mixing_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb9-7"><a href="solving-simple-differential-equations.html#cb9-7" tabindex="-1"></a>  <span class="at">time =</span> t,</span>
-<span id="cb9-8"><a href="solving-simple-differential-equations.html#cb9-8" tabindex="-1"></a>  <span class="at">salt =</span> S_t</span>
-<span id="cb9-9"><a href="solving-simple-differential-equations.html#cb9-9" tabindex="-1"></a>)</span>
-<span id="cb9-10"><a href="solving-simple-differential-equations.html#cb9-10" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="solving-simple-differential-equations.html#cb9-11" tabindex="-1"></a><span class="co"># Plot the results</span></span>
-<span id="cb9-12"><a href="solving-simple-differential-equations.html#cb9-12" tabindex="-1"></a><span class="fu">ggplot</span>(mixing_data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> salt)) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="solving-simple-differential-equations.html#cb9-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="solving-simple-differential-equations.html#cb9-14" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">200</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb9-15"><a href="solving-simple-differential-equations.html#cb9-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="dv">200</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.6</span>))), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="solving-simple-differential-equations.html#cb9-16" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">25</span>, <span class="at">y =</span> <span class="dv">90</span>, <span class="at">label =</span> <span class="st">&quot;20 min: 90.2 lbs&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-17"><a href="solving-simple-differential-equations.html#cb9-17" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">70</span>, <span class="at">y =</span> <span class="dv">210</span>, <span class="at">label =</span> <span class="st">&quot;Equilibrium: 200 lbs&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-18"><a href="solving-simple-differential-equations.html#cb9-18" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-19"><a href="solving-simple-differential-equations.html#cb9-19" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Salt Accumulation in Mixing Tank&quot;</span>,</span>
-<span id="cb9-20"><a href="solving-simple-differential-equations.html#cb9-20" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time (minutes)&quot;</span>,</span>
-<span id="cb9-21"><a href="solving-simple-differential-equations.html#cb9-21" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Salt (pounds)&quot;</span>,</span>
-<span id="cb9-22"><a href="solving-simple-differential-equations.html#cb9-22" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Approach to equilibrium concentration&quot;</span></span>
-<span id="cb9-23"><a href="solving-simple-differential-equations.html#cb9-23" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb9-24"><a href="solving-simple-differential-equations.html#cb9-24" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="solving-simple-differential-equations.html#cb4-1" tabindex="-1"></a><span class="co"># Parameters for mixing problem</span></span>
+<span id="cb4-2"><a href="solving-simple-differential-equations.html#cb4-2" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="solving-simple-differential-equations.html#cb4-3" tabindex="-1"></a>S_t <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">3</span><span class="sc">*</span>t<span class="sc">/</span><span class="dv">100</span>))</span>
+<span id="cb4-4"><a href="solving-simple-differential-equations.html#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="solving-simple-differential-equations.html#cb4-5" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb4-6"><a href="solving-simple-differential-equations.html#cb4-6" tabindex="-1"></a>mixing_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-7"><a href="solving-simple-differential-equations.html#cb4-7" tabindex="-1"></a>  <span class="at">time =</span> t,</span>
+<span id="cb4-8"><a href="solving-simple-differential-equations.html#cb4-8" tabindex="-1"></a>  <span class="at">salt =</span> S_t</span>
+<span id="cb4-9"><a href="solving-simple-differential-equations.html#cb4-9" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="solving-simple-differential-equations.html#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="solving-simple-differential-equations.html#cb4-11" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb4-12"><a href="solving-simple-differential-equations.html#cb4-12" tabindex="-1"></a><span class="fu">ggplot</span>(mixing_data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> salt)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="solving-simple-differential-equations.html#cb4-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="solving-simple-differential-equations.html#cb4-14" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">200</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="solving-simple-differential-equations.html#cb4-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="dv">200</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.6</span>))), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="solving-simple-differential-equations.html#cb4-16" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">25</span>, <span class="at">y =</span> <span class="dv">90</span>, <span class="at">label =</span> <span class="st">&quot;20 min: 90.2 lbs&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="solving-simple-differential-equations.html#cb4-17" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">70</span>, <span class="at">y =</span> <span class="dv">210</span>, <span class="at">label =</span> <span class="st">&quot;Equilibrium: 200 lbs&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-18"><a href="solving-simple-differential-equations.html#cb4-18" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-19"><a href="solving-simple-differential-equations.html#cb4-19" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Salt Accumulation in Mixing Tank&quot;</span>,</span>
+<span id="cb4-20"><a href="solving-simple-differential-equations.html#cb4-20" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time (minutes)&quot;</span>,</span>
+<span id="cb4-21"><a href="solving-simple-differential-equations.html#cb4-21" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Salt (pounds)&quot;</span>,</span>
+<span id="cb4-22"><a href="solving-simple-differential-equations.html#cb4-22" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Approach to equilibrium concentration&quot;</span></span>
+<span id="cb4-23"><a href="solving-simple-differential-equations.html#cb4-23" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-24"><a href="solving-simple-differential-equations.html#cb4-24" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <pre><code>## Warning in geom_point(aes(x = 20, y = 200 * (1 - exp(-0.6))), color = &quot;red&quot;, : All aesthetics have length 1, but the data has 101 rows.
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>The curve shows salt content rising toward 200 pounds—the equilibrium where inflow and outflow balance. This S-shaped approach to equilibrium appears throughout physics, chemistry, and engineering.</p>
 </div>
 <div id="the-power-and-limits-of-separation" class="section level2 hasAnchor" number="3.7">
@@ -391,8 +396,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="why-the-world-changes-an-introduction-to-differential-equations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="why-the-world-changes-an-introduction-to-differential-equations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="nonlinear-dynamics-in-one-dimension.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -16,3 +16,13 @@ a-more-complex-example-mixing-problems
 the-power-and-limits-of-separation
 building-intuition
 whats-next
+nonlinear-dynamics-in-one-dimension
+when-more-becomes-different
+finding-the-balance-points
+the-logistic-portrait
+beyond-simple-equilibrium-bistable-systems
+the-geometry-of-dynamics
+harvesting-and-catastrophic-collapse
+the-richness-of-one-dimension
+building-intuition-for-the-nonlinear-world
+the-path-forward
