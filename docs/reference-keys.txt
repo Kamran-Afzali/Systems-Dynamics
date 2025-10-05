@@ -26,3 +26,16 @@ harvesting-and-catastrophic-collapse
 the-richness-of-one-dimension
 building-intuition-for-the-nonlinear-world
 the-path-forward
+the-phase-line-of-one-dimensional-dynamics
+the-geometry-of-flow
+the-universal-patterns-of-creation-and-annihilation
+the-saddle-node-bifurcation-creation-from-nothing
+the-pitchfork-bifurcation-symmetry-breaking
+the-bifurcation-diagram-mapping-parameter-space
+hysteresis-and-the-memory-of-systems
+beyond-classical-bifurcations-transcritical-and-complex-scenarios
+cusp-catastrophes-and-multiple-parameter-systems
+imperfect-bifurcations-and-structural-stability
+phase-line-analysis-a-universal-tool
+the-landscape-perspective
+building-toward-higher-dimensions
