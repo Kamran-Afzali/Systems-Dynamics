@@ -23,7 +23,7 @@
 <meta name="author" content="Kamran Afzali" />
 
 
-<meta name="date" content="2025-10-05" />
+<meta name="date" content="2025-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -191,6 +191,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.9</b> The Landscape Perspective</a></li>
 <li class="chapter" data-level="5.10" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.10</b> Building Toward Higher Dimensions</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -279,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-28"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb1-28" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb1-29"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb1-29" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb1-30"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb1-30" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>The curve starts gently but becomes increasingly steep. After 35 years, our town of 1000 has doubled to about 2000 people. But notice how the growth accelerates—it takes only 15 more years to double again to 4000.</p>
 <p>This exponential behavior appears troubling for real populations, which can’t grow indefinitely. A small town doesn’t have infinite resources or space. We’ll need more sophisticated models to capture these constraints, but that’s a story for future posts.</p>
 </div>
@@ -327,7 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-35"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb2-35" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
 <span id="cb2-36"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb2-36" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> K, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb2-37"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb2-37" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">30</span>, <span class="at">y =</span> K <span class="sc">+</span> <span class="dv">200</span>, <span class="at">label =</span> <span class="st">&quot;Carrying Capacity&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>The logistic curve starts exponentially but gradually levels off as it approaches the carrying capacity. This S-shaped curve appears throughout biology and beyond—from the adoption of new technologies to the spread of information through social networks.</p>
 </div>
 <div id="the-bigger-picture" class="section level2 hasAnchor" number="2.6">

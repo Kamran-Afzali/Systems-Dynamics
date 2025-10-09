@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Introducion to Systems | Systems Dynamics</title>
+  <meta name="description" content="Chapter 6 Introducion to Systems | Systems Dynamics" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Introducion to Systems | Systems Dynamics" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Introducion to Systems | Systems Dynamics" />
+  
+  
+  
+
+<meta name="author" content="Kamran Afzali" />
+
+
+<meta name="date" content="2025-10-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-phase-line-of-one-dimensional-dynamics.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Systems Dynamics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Differential Equations and Systems Dynamics</a></li>
+<li class="chapter" data-level="2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Why the World Changes: An Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-language-of-change"><i class="fa fa-check"></i><b>2.1</b> The Language of Change</a></li>
+<li class="chapter" data-level="2.2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#from-coffee-to-cosmos"><i class="fa fa-check"></i><b>2.2</b> From Coffee to Cosmos</a></li>
+<li class="chapter" data-level="2.3" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#getting-our-hands-dirty-solving-a-simple-example"><i class="fa fa-check"></i><b>2.3</b> Getting Our Hands Dirty: Solving a Simple Example</a></li>
+<li class="chapter" data-level="2.4" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#seeing-the-solution-in-action"><i class="fa fa-check"></i><b>2.4</b> Seeing the Solution in Action</a></li>
+<li class="chapter" data-level="2.5" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#when-theory-meets-reality"><i class="fa fa-check"></i><b>2.5</b> When Theory Meets Reality</a></li>
+<li class="chapter" data-level="2.6" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-bigger-picture"><i class="fa fa-check"></i><b>2.6</b> The Bigger Picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html"><i class="fa fa-check"></i><b>3</b> Solving Simple Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-art-of-separation"><i class="fa fa-check"></i><b>3.1</b> The Art of Separation</a></li>
+<li class="chapter" data-level="3.2" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#finding-the-missing-piece"><i class="fa fa-check"></i><b>3.2</b> Finding the Missing Piece</a></li>
+<li class="chapter" data-level="3.3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-method-in-action"><i class="fa fa-check"></i><b>3.3</b> The Method in Action</a></li>
+<li class="chapter" data-level="3.4" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#beyond-simple-cooling-the-exponential-family"><i class="fa fa-check"></i><b>3.4</b> Beyond Simple Cooling: The Exponential Family</a></li>
+<li class="chapter" data-level="3.5" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#when-variables-refuse-to-separate"><i class="fa fa-check"></i><b>3.5</b> When Variables Refuse to Separate</a></li>
+<li class="chapter" data-level="3.6" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#a-more-complex-example-mixing-problems"><i class="fa fa-check"></i><b>3.6</b> A More Complex Example: Mixing Problems</a></li>
+<li class="chapter" data-level="3.7" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-power-and-limits-of-separation"><i class="fa fa-check"></i><b>3.7</b> The Power and Limits of Separation</a></li>
+<li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
+<li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html"><i class="fa fa-check"></i><b>5</b> The Phase Line of One-Dimensional Dynamics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-geometry-of-flow"><i class="fa fa-check"></i><b>5.1</b> The Geometry of Flow</a></li>
+<li class="chapter" data-level="5.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-universal-patterns-of-creation-and-annihilation"><i class="fa fa-check"></i><b>5.2</b> The Universal Patterns of Creation and Annihilation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-saddle-node-bifurcation-creation-from-nothing"><i class="fa fa-check"></i><b>5.2.1</b> The Saddle-Node Bifurcation: Creation from Nothing</a></li>
+<li class="chapter" data-level="5.2.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-pitchfork-bifurcation-symmetry-breaking"><i class="fa fa-check"></i><b>5.2.2</b> The Pitchfork Bifurcation: Symmetry Breaking</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-bifurcation-diagram-mapping-parameter-space"><i class="fa fa-check"></i><b>5.3</b> The Bifurcation Diagram: Mapping Parameter Space</a></li>
+<li class="chapter" data-level="5.4" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#hysteresis-and-the-memory-of-systems"><i class="fa fa-check"></i><b>5.4</b> Hysteresis and the Memory of Systems</a></li>
+<li class="chapter" data-level="5.5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#beyond-classical-bifurcations-transcritical-and-complex-scenarios"><i class="fa fa-check"></i><b>5.5</b> Beyond Classical Bifurcations: Transcritical and Complex Scenarios</a></li>
+<li class="chapter" data-level="5.6" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#cusp-catastrophes-and-multiple-parameter-systems"><i class="fa fa-check"></i><b>5.6</b> Cusp Catastrophes and Multiple Parameter Systems</a></li>
+<li class="chapter" data-level="5.7" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#imperfect-bifurcations-and-structural-stability"><i class="fa fa-check"></i><b>5.7</b> Imperfect Bifurcations and Structural Stability</a></li>
+<li class="chapter" data-level="5.8" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#phase-line-analysis-a-universal-tool"><i class="fa fa-check"></i><b>5.8</b> Phase Line Analysis: A Universal Tool</a></li>
+<li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.9</b> The Landscape Perspective</a></li>
+<li class="chapter" data-level="5.10" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.10</b> Building Toward Higher Dimensions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Systems Dynamics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introducion-to-systems" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Introducion to Systems<a href="introducion-to-systems.html#introducion-to-systems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The morning sun illuminates a meadow where rabbits graze peacefully among wildflowers. Hidden in the forest edge, foxes wait with predatory patience. This ancient dance—predator stalking prey, prey population rising and falling, predator numbers following in complex synchrony—represents one of nature’s most fundamental patterns. Yet beneath this pastoral scene lies mathematics of stunning beauty and complexity.</p>
+<p>Where our previous exploration revealed the rich geometric structure of one-dimensional flows, we now enter a realm of vastly expanded possibility. With two coupled variables, systems can exhibit behaviors impossible in single dimensions: <strong>closed orbital trajectories</strong> where populations cycle endlessly, <strong>spiral attractors</strong> where disturbances decay in oscillatory fashion, and <strong>saddle points</strong> where trajectories approach along some directions while fleeing along others.</p>
+<p>The transition from one to two dimensions represents more than mere complexity increase—it constitutes a qualitative leap into the heart of modern dynamical systems theory. Here, we encounter the fundamental objects that govern everything from planetary motion to neural oscillations: <strong>vector fields</strong> that assign velocity vectors to every point in space, <strong>phase portraits</strong> that reveal the global organization of system behavior, and <strong>limit cycles</strong> that create sustained oscillations without external driving.</p>
+<div id="the-architecture-of-coupled-systems" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> The Architecture of Coupled Systems<a href="introducion-to-systems.html#the-architecture-of-coupled-systems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A two-dimensional dynamical system consists of two coupled differential equations that simultaneously govern the evolution of two state variables:</p>
+<p><span class="math display">\[\frac{dx}{dt} = f(x,y)\]</span> <span class="math display">\[\frac{dy}{dt} = g(x,y)\]</span></p>
+<p>These equations define a <strong>vector field</strong> <span class="math inline">\(\mathbf{F}(x,y) = (f(x,y), g(x,y))\)</span> that assigns to every point <span class="math inline">\((x,y)\)</span> in the phase plane a velocity vector indicating the instantaneous direction and magnitude of system motion.</p>
+<p>Unlike one-dimensional systems where trajectories could only move forward or backward along a line, two-dimensional systems permit trajectories to curve, spiral, form closed loops, and exhibit intricate geometric patterns. The phase space—now a plane rather than a line—becomes a canvas for displaying the complete behavioral repertoire of the system.</p>
+<p>Consider our foundational example, the <strong>Lotka-Volterra predator-prey system</strong>:</p>
+<p><span class="math display">\[\frac{dx}{dt} = ax - bxy\]</span> <span class="math display">\[\frac{dy}{dt} = -cy + dxy\]</span></p>
+<p>Here, <span class="math inline">\(x\)</span> represents prey population (rabbits), <span class="math inline">\(y\)</span> represents predator population (foxes), and the parameters <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>, <span class="math inline">\(d &gt; 0\)</span> encode biological interactions. The term <span class="math inline">\(ax\)</span> models exponential prey growth in the absence of predators. The term <span class="math inline">\(-bxy\)</span> captures predation events, reducing prey while the term <span class="math inline">\(dxy\)</span> converts consumed prey into new predators. The term <span class="math inline">\(-cy\)</span> represents predator death in the absence of prey.</p>
+<p>This system embodies the essential feature distinguishing multi-dimensional dynamics from one-dimensional flows: <strong>coupling</strong>. Neither variable evolves independently. Instead, each variable’s rate of change depends explicitly on the current state of both variables, creating feedback loops that generate complex temporal patterns.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introducion-to-systems.html#cb77-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb77-2"><a href="introducion-to-systems.html#cb77-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb77-3"><a href="introducion-to-systems.html#cb77-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb77-4"><a href="introducion-to-systems.html#cb77-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb77-5"><a href="introducion-to-systems.html#cb77-5" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb77-6"><a href="introducion-to-systems.html#cb77-6" tabindex="-1"></a></span>
+<span id="cb77-7"><a href="introducion-to-systems.html#cb77-7" tabindex="-1"></a><span class="co"># Define Lotka-Volterra system</span></span>
+<span id="cb77-8"><a href="introducion-to-systems.html#cb77-8" tabindex="-1"></a>lotka_volterra <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb77-9"><a href="introducion-to-systems.html#cb77-9" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb77-10"><a href="introducion-to-systems.html#cb77-10" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> a<span class="sc">*</span>x <span class="sc">-</span> b<span class="sc">*</span>x<span class="sc">*</span>y</span>
+<span id="cb77-11"><a href="introducion-to-systems.html#cb77-11" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> <span class="sc">-</span>c<span class="sc">*</span>y <span class="sc">+</span> d<span class="sc">*</span>x<span class="sc">*</span>y</span>
+<span id="cb77-12"><a href="introducion-to-systems.html#cb77-12" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
+<span id="cb77-13"><a href="introducion-to-systems.html#cb77-13" tabindex="-1"></a>  })</span>
+<span id="cb77-14"><a href="introducion-to-systems.html#cb77-14" tabindex="-1"></a>}</span>
+<span id="cb77-15"><a href="introducion-to-systems.html#cb77-15" tabindex="-1"></a></span>
+<span id="cb77-16"><a href="introducion-to-systems.html#cb77-16" tabindex="-1"></a><span class="co"># Set parameters</span></span>
+<span id="cb77-17"><a href="introducion-to-systems.html#cb77-17" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="fl">0.5</span>, <span class="at">c =</span> <span class="fl">0.75</span>, <span class="at">d =</span> <span class="fl">0.25</span>)</span>
+<span id="cb77-18"><a href="introducion-to-systems.html#cb77-18" tabindex="-1"></a></span>
+<span id="cb77-19"><a href="introducion-to-systems.html#cb77-19" tabindex="-1"></a><span class="co"># Create vector field visualization</span></span>
+<span id="cb77-20"><a href="introducion-to-systems.html#cb77-20" tabindex="-1"></a>x_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">6</span>, <span class="at">by =</span> <span class="fl">0.3</span>)</span>
+<span id="cb77-21"><a href="introducion-to-systems.html#cb77-21" tabindex="-1"></a>y_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="fl">0.2</span>)</span>
+<span id="cb77-22"><a href="introducion-to-systems.html#cb77-22" tabindex="-1"></a></span>
+<span id="cb77-23"><a href="introducion-to-systems.html#cb77-23" tabindex="-1"></a>vector_field_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_range, <span class="at">y =</span> y_range)</span>
+<span id="cb77-24"><a href="introducion-to-systems.html#cb77-24" tabindex="-1"></a></span>
+<span id="cb77-25"><a href="introducion-to-systems.html#cb77-25" tabindex="-1"></a><span class="co"># Calculate vector field</span></span>
+<span id="cb77-26"><a href="introducion-to-systems.html#cb77-26" tabindex="-1"></a>vector_field_data<span class="sc">$</span>dx <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field_data, params<span class="sc">$</span>a<span class="sc">*</span>x <span class="sc">-</span> params<span class="sc">$</span>b<span class="sc">*</span>x<span class="sc">*</span>y)</span>
+<span id="cb77-27"><a href="introducion-to-systems.html#cb77-27" tabindex="-1"></a>vector_field_data<span class="sc">$</span>dy <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field_data, <span class="sc">-</span>params<span class="sc">$</span>c<span class="sc">*</span>y <span class="sc">+</span> params<span class="sc">$</span>d<span class="sc">*</span>x<span class="sc">*</span>y)</span>
+<span id="cb77-28"><a href="introducion-to-systems.html#cb77-28" tabindex="-1"></a></span>
+<span id="cb77-29"><a href="introducion-to-systems.html#cb77-29" tabindex="-1"></a><span class="co"># Normalize vectors for better visualization</span></span>
+<span id="cb77-30"><a href="introducion-to-systems.html#cb77-30" tabindex="-1"></a>vector_field_data<span class="sc">$</span>magnitude <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(vector_field_data<span class="sc">$</span>dx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> vector_field_data<span class="sc">$</span>dy<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb77-31"><a href="introducion-to-systems.html#cb77-31" tabindex="-1"></a>vector_field_data<span class="sc">$</span>dx_norm <span class="ot">&lt;-</span> vector_field_data<span class="sc">$</span>dx <span class="sc">/</span> vector_field_data<span class="sc">$</span>magnitude <span class="sc">*</span> <span class="fl">0.15</span></span>
+<span id="cb77-32"><a href="introducion-to-systems.html#cb77-32" tabindex="-1"></a>vector_field_data<span class="sc">$</span>dy_norm <span class="ot">&lt;-</span> vector_field_data<span class="sc">$</span>dy <span class="sc">/</span> vector_field_data<span class="sc">$</span>magnitude <span class="sc">*</span> <span class="fl">0.15</span></span>
+<span id="cb77-33"><a href="introducion-to-systems.html#cb77-33" tabindex="-1"></a></span>
+<span id="cb77-34"><a href="introducion-to-systems.html#cb77-34" tabindex="-1"></a><span class="co"># Create vector field plot</span></span>
+<span id="cb77-35"><a href="introducion-to-systems.html#cb77-35" tabindex="-1"></a>vector_field_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(vector_field_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb77-36"><a href="introducion-to-systems.html#cb77-36" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> x <span class="sc">+</span> dx_norm, <span class="at">yend =</span> y <span class="sc">+</span> dy_norm),</span>
+<span id="cb77-37"><a href="introducion-to-systems.html#cb77-37" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.02</span>, <span class="st">&quot;npc&quot;</span>)), </span>
+<span id="cb77-38"><a href="introducion-to-systems.html#cb77-38" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb77-39"><a href="introducion-to-systems.html#cb77-39" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb77-40"><a href="introducion-to-systems.html#cb77-40" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Lotka-Volterra Vector Field&quot;</span>,</span>
+<span id="cb77-41"><a href="introducion-to-systems.html#cb77-41" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Prey Population (x)&quot;</span>,</span>
+<span id="cb77-42"><a href="introducion-to-systems.html#cb77-42" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Predator Population (y)&quot;</span>,</span>
+<span id="cb77-43"><a href="introducion-to-systems.html#cb77-43" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Arrows show instantaneous direction of system evolution&quot;</span></span>
+<span id="cb77-44"><a href="introducion-to-systems.html#cb77-44" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb77-45"><a href="introducion-to-systems.html#cb77-45" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb77-46"><a href="introducion-to-systems.html#cb77-46" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span>
+<span id="cb77-47"><a href="introducion-to-systems.html#cb77-47" tabindex="-1"></a></span>
+<span id="cb77-48"><a href="introducion-to-systems.html#cb77-48" tabindex="-1"></a><span class="fu">print</span>(vector_field_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>The vector field visualization reveals the geometric structure underlying predator-prey dynamics. At each point in the phase plane, the arrow indicates where a system starting at that point will initially move. The patterns formed by these arrows encode the system’s global behavioral organization.</p>
+<div id="fixed-points-and-local-stability-analysis" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Fixed Points and Local Stability Analysis<a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In two-dimensional systems, <strong>fixed points</strong> (also called <strong>equilibrium points</strong>) occur where both derivatives simultaneously vanish:</p>
+<p><span class="math display">\[f(x^_, y^_) = 0\]</span> <span class="math display">\[g(x^_, y^_) = 0\]</span></p>
+<p>For the Lotka-Volterra system, we solve:</p>
+<p><span class="math display">\[ax^* - bx^_y^_ = x^_(a - by^_) = 0\]</span> <span class="math display">\[-cy^* + dx^_y^_ = y^_(-c + dx^_) = 0\]</span></p>
+<p>The first equation gives either <span class="math inline">\(x^* = 0\)</span> or <span class="math inline">\(y^* = a/b\)</span>. The second equation gives either <span class="math inline">\(y^* = 0\)</span> or <span class="math inline">\(x^* = c/d\)</span>. This yields two fixed points: <span class="math inline">\((0,0)\)</span> representing mutual extinction, and <span class="math inline">\((c/d, a/b)\)</span> representing coexistence.</p>
+<p>To analyze stability, we <strong>linearize</strong> the system near each fixed point. The <strong>Jacobian matrix</strong> captures the local linear approximation:</p>
+<p><span class="math display">\[\mathbf{J}(x,y) = \begin{pmatrix} \frac{\partial f}{\partial x} &amp; \frac{\partial f}{\partial y} \ \frac{\partial g}{\partial x} &amp; \frac{\partial g}{\partial y} \end{pmatrix} = \begin{pmatrix} a - by &amp; -bx \ dy &amp; -c + dx \end{pmatrix}\]</span></p>
+<p>At the extinction fixed point <span class="math inline">\((0,0)\)</span>:</p>
+<p><span class="math display">\[\mathbf{J}(0,0) = \begin{pmatrix} a &amp; 0 \ 0 &amp; -c \end{pmatrix}\]</span></p>
+<p>The eigenvalues are <span class="math inline">\(\lambda_1 = a &gt; 0\)</span> and <span class="math inline">\(\lambda_2 = -c &lt; 0\)</span>. Since we have one positive and one negative eigenvalue, this fixed point is a <strong>saddle</strong>—trajectories approach along the stable direction (predator axis) but diverge along the unstable direction (prey axis).</p>
+<p>At the coexistence fixed point <span class="math inline">\((c/d, a/b)\)</span>:</p>
+<p><span class="math display">\[\mathbf{J}\left(\frac{c}{d}, \frac{a}{b}\right) = \begin{pmatrix} 0 &amp; -\frac{bc}{d} \ \frac{ad}{b} &amp; 0 \end{pmatrix}\]</span></p>
+<p>The characteristic equation is:</p>
+<p><span class="math display">\[\det(\mathbf{J} - \lambda\mathbf{I}) = \lambda^2 + \frac{bc}{d} \cdot \frac{ad}{b} = \lambda^2 + ac = 0\]</span></p>
+<p>This gives purely imaginary eigenvalues <span class="math inline">\(\lambda = \pm i\sqrt{ac}\)</span>. Such eigenvalues indicate a <strong>center</strong>—trajectories near the fixed point follow closed orbits.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="introducion-to-systems.html#cb78-1" tabindex="-1"></a><span class="co"># Analyze fixed points and stability</span></span>
+<span id="cb78-2"><a href="introducion-to-systems.html#cb78-2" tabindex="-1"></a><span class="co"># Fixed points</span></span>
+<span id="cb78-3"><a href="introducion-to-systems.html#cb78-3" tabindex="-1"></a>fp1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)  <span class="co"># Extinction</span></span>
+<span id="cb78-4"><a href="introducion-to-systems.html#cb78-4" tabindex="-1"></a>fp2 <span class="ot">&lt;-</span> <span class="fu">c</span>(params<span class="sc">$</span>c<span class="sc">/</span>params<span class="sc">$</span>d, params<span class="sc">$</span>a<span class="sc">/</span>params<span class="sc">$</span>b)  <span class="co"># Coexistence</span></span>
+<span id="cb78-5"><a href="introducion-to-systems.html#cb78-5" tabindex="-1"></a></span>
+<span id="cb78-6"><a href="introducion-to-systems.html#cb78-6" tabindex="-1"></a><span class="co"># Calculate Jacobian at each fixed point</span></span>
+<span id="cb78-7"><a href="introducion-to-systems.html#cb78-7" tabindex="-1"></a>jacobian_at_point <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, params) {</span>
+<span id="cb78-8"><a href="introducion-to-systems.html#cb78-8" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="fu">c</span>(params<span class="sc">$</span>a <span class="sc">-</span> params<span class="sc">$</span>b<span class="sc">*</span>y, <span class="sc">-</span>params<span class="sc">$</span>b<span class="sc">*</span>x,</span>
+<span id="cb78-9"><a href="introducion-to-systems.html#cb78-9" tabindex="-1"></a>           params<span class="sc">$</span>d<span class="sc">*</span>y, <span class="sc">-</span>params<span class="sc">$</span>c <span class="sc">+</span> params<span class="sc">$</span>d<span class="sc">*</span>x), </span>
+<span id="cb78-10"><a href="introducion-to-systems.html#cb78-10" tabindex="-1"></a>         <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb78-11"><a href="introducion-to-systems.html#cb78-11" tabindex="-1"></a>}</span>
+<span id="cb78-12"><a href="introducion-to-systems.html#cb78-12" tabindex="-1"></a></span>
+<span id="cb78-13"><a href="introducion-to-systems.html#cb78-13" tabindex="-1"></a>J1 <span class="ot">&lt;-</span> <span class="fu">jacobian_at_point</span>(fp1[<span class="dv">1</span>], fp1[<span class="dv">2</span>], params)</span>
+<span id="cb78-14"><a href="introducion-to-systems.html#cb78-14" tabindex="-1"></a>J2 <span class="ot">&lt;-</span> <span class="fu">jacobian_at_point</span>(fp2[<span class="dv">1</span>], fp2[<span class="dv">2</span>], params)</span>
+<span id="cb78-15"><a href="introducion-to-systems.html#cb78-15" tabindex="-1"></a></span>
+<span id="cb78-16"><a href="introducion-to-systems.html#cb78-16" tabindex="-1"></a><span class="co"># Calculate eigenvalues</span></span>
+<span id="cb78-17"><a href="introducion-to-systems.html#cb78-17" tabindex="-1"></a>eigen1 <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J1)</span>
+<span id="cb78-18"><a href="introducion-to-systems.html#cb78-18" tabindex="-1"></a>eigen2 <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J2)</span>
+<span id="cb78-19"><a href="introducion-to-systems.html#cb78-19" tabindex="-1"></a></span>
+<span id="cb78-20"><a href="introducion-to-systems.html#cb78-20" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Fixed Point 1 (Extinction):&quot;</span>, fp1, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Fixed Point 1 (Extinction): 0 0</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="introducion-to-systems.html#cb80-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Eigenvalues:&quot;</span>, eigen1<span class="sc">$</span>values, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Eigenvalues: 1 -0.75</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="introducion-to-systems.html#cb82-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Type: Saddle (one positive, one negative eigenvalue)</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Type: Saddle (one positive, one negative eigenvalue)</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="introducion-to-systems.html#cb84-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Fixed Point 2 (Coexistence):&quot;</span>, fp2, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Fixed Point 2 (Coexistence): 3 2</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="introducion-to-systems.html#cb86-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Eigenvalues:&quot;</span>, eigen2<span class="sc">$</span>values, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Eigenvalues: 0+0.8660254i 0-0.8660254i</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="introducion-to-systems.html#cb88-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Type: Center (purely imaginary eigenvalues)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Type: Center (purely imaginary eigenvalues)</code></pre>
+<p>The linear stability analysis reveals fundamental differences between fixed point types. <strong>Saddle points</strong> are always unstable—most nearby trajectories eventually diverge. <strong>Centers</strong> represent neutrally stable equilibria—nearby trajectories neither converge to nor diverge from the fixed point, instead forming closed orbits.</p>
+</div>
+<div id="the-phase-portrait-visualizing-global-behavior" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> The Phase Portrait: Visualizing Global Behavior<a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While linear analysis reveals local behavior near fixed points, understanding global system dynamics requires constructing the complete <strong>phase portrait</strong>—a visualization showing representative trajectories throughout the phase plane.</p>
+<p>For the Lotka-Volterra system, we can integrate trajectories starting from various initial conditions to reveal the global pattern:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="introducion-to-systems.html#cb90-1" tabindex="-1"></a><span class="co"># Numerical integration of trajectories</span></span>
+<span id="cb90-2"><a href="introducion-to-systems.html#cb90-2" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb90-3"><a href="introducion-to-systems.html#cb90-3" tabindex="-1"></a></span>
+<span id="cb90-4"><a href="introducion-to-systems.html#cb90-4" tabindex="-1"></a><span class="co"># Function to integrate single trajectory</span></span>
+<span id="cb90-5"><a href="introducion-to-systems.html#cb90-5" tabindex="-1"></a>integrate_trajectory <span class="ot">&lt;-</span> <span class="cf">function</span>(x0, y0, <span class="at">t_max =</span> <span class="dv">20</span>, <span class="at">dt =</span> <span class="fl">0.01</span>) {</span>
+<span id="cb90-6"><a href="introducion-to-systems.html#cb90-6" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, t_max, <span class="at">by =</span> dt)</span>
+<span id="cb90-7"><a href="introducion-to-systems.html#cb90-7" tabindex="-1"></a>  initial_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">x =</span> x0, <span class="at">y =</span> y0)</span>
+<span id="cb90-8"><a href="introducion-to-systems.html#cb90-8" tabindex="-1"></a>  </span>
+<span id="cb90-9"><a href="introducion-to-systems.html#cb90-9" tabindex="-1"></a>  solution <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> initial_state, <span class="at">times =</span> times, <span class="at">func =</span> lotka_volterra, <span class="at">parms =</span> params)</span>
+<span id="cb90-10"><a href="introducion-to-systems.html#cb90-10" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.data.frame</span>(solution))</span>
+<span id="cb90-11"><a href="introducion-to-systems.html#cb90-11" tabindex="-1"></a>}</span>
+<span id="cb90-12"><a href="introducion-to-systems.html#cb90-12" tabindex="-1"></a></span>
+<span id="cb90-13"><a href="introducion-to-systems.html#cb90-13" tabindex="-1"></a><span class="co"># Generate multiple trajectories</span></span>
+<span id="cb90-14"><a href="introducion-to-systems.html#cb90-14" tabindex="-1"></a>initial_conditions <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb90-15"><a href="introducion-to-systems.html#cb90-15" tabindex="-1"></a>  <span class="at">x0 =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb90-16"><a href="introducion-to-systems.html#cb90-16" tabindex="-1"></a>  <span class="at">y0 =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb90-17"><a href="introducion-to-systems.html#cb90-17" tabindex="-1"></a>)</span>
+<span id="cb90-18"><a href="introducion-to-systems.html#cb90-18" tabindex="-1"></a></span>
+<span id="cb90-19"><a href="introducion-to-systems.html#cb90-19" tabindex="-1"></a>all_trajectories <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb90-20"><a href="introducion-to-systems.html#cb90-20" tabindex="-1"></a></span>
+<span id="cb90-21"><a href="introducion-to-systems.html#cb90-21" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(initial_conditions)) {</span>
+<span id="cb90-22"><a href="introducion-to-systems.html#cb90-22" tabindex="-1"></a>  traj <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory</span>(initial_conditions<span class="sc">$</span>x0[i], initial_conditions<span class="sc">$</span>y0[i])</span>
+<span id="cb90-23"><a href="introducion-to-systems.html#cb90-23" tabindex="-1"></a>  traj<span class="sc">$</span>trajectory_id <span class="ot">&lt;-</span> i</span>
+<span id="cb90-24"><a href="introducion-to-systems.html#cb90-24" tabindex="-1"></a>  all_trajectories <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_trajectories, traj)</span>
+<span id="cb90-25"><a href="introducion-to-systems.html#cb90-25" tabindex="-1"></a>}</span>
+<span id="cb90-26"><a href="introducion-to-systems.html#cb90-26" tabindex="-1"></a></span>
+<span id="cb90-27"><a href="introducion-to-systems.html#cb90-27" tabindex="-1"></a><span class="co"># Create phase portrait</span></span>
+<span id="cb90-28"><a href="introducion-to-systems.html#cb90-28" tabindex="-1"></a>phase_portrait <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb90-29"><a href="introducion-to-systems.html#cb90-29" tabindex="-1"></a>  <span class="co"># Vector field (subsampled for clarity)</span></span>
+<span id="cb90-30"><a href="introducion-to-systems.html#cb90-30" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> vector_field_data[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(vector_field_data), <span class="at">by =</span> <span class="dv">3</span>),],</span>
+<span id="cb90-31"><a href="introducion-to-systems.html#cb90-31" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> x <span class="sc">+</span> dx_norm<span class="sc">*</span><span class="fl">0.8</span>, <span class="at">yend =</span> y <span class="sc">+</span> dy_norm<span class="sc">*</span><span class="fl">0.8</span>),</span>
+<span id="cb90-32"><a href="introducion-to-systems.html#cb90-32" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)), </span>
+<span id="cb90-33"><a href="introducion-to-systems.html#cb90-33" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb90-34"><a href="introducion-to-systems.html#cb90-34" tabindex="-1"></a>  </span>
+<span id="cb90-35"><a href="introducion-to-systems.html#cb90-35" tabindex="-1"></a>  <span class="co"># Trajectories</span></span>
+<span id="cb90-36"><a href="introducion-to-systems.html#cb90-36" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> all_trajectories, </span>
+<span id="cb90-37"><a href="introducion-to-systems.html#cb90-37" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">group =</span> trajectory_id, <span class="at">color =</span> trajectory_id),</span>
+<span id="cb90-38"><a href="introducion-to-systems.html#cb90-38" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb90-39"><a href="introducion-to-systems.html#cb90-39" tabindex="-1"></a>  </span>
+<span id="cb90-40"><a href="introducion-to-systems.html#cb90-40" tabindex="-1"></a>  <span class="co"># Fixed points</span></span>
+<span id="cb90-41"><a href="introducion-to-systems.html#cb90-41" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp1[<span class="dv">1</span>], <span class="at">y =</span> fp1[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb90-42"><a href="introducion-to-systems.html#cb90-42" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp2[<span class="dv">1</span>], <span class="at">y =</span> fp2[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb90-43"><a href="introducion-to-systems.html#cb90-43" tabindex="-1"></a>  </span>
+<span id="cb90-44"><a href="introducion-to-systems.html#cb90-44" tabindex="-1"></a>  <span class="co"># Annotations</span></span>
+<span id="cb90-45"><a href="introducion-to-systems.html#cb90-45" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> fp1[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.3</span>, <span class="at">y =</span> fp1[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.2</span>, </span>
+<span id="cb90-46"><a href="introducion-to-systems.html#cb90-46" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Extinction</span><span class="sc">\n</span><span class="st">(Saddle)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb90-47"><a href="introducion-to-systems.html#cb90-47" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> fp2[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.5</span>, <span class="at">y =</span> fp2[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.3</span>, </span>
+<span id="cb90-48"><a href="introducion-to-systems.html#cb90-48" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Coexistence</span><span class="sc">\n</span><span class="st">(Center)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb90-49"><a href="introducion-to-systems.html#cb90-49" tabindex="-1"></a>  </span>
+<span id="cb90-50"><a href="introducion-to-systems.html#cb90-50" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb90-51"><a href="introducion-to-systems.html#cb90-51" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb90-52"><a href="introducion-to-systems.html#cb90-52" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Lotka-Volterra Phase Portrait&quot;</span>,</span>
+<span id="cb90-53"><a href="introducion-to-systems.html#cb90-53" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Prey Population (x)&quot;</span>,</span>
+<span id="cb90-54"><a href="introducion-to-systems.html#cb90-54" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Predator Population (y)&quot;</span>,</span>
+<span id="cb90-55"><a href="introducion-to-systems.html#cb90-55" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Closed orbits around coexistence equilibrium&quot;</span></span>
+<span id="cb90-56"><a href="introducion-to-systems.html#cb90-56" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-57"><a href="introducion-to-systems.html#cb90-57" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb90-58"><a href="introducion-to-systems.html#cb90-58" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb90-59"><a href="introducion-to-systems.html#cb90-59" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">6</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">4</span>)</span>
+<span id="cb90-60"><a href="introducion-to-systems.html#cb90-60" tabindex="-1"></a></span>
+<span id="cb90-61"><a href="introducion-to-systems.html#cb90-61" tabindex="-1"></a><span class="fu">print</span>(phase_portrait)</span></code></pre></div>
+<pre><code>## Warning: Removed 702 rows containing missing values or values outside the scale range (`geom_path()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>The phase portrait reveals the Lotka-Volterra system’s most striking feature: <strong>closed orbits</strong> surrounding the coexistence fixed point. These orbits represent periodic solutions where predator and prey populations oscillate indefinitely with constant amplitude and period determined by initial conditions.</p>
+<p>This behavior reflects a profound conservation law. The Lotka-Volterra system conserves the quantity:</p>
+<p><span class="math display">\[H(x,y) = d \ln(x) - dx + b \ln(y) - by\]</span></p>
+<p>Along any trajectory, <span class="math inline">\(H\)</span> remains constant, constraining motion to level curves of this <strong>Hamiltonian function</strong>. Each closed orbit corresponds to a different energy level, creating a family of nested periodic orbits.</p>
+</div>
+</div>
+<div id="beyond-simple-oscillations-modified-predator-prey-systems" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Beyond Simple Oscillations: Modified Predator-Prey Systems<a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While the classical Lotka-Volterra model provides fundamental insights, real ecological systems exhibit additional complexities. <strong>Carrying capacity</strong> limits prey growth, <strong>predator saturation</strong> occurs at high prey densities, and <strong>demographic stochasticity</strong> introduces random fluctuations.</p>
+<p>Consider the <strong>modified predator-prey system</strong> that incorporates prey carrying capacity:</p>
+<p><span class="math display">\[\frac{dx}{dt} = rx\left(1 - \frac{x}{K}\right) - \frac{axy}{1 + bx}\]</span> <span class="math display">\[\frac{dy}{dt} = \frac{eaxy}{1 + bx} - my\]</span></p>
+<p>Here, <span class="math inline">\(r\)</span> represents intrinsic prey growth rate, <span class="math inline">\(K\)</span> denotes prey carrying capacity, <span class="math inline">\(a\)</span> captures predation rate, <span class="math inline">\(b\)</span> models predator saturation, <span class="math inline">\(e\)</span> represents conversion efficiency, and <span class="math inline">\(m\)</span> denotes predator mortality rate.</p>
+<p>This system exhibits qualitatively different behavior from the classical model. Depending on parameter values, it can display:</p>
+<ul>
+<li><strong>Stable coexistence</strong> with a single attracting fixed point</li>
+<li><strong>Limit cycle oscillations</strong> with sustained periodic behavior</li>
+<li><strong>Multiple attractors</strong> with different basins of attraction</li>
+<li><strong>Bifurcations</strong> where small parameter changes trigger qualitative behavioral transitions</li>
+</ul>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="introducion-to-systems.html#cb92-1" tabindex="-1"></a><span class="co"># Modified predator-prey system with carrying capacity</span></span>
+<span id="cb92-2"><a href="introducion-to-systems.html#cb92-2" tabindex="-1"></a>modified_predprey <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb92-3"><a href="introducion-to-systems.html#cb92-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb92-4"><a href="introducion-to-systems.html#cb92-4" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> r<span class="sc">*</span>x<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> x<span class="sc">/</span>K) <span class="sc">-</span> (a<span class="sc">*</span>x<span class="sc">*</span>y)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> b<span class="sc">*</span>x)</span>
+<span id="cb92-5"><a href="introducion-to-systems.html#cb92-5" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> (e<span class="sc">*</span>a<span class="sc">*</span>x<span class="sc">*</span>y)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> b<span class="sc">*</span>x) <span class="sc">-</span> m<span class="sc">*</span>y</span>
+<span id="cb92-6"><a href="introducion-to-systems.html#cb92-6" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
+<span id="cb92-7"><a href="introducion-to-systems.html#cb92-7" tabindex="-1"></a>  })</span>
+<span id="cb92-8"><a href="introducion-to-systems.html#cb92-8" tabindex="-1"></a>}</span>
+<span id="cb92-9"><a href="introducion-to-systems.html#cb92-9" tabindex="-1"></a></span>
+<span id="cb92-10"><a href="introducion-to-systems.html#cb92-10" tabindex="-1"></a><span class="co"># Parameters for limit cycle behavior</span></span>
+<span id="cb92-11"><a href="introducion-to-systems.html#cb92-11" tabindex="-1"></a>mod_params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">r =</span> <span class="dv">1</span>, <span class="at">K =</span> <span class="dv">10</span>, <span class="at">a =</span> <span class="fl">0.5</span>, <span class="at">b =</span> <span class="fl">0.1</span>, <span class="at">e =</span> <span class="fl">0.3</span>, <span class="at">m =</span> <span class="fl">0.2</span>)</span>
+<span id="cb92-12"><a href="introducion-to-systems.html#cb92-12" tabindex="-1"></a></span>
+<span id="cb92-13"><a href="introducion-to-systems.html#cb92-13" tabindex="-1"></a><span class="co"># Create vector field for modified system</span></span>
+<span id="cb92-14"><a href="introducion-to-systems.html#cb92-14" tabindex="-1"></a>x_range_mod <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="fl">0.4</span>)</span>
+<span id="cb92-15"><a href="introducion-to-systems.html#cb92-15" tabindex="-1"></a>y_range_mod <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="fl">0.3</span>)</span>
+<span id="cb92-16"><a href="introducion-to-systems.html#cb92-16" tabindex="-1"></a></span>
+<span id="cb92-17"><a href="introducion-to-systems.html#cb92-17" tabindex="-1"></a>vector_field_mod <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_range_mod, <span class="at">y =</span> y_range_mod)</span>
+<span id="cb92-18"><a href="introducion-to-systems.html#cb92-18" tabindex="-1"></a></span>
+<span id="cb92-19"><a href="introducion-to-systems.html#cb92-19" tabindex="-1"></a><span class="co"># Calculate vector field</span></span>
+<span id="cb92-20"><a href="introducion-to-systems.html#cb92-20" tabindex="-1"></a>vector_field_mod<span class="sc">$</span>dx <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field_mod, </span>
+<span id="cb92-21"><a href="introducion-to-systems.html#cb92-21" tabindex="-1"></a>  mod_params<span class="sc">$</span>r<span class="sc">*</span>x<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> x<span class="sc">/</span>mod_params<span class="sc">$</span>K) <span class="sc">-</span> (mod_params<span class="sc">$</span>a<span class="sc">*</span>x<span class="sc">*</span>y)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> mod_params<span class="sc">$</span>b<span class="sc">*</span>x))</span>
+<span id="cb92-22"><a href="introducion-to-systems.html#cb92-22" tabindex="-1"></a>vector_field_mod<span class="sc">$</span>dy <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field_mod, </span>
+<span id="cb92-23"><a href="introducion-to-systems.html#cb92-23" tabindex="-1"></a>  (mod_params<span class="sc">$</span>e<span class="sc">*</span>mod_params<span class="sc">$</span>a<span class="sc">*</span>x<span class="sc">*</span>y)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> mod_params<span class="sc">$</span>b<span class="sc">*</span>x) <span class="sc">-</span> mod_params<span class="sc">$</span>m<span class="sc">*</span>y)</span>
+<span id="cb92-24"><a href="introducion-to-systems.html#cb92-24" tabindex="-1"></a></span>
+<span id="cb92-25"><a href="introducion-to-systems.html#cb92-25" tabindex="-1"></a><span class="co"># Normalize vectors</span></span>
+<span id="cb92-26"><a href="introducion-to-systems.html#cb92-26" tabindex="-1"></a>vector_field_mod<span class="sc">$</span>magnitude <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(vector_field_mod<span class="sc">$</span>dx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> vector_field_mod<span class="sc">$</span>dy<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb92-27"><a href="introducion-to-systems.html#cb92-27" tabindex="-1"></a>vector_field_mod<span class="sc">$</span>dx_norm <span class="ot">&lt;-</span> vector_field_mod<span class="sc">$</span>dx <span class="sc">/</span> vector_field_mod<span class="sc">$</span>magnitude <span class="sc">*</span> <span class="fl">0.2</span></span>
+<span id="cb92-28"><a href="introducion-to-systems.html#cb92-28" tabindex="-1"></a>vector_field_mod<span class="sc">$</span>dy_norm <span class="ot">&lt;-</span> vector_field_mod<span class="sc">$</span>dy <span class="sc">/</span> vector_field_mod<span class="sc">$</span>magnitude <span class="sc">*</span> <span class="fl">0.2</span></span>
+<span id="cb92-29"><a href="introducion-to-systems.html#cb92-29" tabindex="-1"></a></span>
+<span id="cb92-30"><a href="introducion-to-systems.html#cb92-30" tabindex="-1"></a><span class="co"># Generate trajectory starting near equilibrium</span></span>
+<span id="cb92-31"><a href="introducion-to-systems.html#cb92-31" tabindex="-1"></a>traj_mod <span class="ot">&lt;-</span> integrate_trajectory_mod <span class="ot">&lt;-</span> <span class="cf">function</span>(x0, y0, <span class="at">t_max =</span> <span class="dv">50</span>, <span class="at">system_func =</span> modified_predprey, <span class="at">params =</span> mod_params) {</span>
+<span id="cb92-32"><a href="introducion-to-systems.html#cb92-32" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, t_max, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb92-33"><a href="introducion-to-systems.html#cb92-33" tabindex="-1"></a>  initial_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">x =</span> x0, <span class="at">y =</span> y0)</span>
+<span id="cb92-34"><a href="introducion-to-systems.html#cb92-34" tabindex="-1"></a>  </span>
+<span id="cb92-35"><a href="introducion-to-systems.html#cb92-35" tabindex="-1"></a>  solution <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> initial_state, <span class="at">times =</span> times, <span class="at">func =</span> system_func, <span class="at">parms =</span> params)</span>
+<span id="cb92-36"><a href="introducion-to-systems.html#cb92-36" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.data.frame</span>(solution))</span>
+<span id="cb92-37"><a href="introducion-to-systems.html#cb92-37" tabindex="-1"></a>}</span>
+<span id="cb92-38"><a href="introducion-to-systems.html#cb92-38" tabindex="-1"></a></span>
+<span id="cb92-39"><a href="introducion-to-systems.html#cb92-39" tabindex="-1"></a><span class="co"># Create trajectory showing limit cycle</span></span>
+<span id="cb92-40"><a href="introducion-to-systems.html#cb92-40" tabindex="-1"></a>limit_cycle_traj <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory_mod</span>(<span class="dv">8</span>, <span class="dv">3</span>)</span>
+<span id="cb92-41"><a href="introducion-to-systems.html#cb92-41" tabindex="-1"></a></span>
+<span id="cb92-42"><a href="introducion-to-systems.html#cb92-42" tabindex="-1"></a><span class="co"># Create phase portrait for modified system</span></span>
+<span id="cb92-43"><a href="introducion-to-systems.html#cb92-43" tabindex="-1"></a>modified_phase_portrait <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb92-44"><a href="introducion-to-systems.html#cb92-44" tabindex="-1"></a>  <span class="co"># Vector field</span></span>
+<span id="cb92-45"><a href="introducion-to-systems.html#cb92-45" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> vector_field_mod[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(vector_field_mod), <span class="at">by =</span> <span class="dv">2</span>),],</span>
+<span id="cb92-46"><a href="introducion-to-systems.html#cb92-46" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> x <span class="sc">+</span> dx_norm, <span class="at">yend =</span> y <span class="sc">+</span> dy_norm),</span>
+<span id="cb92-47"><a href="introducion-to-systems.html#cb92-47" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)), </span>
+<span id="cb92-48"><a href="introducion-to-systems.html#cb92-48" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;lightcoral&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb92-49"><a href="introducion-to-systems.html#cb92-49" tabindex="-1"></a>  </span>
+<span id="cb92-50"><a href="introducion-to-systems.html#cb92-50" tabindex="-1"></a>  <span class="co"># Limit cycle trajectory</span></span>
+<span id="cb92-51"><a href="introducion-to-systems.html#cb92-51" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> limit_cycle_traj, </span>
+<span id="cb92-52"><a href="introducion-to-systems.html#cb92-52" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb92-53"><a href="introducion-to-systems.html#cb92-53" tabindex="-1"></a>  </span>
+<span id="cb92-54"><a href="introducion-to-systems.html#cb92-54" tabindex="-1"></a>  <span class="co"># Starting point</span></span>
+<span id="cb92-55"><a href="introducion-to-systems.html#cb92-55" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> limit_cycle_traj[<span class="dv">1</span>,], <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), </span>
+<span id="cb92-56"><a href="introducion-to-systems.html#cb92-56" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb92-57"><a href="introducion-to-systems.html#cb92-57" tabindex="-1"></a>  </span>
+<span id="cb92-58"><a href="introducion-to-systems.html#cb92-58" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb92-59"><a href="introducion-to-systems.html#cb92-59" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Modified Predator-Prey System&quot;</span>,</span>
+<span id="cb92-60"><a href="introducion-to-systems.html#cb92-60" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Prey Population (x)&quot;</span>,</span>
+<span id="cb92-61"><a href="introducion-to-systems.html#cb92-61" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Predator Population (y)&quot;</span>,</span>
+<span id="cb92-62"><a href="introducion-to-systems.html#cb92-62" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Spiral approach to limit cycle attractor&quot;</span></span>
+<span id="cb92-63"><a href="introducion-to-systems.html#cb92-63" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb92-64"><a href="introducion-to-systems.html#cb92-64" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb92-65"><a href="introducion-to-systems.html#cb92-65" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb92-66"><a href="introducion-to-systems.html#cb92-66" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">8</span>)</span>
+<span id="cb92-67"><a href="introducion-to-systems.html#cb92-67" tabindex="-1"></a></span>
+<span id="cb92-68"><a href="introducion-to-systems.html#cb92-68" tabindex="-1"></a><span class="fu">print</span>(modified_phase_portrait)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>The modified system demonstrates how realistic ecological constraints create <strong>limit cycles</strong>—isolated closed orbits that attract nearby trajectories. Unlike the nested orbits of the classical Lotka-Volterra system, limit cycles represent <strong>structurally stable</strong> oscillations that persist under small perturbations.</p>
+<div id="competitive-systems-and-exclusion-principles" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Competitive Systems and Exclusion Principles<a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Not all two-species interactions involve predation. <strong>Competitive systems</strong> model organisms competing for shared resources, leading to fundamentally different dynamics. Consider the <strong>Lotka-Volterra competition equations</strong>:</p>
+<p><span class="math display">\[\frac{dx}{dt} = r_1 x\left(1 - \frac{x + \alpha_{12}y}{K_1}\right)\]</span> <span class="math display">\[\frac{dy}{dt} = r_2 y\left(1 - \frac{y + \alpha_{21}x}{K_2}\right)\]</span></p>
+<p>Here, <span class="math inline">\(r_i\)</span> represents the intrinsic growth rate of species <span class="math inline">\(i\)</span>, <span class="math inline">\(K_i\)</span> denotes its carrying capacity, and <span class="math inline">\(\alpha_{ij}\)</span> measures the competitive effect of species <span class="math inline">\(j\)</span> on species <span class="math inline">\(i\)</span>.</p>
+<p>This system can exhibit four qualitatively different outcomes depending on the competition coefficients:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Species 1 always wins</strong>: <span class="math inline">\((K_1, 0)\)</span> is the only stable fixed point</li>
+<li><strong>Species 2 always wins</strong>: <span class="math inline">\((0, K_2)\)</span> is the only stable fixed point</li>
+<li><strong>Coexistence</strong>: <span class="math inline">\((x^_, y^_)\)</span> with both species at positive densities is stable</li>
+<li><strong>Bistability</strong>: Both single-species states are stable; outcome depends on initial conditions</li>
+</ol>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introducion-to-systems.html#cb93-1" tabindex="-1"></a><span class="co"># Competition system analysis</span></span>
+<span id="cb93-2"><a href="introducion-to-systems.html#cb93-2" tabindex="-1"></a>competition_system <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb93-3"><a href="introducion-to-systems.html#cb93-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb93-4"><a href="introducion-to-systems.html#cb93-4" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> r1<span class="sc">*</span>x<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> (x <span class="sc">+</span> alpha12<span class="sc">*</span>y)<span class="sc">/</span>K1)</span>
+<span id="cb93-5"><a href="introducion-to-systems.html#cb93-5" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> r2<span class="sc">*</span>y<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> (y <span class="sc">+</span> alpha21<span class="sc">*</span>x)<span class="sc">/</span>K2)</span>
+<span id="cb93-6"><a href="introducion-to-systems.html#cb93-6" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
+<span id="cb93-7"><a href="introducion-to-systems.html#cb93-7" tabindex="-1"></a>  })</span>
+<span id="cb93-8"><a href="introducion-to-systems.html#cb93-8" tabindex="-1"></a>}</span>
+<span id="cb93-9"><a href="introducion-to-systems.html#cb93-9" tabindex="-1"></a></span>
+<span id="cb93-10"><a href="introducion-to-systems.html#cb93-10" tabindex="-1"></a><span class="co"># Parameters for bistable case</span></span>
+<span id="cb93-11"><a href="introducion-to-systems.html#cb93-11" tabindex="-1"></a>comp_params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">r1 =</span> <span class="dv">1</span>, <span class="at">r2 =</span> <span class="dv">1</span>, <span class="at">K1 =</span> <span class="dv">10</span>, <span class="at">K2 =</span> <span class="dv">8</span>, <span class="at">alpha12 =</span> <span class="fl">0.8</span>, <span class="at">alpha21 =</span> <span class="fl">1.2</span>)</span>
+<span id="cb93-12"><a href="introducion-to-systems.html#cb93-12" tabindex="-1"></a></span>
+<span id="cb93-13"><a href="introducion-to-systems.html#cb93-13" tabindex="-1"></a><span class="co"># Find fixed points analytically</span></span>
+<span id="cb93-14"><a href="introducion-to-systems.html#cb93-14" tabindex="-1"></a><span class="co"># (0,0), (K1,0), (0,K2), and coexistence point if it exists</span></span>
+<span id="cb93-15"><a href="introducion-to-systems.html#cb93-15" tabindex="-1"></a>fp_origin <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb93-16"><a href="introducion-to-systems.html#cb93-16" tabindex="-1"></a>fp_sp1 <span class="ot">&lt;-</span> <span class="fu">c</span>(comp_params<span class="sc">$</span>K1, <span class="dv">0</span>)</span>
+<span id="cb93-17"><a href="introducion-to-systems.html#cb93-17" tabindex="-1"></a>fp_sp2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, comp_params<span class="sc">$</span>K2)</span>
+<span id="cb93-18"><a href="introducion-to-systems.html#cb93-18" tabindex="-1"></a></span>
+<span id="cb93-19"><a href="introducion-to-systems.html#cb93-19" tabindex="-1"></a><span class="co"># Coexistence fixed point (if positive)</span></span>
+<span id="cb93-20"><a href="introducion-to-systems.html#cb93-20" tabindex="-1"></a>denom <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> comp_params<span class="sc">$</span>alpha12 <span class="sc">*</span> comp_params<span class="sc">$</span>alpha21</span>
+<span id="cb93-21"><a href="introducion-to-systems.html#cb93-21" tabindex="-1"></a><span class="cf">if</span> (denom <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb93-22"><a href="introducion-to-systems.html#cb93-22" tabindex="-1"></a>  x_coex <span class="ot">&lt;-</span> (comp_params<span class="sc">$</span>K1 <span class="sc">-</span> comp_params<span class="sc">$</span>alpha12 <span class="sc">*</span> comp_params<span class="sc">$</span>K2) <span class="sc">/</span> denom</span>
+<span id="cb93-23"><a href="introducion-to-systems.html#cb93-23" tabindex="-1"></a>  y_coex <span class="ot">&lt;-</span> (comp_params<span class="sc">$</span>K2 <span class="sc">-</span> comp_params<span class="sc">$</span>alpha21 <span class="sc">*</span> comp_params<span class="sc">$</span>K1) <span class="sc">/</span> denom</span>
+<span id="cb93-24"><a href="introducion-to-systems.html#cb93-24" tabindex="-1"></a>  fp_coex <span class="ot">&lt;-</span> <span class="fu">c</span>(x_coex, y_coex)</span>
+<span id="cb93-25"><a href="introducion-to-systems.html#cb93-25" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb93-26"><a href="introducion-to-systems.html#cb93-26" tabindex="-1"></a>  fp_coex <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb93-27"><a href="introducion-to-systems.html#cb93-27" tabindex="-1"></a>}</span>
+<span id="cb93-28"><a href="introducion-to-systems.html#cb93-28" tabindex="-1"></a></span>
+<span id="cb93-29"><a href="introducion-to-systems.html#cb93-29" tabindex="-1"></a><span class="co"># Create vector field for competition system</span></span>
+<span id="cb93-30"><a href="introducion-to-systems.html#cb93-30" tabindex="-1"></a>x_range_comp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb93-31"><a href="introducion-to-systems.html#cb93-31" tabindex="-1"></a>y_range_comp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.4</span>)</span>
+<span id="cb93-32"><a href="introducion-to-systems.html#cb93-32" tabindex="-1"></a></span>
+<span id="cb93-33"><a href="introducion-to-systems.html#cb93-33" tabindex="-1"></a>vector_field_comp <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_range_comp, <span class="at">y =</span> y_range_comp)</span>
+<span id="cb93-34"><a href="introducion-to-systems.html#cb93-34" tabindex="-1"></a></span>
+<span id="cb93-35"><a href="introducion-to-systems.html#cb93-35" tabindex="-1"></a>vector_field_comp<span class="sc">$</span>dx <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field_comp, </span>
+<span id="cb93-36"><a href="introducion-to-systems.html#cb93-36" tabindex="-1"></a>  comp_params<span class="sc">$</span>r1<span class="sc">*</span>x<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> (x <span class="sc">+</span> comp_params<span class="sc">$</span>alpha12<span class="sc">*</span>y)<span class="sc">/</span>comp_params<span class="sc">$</span>K1))</span>
+<span id="cb93-37"><a href="introducion-to-systems.html#cb93-37" tabindex="-1"></a>vector_field_comp<span class="sc">$</span>dy <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field_comp, </span>
+<span id="cb93-38"><a href="introducion-to-systems.html#cb93-38" tabindex="-1"></a>  comp_params<span class="sc">$</span>r2<span class="sc">*</span>y<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> (y <span class="sc">+</span> comp_params<span class="sc">$</span>alpha21<span class="sc">*</span>x)<span class="sc">/</span>comp_params<span class="sc">$</span>K2))</span>
+<span id="cb93-39"><a href="introducion-to-systems.html#cb93-39" tabindex="-1"></a></span>
+<span id="cb93-40"><a href="introducion-to-systems.html#cb93-40" tabindex="-1"></a><span class="co"># Normalize vectors</span></span>
+<span id="cb93-41"><a href="introducion-to-systems.html#cb93-41" tabindex="-1"></a>vector_field_comp<span class="sc">$</span>magnitude <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(vector_field_comp<span class="sc">$</span>dx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> vector_field_comp<span class="sc">$</span>dy<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb93-42"><a href="introducion-to-systems.html#cb93-42" tabindex="-1"></a>vector_field_comp<span class="sc">$</span>dx_norm <span class="ot">&lt;-</span> vector_field_comp<span class="sc">$</span>dx <span class="sc">/</span> (vector_field_comp<span class="sc">$</span>magnitude <span class="sc">+</span> <span class="fl">1e-10</span>) <span class="sc">*</span> <span class="fl">0.25</span></span>
+<span id="cb93-43"><a href="introducion-to-systems.html#cb93-43" tabindex="-1"></a>vector_field_comp<span class="sc">$</span>dy_norm <span class="ot">&lt;-</span> vector_field_comp<span class="sc">$</span>dy <span class="sc">/</span> (vector_field_comp<span class="sc">$</span>magnitude <span class="sc">+</span> <span class="fl">1e-10</span>) <span class="sc">*</span> <span class="fl">0.25</span></span>
+<span id="cb93-44"><a href="introducion-to-systems.html#cb93-44" tabindex="-1"></a></span>
+<span id="cb93-45"><a href="introducion-to-systems.html#cb93-45" tabindex="-1"></a><span class="co"># Generate trajectories from different initial conditions</span></span>
+<span id="cb93-46"><a href="introducion-to-systems.html#cb93-46" tabindex="-1"></a>initial_conditions_comp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb93-47"><a href="introducion-to-systems.html#cb93-47" tabindex="-1"></a>  <span class="at">x0 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">6</span>),</span>
+<span id="cb93-48"><a href="introducion-to-systems.html#cb93-48" tabindex="-1"></a>  <span class="at">y0 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">7</span>)</span>
+<span id="cb93-49"><a href="introducion-to-systems.html#cb93-49" tabindex="-1"></a>)</span>
+<span id="cb93-50"><a href="introducion-to-systems.html#cb93-50" tabindex="-1"></a></span>
+<span id="cb93-51"><a href="introducion-to-systems.html#cb93-51" tabindex="-1"></a>all_comp_trajectories <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb93-52"><a href="introducion-to-systems.html#cb93-52" tabindex="-1"></a></span>
+<span id="cb93-53"><a href="introducion-to-systems.html#cb93-53" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(initial_conditions_comp)) {</span>
+<span id="cb93-54"><a href="introducion-to-systems.html#cb93-54" tabindex="-1"></a>  traj <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory_mod</span>(</span>
+<span id="cb93-55"><a href="introducion-to-systems.html#cb93-55" tabindex="-1"></a>    initial_conditions_comp<span class="sc">$</span>x0[i], </span>
+<span id="cb93-56"><a href="introducion-to-systems.html#cb93-56" tabindex="-1"></a>    initial_conditions_comp<span class="sc">$</span>y0[i], </span>
+<span id="cb93-57"><a href="introducion-to-systems.html#cb93-57" tabindex="-1"></a>    <span class="at">t_max =</span> <span class="dv">15</span>,</span>
+<span id="cb93-58"><a href="introducion-to-systems.html#cb93-58" tabindex="-1"></a>    <span class="at">system_func =</span> competition_system, </span>
+<span id="cb93-59"><a href="introducion-to-systems.html#cb93-59" tabindex="-1"></a>    <span class="at">params =</span> comp_params</span>
+<span id="cb93-60"><a href="introducion-to-systems.html#cb93-60" tabindex="-1"></a>  )</span>
+<span id="cb93-61"><a href="introducion-to-systems.html#cb93-61" tabindex="-1"></a>  traj<span class="sc">$</span>trajectory_id <span class="ot">&lt;-</span> i</span>
+<span id="cb93-62"><a href="introducion-to-systems.html#cb93-62" tabindex="-1"></a>  all_comp_trajectories <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_comp_trajectories, traj)</span>
+<span id="cb93-63"><a href="introducion-to-systems.html#cb93-63" tabindex="-1"></a>}</span>
+<span id="cb93-64"><a href="introducion-to-systems.html#cb93-64" tabindex="-1"></a></span>
+<span id="cb93-65"><a href="introducion-to-systems.html#cb93-65" tabindex="-1"></a><span class="co"># Create competition phase portrait</span></span>
+<span id="cb93-66"><a href="introducion-to-systems.html#cb93-66" tabindex="-1"></a>competition_phase_portrait <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb93-67"><a href="introducion-to-systems.html#cb93-67" tabindex="-1"></a>  <span class="co"># Vector field</span></span>
+<span id="cb93-68"><a href="introducion-to-systems.html#cb93-68" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> vector_field_comp[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(vector_field_comp), <span class="at">by =</span> <span class="dv">3</span>),],</span>
+<span id="cb93-69"><a href="introducion-to-systems.html#cb93-69" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> x <span class="sc">+</span> dx_norm, <span class="at">yend =</span> y <span class="sc">+</span> dy_norm),</span>
+<span id="cb93-70"><a href="introducion-to-systems.html#cb93-70" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)), </span>
+<span id="cb93-71"><a href="introducion-to-systems.html#cb93-71" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;lightgreen&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb93-72"><a href="introducion-to-systems.html#cb93-72" tabindex="-1"></a>  </span>
+<span id="cb93-73"><a href="introducion-to-systems.html#cb93-73" tabindex="-1"></a>  <span class="co"># Trajectories</span></span>
+<span id="cb93-74"><a href="introducion-to-systems.html#cb93-74" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> all_comp_trajectories, </span>
+<span id="cb93-75"><a href="introducion-to-systems.html#cb93-75" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">group =</span> trajectory_id, <span class="at">color =</span> <span class="fu">factor</span>(trajectory_id)),</span>
+<span id="cb93-76"><a href="introducion-to-systems.html#cb93-76" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb93-77"><a href="introducion-to-systems.html#cb93-77" tabindex="-1"></a>  </span>
+<span id="cb93-78"><a href="introducion-to-systems.html#cb93-78" tabindex="-1"></a>  <span class="co"># Fixed points</span></span>
+<span id="cb93-79"><a href="introducion-to-systems.html#cb93-79" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp_origin[<span class="dv">1</span>], <span class="at">y =</span> fp_origin[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb93-80"><a href="introducion-to-systems.html#cb93-80" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp_sp1[<span class="dv">1</span>], <span class="at">y =</span> fp_sp1[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb93-81"><a href="introducion-to-systems.html#cb93-81" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp_sp2[<span class="dv">1</span>], <span class="at">y =</span> fp_sp2[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb93-82"><a href="introducion-to-systems.html#cb93-82" tabindex="-1"></a>  </span>
+<span id="cb93-83"><a href="introducion-to-systems.html#cb93-83" tabindex="-1"></a>  <span class="co"># Nullclines</span></span>
+<span id="cb93-84"><a href="introducion-to-systems.html#cb93-84" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">12</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb93-85"><a href="introducion-to-systems.html#cb93-85" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">y =</span> (comp_params<span class="sc">$</span>K1 <span class="sc">-</span> x)<span class="sc">/</span>comp_params<span class="sc">$</span>alpha12),</span>
+<span id="cb93-86"><a href="introducion-to-systems.html#cb93-86" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb93-87"><a href="introducion-to-systems.html#cb93-87" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb93-88"><a href="introducion-to-systems.html#cb93-88" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">x =</span> (comp_params<span class="sc">$</span>K2 <span class="sc">-</span> y)<span class="sc">/</span>comp_params<span class="sc">$</span>alpha21),</span>
+<span id="cb93-89"><a href="introducion-to-systems.html#cb93-89" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb93-90"><a href="introducion-to-systems.html#cb93-90" tabindex="-1"></a>  </span>
+<span id="cb93-91"><a href="introducion-to-systems.html#cb93-91" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">guide =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb93-92"><a href="introducion-to-systems.html#cb93-92" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb93-93"><a href="introducion-to-systems.html#cb93-93" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Competitive Exclusion System&quot;</span>,</span>
+<span id="cb93-94"><a href="introducion-to-systems.html#cb93-94" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Species 1 Population (x)&quot;</span>,</span>
+<span id="cb93-95"><a href="introducion-to-systems.html#cb93-95" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Species 2 Population (y)&quot;</span>,</span>
+<span id="cb93-96"><a href="introducion-to-systems.html#cb93-96" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Outcome depends on initial conditions (bistability)&quot;</span></span>
+<span id="cb93-97"><a href="introducion-to-systems.html#cb93-97" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb93-98"><a href="introducion-to-systems.html#cb93-98" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb93-99"><a href="introducion-to-systems.html#cb93-99" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb93-100"><a href="introducion-to-systems.html#cb93-100" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb93-101"><a href="introducion-to-systems.html#cb93-101" tabindex="-1"></a></span>
+<span id="cb93-102"><a href="introducion-to-systems.html#cb93-102" tabindex="-1"></a><span class="fu">print</span>(competition_phase_portrait)</span></code></pre></div>
+<pre><code>## Warning: Removed 40 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>The competition system illustrates the <strong>principle of competitive exclusion</strong>: when species compete for identical resources, complete competitors cannot coexist indefinitely. The mathematical condition for coexistence requires that each species limits its own growth more than it limits its competitor’s growth:</p>
+<p><span class="math display">\[\alpha_{12} &lt; \frac{K_1}{K_2} \text{ and } \alpha_{21} &lt; \frac{K_2}{K_1}\]</span></p>
+<p>When these inequalities fail, the system exhibits competitive exclusion—one species drives the other extinct regardless of initial conditions.</p>
+</div>
+<div id="nullclines-and-phase-plane-analysis" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Nullclines and Phase Plane Analysis<a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A powerful technique for analyzing two-dimensional systems involves constructing <strong>nullclines</strong>—curves where one derivative vanishes. The <span class="math inline">\(x\)</span>-nullcline satisfies <span class="math inline">\(\dot{x} = f(x,y) = 0\)</span>, while the <span class="math inline">\(y\)</span>-nullcline satisfies <span class="math inline">\(\dot{y} = g(x,y) = 0\)</span>.</p>
+<p>Fixed points occur at nullcline intersections, and the nullcline geometry reveals flow patterns throughout the phase plane. Between nullclines, the signs of <span class="math inline">\(\dot{x}\)</span> and <span class="math inline">\(\dot{y}\)</span> remain constant, creating regions of uniform flow direction.</p>
+<p>For the competition system, the nullclines are:</p>
+<p><strong><span class="math inline">\(x\)</span>-nullcline</strong>: <span class="math inline">\(x = 0\)</span> or <span class="math inline">\(y = \frac{K_1 - x}{\alpha_{12}}\)</span> <strong><span class="math inline">\(y\)</span>-nullcline</strong>: <span class="math inline">\(y = 0\)</span> or <span class="math inline">\(x = \frac{K_2 - y}{\alpha_{21}}\)</span></p>
+<p>The intersection of the non-trivial nullclines determines the coexistence fixed point, while their slopes relative to each other predict stability outcomes.</p>
+</div>
+<div id="the-geometry-of-stability" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> The Geometry of Stability<a href="introducion-to-systems.html#the-geometry-of-stability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Two-dimensional systems exhibit a rich taxonomy of fixed point types, each with characteristic geometric signatures. The <strong>trace-determinant diagram</strong> provides a complete classification based on the eigenvalues of the linearization matrix.</p>
+<p>For a <span class="math inline">\(2 \times 2\)</span> matrix with eigenvalues <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>:</p>
+<ul>
+<li><strong>Trace</strong>: <span class="math inline">\(\tau = \lambda_1 + \lambda_2 = \text{tr}(\mathbf{J})\)</span></li>
+<li><strong>Determinant</strong>: <span class="math inline">\(\Delta = \lambda_1 \lambda_2 = \det(\mathbf{J})\)</span></li>
+</ul>
+<p>The eigenvalue structure determines stability:</p>
+<ul>
+<li><span class="math inline">\(\Delta &lt; 0\)</span>: <strong>Saddle</strong> (unstable)</li>
+<li><span class="math inline">\(\Delta &gt; 0, \tau &lt; 0\)</span>: <strong>Stable node</strong> (<span class="math inline">\(\tau^2 &gt; 4\Delta\)</span>) or <strong>stable spiral</strong> (<span class="math inline">\(\tau^2 &lt; 4\Delta\)</span>)</li>
+<li><span class="math inline">\(\Delta &gt; 0, \tau &gt; 0\)</span>: <strong>Unstable node</strong> (<span class="math inline">\(\tau^2 &gt; 4\Delta\)</span>) or <strong>unstable spiral</strong> (<span class="math inline">\(\tau^2 &lt; 4\Delta\)</span>)</li>
+<li><span class="math inline">\(\Delta &gt; 0, \tau = 0\)</span>: <strong>Center</strong> (neutrally stable)</li>
+</ul>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="introducion-to-systems.html#cb96-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb96-2"><a href="introducion-to-systems.html#cb96-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb96-3"><a href="introducion-to-systems.html#cb96-3" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="introducion-to-systems.html#cb96-4" tabindex="-1"></a><span class="co"># Create trace-determinant classification diagram</span></span>
+<span id="cb96-5"><a href="introducion-to-systems.html#cb96-5" tabindex="-1"></a>tau_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb96-6"><a href="introducion-to-systems.html#cb96-6" tabindex="-1"></a>delta_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb96-7"><a href="introducion-to-systems.html#cb96-7" tabindex="-1"></a></span>
+<span id="cb96-8"><a href="introducion-to-systems.html#cb96-8" tabindex="-1"></a>trace_det_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">tau =</span> tau_range, <span class="at">delta =</span> delta_range)</span>
+<span id="cb96-9"><a href="introducion-to-systems.html#cb96-9" tabindex="-1"></a></span>
+<span id="cb96-10"><a href="introducion-to-systems.html#cb96-10" tabindex="-1"></a><span class="co"># Classify fixed point types (you can adjust the &#39;Center&#39; criterion if desired)</span></span>
+<span id="cb96-11"><a href="introducion-to-systems.html#cb96-11" tabindex="-1"></a>trace_det_grid<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">with</span>(trace_det_grid, {</span>
+<span id="cb96-12"><a href="introducion-to-systems.html#cb96-12" tabindex="-1"></a>  <span class="fu">ifelse</span>(delta <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Saddle&quot;</span>,</span>
+<span id="cb96-13"><a href="introducion-to-systems.html#cb96-13" tabindex="-1"></a>  <span class="fu">ifelse</span>(delta <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau<span class="sc">^</span><span class="dv">2</span> <span class="sc">&gt;</span> <span class="dv">4</span><span class="sc">*</span>delta, <span class="st">&quot;Stable Node&quot;</span>,</span>
+<span id="cb96-14"><a href="introducion-to-systems.html#cb96-14" tabindex="-1"></a>  <span class="fu">ifelse</span>(delta <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau<span class="sc">^</span><span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">4</span><span class="sc">*</span>delta, <span class="st">&quot;Stable Spiral&quot;</span>,</span>
+<span id="cb96-15"><a href="introducion-to-systems.html#cb96-15" tabindex="-1"></a>  <span class="fu">ifelse</span>(delta <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau<span class="sc">^</span><span class="dv">2</span> <span class="sc">&gt;</span> <span class="dv">4</span><span class="sc">*</span>delta, <span class="st">&quot;Unstable Node&quot;</span>,</span>
+<span id="cb96-16"><a href="introducion-to-systems.html#cb96-16" tabindex="-1"></a>  <span class="fu">ifelse</span>(delta <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau<span class="sc">^</span><span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">4</span><span class="sc">*</span>delta, <span class="st">&quot;Unstable Spiral&quot;</span>,</span>
+<span id="cb96-17"><a href="introducion-to-systems.html#cb96-17" tabindex="-1"></a>  <span class="fu">ifelse</span>(delta <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(tau) <span class="sc">&lt;</span> <span class="fl">0.1</span>, <span class="st">&quot;Center&quot;</span>, <span class="st">&quot;Boundary&quot;</span>))))))</span>
+<span id="cb96-18"><a href="introducion-to-systems.html#cb96-18" tabindex="-1"></a>})</span>
+<span id="cb96-19"><a href="introducion-to-systems.html#cb96-19" tabindex="-1"></a></span>
+<span id="cb96-20"><a href="introducion-to-systems.html#cb96-20" tabindex="-1"></a><span class="co"># Convert to factor with levels matching the color scale</span></span>
+<span id="cb96-21"><a href="introducion-to-systems.html#cb96-21" tabindex="-1"></a>trace_det_grid<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">factor</span>(trace_det_grid<span class="sc">$</span>type,</span>
+<span id="cb96-22"><a href="introducion-to-systems.html#cb96-22" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Saddle&quot;</span>, <span class="st">&quot;Stable Node&quot;</span>, <span class="st">&quot;Stable Spiral&quot;</span>,</span>
+<span id="cb96-23"><a href="introducion-to-systems.html#cb96-23" tabindex="-1"></a>                                         <span class="st">&quot;Unstable Node&quot;</span>, <span class="st">&quot;Unstable Spiral&quot;</span>,</span>
+<span id="cb96-24"><a href="introducion-to-systems.html#cb96-24" tabindex="-1"></a>                                         <span class="st">&quot;Center&quot;</span>, <span class="st">&quot;Boundary&quot;</span>))</span>
+<span id="cb96-25"><a href="introducion-to-systems.html#cb96-25" tabindex="-1"></a></span>
+<span id="cb96-26"><a href="introducion-to-systems.html#cb96-26" tabindex="-1"></a><span class="co"># Parabola curve (delta = tau^2 / 4)</span></span>
+<span id="cb96-27"><a href="introducion-to-systems.html#cb96-27" tabindex="-1"></a>parabola_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">tau =</span> tau_range) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">delta =</span> tau<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">4</span>)</span>
+<span id="cb96-28"><a href="introducion-to-systems.html#cb96-28" tabindex="-1"></a></span>
+<span id="cb96-29"><a href="introducion-to-systems.html#cb96-29" tabindex="-1"></a><span class="co"># Create classification plot</span></span>
+<span id="cb96-30"><a href="introducion-to-systems.html#cb96-30" tabindex="-1"></a>trace_det_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(trace_det_grid, <span class="fu">aes</span>(<span class="at">x =</span> tau, <span class="at">y =</span> delta, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb96-31"><a href="introducion-to-systems.html#cb96-31" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb96-32"><a href="introducion-to-systems.html#cb96-32" tabindex="-1"></a>  <span class="co"># prevent inheriting the mapping (no &#39;type&#39; in parabola_df)</span></span>
+<span id="cb96-33"><a href="introducion-to-systems.html#cb96-33" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> parabola_df,</span>
+<span id="cb96-34"><a href="introducion-to-systems.html#cb96-34" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> tau, <span class="at">y =</span> delta),</span>
+<span id="cb96-35"><a href="introducion-to-systems.html#cb96-35" tabindex="-1"></a>            <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb96-36"><a href="introducion-to-systems.html#cb96-36" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb96-37"><a href="introducion-to-systems.html#cb96-37" tabindex="-1"></a>  <span class="co"># these horizontal/vertical lines don&#39;t need the &#39;fill&#39; mapping either</span></span>
+<span id="cb96-38"><a href="introducion-to-systems.html#cb96-38" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb96-39"><a href="introducion-to-systems.html#cb96-39" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb96-40"><a href="introducion-to-systems.html#cb96-40" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb96-41"><a href="introducion-to-systems.html#cb96-41" tabindex="-1"></a>    <span class="st">&quot;Saddle&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb96-42"><a href="introducion-to-systems.html#cb96-42" tabindex="-1"></a>    <span class="st">&quot;Stable Node&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb96-43"><a href="introducion-to-systems.html#cb96-43" tabindex="-1"></a>    <span class="st">&quot;Stable Spiral&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightgreen&quot;</span>,</span>
+<span id="cb96-44"><a href="introducion-to-systems.html#cb96-44" tabindex="-1"></a>    <span class="st">&quot;Unstable Node&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkred&quot;</span>,</span>
+<span id="cb96-45"><a href="introducion-to-systems.html#cb96-45" tabindex="-1"></a>    <span class="st">&quot;Unstable Spiral&quot;</span> <span class="ot">=</span> <span class="st">&quot;pink&quot;</span>,</span>
+<span id="cb96-46"><a href="introducion-to-systems.html#cb96-46" tabindex="-1"></a>    <span class="st">&quot;Center&quot;</span> <span class="ot">=</span> <span class="st">&quot;yellow&quot;</span>,</span>
+<span id="cb96-47"><a href="introducion-to-systems.html#cb96-47" tabindex="-1"></a>    <span class="st">&quot;Boundary&quot;</span> <span class="ot">=</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb96-48"><a href="introducion-to-systems.html#cb96-48" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb96-49"><a href="introducion-to-systems.html#cb96-49" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb96-50"><a href="introducion-to-systems.html#cb96-50" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Fixed Point Classification&quot;</span>,</span>
+<span id="cb96-51"><a href="introducion-to-systems.html#cb96-51" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Trace (τ)&quot;</span>,</span>
+<span id="cb96-52"><a href="introducion-to-systems.html#cb96-52" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Determinant (Δ)&quot;</span>,</span>
+<span id="cb96-53"><a href="introducion-to-systems.html#cb96-53" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Fixed Point Type&quot;</span>,</span>
+<span id="cb96-54"><a href="introducion-to-systems.html#cb96-54" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Classification based on linearization eigenvalues&quot;</span></span>
+<span id="cb96-55"><a href="introducion-to-systems.html#cb96-55" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb96-56"><a href="introducion-to-systems.html#cb96-56" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb96-57"><a href="introducion-to-systems.html#cb96-57" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span></code></pre></div>
+<pre><code>## Warning in geom_hline(yintercept = 0, inherit.aes = FALSE, color = &quot;black&quot;, : Ignoring unknown parameters: `inherit.aes`</code></pre>
+<pre><code>## Warning in geom_vline(xintercept = 0, inherit.aes = FALSE, color = &quot;black&quot;, : Ignoring unknown parameters: `inherit.aes`</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="introducion-to-systems.html#cb99-1" tabindex="-1"></a><span class="fu">print</span>(trace_det_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>This classification reveals how small changes in system parameters can trigger qualitative behavioral changes. As parameters vary, fixed points can transition between types, creating <strong>bifurcations</strong> that fundamentally alter system dynamics.</p>
+</div>
+</div>
+<div id="time-series-and-oscillatory-dynamics" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Time Series and Oscillatory Dynamics<a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While phase portraits reveal geometric structure, <strong>time series</strong> show how variables evolve temporally. Two-dimensional systems can generate periodic oscillations, quasi-periodic motion, or complex irregular behavior impossible in one-dimensional systems.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="introducion-to-systems.html#cb100-1" tabindex="-1"></a><span class="co"># Generate time series for different systems</span></span>
+<span id="cb100-2"><a href="introducion-to-systems.html#cb100-2" tabindex="-1"></a>time_series_lv <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory_mod</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="at">t_max =</span> <span class="dv">20</span>, </span>
+<span id="cb100-3"><a href="introducion-to-systems.html#cb100-3" tabindex="-1"></a>                                          <span class="at">system_func =</span> lotka_volterra, </span>
+<span id="cb100-4"><a href="introducion-to-systems.html#cb100-4" tabindex="-1"></a>                                          <span class="at">params =</span> params)</span>
+<span id="cb100-5"><a href="introducion-to-systems.html#cb100-5" tabindex="-1"></a></span>
+<span id="cb100-6"><a href="introducion-to-systems.html#cb100-6" tabindex="-1"></a>time_series_mod <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory_mod</span>(<span class="dv">8</span>, <span class="dv">3</span>, <span class="at">t_max =</span> <span class="dv">30</span>,</span>
+<span id="cb100-7"><a href="introducion-to-systems.html#cb100-7" tabindex="-1"></a>                                           <span class="at">system_func =</span> modified_predprey,</span>
+<span id="cb100-8"><a href="introducion-to-systems.html#cb100-8" tabindex="-1"></a>                                           <span class="at">params =</span> mod_params)</span>
+<span id="cb100-9"><a href="introducion-to-systems.html#cb100-9" tabindex="-1"></a></span>
+<span id="cb100-10"><a href="introducion-to-systems.html#cb100-10" tabindex="-1"></a><span class="co"># Create time series plots</span></span>
+<span id="cb100-11"><a href="introducion-to-systems.html#cb100-11" tabindex="-1"></a>ts_plot_lv <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(time_series_lv, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb100-12"><a href="introducion-to-systems.html#cb100-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> x, <span class="at">color =</span> <span class="st">&quot;Prey&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb100-13"><a href="introducion-to-systems.html#cb100-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;Predator&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb100-14"><a href="introducion-to-systems.html#cb100-14" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Prey&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;Predator&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb100-15"><a href="introducion-to-systems.html#cb100-15" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb100-16"><a href="introducion-to-systems.html#cb100-16" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Lotka-Volterra Oscillations&quot;</span>,</span>
+<span id="cb100-17"><a href="introducion-to-systems.html#cb100-17" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb100-18"><a href="introducion-to-systems.html#cb100-18" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Population&quot;</span>,</span>
+<span id="cb100-19"><a href="introducion-to-systems.html#cb100-19" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Species&quot;</span>,</span>
+<span id="cb100-20"><a href="introducion-to-systems.html#cb100-20" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Perfect periodic oscillations&quot;</span></span>
+<span id="cb100-21"><a href="introducion-to-systems.html#cb100-21" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb100-22"><a href="introducion-to-systems.html#cb100-22" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb100-23"><a href="introducion-to-systems.html#cb100-23" tabindex="-1"></a></span>
+<span id="cb100-24"><a href="introducion-to-systems.html#cb100-24" tabindex="-1"></a>ts_plot_mod <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(time_series_mod, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb100-25"><a href="introducion-to-systems.html#cb100-25" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> x, <span class="at">color =</span> <span class="st">&quot;Prey&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb100-26"><a href="introducion-to-systems.html#cb100-26" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;Predator&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb100-27"><a href="introducion-to-systems.html#cb100-27" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Prey&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;Predator&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb100-28"><a href="introducion-to-systems.html#cb100-28" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb100-29"><a href="introducion-to-systems.html#cb100-29" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Modified System Oscillations&quot;</span>, </span>
+<span id="cb100-30"><a href="introducion-to-systems.html#cb100-30" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb100-31"><a href="introducion-to-systems.html#cb100-31" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Population&quot;</span>,</span>
+<span id="cb100-32"><a href="introducion-to-systems.html#cb100-32" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Species&quot;</span>,</span>
+<span id="cb100-33"><a href="introducion-to-systems.html#cb100-33" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Damped oscillations approaching limit cycle&quot;</span></span>
+<span id="cb100-34"><a href="introducion-to-systems.html#cb100-34" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb100-35"><a href="introducion-to-systems.html#cb100-35" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb100-36"><a href="introducion-to-systems.html#cb100-36" tabindex="-1"></a></span>
+<span id="cb100-37"><a href="introducion-to-systems.html#cb100-37" tabindex="-1"></a><span class="co"># Display time series</span></span>
+<span id="cb100-38"><a href="introducion-to-systems.html#cb100-38" tabindex="-1"></a><span class="fu">grid.arrange</span>(ts_plot_lv, ts_plot_mod, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>The time series reveal fundamental differences between system types. The classical Lotka-Volterra system produces <strong>perfect sinusoidal oscillations</strong> with constant amplitude determined by initial conditions. The modified system generates <strong>damped oscillations</strong> that approach a stable limit cycle with fixed amplitude and period.</p>
+<p>These temporal patterns encode crucial ecological information. The phase relationship between predator and prey populations, the amplitude of oscillations, and the approach to steady states all provide insights into population stability, extinction risk, and ecosystem resilience.</p>
+</div>
+<div id="basins-of-attraction-and-global-dynamics" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Basins of Attraction and Global Dynamics<a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Local stability analysis near fixed points provides essential information, but understanding complete system behavior requires examining <strong>basins of attraction</strong>—regions of initial conditions leading to specific long-term outcomes.</p>
+<p>In the competitive system with bistability, the phase plane divides into two basins separated by the <strong>separatrix</strong>—a special trajectory forming the boundary between different attracting regions. Initial conditions on one side of the separatrix lead to species 1 dominance, while conditions on the other side result in species 2 victory.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introducion-to-systems.html#cb101-1" tabindex="-1"></a><span class="co"># Analyze basins of attraction for competitive system</span></span>
+<span id="cb101-2"><a href="introducion-to-systems.html#cb101-2" tabindex="-1"></a><span class="co"># Create a grid of initial conditions</span></span>
+<span id="cb101-3"><a href="introducion-to-systems.html#cb101-3" tabindex="-1"></a>x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">11.5</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb101-4"><a href="introducion-to-systems.html#cb101-4" tabindex="-1"></a>y_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">9.5</span>, <span class="at">by =</span> <span class="fl">0.4</span>)</span>
+<span id="cb101-5"><a href="introducion-to-systems.html#cb101-5" tabindex="-1"></a>basin_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x0 =</span> x_grid, <span class="at">y0 =</span> y_grid)</span>
+<span id="cb101-6"><a href="introducion-to-systems.html#cb101-6" tabindex="-1"></a></span>
+<span id="cb101-7"><a href="introducion-to-systems.html#cb101-7" tabindex="-1"></a><span class="co"># Function to determine long-term outcome</span></span>
+<span id="cb101-8"><a href="introducion-to-systems.html#cb101-8" tabindex="-1"></a>determine_outcome <span class="ot">&lt;-</span> <span class="cf">function</span>(x0, y0, <span class="at">t_max =</span> <span class="dv">25</span>) {</span>
+<span id="cb101-9"><a href="introducion-to-systems.html#cb101-9" tabindex="-1"></a>  traj <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory_mod</span>(x0, y0, t_max, competition_system, comp_params)</span>
+<span id="cb101-10"><a href="introducion-to-systems.html#cb101-10" tabindex="-1"></a>  final_state <span class="ot">&lt;-</span> <span class="fu">tail</span>(traj, <span class="dv">1</span>)</span>
+<span id="cb101-11"><a href="introducion-to-systems.html#cb101-11" tabindex="-1"></a>  </span>
+<span id="cb101-12"><a href="introducion-to-systems.html#cb101-12" tabindex="-1"></a>  <span class="co"># Classify based on final populations</span></span>
+<span id="cb101-13"><a href="introducion-to-systems.html#cb101-13" tabindex="-1"></a>  <span class="cf">if</span> (final_state<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="fl">0.1</span> <span class="sc">&amp;&amp;</span> final_state<span class="sc">$</span>y <span class="sc">&lt;</span> <span class="fl">0.1</span>) {</span>
+<span id="cb101-14"><a href="introducion-to-systems.html#cb101-14" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">&quot;Species 1 Wins&quot;</span>)</span>
+<span id="cb101-15"><a href="introducion-to-systems.html#cb101-15" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (final_state<span class="sc">$</span>x <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">&amp;&amp;</span> final_state<span class="sc">$</span>y <span class="sc">&gt;</span> <span class="fl">0.1</span>) {</span>
+<span id="cb101-16"><a href="introducion-to-systems.html#cb101-16" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">&quot;Species 2 Wins&quot;</span>) </span>
+<span id="cb101-17"><a href="introducion-to-systems.html#cb101-17" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (final_state<span class="sc">$</span>x <span class="sc">&gt;</span> <span class="fl">0.1</span> <span class="sc">&amp;&amp;</span> final_state<span class="sc">$</span>y <span class="sc">&gt;</span> <span class="fl">0.1</span>) {</span>
+<span id="cb101-18"><a href="introducion-to-systems.html#cb101-18" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">&quot;Coexistence&quot;</span>)</span>
+<span id="cb101-19"><a href="introducion-to-systems.html#cb101-19" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb101-20"><a href="introducion-to-systems.html#cb101-20" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">&quot;Extinction&quot;</span>)</span>
+<span id="cb101-21"><a href="introducion-to-systems.html#cb101-21" tabindex="-1"></a>  }</span>
+<span id="cb101-22"><a href="introducion-to-systems.html#cb101-22" tabindex="-1"></a>}</span>
+<span id="cb101-23"><a href="introducion-to-systems.html#cb101-23" tabindex="-1"></a></span>
+<span id="cb101-24"><a href="introducion-to-systems.html#cb101-24" tabindex="-1"></a><span class="co"># Determine outcome for each initial condition</span></span>
+<span id="cb101-25"><a href="introducion-to-systems.html#cb101-25" tabindex="-1"></a>basin_grid<span class="sc">$</span>outcome <span class="ot">&lt;-</span> <span class="fu">mapply</span>(determine_outcome, basin_grid<span class="sc">$</span>x0, basin_grid<span class="sc">$</span>y0)</span>
+<span id="cb101-26"><a href="introducion-to-systems.html#cb101-26" tabindex="-1"></a></span>
+<span id="cb101-27"><a href="introducion-to-systems.html#cb101-27" tabindex="-1"></a><span class="co"># Create basin of attraction plot</span></span>
+<span id="cb101-28"><a href="introducion-to-systems.html#cb101-28" tabindex="-1"></a>basin_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basin_grid, <span class="fu">aes</span>(<span class="at">x =</span> x0, <span class="at">y =</span> y0, <span class="at">fill =</span> outcome)) <span class="sc">+</span></span>
+<span id="cb101-29"><a href="introducion-to-systems.html#cb101-29" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb101-30"><a href="introducion-to-systems.html#cb101-30" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp_sp1[<span class="dv">1</span>], <span class="at">y =</span> fp_sp1[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb101-31"><a href="introducion-to-systems.html#cb101-31" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp_sp2[<span class="dv">1</span>], <span class="at">y =</span> fp_sp2[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb101-32"><a href="introducion-to-systems.html#cb101-32" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb101-33"><a href="introducion-to-systems.html#cb101-33" tabindex="-1"></a>    <span class="st">&quot;Species 1 Wins&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightblue&quot;</span>,</span>
+<span id="cb101-34"><a href="introducion-to-systems.html#cb101-34" tabindex="-1"></a>    <span class="st">&quot;Species 2 Wins&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightyellow&quot;</span>, </span>
+<span id="cb101-35"><a href="introducion-to-systems.html#cb101-35" tabindex="-1"></a>    <span class="st">&quot;Coexistence&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightgreen&quot;</span>,</span>
+<span id="cb101-36"><a href="introducion-to-systems.html#cb101-36" tabindex="-1"></a>    <span class="st">&quot;Extinction&quot;</span> <span class="ot">=</span> <span class="st">&quot;gray&quot;</span></span>
+<span id="cb101-37"><a href="introducion-to-systems.html#cb101-37" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb101-38"><a href="introducion-to-systems.html#cb101-38" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb101-39"><a href="introducion-to-systems.html#cb101-39" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Basins of Attraction&quot;</span>,</span>
+<span id="cb101-40"><a href="introducion-to-systems.html#cb101-40" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Initial Species 1 Population&quot;</span>,</span>
+<span id="cb101-41"><a href="introducion-to-systems.html#cb101-41" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Initial Species 2 Population&quot;</span>, </span>
+<span id="cb101-42"><a href="introducion-to-systems.html#cb101-42" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Long-term Outcome&quot;</span>,</span>
+<span id="cb101-43"><a href="introducion-to-systems.html#cb101-43" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Initial conditions determine competitive outcome&quot;</span></span>
+<span id="cb101-44"><a href="introducion-to-systems.html#cb101-44" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb101-45"><a href="introducion-to-systems.html#cb101-45" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb101-46"><a href="introducion-to-systems.html#cb101-46" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span>
+<span id="cb101-47"><a href="introducion-to-systems.html#cb101-47" tabindex="-1"></a></span>
+<span id="cb101-48"><a href="introducion-to-systems.html#cb101-48" tabindex="-1"></a><span class="fu">print</span>(basin_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>The basin structure reveals how initial population sizes determine evolutionary outcomes. Small changes in starting conditions near the separatrix can lead to dramatically different long-term fates—a sensitivity that has profound implications for conservation biology and species management.</p>
+</div>
+<div id="the-road-to-chaos-nonlinear-feedback-and-complex-dynamics" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> The Road to Chaos: Nonlinear Feedback and Complex Dynamics<a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While linear analysis provides crucial local insights, the full richness of two-dimensional dynamics emerges through nonlinear effects. <strong>Feedback loops</strong> between variables can amplify small perturbations, create multiple timescales, and generate behaviors that linear theory cannot predict.</p>
+<p>Consider a <strong>modified competition model</strong> with <strong>Allee effects</strong>—situations where populations face difficulties at low densities:</p>
+<p><span class="math inline">\(\frac{dx}{dt} = r_1 x\left(\frac{x}{A_1} - 1\right)\left(1 - \frac{x}{K_1}\right) - \alpha_{12}xy\)</span> <span class="math inline">\(\frac{dy}{dt} = r_2 y\left(\frac{y}{A_2} - 1\right)\left(1 - \frac{y}{K_2}\right) - \alpha_{21}xy\)</span></p>
+<p>Here, <span class="math inline">\(A_i\)</span> represents the <strong>Allee threshold</strong> below which species <span class="math inline">\(i\)</span> cannot sustain positive growth. This creates <strong>bistability</strong> at the single-species level—populations can either grow to carrying capacity or decline to extinction depending on initial density.</p>
+<p>The coupling between Allee effects and interspecific competition generates complex dynamics including <strong>multiple attractors</strong>, <strong>hysteresis</strong>, and <strong>catastrophic shifts</strong> where small environmental changes trigger sudden population collapses.</p>
+</div>
+<div id="limit-cycles-and-oscillatory-attractors" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Limit Cycles and Oscillatory Attractors<a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One of the most important discoveries in two-dimensional dynamics is the existence of <strong>limit cycles</strong>—isolated closed orbits that attract nearby trajectories. Unlike the neutral cycles of Hamiltonian systems, limit cycles represent <strong>structurally stable oscillations</strong> that persist under small perturbations.</p>
+<p>The <strong>Poincaré-Bendixson theorem</strong> provides fundamental insight: in two-dimensional systems, any bounded trajectory that doesn’t approach a fixed point must approach a limit cycle. This creates a trichotomy for long-term behavior—trajectories either approach fixed points, escape to infinity, or settle onto periodic orbits.</p>
+<p><strong>Van der Pol oscillators</strong> exemplify systems with stable limit cycles:</p>
+<p><span class="math inline">\(\frac{dx}{dt} = y\)</span><br />
+<span class="math inline">\(\frac{dy}{dt} = -x + \mu(1-x^2)y\)</span></p>
+<p>For <span class="math inline">\(\mu &gt; 0\)</span>, this system has an unstable fixed point at the origin surrounded by a stable limit cycle. The parameter <span class="math inline">\(\mu\)</span> controls the nonlinearity strength and determines oscillation characteristics.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="introducion-to-systems.html#cb102-1" tabindex="-1"></a><span class="co"># Van der Pol oscillator</span></span>
+<span id="cb102-2"><a href="introducion-to-systems.html#cb102-2" tabindex="-1"></a>van_der_pol <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb102-3"><a href="introducion-to-systems.html#cb102-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb102-4"><a href="introducion-to-systems.html#cb102-4" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> y</span>
+<span id="cb102-5"><a href="introducion-to-systems.html#cb102-5" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> <span class="sc">-</span>x <span class="sc">+</span> mu<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span>)<span class="sc">*</span>y</span>
+<span id="cb102-6"><a href="introducion-to-systems.html#cb102-6" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
+<span id="cb102-7"><a href="introducion-to-systems.html#cb102-7" tabindex="-1"></a>  })</span>
+<span id="cb102-8"><a href="introducion-to-systems.html#cb102-8" tabindex="-1"></a>}</span>
+<span id="cb102-9"><a href="introducion-to-systems.html#cb102-9" tabindex="-1"></a></span>
+<span id="cb102-10"><a href="introducion-to-systems.html#cb102-10" tabindex="-1"></a><span class="co"># Parameters for strong nonlinearity</span></span>
+<span id="cb102-11"><a href="introducion-to-systems.html#cb102-11" tabindex="-1"></a>vdp_params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">2</span>)</span>
+<span id="cb102-12"><a href="introducion-to-systems.html#cb102-12" tabindex="-1"></a></span>
+<span id="cb102-13"><a href="introducion-to-systems.html#cb102-13" tabindex="-1"></a><span class="co"># Generate limit cycle trajectory</span></span>
+<span id="cb102-14"><a href="introducion-to-systems.html#cb102-14" tabindex="-1"></a>vdp_trajectory <span class="ot">&lt;-</span> <span class="fu">integrate_trajectory_mod</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="at">t_max =</span> <span class="dv">20</span>,</span>
+<span id="cb102-15"><a href="introducion-to-systems.html#cb102-15" tabindex="-1"></a>                                          <span class="at">system_func =</span> van_der_pol,</span>
+<span id="cb102-16"><a href="introducion-to-systems.html#cb102-16" tabindex="-1"></a>                                          <span class="at">params =</span> vdp_params)</span>
+<span id="cb102-17"><a href="introducion-to-systems.html#cb102-17" tabindex="-1"></a></span>
+<span id="cb102-18"><a href="introducion-to-systems.html#cb102-18" tabindex="-1"></a><span class="co"># Create Van der Pol phase portrait</span></span>
+<span id="cb102-19"><a href="introducion-to-systems.html#cb102-19" tabindex="-1"></a>vdp_portrait <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(vdp_trajectory, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb102-20"><a href="introducion-to-systems.html#cb102-20" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb102-21"><a href="introducion-to-systems.html#cb102-21" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb102-22"><a href="introducion-to-systems.html#cb102-22" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> vdp_trajectory[<span class="dv">1</span>,], <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), </span>
+<span id="cb102-23"><a href="introducion-to-systems.html#cb102-23" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb102-24"><a href="introducion-to-systems.html#cb102-24" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb102-25"><a href="introducion-to-systems.html#cb102-25" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Van der Pol Limit Cycle&quot;</span>,</span>
+<span id="cb102-26"><a href="introducion-to-systems.html#cb102-26" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Position (x)&quot;</span>, </span>
+<span id="cb102-27"><a href="introducion-to-systems.html#cb102-27" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Velocity (y)&quot;</span>,</span>
+<span id="cb102-28"><a href="introducion-to-systems.html#cb102-28" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Self-sustaining oscillation with stable amplitude&quot;</span></span>
+<span id="cb102-29"><a href="introducion-to-systems.html#cb102-29" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb102-30"><a href="introducion-to-systems.html#cb102-30" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb102-31"><a href="introducion-to-systems.html#cb102-31" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span>
+<span id="cb102-32"><a href="introducion-to-systems.html#cb102-32" tabindex="-1"></a></span>
+<span id="cb102-33"><a href="introducion-to-systems.html#cb102-33" tabindex="-1"></a><span class="fu">print</span>(vdp_portrait)</span></code></pre></div>
+<pre><code>## Warning in geom_point(aes(x = 0, y = 0), color = &quot;blue&quot;, size = 3): All aesthetics have length 1, but the data has 401 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="introducion-to-systems.html#cb104-1" tabindex="-1"></a><span class="co"># Time series showing relaxation oscillations</span></span>
+<span id="cb104-2"><a href="introducion-to-systems.html#cb104-2" tabindex="-1"></a>vdp_timeseries <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(vdp_trajectory, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb104-3"><a href="introducion-to-systems.html#cb104-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> x, <span class="at">color =</span> <span class="st">&quot;Position&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb104-4"><a href="introducion-to-systems.html#cb104-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> y, <span class="at">color =</span> <span class="st">&quot;Velocity&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb104-5"><a href="introducion-to-systems.html#cb104-5" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Position&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;Velocity&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb104-6"><a href="introducion-to-systems.html#cb104-6" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb104-7"><a href="introducion-to-systems.html#cb104-7" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Van der Pol Time Series&quot;</span>,</span>
+<span id="cb104-8"><a href="introducion-to-systems.html#cb104-8" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb104-9"><a href="introducion-to-systems.html#cb104-9" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Amplitude&quot;</span>, </span>
+<span id="cb104-10"><a href="introducion-to-systems.html#cb104-10" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Variable&quot;</span>,</span>
+<span id="cb104-11"><a href="introducion-to-systems.html#cb104-11" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Relaxation oscillations with fast/slow dynamics&quot;</span></span>
+<span id="cb104-12"><a href="introducion-to-systems.html#cb104-12" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb104-13"><a href="introducion-to-systems.html#cb104-13" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb104-14"><a href="introducion-to-systems.html#cb104-14" tabindex="-1"></a></span>
+<span id="cb104-15"><a href="introducion-to-systems.html#cb104-15" tabindex="-1"></a><span class="fu">print</span>(vdp_timeseries)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+<p>The Van der Pol oscillator demonstrates <strong>relaxation oscillations</strong>—periodic motion characterized by alternating fast and slow phases. Such oscillations appear throughout science and engineering, from neural action potentials to economic business cycles.</p>
+</div>
+<div id="applications-across-disciplines" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Applications Across Disciplines<a href="introducion-to-systems.html#applications-across-disciplines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The mathematical frameworks developed for two-dimensional systems find applications across virtually every scientific discipline. <strong>Chemical reaction networks</strong> use coupled differential equations to model concentration dynamics and oscillatory reactions like the Belousov-Zhabotinsky reaction. <strong>Epidemiological models</strong> track the spread of diseases through populations using SIR (Susceptible-Infected-Recovered) compartmental models. <strong>Economic systems</strong> employ coupled equations to study business cycles, market dynamics, and resource allocation.</p>
+<p>In <strong>neuroscience</strong>, the <strong>FitzHugh-Nagumo model</strong> captures the essential features of neural excitability:</p>
+<p><span class="math inline">\(\frac{dV}{dt} = V - \frac{V^3}{3} - W + I\)</span> <span class="math inline">\(\frac{dW}{dt} = \frac{1}{\tau}(V + a - bW)\)</span></p>
+<p>Here, <span class="math inline">\(V\)</span> represents membrane voltage, <span class="math inline">\(W\)</span> models recovery variables, <span class="math inline">\(I\)</span> denotes external current, and the parameters control excitability properties. This system can exhibit rest states, periodic firing, or bistability between quiescent and active states.</p>
+</div>
+<div id="bifurcations-in-two-dimensional-systems" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Bifurcations in Two-Dimensional Systems<a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As system parameters vary, two-dimensional systems can undergo <strong>bifurcations</strong> that qualitatively change their dynamics. These bifurcations create <strong>parameter regimes</strong> with distinct behavioral characteristics and transition boundaries where small parameter changes trigger dramatic dynamical shifts.</p>
+<p><strong>Hopf bifurcations</strong> represent one of the most important transition types—fixed points can lose stability and spawn limit cycles as parameters cross critical values. The <strong>supercritical Hopf bifurcation</strong> creates small-amplitude stable oscillations, while the <strong>subcritical Hopf bifurcation</strong> generates large-amplitude unstable cycles.</p>
+<p><strong>Saddle-node bifurcations</strong> can occur for fixed points or periodic orbits, creating or destroying attractors as parameters vary. <strong>Transcritical</strong> and <strong>pitchfork bifurcations</strong> exchange stability between existing attractors.</p>
+<p>These bifurcation mechanisms explain how ecosystems can suddenly shift between alternative stable states, how neural systems transition between quiescence and oscillation, and how economic systems experience sudden transitions between growth and recession phases.</p>
+</div>
+<div id="the-geometric-foundation-of-complexity" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> The Geometric Foundation of Complexity<a href="introducion-to-systems.html#the-geometric-foundation-of-complexity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Two-dimensional systems reveal how geometric structures underlie complex dynamical behavior. <strong>Vector fields</strong> create flow patterns that organize the entire phase space. <strong>Manifolds</strong> associated with saddle points create highways along which trajectories travel between different regions. <strong>Separatrices</strong> divide the phase plane into regions with qualitatively different long-term behavior.</p>
+<p>The interplay between <strong>local</strong> and <strong>global</strong> dynamics becomes crucial. Linear analysis provides local information near fixed points, but global behavior depends on how different local regions connect through the flow. <strong>Heteroclinic</strong> and <strong>homoclinic orbits</strong>—trajectories connecting different fixed points or returning to the same fixed point—create the backbone structure organizing global dynamics.</p>
+<p>This geometric perspective transforms our understanding of complex systems. Rather than viewing dynamics as collections of interacting parts, we learn to see them as flows through structured landscapes where topology and geometry determine possible behaviors.</p>
+</div>
+<div id="beyond-two-dimensions-preparing-for-chaos" class="section level2 hasAnchor" number="6.10">
+<h2><span class="header-section-number">6.10</span> Beyond Two Dimensions: Preparing for Chaos<a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While two-dimensional systems exhibit rich dynamics, they remain fundamentally constrained by the <strong>Poincaré-Bendixson theorem</strong>. Bounded trajectories must approach either fixed points or periodic orbits—<strong>chaos</strong> cannot exist in two-dimensional continuous-time systems.</p>
+<p>This limitation disappears in three or more dimensions, where trajectories can exhibit <strong>strange attractors</strong>, <strong>sensitive dependence on initial conditions</strong>, and <strong>deterministic chaos</strong>. The geometric structures we’ve developed—phase space analysis, stability theory, bifurcation tracking—provide the essential foundation for understanding these higher-dimensional phenomena.</p>
+<p>Our exploration of two-dimensional systems reveals the profound richness that emerges when variables couple through nonlinear feedback. From the elegant closed orbits of predator-prey systems to the complex basin structures of competitive dynamics, we discover how mathematical structure creates the patterns observed throughout nature and society.</p>
+<p>The transition from one to two dimensions represents more than quantitative increase—it opens entirely new categories of dynamical behavior. <strong>Oscillations</strong>, <strong>multistability</strong>, <strong>hysteresis</strong>, and <strong>catastrophic transitions</strong> become possible, providing mathematical frameworks for understanding phenomena from population cycles to neural rhythms to economic fluctuations.</p>
+<p>As we prepare to venture into higher dimensions, the geometric intuition developed here—reading phase portraits, tracking stability changes, understanding how local linear analysis connects to global nonlinear behavior—remains central to all that follows. The two-dimensional phase plane serves as our training ground for the even more exotic behaviors that await in the full complexity of multi-dimensional dynamical systems.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-phase-line-of-one-dimensional-dynamics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/edit/main/05-Intro_Sys.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/blob/main/05-Intro_Sys.Rmd",
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

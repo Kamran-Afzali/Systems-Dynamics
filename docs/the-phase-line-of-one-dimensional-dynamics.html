@@ -23,7 +23,7 @@
 <meta name="author" content="Kamran Afzali" />
 
 
-<meta name="date" content="2025-10-05" />
+<meta name="date" content="2025-10-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="nonlinear-dynamics-in-one-dimension.html"/>
-
+<link rel="next" href="introducion-to-systems.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -191,6 +191,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.9</b> The Landscape Perspective</a></li>
 <li class="chapter" data-level="5.10" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.10</b> Building Toward Higher Dimensions</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -291,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Warning in geom_segment(aes(x = 2.3, y = 0, xend = 2.5, yend = 0), arrow = arrow(length = unit(0.3, : All aesthetics have length 1, but the data has 61 rows.
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
 <pre><code>## Warning: Removed 8 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>The phase line immediately reveals the system’s complete behavior. Where <span class="math inline">\(f(x) &gt; 0\)</span> (above the x-axis), we have <span class="math inline">\(\dot{x} &gt; 0\)</span>, so <span class="math inline">\(x\)</span> increases—flow moves rightward. Where <span class="math inline">\(f(x) &lt; 0\)</span> (below the x-axis), we have <span class="math inline">\(\dot{x} &lt; 0\)</span>, so <span class="math inline">\(x\)</span> decreases—flow moves leftward.</p>
 <p>The fixed points at <span class="math inline">\(x = -1\)</span> and <span class="math inline">\(x = 1\)</span> are both stable. Any initial condition in the interval <span class="math inline">\((-\infty, -1)\)</span> flows leftward toward <span class="math inline">\(x = -1\)</span>. Any condition in <span class="math inline">\((1, \infty)\)</span> flows rightward toward <span class="math inline">\(x = 1\)</span>. But what about the interval <span class="math inline">\((-1, 1)\)</span>? Here, all trajectories flow leftward toward <span class="math inline">\(x = -1\)</span>.</p>
 <p>This geometric approach transforms the abstract differential equation into a vivid landscape of attraction and repulsion. We can immediately identify basins of attraction, understand long-term behavior, and predict system response to perturbations—all without solving a single integral.</p>
@@ -425,7 +447,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Warning in geom_segment(aes(x = 1.8, y = 0, xend = 2, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
 <pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>This sequence reveals the <strong>saddle-node bifurcation</strong>—the most common way fixed points appear in dynamical systems. At the critical parameter value <span class="math inline">\(\mu = 0\)</span>, a stable and unstable fixed point are born simultaneously, emerging from nothing in a process mathematicians call a <strong>tangent bifurcation</strong>.</p>
 <p>The saddle-node bifurcation appears throughout science and engineering. In laser physics, it describes the threshold where coherent light emission begins. In ecology, it models sudden population crashes when environmental conditions deteriorate. In neuroscience, it explains how neurons transition from quiescent to firing states.</p>
 </div>
@@ -494,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).
 ## Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
 <pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>The pitchfork bifurcation at <span class="math inline">\(\mu = 0\)</span> represents a <strong>symmetry-breaking transition</strong>. For <span class="math inline">\(\mu &lt; 0\)</span>, the system has a unique stable state at <span class="math inline">\(x = 0\)</span>. For <span class="math inline">\(\mu &gt; 0\)</span>, this central state becomes unstable, and the system must “choose” between two symmetric alternatives at <span class="math inline">\(x = \pm\sqrt{\mu}\)</span>.</p>
 <p>This pattern appears wherever systems transition from unique to multiple stable states. In ferromagnetism, it describes how materials spontaneously magnetize below the Curie temperature—the system breaks its underlying symmetry by choosing a preferred magnetic direction. In evolutionary biology, it models how populations can suddenly split into distinct subspecies when environmental pressure exceeds a threshold.</p>
 </div>
@@ -542,7 +564,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb54-37"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb54-37" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
 <span id="cb54-38"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb54-38" tabindex="-1"></a></span>
 <span id="cb54-39"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb54-39" tabindex="-1"></a><span class="fu">print</span>(bifurcation_plot)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb55-1" tabindex="-1"></a><span class="co"># Create saddle-node bifurcation diagram</span></span>
 <span id="cb55-2"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb55-2" tabindex="-1"></a>mu_range_sn <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
 <span id="cb55-3"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb55-3" tabindex="-1"></a>bifurcation_data_sn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
@@ -585,7 +607,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb55-40"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb55-40" tabindex="-1"></a></span>
 <span id="cb55-41"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb55-41" tabindex="-1"></a><span class="co"># Display both bifurcation diagrams</span></span>
 <span id="cb55-42"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb55-42" tabindex="-1"></a><span class="fu">grid.arrange</span>(bifurcation_plot, bifurcation_plot_sn, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
 <p>These bifurcation diagrams encode the complete parametric behavior of each system. Solid lines represent stable fixed points (where solutions converge), while dashed lines represent unstable fixed points (where solutions diverge). The vertical line at <span class="math inline">\(\mu = 0\)</span> marks the bifurcation point where qualitative behavior changes.</p>
 <p>For the pitchfork bifurcation, we see the characteristic “fork” shape that gives this bifurcation its name. The stable branch splits into two as <span class="math inline">\(\mu\)</span> increases through zero, while an unstable branch emerges along the original trajectory.</p>
 <p>For the saddle-node bifurcation, the two branches approach each other as <span class="math inline">\(\mu\)</span> decreases toward zero, meeting tangentially at the bifurcation point before disappearing entirely for <span class="math inline">\(\mu &lt; 0\)</span>.</p>
@@ -733,7 +755,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Warning: Removed 30 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
 <pre><code>## Warning: Removed 29 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
 <pre><code>## Warning: Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb63-1" tabindex="-1"></a><span class="co"># Create transcritical bifurcation diagram</span></span>
 <span id="cb63-2"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb63-2" tabindex="-1"></a>mu_range_tc <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.8</span>, <span class="fl">0.8</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
 <span id="cb63-3"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb63-3" tabindex="-1"></a>bifurcation_data_tc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
@@ -776,7 +798,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb63-40"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb63-40" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
 <span id="cb63-41"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb63-41" tabindex="-1"></a></span>
 <span id="cb63-42"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb63-42" tabindex="-1"></a><span class="fu">print</span>(bifurcation_plot_tc)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-31-2.png" width="672" /></p>
 <p>The transcritical bifurcation appears frequently in population dynamics, where it often models the transition between extinction and survival. One branch represents the extinct state (<span class="math inline">\(x = 0\)</span>), while the other represents a viable population (<span class="math inline">\(x = \mu\)</span>, when positive). As environmental conditions improve (<span class="math inline">\(\mu\)</span> increases), the system transitions from a stable extinction state to a stable population state.</p>
 </div>
 <div id="cusp-catastrophes-and-multiple-parameter-systems" class="section level2 hasAnchor" number="5.6">
@@ -832,7 +854,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb68-23"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb68-23" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fl">0.1</span>, <span class="at">label =</span> <span class="st">&quot;Cusp Point&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>)</span>
 <span id="cb68-24"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb68-24" tabindex="-1"></a></span>
 <span id="cb68-25"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb68-25" tabindex="-1"></a><span class="fu">print</span>(cusp_plot)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb69-1" tabindex="-1"></a><span class="co"># Create 3D visualization of the cusp surface</span></span>
 <span id="cb69-2"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb69-2" tabindex="-1"></a><span class="co"># We&#39;ll show fixed point locations as a function of parameters</span></span>
 <span id="cb69-3"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb69-3" tabindex="-1"></a>mu_3d <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
@@ -872,7 +894,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb73-23"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb73-23" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
 <span id="cb73-24"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb73-24" tabindex="-1"></a></span>
 <span id="cb73-25"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb73-25" tabindex="-1"></a><span class="fu">print</span>(cusp_surface_plot)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
 <p>The cusp catastrophe reveals how two-parameter systems can exhibit sudden jumps between different stable states as parameters vary continuously. Inside the cusp region (where <span class="math inline">\(\nu^2 + 4\mu &lt; 0\)</span>), no equilibria exist. Outside the cusp, two equilibria coexist, creating potential for hysteresis and sudden transitions.</p>
 <p>This geometric structure appears in diverse contexts. In optics, it describes the caustic patterns formed by light passing through curved surfaces. In psychology, it models sudden changes in perception or decision-making. In structural engineering, it explains how loaded beams can suddenly buckle when stress exceeds critical values.</p>
 </div>
@@ -956,7 +978,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb74-72"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb74-72" tabindex="-1"></a></span>
 <span id="cb74-73"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb74-73" tabindex="-1"></a><span class="co"># Arrange plots</span></span>
 <span id="cb74-74"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb74-74" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(imperfect_plots, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>The imperfect pitchfork reveals how small perturbations can fundamentally alter system behavior. The symmetric pitchfork structure breaks into separate saddle-node bifurcations, eliminating the region of bistability that existed in the perfect case. This demonstrates that pitchfork bifurcations are <strong>structurally unstable</strong>—they disappear under generic perturbations.</p>
 <p>In contrast, saddle-node bifurcations are <strong>structurally stable</strong>. Small perturbations may shift the bifurcation point but preserve the basic creation/annihilation mechanism. This structural stability explains why saddle-node bifurcations are ubiquitous in applications, while perfect pitchfork bifurcations are rare in real systems.</p>
 </div>
@@ -1023,9 +1045,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb75-55"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb75-55" tabindex="-1"></a></span>
 <span id="cb75-56"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb75-56" tabindex="-1"></a><span class="co"># Arrange plots</span></span>
 <span id="cb75-57"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb75-57" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(sin_bifurcation_plots[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="the-phase-line-of-one-dimensional-dynamics.html#cb76-1" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(sin_bifurcation_plots[<span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>], <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
 <p>This transcendental system demonstrates how phase line analysis scales to arbitrary nonlinear functions. The geometric approach—identifying where <span class="math inline">\(f(x)\)</span> crosses zero, determining flow direction from the sign of <span class="math inline">\(f(x)\)</span>, and analyzing stability from the slope <span class="math inline">\(f&#39;(x)\)</span>—works regardless of analytical complexity.</p>
 </div>
 <div id="the-landscape-perspective" class="section level2 hasAnchor" number="5.9">
@@ -1050,8 +1072,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="nonlinear-dynamics-in-one-dimension.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="nonlinear-dynamics-in-one-dimension.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducion-to-systems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
