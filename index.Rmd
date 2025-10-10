@@ -3,8 +3,12 @@ title: "Systems Dynamics"
 author: "Kamran Afzali"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-cover-image: EHRVAL.jpg
+cover-image: "EHRVAL.jpg"
 ---
+
+```{r fig.align='center', echo=FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.link='https://www.crcpress.com/product/isbn/9781138700109'}
+knitr::include_graphics('images/EHRVAL.jpg', dpi = NA)
+```
 
 # Differential Equations and Systems Dynamics
 

@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb77-46"><a href="introducion-to-systems.html#cb77-46" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span>
 <span id="cb77-47"><a href="introducion-to-systems.html#cb77-47" tabindex="-1"></a></span>
 <span id="cb77-48"><a href="introducion-to-systems.html#cb77-48" tabindex="-1"></a><span class="fu">print</span>(vector_field_plot)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>The vector field visualization reveals the geometric structure underlying predator-prey dynamics. At each point in the phase plane, the arrow indicates where a system starting at that point will initially move. The patterns formed by these arrows encode the system’s global behavioral organization.</p>
 <div id="fixed-points-and-local-stability-analysis" class="section level3 hasAnchor" number="6.1.1">
 <h3><span class="header-section-number">6.1.1</span> Fixed Points and Local Stability Analysis<a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -413,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb90-60"><a href="introducion-to-systems.html#cb90-60" tabindex="-1"></a></span>
 <span id="cb90-61"><a href="introducion-to-systems.html#cb90-61" tabindex="-1"></a><span class="fu">print</span>(phase_portrait)</span></code></pre></div>
 <pre><code>## Warning: Removed 702 rows containing missing values or values outside the scale range (`geom_path()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>The phase portrait reveals the Lotka-Volterra system’s most striking feature: <strong>closed orbits</strong> surrounding the coexistence fixed point. These orbits represent periodic solutions where predator and prey populations oscillate indefinitely with constant amplitude and period determined by initial conditions.</p>
 <p>This behavior reflects a profound conservation law. The Lotka-Volterra system conserves the quantity:</p>
 <p><span class="math display">\[H(x,y) = d \ln(x) - dx + b \ln(y) - by\]</span></p>
@@ -501,7 +501,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb92-66"><a href="introducion-to-systems.html#cb92-66" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">8</span>)</span>
 <span id="cb92-67"><a href="introducion-to-systems.html#cb92-67" tabindex="-1"></a></span>
 <span id="cb92-68"><a href="introducion-to-systems.html#cb92-68" tabindex="-1"></a><span class="fu">print</span>(modified_phase_portrait)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>The modified system demonstrates how realistic ecological constraints create <strong>limit cycles</strong>—isolated closed orbits that attract nearby trajectories. Unlike the nested orbits of the classical Lotka-Volterra system, limit cycles represent <strong>structurally stable</strong> oscillations that persist under small perturbations.</p>
 <div id="competitive-systems-and-exclusion-principles" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Competitive Systems and Exclusion Principles<a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -619,7 +619,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb93-102"><a href="introducion-to-systems.html#cb93-102" tabindex="-1"></a><span class="fu">print</span>(competition_phase_portrait)</span></code></pre></div>
 <pre><code>## Warning: Removed 40 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
 <pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>The competition system illustrates the <strong>principle of competitive exclusion</strong>: when species compete for identical resources, complete competitors cannot coexist indefinitely. The mathematical condition for coexistence requires that each species limits its own growth more than it limits its competitor’s growth:</p>
 <p><span class="math display">\[\alpha_{12} &lt; \frac{K_1}{K_2} \text{ and } \alpha_{21} &lt; \frac{K_2}{K_1}\]</span></p>
 <p>When these inequalities fail, the system exhibits competitive exclusion—one species drives the other extinct regardless of initial conditions.</p>
@@ -707,7 +707,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Warning in geom_hline(yintercept = 0, inherit.aes = FALSE, color = &quot;black&quot;, : Ignoring unknown parameters: `inherit.aes`</code></pre>
 <pre><code>## Warning in geom_vline(xintercept = 0, inherit.aes = FALSE, color = &quot;black&quot;, : Ignoring unknown parameters: `inherit.aes`</code></pre>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="introducion-to-systems.html#cb99-1" tabindex="-1"></a><span class="fu">print</span>(trace_det_plot)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>This classification reveals how small changes in system parameters can trigger qualitative behavioral changes. As parameters vary, fixed points can transition between types, creating <strong>bifurcations</strong> that fundamentally alter system dynamics.</p>
 </div>
 </div>
@@ -807,7 +807,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb101-46"><a href="introducion-to-systems.html#cb101-46" tabindex="-1"></a>  <span class="fu">coord_equal</span>()</span>
 <span id="cb101-47"><a href="introducion-to-systems.html#cb101-47" tabindex="-1"></a></span>
 <span id="cb101-48"><a href="introducion-to-systems.html#cb101-48" tabindex="-1"></a><span class="fu">print</span>(basin_plot)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>The basin structure reveals how initial population sizes determine evolutionary outcomes. Small changes in starting conditions near the separatrix can lead to dramatically different long-term fates—a sensitivity that has profound implications for conservation biology and species management.</p>
 </div>
 <div id="the-road-to-chaos-nonlinear-feedback-and-complex-dynamics" class="section level2 hasAnchor" number="6.5">
@@ -861,7 +861,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb102-33"><a href="introducion-to-systems.html#cb102-33" tabindex="-1"></a><span class="fu">print</span>(vdp_portrait)</span></code></pre></div>
 <pre><code>## Warning in geom_point(aes(x = 0, y = 0), color = &quot;blue&quot;, size = 3): All aesthetics have length 1, but the data has 401 rows.
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="introducion-to-systems.html#cb104-1" tabindex="-1"></a><span class="co"># Time series showing relaxation oscillations</span></span>
 <span id="cb104-2"><a href="introducion-to-systems.html#cb104-2" tabindex="-1"></a>vdp_timeseries <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(vdp_trajectory, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
 <span id="cb104-3"><a href="introducion-to-systems.html#cb104-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> x, <span class="at">color =</span> <span class="st">&quot;Position&quot;</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
@@ -877,7 +877,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb104-13"><a href="introducion-to-systems.html#cb104-13" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
 <span id="cb104-14"><a href="introducion-to-systems.html#cb104-14" tabindex="-1"></a></span>
 <span id="cb104-15"><a href="introducion-to-systems.html#cb104-15" tabindex="-1"></a><span class="fu">print</span>(vdp_timeseries)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
 <p>The Van der Pol oscillator demonstrates <strong>relaxation oscillations</strong>—periodic motion characterized by alternating fast and slow phases. Such oscillations appear throughout science and engineering, from neural action potentials to economic business cycles.</p>
 </div>
 <div id="applications-across-disciplines" class="section level2 hasAnchor" number="6.7">
