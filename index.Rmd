@@ -3,6 +3,7 @@ title: "Systems Dynamics"
 author: "Kamran Afzali"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
+cover-image: EHRVAL.jpg
 ---
 
 # Differential Equations and Systems Dynamics
