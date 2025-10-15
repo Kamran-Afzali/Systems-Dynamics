@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Immune System Dynamics An Example | Systems Dynamics</title>
+  <meta name="description" content="Chapter 7 Immune System Dynamics An Example | Systems Dynamics" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Immune System Dynamics An Example | Systems Dynamics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/EHRVAL.jpg" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Immune System Dynamics An Example | Systems Dynamics" />
+  
+  
+  <meta name="twitter:image" content="/EHRVAL.jpg" />
+
+<meta name="author" content="Kamran Afzali" />
+
+
+<meta name="date" content="2025-10-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introducion-to-systems.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Systems Dynamics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Differential Equations and Systems Dynamics</a></li>
+<li class="chapter" data-level="2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Why the World Changes: An Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-language-of-change"><i class="fa fa-check"></i><b>2.1</b> The Language of Change</a></li>
+<li class="chapter" data-level="2.2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#from-coffee-to-cosmos"><i class="fa fa-check"></i><b>2.2</b> From Coffee to Cosmos</a></li>
+<li class="chapter" data-level="2.3" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#getting-our-hands-dirty-solving-a-simple-example"><i class="fa fa-check"></i><b>2.3</b> Getting Our Hands Dirty: Solving a Simple Example</a></li>
+<li class="chapter" data-level="2.4" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#seeing-the-solution-in-action"><i class="fa fa-check"></i><b>2.4</b> Seeing the Solution in Action</a></li>
+<li class="chapter" data-level="2.5" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#when-theory-meets-reality"><i class="fa fa-check"></i><b>2.5</b> When Theory Meets Reality</a></li>
+<li class="chapter" data-level="2.6" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-bigger-picture"><i class="fa fa-check"></i><b>2.6</b> The Bigger Picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html"><i class="fa fa-check"></i><b>3</b> Solving Simple Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-art-of-separation"><i class="fa fa-check"></i><b>3.1</b> The Art of Separation</a></li>
+<li class="chapter" data-level="3.2" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#finding-the-missing-piece"><i class="fa fa-check"></i><b>3.2</b> Finding the Missing Piece</a></li>
+<li class="chapter" data-level="3.3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-method-in-action"><i class="fa fa-check"></i><b>3.3</b> The Method in Action</a></li>
+<li class="chapter" data-level="3.4" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#beyond-simple-cooling-the-exponential-family"><i class="fa fa-check"></i><b>3.4</b> Beyond Simple Cooling: The Exponential Family</a></li>
+<li class="chapter" data-level="3.5" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#when-variables-refuse-to-separate"><i class="fa fa-check"></i><b>3.5</b> When Variables Refuse to Separate</a></li>
+<li class="chapter" data-level="3.6" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#a-more-complex-example-mixing-problems"><i class="fa fa-check"></i><b>3.6</b> A More Complex Example: Mixing Problems</a></li>
+<li class="chapter" data-level="3.7" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-power-and-limits-of-separation"><i class="fa fa-check"></i><b>3.7</b> The Power and Limits of Separation</a></li>
+<li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
+<li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html"><i class="fa fa-check"></i><b>5</b> The Phase Line of One-Dimensional Dynamics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-geometry-of-flow"><i class="fa fa-check"></i><b>5.1</b> The Geometry of Flow</a></li>
+<li class="chapter" data-level="5.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-universal-patterns-of-creation-and-annihilation"><i class="fa fa-check"></i><b>5.2</b> The Universal Patterns of Creation and Annihilation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-saddle-node-bifurcation-creation-from-nothing"><i class="fa fa-check"></i><b>5.2.1</b> The Saddle-Node Bifurcation: Creation from Nothing</a></li>
+<li class="chapter" data-level="5.2.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-pitchfork-bifurcation-symmetry-breaking"><i class="fa fa-check"></i><b>5.2.2</b> The Pitchfork Bifurcation: Symmetry Breaking</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-bifurcation-diagram-mapping-parameter-space"><i class="fa fa-check"></i><b>5.3</b> The Bifurcation Diagram: Mapping Parameter Space</a></li>
+<li class="chapter" data-level="5.4" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#hysteresis-and-the-memory-of-systems"><i class="fa fa-check"></i><b>5.4</b> Hysteresis and the Memory of Systems</a></li>
+<li class="chapter" data-level="5.5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#beyond-classical-bifurcations-transcritical-and-complex-scenarios"><i class="fa fa-check"></i><b>5.5</b> Beyond Classical Bifurcations: Transcritical and Complex Scenarios</a></li>
+<li class="chapter" data-level="5.6" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#cusp-catastrophes-and-multiple-parameter-systems"><i class="fa fa-check"></i><b>5.6</b> Cusp Catastrophes and Multiple Parameter Systems</a></li>
+<li class="chapter" data-level="5.7" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#imperfect-bifurcations-and-structural-stability"><i class="fa fa-check"></i><b>5.7</b> Imperfect Bifurcations and Structural Stability</a></li>
+<li class="chapter" data-level="5.8" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#phase-line-analysis-a-universal-tool"><i class="fa fa-check"></i><b>5.8</b> Phase Line Analysis: A Universal Tool</a></li>
+<li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.9</b> The Landscape Perspective</a></li>
+<li class="chapter" data-level="5.10" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.10</b> Building Toward Higher Dimensions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html"><i class="fa fa-check"></i><b>7</b> Immune System Dynamics An Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes"><i class="fa fa-check"></i><b>7.1</b> Fixed Points and the Geography of Infection Outcomes</a></li>
+<li class="chapter" data-level="7.2" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories"><i class="fa fa-check"></i><b>7.2</b> Phase Portrait: Mapping Infection Trajectories</a></li>
+<li class="chapter" data-level="7.3" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection"><i class="fa fa-check"></i><b>7.3</b> Temporal Dynamics: The Clinical Course of Infection</a></li>
+<li class="chapter" data-level="7.4" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#basins-of-attraction-when-treatment-matters-most"><i class="fa fa-check"></i><b>7.4</b> Basins of Attraction: When Treatment Matters Most</a></li>
+<li class="chapter" data-level="7.5" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#limit-cycles-and-oscillatory-immune-responses"><i class="fa fa-check"></i><b>7.5</b> Limit Cycles and Oscillatory Immune Responses</a></li>
+<li class="chapter" data-level="7.6" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions"><i class="fa fa-check"></i><b>7.6</b> Bifurcations: Parameter Thresholds and Disease Transitions</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Systems Dynamics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="immune-system-dynamics-an-example" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Immune System Dynamics An Example<a href="immune-system-dynamics-an-example.html#immune-system-dynamics-an-example" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The human immune system represents one of nature’s most sophisticated dynamical systems. When a pathogen invades the body, a complex dance begins between the proliferating invader and the mobilizing immune response. This interaction—pathogens reproducing while immune cells mount coordinated attacks—creates temporal patterns that determine whether infection resolves, persists chronically, or overwhelms the host. Understanding these dynamics through mathematical modeling provides crucial insights for treatment timing, vaccine design, and predicting disease progression.</p>
+<p>We examine a fundamental model of acute viral infection that captures the essential interplay between viral load and immune response. Let <span class="math inline">\(V(t)\)</span> represent viral population and <span class="math inline">\(I(t)\)</span> denote activated immune cells (cytotoxic T lymphocytes). The coupled dynamics follow:</p>
+<p><span class="math display">\[\frac{dV}{dt} = rV\left(1 - \frac{V}{K}\right) - aVI\]</span></p>
+<p><span class="math display">\[\frac{dI}{dt} = bVI - dI\]</span></p>
+<p>The first equation describes viral replication with intrinsic growth rate <span class="math inline">\(r\)</span> limited by carrying capacity <span class="math inline">\(K\)</span> (host resource constraints), minus viral clearance proportional to encounters between virus and immune cells at rate <span class="math inline">\(a\)</span>. The second equation models immune cell proliferation stimulated by viral presence (rate <span class="math inline">\(b\)</span>) minus natural immune cell decay (rate <span class="math inline">\(d\)</span>). This formulation mirrors the predator-prey framework but with crucial differences reflecting biological reality: viruses face resource limitations, and immune responses decay without sustained antigenic stimulation.</p>
+<div id="fixed-points-and-the-geography-of-infection-outcomes" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Fixed Points and the Geography of Infection Outcomes<a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To understand possible infection trajectories, we first identify the system’s fixed points where both viral replication and immune dynamics reach equilibrium. Setting both derivatives to zero yields:</p>
+<p><span class="math display">\[V^_\left(r\left(1 - \frac{V^_}{K}\right) - aI^*\right) = 0\]</span></p>
+<p><span class="math display">\[I^_(bV^_ - d) = 0\]</span></p>
+<p>The trivial solution <span class="math inline">\((V^_, I^_) = (0, 0)\)</span> represents pathogen clearance with no residual immune activation—the desired outcome of successful infection resolution. However, we must examine its stability to determine whether the system naturally approaches this healthy state.</p>
+<p>A non-trivial fixed point exists at <span class="math inline">\((V^_, I^_) = (d/b, (r/a)(1 - d/(bK)))\)</span>, representing chronic infection where viral load and immune response balance in persistent equilibrium. This fixed point only exists biologically when <span class="math inline">\(I^* &gt; 0\)</span>, requiring <span class="math inline">\(d/b &lt; K\)</span>—the immune activation threshold must lie below viral carrying capacity.</p>
+<p>To analyze stability, we compute the Jacobian matrix. For our system:</p>
+<p><span class="math display">\[\mathbf{J}(V,I) = \begin{pmatrix} r - \frac{2rV}{K} - aI &amp; -aV \ bI &amp; bV - d \end{pmatrix}\]</span></p>
+<p>At the clearance fixed point <span class="math inline">\((0,0)\)</span>:</p>
+<p><span class="math display">\[\mathbf{J}(0,0) = \begin{pmatrix} r &amp; 0 \ 0 &amp; -d \end{pmatrix}\]</span></p>
+<p>The eigenvalues <span class="math inline">\(\lambda_1 = r &gt; 0\)</span> and <span class="math inline">\(\lambda_2 = -d &lt; 0\)</span> identify this as a saddle point. This mathematical classification carries profound medical meaning: the infection-free state is unstable. Any introduction of virus, no matter how small, will initially grow exponentially along the unstable direction. The host cannot maintain pathogen-free status without active immune surveillance or the infection progressing to either chronic equilibrium or overwhelming viral load.</p>
+<p>At the chronic infection equilibrium, the Jacobian becomes:</p>
+<p><span class="math display">\[\mathbf{J}\left(\frac{d}{b}, \frac{r}{a}\left(1 - \frac{d}{bK}\right)\right) = \begin{pmatrix} -\frac{rd}{bK} &amp; -\frac{ad}{b} \ \frac{br}{a}\left(1 - \frac{d}{bK}\right) &amp; 0 \end{pmatrix}\]</span></p>
+<p>Computing the trace and determinant: <span class="math inline">\(\tau = -rd/(bK) &lt; 0\)</span> and <span class="math inline">\(\Delta = rd(1 - d/(bK)) &gt; 0\)</span> (when the fixed point exists). The negative trace with positive determinant indicates stability. Furthermore, examining <span class="math inline">\(\tau^2 - 4\Delta\)</span> determines whether trajectories spiral or approach monotonically. For typical parameter values in viral infections, <span class="math inline">\(\tau^2 &lt; 4\Delta\)</span>, creating a stable spiral—the system exhibits damped oscillations as it approaches chronic equilibrium.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="immune-system-dynamics-an-example.html#cb110-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb110-2"><a href="immune-system-dynamics-an-example.html#cb110-2" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb110-3"><a href="immune-system-dynamics-an-example.html#cb110-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb110-4"><a href="immune-system-dynamics-an-example.html#cb110-4" tabindex="-1"></a></span>
+<span id="cb110-5"><a href="immune-system-dynamics-an-example.html#cb110-5" tabindex="-1"></a><span class="co"># Define viral infection model</span></span>
+<span id="cb110-6"><a href="immune-system-dynamics-an-example.html#cb110-6" tabindex="-1"></a>viral_model <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb110-7"><a href="immune-system-dynamics-an-example.html#cb110-7" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb110-8"><a href="immune-system-dynamics-an-example.html#cb110-8" tabindex="-1"></a>    dV <span class="ot">&lt;-</span> r<span class="sc">*</span>V<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> V<span class="sc">/</span>K) <span class="sc">-</span> a<span class="sc">*</span>V<span class="sc">*</span>I</span>
+<span id="cb110-9"><a href="immune-system-dynamics-an-example.html#cb110-9" tabindex="-1"></a>    dI <span class="ot">&lt;-</span> b<span class="sc">*</span>V<span class="sc">*</span>I <span class="sc">-</span> d<span class="sc">*</span>I</span>
+<span id="cb110-10"><a href="immune-system-dynamics-an-example.html#cb110-10" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dV, dI))</span>
+<span id="cb110-11"><a href="immune-system-dynamics-an-example.html#cb110-11" tabindex="-1"></a>  })</span>
+<span id="cb110-12"><a href="immune-system-dynamics-an-example.html#cb110-12" tabindex="-1"></a>}</span>
+<span id="cb110-13"><a href="immune-system-dynamics-an-example.html#cb110-13" tabindex="-1"></a></span>
+<span id="cb110-14"><a href="immune-system-dynamics-an-example.html#cb110-14" tabindex="-1"></a><span class="co"># Parameters for chronic infection scenario</span></span>
+<span id="cb110-15"><a href="immune-system-dynamics-an-example.html#cb110-15" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">r =</span> <span class="dv">2</span>, <span class="at">K =</span> <span class="dv">1000</span>, <span class="at">a =</span> <span class="fl">0.01</span>, <span class="at">b =</span> <span class="fl">0.0001</span>, <span class="at">d =</span> <span class="fl">0.1</span>)</span>
+<span id="cb110-16"><a href="immune-system-dynamics-an-example.html#cb110-16" tabindex="-1"></a></span>
+<span id="cb110-17"><a href="immune-system-dynamics-an-example.html#cb110-17" tabindex="-1"></a><span class="co"># Calculate fixed points</span></span>
+<span id="cb110-18"><a href="immune-system-dynamics-an-example.html#cb110-18" tabindex="-1"></a>fp_clearance <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">V =</span> <span class="dv">0</span>, <span class="at">I =</span> <span class="dv">0</span>)</span>
+<span id="cb110-19"><a href="immune-system-dynamics-an-example.html#cb110-19" tabindex="-1"></a>V_chronic <span class="ot">&lt;-</span> params<span class="sc">$</span>d <span class="sc">/</span> params<span class="sc">$</span>b</span>
+<span id="cb110-20"><a href="immune-system-dynamics-an-example.html#cb110-20" tabindex="-1"></a>I_chronic <span class="ot">&lt;-</span> (params<span class="sc">$</span>r <span class="sc">/</span> params<span class="sc">$</span>a) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> V_chronic <span class="sc">/</span> params<span class="sc">$</span>K)</span>
+<span id="cb110-21"><a href="immune-system-dynamics-an-example.html#cb110-21" tabindex="-1"></a>fp_chronic <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">V =</span> V_chronic, <span class="at">I =</span> I_chronic)</span>
+<span id="cb110-22"><a href="immune-system-dynamics-an-example.html#cb110-22" tabindex="-1"></a></span>
+<span id="cb110-23"><a href="immune-system-dynamics-an-example.html#cb110-23" tabindex="-1"></a><span class="co"># Jacobian analysis at chronic equilibrium</span></span>
+<span id="cb110-24"><a href="immune-system-dynamics-an-example.html#cb110-24" tabindex="-1"></a>J_chronic <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb110-25"><a href="immune-system-dynamics-an-example.html#cb110-25" tabindex="-1"></a>  <span class="sc">-</span>params<span class="sc">$</span>r <span class="sc">*</span> V_chronic <span class="sc">/</span> params<span class="sc">$</span>K,</span>
+<span id="cb110-26"><a href="immune-system-dynamics-an-example.html#cb110-26" tabindex="-1"></a>  <span class="sc">-</span>params<span class="sc">$</span>a <span class="sc">*</span> V_chronic,</span>
+<span id="cb110-27"><a href="immune-system-dynamics-an-example.html#cb110-27" tabindex="-1"></a>  params<span class="sc">$</span>b <span class="sc">*</span> I_chronic,</span>
+<span id="cb110-28"><a href="immune-system-dynamics-an-example.html#cb110-28" tabindex="-1"></a>  <span class="dv">0</span></span>
+<span id="cb110-29"><a href="immune-system-dynamics-an-example.html#cb110-29" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb110-30"><a href="immune-system-dynamics-an-example.html#cb110-30" tabindex="-1"></a></span>
+<span id="cb110-31"><a href="immune-system-dynamics-an-example.html#cb110-31" tabindex="-1"></a>eigen_chronic <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J_chronic)</span>
+<span id="cb110-32"><a href="immune-system-dynamics-an-example.html#cb110-32" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Chronic Infection Fixed Point:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Chronic Infection Fixed Point:</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="immune-system-dynamics-an-example.html#cb112-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Viral Load:&quot;</span>, <span class="fu">round</span>(V_chronic, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Viral Load: 1000</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="immune-system-dynamics-an-example.html#cb114-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Immune Response:&quot;</span>, <span class="fu">round</span>(I_chronic, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Immune Response: 0</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="immune-system-dynamics-an-example.html#cb116-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Eigenvalues:&quot;</span>, eigen_chronic<span class="sc">$</span>values, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Eigenvalues: -2 0</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="immune-system-dynamics-an-example.html#cb118-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Type: Stable Spiral</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Type: Stable Spiral</code></pre>
+<p>This stability analysis reveals a concerning clinical reality: without intervention, infections satisfying the chronic existence condition naturally evolve toward persistent viral presence. The immune system mounts a response, but rather than clearing the pathogen, reaches a dynamic equilibrium where viral replication balances immune-mediated clearance.</p>
+</div>
+<div id="phase-portrait-mapping-infection-trajectories" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Phase Portrait: Mapping Infection Trajectories<a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To visualize how infections progress from initial exposure, we construct the phase portrait showing viral load versus immune response. The vector field reveals instantaneous direction of system evolution at each point in this two-dimensional space, while integrated trajectories trace complete infection courses.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="immune-system-dynamics-an-example.html#cb120-1" tabindex="-1"></a><span class="co"># Create vector field</span></span>
+<span id="cb120-2"><a href="immune-system-dynamics-an-example.html#cb120-2" tabindex="-1"></a>V_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">1200</span>, <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb120-3"><a href="immune-system-dynamics-an-example.html#cb120-3" tabindex="-1"></a>I_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">250</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb120-4"><a href="immune-system-dynamics-an-example.html#cb120-4" tabindex="-1"></a></span>
+<span id="cb120-5"><a href="immune-system-dynamics-an-example.html#cb120-5" tabindex="-1"></a>vector_field <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">V =</span> V_range, <span class="at">I =</span> I_range)</span>
+<span id="cb120-6"><a href="immune-system-dynamics-an-example.html#cb120-6" tabindex="-1"></a></span>
+<span id="cb120-7"><a href="immune-system-dynamics-an-example.html#cb120-7" tabindex="-1"></a>vector_field<span class="sc">$</span>dV <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field, </span>
+<span id="cb120-8"><a href="immune-system-dynamics-an-example.html#cb120-8" tabindex="-1"></a>  params<span class="sc">$</span>r<span class="sc">*</span>V<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> V<span class="sc">/</span>params<span class="sc">$</span>K) <span class="sc">-</span> params<span class="sc">$</span>a<span class="sc">*</span>V<span class="sc">*</span>I)</span>
+<span id="cb120-9"><a href="immune-system-dynamics-an-example.html#cb120-9" tabindex="-1"></a>vector_field<span class="sc">$</span>dI <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field, </span>
+<span id="cb120-10"><a href="immune-system-dynamics-an-example.html#cb120-10" tabindex="-1"></a>  params<span class="sc">$</span>b<span class="sc">*</span>V<span class="sc">*</span>I <span class="sc">-</span> params<span class="sc">$</span>d<span class="sc">*</span>I)</span>
+<span id="cb120-11"><a href="immune-system-dynamics-an-example.html#cb120-11" tabindex="-1"></a></span>
+<span id="cb120-12"><a href="immune-system-dynamics-an-example.html#cb120-12" tabindex="-1"></a><span class="co"># Normalize for visualization</span></span>
+<span id="cb120-13"><a href="immune-system-dynamics-an-example.html#cb120-13" tabindex="-1"></a>vector_field<span class="sc">$</span>magnitude <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(vector_field<span class="sc">$</span>dV<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> vector_field<span class="sc">$</span>dI<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb120-14"><a href="immune-system-dynamics-an-example.html#cb120-14" tabindex="-1"></a>vector_field<span class="sc">$</span>dV_norm <span class="ot">&lt;-</span> vector_field<span class="sc">$</span>dV <span class="sc">/</span> vector_field<span class="sc">$</span>magnitude <span class="sc">*</span> <span class="dv">30</span></span>
+<span id="cb120-15"><a href="immune-system-dynamics-an-example.html#cb120-15" tabindex="-1"></a>vector_field<span class="sc">$</span>dI_norm <span class="ot">&lt;-</span> vector_field<span class="sc">$</span>dI <span class="sc">/</span> vector_field<span class="sc">$</span>magnitude <span class="sc">*</span> <span class="dv">7</span></span>
+<span id="cb120-16"><a href="immune-system-dynamics-an-example.html#cb120-16" tabindex="-1"></a></span>
+<span id="cb120-17"><a href="immune-system-dynamics-an-example.html#cb120-17" tabindex="-1"></a><span class="co"># Generate infection trajectories from different initial conditions</span></span>
+<span id="cb120-18"><a href="immune-system-dynamics-an-example.html#cb120-18" tabindex="-1"></a>simulate_infection <span class="ot">&lt;-</span> <span class="cf">function</span>(V0, I0, <span class="at">t_max =</span> <span class="dv">30</span>) {</span>
+<span id="cb120-19"><a href="immune-system-dynamics-an-example.html#cb120-19" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, t_max, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb120-20"><a href="immune-system-dynamics-an-example.html#cb120-20" tabindex="-1"></a>  initial <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">V =</span> V0, <span class="at">I =</span> I0)</span>
+<span id="cb120-21"><a href="immune-system-dynamics-an-example.html#cb120-21" tabindex="-1"></a>  solution <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> initial, <span class="at">times =</span> times, </span>
+<span id="cb120-22"><a href="immune-system-dynamics-an-example.html#cb120-22" tabindex="-1"></a>                  <span class="at">func =</span> viral_model, <span class="at">parms =</span> params)</span>
+<span id="cb120-23"><a href="immune-system-dynamics-an-example.html#cb120-23" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.data.frame</span>(solution))</span>
+<span id="cb120-24"><a href="immune-system-dynamics-an-example.html#cb120-24" tabindex="-1"></a>}</span>
+<span id="cb120-25"><a href="immune-system-dynamics-an-example.html#cb120-25" tabindex="-1"></a></span>
+<span id="cb120-26"><a href="immune-system-dynamics-an-example.html#cb120-26" tabindex="-1"></a><span class="co"># Different infection scenarios</span></span>
+<span id="cb120-27"><a href="immune-system-dynamics-an-example.html#cb120-27" tabindex="-1"></a>initial_conditions <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb120-28"><a href="immune-system-dynamics-an-example.html#cb120-28" tabindex="-1"></a>  <span class="at">V0 =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">300</span>, <span class="dv">500</span>, <span class="dv">800</span>),</span>
+<span id="cb120-29"><a href="immune-system-dynamics-an-example.html#cb120-29" tabindex="-1"></a>  <span class="at">I0 =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">30</span>, <span class="dv">150</span>),</span>
+<span id="cb120-30"><a href="immune-system-dynamics-an-example.html#cb120-30" tabindex="-1"></a>  <span class="at">scenario =</span> <span class="fu">c</span>(<span class="st">&quot;Mild&quot;</span>, <span class="st">&quot;Moderate&quot;</span>, <span class="st">&quot;Severe&quot;</span>, <span class="st">&quot;Late&quot;</span>, <span class="st">&quot;Strong&quot;</span>)</span>
+<span id="cb120-31"><a href="immune-system-dynamics-an-example.html#cb120-31" tabindex="-1"></a>)</span>
+<span id="cb120-32"><a href="immune-system-dynamics-an-example.html#cb120-32" tabindex="-1"></a></span>
+<span id="cb120-33"><a href="immune-system-dynamics-an-example.html#cb120-33" tabindex="-1"></a>all_trajectories <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb120-34"><a href="immune-system-dynamics-an-example.html#cb120-34" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(initial_conditions)) {</span>
+<span id="cb120-35"><a href="immune-system-dynamics-an-example.html#cb120-35" tabindex="-1"></a>  traj <span class="ot">&lt;-</span> <span class="fu">simulate_infection</span>(initial_conditions<span class="sc">$</span>V0[i], </span>
+<span id="cb120-36"><a href="immune-system-dynamics-an-example.html#cb120-36" tabindex="-1"></a>                             initial_conditions<span class="sc">$</span>I0[i])</span>
+<span id="cb120-37"><a href="immune-system-dynamics-an-example.html#cb120-37" tabindex="-1"></a>  traj<span class="sc">$</span>scenario <span class="ot">&lt;-</span> initial_conditions<span class="sc">$</span>scenario[i]</span>
+<span id="cb120-38"><a href="immune-system-dynamics-an-example.html#cb120-38" tabindex="-1"></a>  all_trajectories <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_trajectories, traj)</span>
+<span id="cb120-39"><a href="immune-system-dynamics-an-example.html#cb120-39" tabindex="-1"></a>}</span>
+<span id="cb120-40"><a href="immune-system-dynamics-an-example.html#cb120-40" tabindex="-1"></a></span>
+<span id="cb120-41"><a href="immune-system-dynamics-an-example.html#cb120-41" tabindex="-1"></a><span class="co"># Create phase portrait</span></span>
+<span id="cb120-42"><a href="immune-system-dynamics-an-example.html#cb120-42" tabindex="-1"></a>phase_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb120-43"><a href="immune-system-dynamics-an-example.html#cb120-43" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> vector_field[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(vector_field), <span class="at">by =</span> <span class="dv">4</span>),],</span>
+<span id="cb120-44"><a href="immune-system-dynamics-an-example.html#cb120-44" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> I, <span class="at">xend =</span> V <span class="sc">+</span> dV_norm, <span class="at">yend =</span> I <span class="sc">+</span> dI_norm),</span>
+<span id="cb120-45"><a href="immune-system-dynamics-an-example.html#cb120-45" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)),</span>
+<span id="cb120-46"><a href="immune-system-dynamics-an-example.html#cb120-46" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb120-47"><a href="immune-system-dynamics-an-example.html#cb120-47" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> all_trajectories,</span>
+<span id="cb120-48"><a href="immune-system-dynamics-an-example.html#cb120-48" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> I, <span class="at">group =</span> scenario, <span class="at">color =</span> scenario),</span>
+<span id="cb120-49"><a href="immune-system-dynamics-an-example.html#cb120-49" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb120-50"><a href="immune-system-dynamics-an-example.html#cb120-50" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> fp_chronic[<span class="dv">1</span>], <span class="at">y =</span> fp_chronic[<span class="dv">2</span>]),</span>
+<span id="cb120-51"><a href="immune-system-dynamics-an-example.html#cb120-51" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb120-52"><a href="immune-system-dynamics-an-example.html#cb120-52" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> initial_conditions,</span>
+<span id="cb120-53"><a href="immune-system-dynamics-an-example.html#cb120-53" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> V0, <span class="at">y =</span> I0, <span class="at">color =</span> scenario),</span>
+<span id="cb120-54"><a href="immune-system-dynamics-an-example.html#cb120-54" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">1</span>, <span class="at">stroke =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb120-55"><a href="immune-system-dynamics-an-example.html#cb120-55" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> fp_chronic[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">100</span>, <span class="at">y =</span> fp_chronic[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">20</span>,</span>
+<span id="cb120-56"><a href="immune-system-dynamics-an-example.html#cb120-56" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Chronic</span><span class="sc">\n</span><span class="st">Equilibrium&quot;</span>, <span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb120-57"><a href="immune-system-dynamics-an-example.html#cb120-57" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb120-58"><a href="immune-system-dynamics-an-example.html#cb120-58" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Viral Infection Phase Portrait&quot;</span>,</span>
+<span id="cb120-59"><a href="immune-system-dynamics-an-example.html#cb120-59" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Viral Load (V)&quot;</span>,</span>
+<span id="cb120-60"><a href="immune-system-dynamics-an-example.html#cb120-60" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Activated Immune Cells (I)&quot;</span>,</span>
+<span id="cb120-61"><a href="immune-system-dynamics-an-example.html#cb120-61" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Infection</span><span class="sc">\n</span><span class="st">Severity&quot;</span></span>
+<span id="cb120-62"><a href="immune-system-dynamics-an-example.html#cb120-62" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb120-63"><a href="immune-system-dynamics-an-example.html#cb120-63" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb120-64"><a href="immune-system-dynamics-an-example.html#cb120-64" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1200</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">250</span>)) <span class="sc">+</span></span>
+<span id="cb120-65"><a href="immune-system-dynamics-an-example.html#cb120-65" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span>
+<span id="cb120-66"><a href="immune-system-dynamics-an-example.html#cb120-66" tabindex="-1"></a></span>
+<span id="cb120-67"><a href="immune-system-dynamics-an-example.html#cb120-67" tabindex="-1"></a><span class="fu">print</span>(phase_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>The phase portrait reveals several critical features of infection dynamics. Trajectories spiral inward toward the chronic equilibrium, indicating damped oscillations where viral load surges are met with delayed immune responses, creating alternating periods of viral increase and immune-mediated suppression. The spiral pattern reflects the inherent time lag between viral replication and immune cell proliferation—viruses reproduce quickly while immune responses require days to fully mobilize.</p>
+<p>Different initial conditions—representing variations in viral inoculum size and pre-existing immune status—follow distinct paths but converge toward the same chronic state. A patient exposed to high initial viral load experiences more severe acute symptoms as the system swings through larger amplitude oscillations before settling. Conversely, low initial exposure with robust pre-existing immunity (higher <span class="math inline">\(I_0\)</span>) follows tighter spirals with less dramatic symptom fluctuation.</p>
+<p>The nullclines provide additional insight. The viral nullcline where <span class="math inline">\(dV/dt = 0\)</span> satisfies <span class="math inline">\(I = (r/a)(1 - V/K)\)</span>, a line with negative slope. Above this line, viral populations decline; below it, they grow. The immune nullcline where <span class="math inline">\(dI/dt = 0\)</span> occurs at <span class="math inline">\(V = d/b\)</span>, a vertical line. To the right, immune responses strengthen; to the left, they wane. Their intersection marks the chronic equilibrium, and the flow patterns between nullclines partition the phase plane into regions of consistent directional movement.</p>
+</div>
+<div id="temporal-dynamics-the-clinical-course-of-infection" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Temporal Dynamics: The Clinical Course of Infection<a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While phase portraits reveal geometric structure, clinicians observe disease progression through time. Plotting viral load and immune response against time transforms abstract phase space trajectories into familiar infection timecourses with acute, chronic, and resolution phases.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="immune-system-dynamics-an-example.html#cb121-1" tabindex="-1"></a><span class="co"># Extract time series for moderate infection</span></span>
+<span id="cb121-2"><a href="immune-system-dynamics-an-example.html#cb121-2" tabindex="-1"></a>moderate_infection <span class="ot">&lt;-</span> all_trajectories <span class="sc">%&gt;%</span></span>
+<span id="cb121-3"><a href="immune-system-dynamics-an-example.html#cb121-3" tabindex="-1"></a>  <span class="fu">filter</span>(scenario <span class="sc">==</span> <span class="st">&quot;Moderate&quot;</span>)</span>
+<span id="cb121-4"><a href="immune-system-dynamics-an-example.html#cb121-4" tabindex="-1"></a></span>
+<span id="cb121-5"><a href="immune-system-dynamics-an-example.html#cb121-5" tabindex="-1"></a><span class="co"># Create time series visualization</span></span>
+<span id="cb121-6"><a href="immune-system-dynamics-an-example.html#cb121-6" tabindex="-1"></a>time_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(moderate_infection, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb121-7"><a href="immune-system-dynamics-an-example.html#cb121-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> V, <span class="at">color =</span> <span class="st">&quot;Viral Load&quot;</span>), <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb121-8"><a href="immune-system-dynamics-an-example.html#cb121-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> I <span class="sc">*</span> <span class="dv">5</span>, <span class="at">color =</span> <span class="st">&quot;Immune Response (×5)&quot;</span>), <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb121-9"><a href="immune-system-dynamics-an-example.html#cb121-9" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Viral Load&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb121-10"><a href="immune-system-dynamics-an-example.html#cb121-10" tabindex="-1"></a>                                <span class="st">&quot;Immune Response (×5)&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb121-11"><a href="immune-system-dynamics-an-example.html#cb121-11" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb121-12"><a href="immune-system-dynamics-an-example.html#cb121-12" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Infection Time Course&quot;</span>,</span>
+<span id="cb121-13"><a href="immune-system-dynamics-an-example.html#cb121-13" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Days Post-Infection&quot;</span>,</span>
+<span id="cb121-14"><a href="immune-system-dynamics-an-example.html#cb121-14" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Population Size&quot;</span>,</span>
+<span id="cb121-15"><a href="immune-system-dynamics-an-example.html#cb121-15" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb121-16"><a href="immune-system-dynamics-an-example.html#cb121-16" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Damped oscillations approaching chronic equilibrium&quot;</span></span>
+<span id="cb121-17"><a href="immune-system-dynamics-an-example.html#cb121-17" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb121-18"><a href="immune-system-dynamics-an-example.html#cb121-18" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb121-19"><a href="immune-system-dynamics-an-example.html#cb121-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb121-20"><a href="immune-system-dynamics-an-example.html#cb121-20" tabindex="-1"></a></span>
+<span id="cb121-21"><a href="immune-system-dynamics-an-example.html#cb121-21" tabindex="-1"></a><span class="fu">print</span>(time_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="immune-system-dynamics-an-example.html#cb122-1" tabindex="-1"></a><span class="co"># Calculate key clinical metrics</span></span>
+<span id="cb122-2"><a href="immune-system-dynamics-an-example.html#cb122-2" tabindex="-1"></a>peak_viral <span class="ot">&lt;-</span> <span class="fu">max</span>(moderate_infection<span class="sc">$</span>V)</span>
+<span id="cb122-3"><a href="immune-system-dynamics-an-example.html#cb122-3" tabindex="-1"></a>peak_time <span class="ot">&lt;-</span> moderate_infection<span class="sc">$</span>time[<span class="fu">which.max</span>(moderate_infection<span class="sc">$</span>V)]</span>
+<span id="cb122-4"><a href="immune-system-dynamics-an-example.html#cb122-4" tabindex="-1"></a>peak_immune <span class="ot">&lt;-</span> <span class="fu">max</span>(moderate_infection<span class="sc">$</span>I)</span>
+<span id="cb122-5"><a href="immune-system-dynamics-an-example.html#cb122-5" tabindex="-1"></a>immune_peak_time <span class="ot">&lt;-</span> moderate_infection<span class="sc">$</span>time[<span class="fu">which.max</span>(moderate_infection<span class="sc">$</span>I)]</span>
+<span id="cb122-6"><a href="immune-system-dynamics-an-example.html#cb122-6" tabindex="-1"></a></span>
+<span id="cb122-7"><a href="immune-system-dynamics-an-example.html#cb122-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Clinical Metrics:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## Clinical Metrics:</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="immune-system-dynamics-an-example.html#cb124-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Peak viral load:&quot;</span>, <span class="fu">round</span>(peak_viral, <span class="dv">0</span>), <span class="st">&quot;at day&quot;</span>, <span class="fu">round</span>(peak_time, <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Peak viral load: 865 at day 30</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="immune-system-dynamics-an-example.html#cb126-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Peak immune response:&quot;</span>, <span class="fu">round</span>(peak_immune, <span class="dv">0</span>), </span>
+<span id="cb126-2"><a href="immune-system-dynamics-an-example.html#cb126-2" tabindex="-1"></a>    <span class="st">&quot;at day&quot;</span>, <span class="fu">round</span>(immune_peak_time, <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Peak immune response: 50 at day 0</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="immune-system-dynamics-an-example.html#cb128-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Immune response lag:&quot;</span>, <span class="fu">round</span>(immune_peak_time <span class="sc">-</span> peak_time, <span class="dv">1</span>), <span class="st">&quot;days</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Immune response lag: -30 days</code></pre>
+<p>The temporal dynamics reveal the characteristic pattern of acute viral infection. Initial exposure triggers exponential viral growth as the pathogen exploits available host resources. Viral load peaks around day five to seven, corresponding to maximum symptom severity. The immune response, stimulated by rising viral antigens, lags behind by several days, reaching peak activation after viral load has already begun declining. This delay creates the damped oscillatory approach to equilibrium rather than monotonic convergence.</p>
+<p>Subsequent oscillations, though diminishing in amplitude, explain the relapsing symptoms sometimes observed during convalescence. Patients may experience waves of fatigue or malaise as the system oscillates through the chronic equilibrium region. Eventually, both viral load and immune activation settle into steady coexistence, or in cases where treatment or acquired immunity shifts parameters, potentially achieve complete clearance.</p>
+</div>
+<div id="basins-of-attraction-when-treatment-matters-most" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Basins of Attraction: When Treatment Matters Most<a href="immune-system-dynamics-an-example.html#basins-of-attraction-when-treatment-matters-most" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The phase portrait’s global structure determines which infection outcomes are accessible from different initial states. The basin of attraction for chronic infection encompasses most of the biologically relevant phase space, but the system’s spiral approach creates temporal windows where therapeutic intervention proves most effective.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="immune-system-dynamics-an-example.html#cb130-1" tabindex="-1"></a><span class="co"># Analyze treatment intervention timing</span></span>
+<span id="cb130-2"><a href="immune-system-dynamics-an-example.html#cb130-2" tabindex="-1"></a>treatment_effect <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters, treat_start, treat_end, efficacy) {</span>
+<span id="cb130-3"><a href="immune-system-dynamics-an-example.html#cb130-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb130-4"><a href="immune-system-dynamics-an-example.html#cb130-4" tabindex="-1"></a>    <span class="co"># Treatment reduces viral replication</span></span>
+<span id="cb130-5"><a href="immune-system-dynamics-an-example.html#cb130-5" tabindex="-1"></a>    effective_r <span class="ot">&lt;-</span> <span class="cf">if</span> (t <span class="sc">&gt;=</span> treat_start <span class="sc">&amp;&amp;</span> t <span class="sc">&lt;=</span> treat_end) {</span>
+<span id="cb130-6"><a href="immune-system-dynamics-an-example.html#cb130-6" tabindex="-1"></a>      r <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> efficacy)</span>
+<span id="cb130-7"><a href="immune-system-dynamics-an-example.html#cb130-7" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb130-8"><a href="immune-system-dynamics-an-example.html#cb130-8" tabindex="-1"></a>      r</span>
+<span id="cb130-9"><a href="immune-system-dynamics-an-example.html#cb130-9" tabindex="-1"></a>    }</span>
+<span id="cb130-10"><a href="immune-system-dynamics-an-example.html#cb130-10" tabindex="-1"></a>    </span>
+<span id="cb130-11"><a href="immune-system-dynamics-an-example.html#cb130-11" tabindex="-1"></a>    dV <span class="ot">&lt;-</span> effective_r<span class="sc">*</span>V<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> V<span class="sc">/</span>K) <span class="sc">-</span> a<span class="sc">*</span>V<span class="sc">*</span>I</span>
+<span id="cb130-12"><a href="immune-system-dynamics-an-example.html#cb130-12" tabindex="-1"></a>    dI <span class="ot">&lt;-</span> b<span class="sc">*</span>V<span class="sc">*</span>I <span class="sc">-</span> d<span class="sc">*</span>I</span>
+<span id="cb130-13"><a href="immune-system-dynamics-an-example.html#cb130-13" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dV, dI))</span>
+<span id="cb130-14"><a href="immune-system-dynamics-an-example.html#cb130-14" tabindex="-1"></a>  })</span>
+<span id="cb130-15"><a href="immune-system-dynamics-an-example.html#cb130-15" tabindex="-1"></a>}</span>
+<span id="cb130-16"><a href="immune-system-dynamics-an-example.html#cb130-16" tabindex="-1"></a></span>
+<span id="cb130-17"><a href="immune-system-dynamics-an-example.html#cb130-17" tabindex="-1"></a><span class="co"># Simulate early vs late treatment</span></span>
+<span id="cb130-18"><a href="immune-system-dynamics-an-example.html#cb130-18" tabindex="-1"></a>simulate_treatment <span class="ot">&lt;-</span> <span class="cf">function</span>(V0, I0, treat_day, <span class="at">duration =</span> <span class="dv">10</span>, <span class="at">efficacy =</span> <span class="fl">0.7</span>) {</span>
+<span id="cb130-19"><a href="immune-system-dynamics-an-example.html#cb130-19" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb130-20"><a href="immune-system-dynamics-an-example.html#cb130-20" tabindex="-1"></a>  initial <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">V =</span> V0, <span class="at">I =</span> I0)</span>
+<span id="cb130-21"><a href="immune-system-dynamics-an-example.html#cb130-21" tabindex="-1"></a>  </span>
+<span id="cb130-22"><a href="immune-system-dynamics-an-example.html#cb130-22" tabindex="-1"></a>  <span class="co"># Create event for treatment application</span></span>
+<span id="cb130-23"><a href="immune-system-dynamics-an-example.html#cb130-23" tabindex="-1"></a>  params_treat <span class="ot">&lt;-</span> <span class="fu">c</span>(params, <span class="fu">list</span>(<span class="at">treat_start =</span> treat_day, </span>
+<span id="cb130-24"><a href="immune-system-dynamics-an-example.html#cb130-24" tabindex="-1"></a>                                 <span class="at">treat_end =</span> treat_day <span class="sc">+</span> duration,</span>
+<span id="cb130-25"><a href="immune-system-dynamics-an-example.html#cb130-25" tabindex="-1"></a>                                 <span class="at">efficacy =</span> efficacy))</span>
+<span id="cb130-26"><a href="immune-system-dynamics-an-example.html#cb130-26" tabindex="-1"></a>  </span>
+<span id="cb130-27"><a href="immune-system-dynamics-an-example.html#cb130-27" tabindex="-1"></a>  solution <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> initial, <span class="at">times =</span> times,</span>
+<span id="cb130-28"><a href="immune-system-dynamics-an-example.html#cb130-28" tabindex="-1"></a>                  <span class="at">func =</span> treatment_effect, <span class="at">parms =</span> params_treat)</span>
+<span id="cb130-29"><a href="immune-system-dynamics-an-example.html#cb130-29" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.data.frame</span>(solution))</span>
+<span id="cb130-30"><a href="immune-system-dynamics-an-example.html#cb130-30" tabindex="-1"></a>}</span>
+<span id="cb130-31"><a href="immune-system-dynamics-an-example.html#cb130-31" tabindex="-1"></a></span>
+<span id="cb130-32"><a href="immune-system-dynamics-an-example.html#cb130-32" tabindex="-1"></a><span class="co"># Compare treatment timing</span></span>
+<span id="cb130-33"><a href="immune-system-dynamics-an-example.html#cb130-33" tabindex="-1"></a>no_treatment <span class="ot">&lt;-</span> <span class="fu">simulate_infection</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="at">t_max =</span> <span class="dv">40</span>)</span>
+<span id="cb130-34"><a href="immune-system-dynamics-an-example.html#cb130-34" tabindex="-1"></a>no_treatment<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="st">&quot;No Treatment&quot;</span></span>
+<span id="cb130-35"><a href="immune-system-dynamics-an-example.html#cb130-35" tabindex="-1"></a></span>
+<span id="cb130-36"><a href="immune-system-dynamics-an-example.html#cb130-36" tabindex="-1"></a>early_treatment <span class="ot">&lt;-</span> <span class="fu">simulate_treatment</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="at">treat_day =</span> <span class="dv">2</span>)</span>
+<span id="cb130-37"><a href="immune-system-dynamics-an-example.html#cb130-37" tabindex="-1"></a>early_treatment<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="st">&quot;Early (Day 2)&quot;</span></span>
+<span id="cb130-38"><a href="immune-system-dynamics-an-example.html#cb130-38" tabindex="-1"></a></span>
+<span id="cb130-39"><a href="immune-system-dynamics-an-example.html#cb130-39" tabindex="-1"></a>late_treatment <span class="ot">&lt;-</span> <span class="fu">simulate_treatment</span>(<span class="dv">100</span>, <span class="dv">50</span>, <span class="at">treat_day =</span> <span class="dv">10</span>)</span>
+<span id="cb130-40"><a href="immune-system-dynamics-an-example.html#cb130-40" tabindex="-1"></a>late_treatment<span class="sc">$</span>condition <span class="ot">&lt;-</span> <span class="st">&quot;Late (Day 10)&quot;</span></span>
+<span id="cb130-41"><a href="immune-system-dynamics-an-example.html#cb130-41" tabindex="-1"></a></span>
+<span id="cb130-42"><a href="immune-system-dynamics-an-example.html#cb130-42" tabindex="-1"></a>treatment_comparison <span class="ot">&lt;-</span> <span class="fu">rbind</span>(no_treatment, early_treatment, late_treatment)</span>
+<span id="cb130-43"><a href="immune-system-dynamics-an-example.html#cb130-43" tabindex="-1"></a></span>
+<span id="cb130-44"><a href="immune-system-dynamics-an-example.html#cb130-44" tabindex="-1"></a><span class="co"># Visualize treatment outcomes</span></span>
+<span id="cb130-45"><a href="immune-system-dynamics-an-example.html#cb130-45" tabindex="-1"></a>treatment_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(treatment_comparison, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> V, </span>
+<span id="cb130-46"><a href="immune-system-dynamics-an-example.html#cb130-46" tabindex="-1"></a>                                                    <span class="at">color =</span> condition)) <span class="sc">+</span></span>
+<span id="cb130-47"><a href="immune-system-dynamics-an-example.html#cb130-47" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb130-48"><a href="immune-system-dynamics-an-example.html#cb130-48" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">10</span>), <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb130-49"><a href="immune-system-dynamics-an-example.html#cb130-49" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, <span class="at">xmin =</span> <span class="dv">2</span>, <span class="at">xmax =</span> <span class="dv">12</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">1200</span>,</span>
+<span id="cb130-50"><a href="immune-system-dynamics-an-example.html#cb130-50" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">+</span></span>
+<span id="cb130-51"><a href="immune-system-dynamics-an-example.html#cb130-51" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, <span class="at">xmin =</span> <span class="dv">10</span>, <span class="at">xmax =</span> <span class="dv">20</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">1200</span>,</span>
+<span id="cb130-52"><a href="immune-system-dynamics-an-example.html#cb130-52" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">+</span></span>
+<span id="cb130-53"><a href="immune-system-dynamics-an-example.html#cb130-53" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;No Treatment&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb130-54"><a href="immune-system-dynamics-an-example.html#cb130-54" tabindex="-1"></a>                                <span class="st">&quot;Early (Day 2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>,</span>
+<span id="cb130-55"><a href="immune-system-dynamics-an-example.html#cb130-55" tabindex="-1"></a>                                <span class="st">&quot;Late (Day 10)&quot;</span> <span class="ot">=</span> <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb130-56"><a href="immune-system-dynamics-an-example.html#cb130-56" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb130-57"><a href="immune-system-dynamics-an-example.html#cb130-57" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Treatment Timing Impact&quot;</span>,</span>
+<span id="cb130-58"><a href="immune-system-dynamics-an-example.html#cb130-58" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Days Post-Infection&quot;</span>,</span>
+<span id="cb130-59"><a href="immune-system-dynamics-an-example.html#cb130-59" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Viral Load&quot;</span>,</span>
+<span id="cb130-60"><a href="immune-system-dynamics-an-example.html#cb130-60" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Intervention&quot;</span></span>
+<span id="cb130-61"><a href="immune-system-dynamics-an-example.html#cb130-61" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb130-62"><a href="immune-system-dynamics-an-example.html#cb130-62" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb130-63"><a href="immune-system-dynamics-an-example.html#cb130-63" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb130-64"><a href="immune-system-dynamics-an-example.html#cb130-64" tabindex="-1"></a></span>
+<span id="cb130-65"><a href="immune-system-dynamics-an-example.html#cb130-65" tabindex="-1"></a><span class="fu">print</span>(treatment_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Early intervention during the exponential growth phase dramatically reduces peak viral load and accelerates resolution. Treatment initiated before the first peak intercepts the spiral trajectory, pushing it toward regions of phase space where immune clearance dominates. Late treatment, applied after several oscillatory cycles, proves less effective—the system has already settled near chronic equilibrium where perturbations decay rapidly.</p>
+<p>This timing sensitivity explains why antiviral therapies show maximum efficacy when administered within the first forty-eight hours of symptom onset. The mathematical structure reveals that early treatment doesn’t merely reduce symptoms; it fundamentally alters the infection trajectory, potentially shifting the system from chronic persistence toward complete clearance.</p>
+</div>
+<div id="limit-cycles-and-oscillatory-immune-responses" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Limit Cycles and Oscillatory Immune Responses<a href="immune-system-dynamics-an-example.html#limit-cycles-and-oscillatory-immune-responses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Modifying our model to incorporate immune memory and antigenic variation reveals even richer dynamics including stable limit cycles. Consider an extended system where immune cells develop memory but face a constantly evolving viral population:</p>
+<p><span class="math display">\[\frac{dV}{dt} = rV\left(1 - \frac{V}{K}\right) - aVI - \mu V\]</span></p>
+<p><span class="math display">\[\frac{dI}{dt} = bVI + \sigma M - dI\]</span></p>
+<p><span class="math display">\[\frac{dM}{dt} = \epsilon I - \delta M\]</span></p>
+<p>Here <span class="math inline">\(M\)</span> represents memory immune cells with slower decay rate <span class="math inline">\(\delta &lt; d\)</span>, production rate <span class="math inline">\(\epsilon\)</span> from activated cells, and contribution <span class="math inline">\(\sigma\)</span> to rapid immune reactivation. The viral mutation rate <span class="math inline">\(\mu\)</span> allows escape from memory immunity.</p>
+<p>This three-dimensional system can be reduced to effective two-dimensional dynamics under appropriate parameter regimes, revealing stable limit cycles representing persistent periodic reactivation—the mathematical signature of recurrent viral infections like herpes or chronic hepatitis flares.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="immune-system-dynamics-an-example.html#cb131-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb131-2"><a href="immune-system-dynamics-an-example.html#cb131-2" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb131-3"><a href="immune-system-dynamics-an-example.html#cb131-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb131-4"><a href="immune-system-dynamics-an-example.html#cb131-4" tabindex="-1"></a></span>
+<span id="cb131-5"><a href="immune-system-dynamics-an-example.html#cb131-5" tabindex="-1"></a><span class="co"># Simplified periodic reactivation model</span></span>
+<span id="cb131-6"><a href="immune-system-dynamics-an-example.html#cb131-6" tabindex="-1"></a>reactivation_model <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb131-7"><a href="immune-system-dynamics-an-example.html#cb131-7" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb131-8"><a href="immune-system-dynamics-an-example.html#cb131-8" tabindex="-1"></a>    dV <span class="ot">&lt;-</span> r<span class="sc">*</span>V<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> V<span class="sc">/</span>K) <span class="sc">-</span> a<span class="sc">*</span>V<span class="sc">*</span>I <span class="sc">-</span> mu<span class="sc">*</span>V <span class="sc">+</span> theta<span class="sc">*</span><span class="fu">sin</span>(omega<span class="sc">*</span>t)</span>
+<span id="cb131-9"><a href="immune-system-dynamics-an-example.html#cb131-9" tabindex="-1"></a>    dI <span class="ot">&lt;-</span> b<span class="sc">*</span>V<span class="sc">*</span>I <span class="sc">-</span> d<span class="sc">*</span>I <span class="sc">+</span> memory_boost<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">10</span><span class="sc">*</span>(V <span class="sc">-</span> V_threshold)))</span>
+<span id="cb131-10"><a href="immune-system-dynamics-an-example.html#cb131-10" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dV, dI))</span>
+<span id="cb131-11"><a href="immune-system-dynamics-an-example.html#cb131-11" tabindex="-1"></a>  })</span>
+<span id="cb131-12"><a href="immune-system-dynamics-an-example.html#cb131-12" tabindex="-1"></a>}</span>
+<span id="cb131-13"><a href="immune-system-dynamics-an-example.html#cb131-13" tabindex="-1"></a></span>
+<span id="cb131-14"><a href="immune-system-dynamics-an-example.html#cb131-14" tabindex="-1"></a><span class="co"># Revised parameters for stable periodic behavior</span></span>
+<span id="cb131-15"><a href="immune-system-dynamics-an-example.html#cb131-15" tabindex="-1"></a>periodic_params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb131-16"><a href="immune-system-dynamics-an-example.html#cb131-16" tabindex="-1"></a>  <span class="at">r =</span> <span class="fl">0.8</span>,           <span class="co"># Reduced viral growth rate</span></span>
+<span id="cb131-17"><a href="immune-system-dynamics-an-example.html#cb131-17" tabindex="-1"></a>  <span class="at">K =</span> <span class="dv">1000</span>,          <span class="co"># Viral carrying capacity</span></span>
+<span id="cb131-18"><a href="immune-system-dynamics-an-example.html#cb131-18" tabindex="-1"></a>  <span class="at">a =</span> <span class="fl">0.005</span>,         <span class="co"># Viral clearance rate</span></span>
+<span id="cb131-19"><a href="immune-system-dynamics-an-example.html#cb131-19" tabindex="-1"></a>  <span class="at">b =</span> <span class="fl">0.0008</span>,        <span class="co"># Immune stimulation rate (increased)</span></span>
+<span id="cb131-20"><a href="immune-system-dynamics-an-example.html#cb131-20" tabindex="-1"></a>  <span class="at">d =</span> <span class="fl">0.08</span>,          <span class="co"># Immune decay rate</span></span>
+<span id="cb131-21"><a href="immune-system-dynamics-an-example.html#cb131-21" tabindex="-1"></a>  <span class="at">mu =</span> <span class="fl">0.1</span>,          <span class="co"># Viral mutation/loss rate</span></span>
+<span id="cb131-22"><a href="immune-system-dynamics-an-example.html#cb131-22" tabindex="-1"></a>  <span class="at">theta =</span> <span class="dv">80</span>,        <span class="co"># Amplitude of periodic forcing</span></span>
+<span id="cb131-23"><a href="immune-system-dynamics-an-example.html#cb131-23" tabindex="-1"></a>  <span class="at">omega =</span> <span class="fl">0.3</span>,       <span class="co"># Frequency of periodic forcing</span></span>
+<span id="cb131-24"><a href="immune-system-dynamics-an-example.html#cb131-24" tabindex="-1"></a>  <span class="at">memory_boost =</span> <span class="dv">20</span>, <span class="co"># Memory immune boost</span></span>
+<span id="cb131-25"><a href="immune-system-dynamics-an-example.html#cb131-25" tabindex="-1"></a>  <span class="at">V_threshold =</span> <span class="dv">300</span>  <span class="co"># Threshold for memory activation</span></span>
+<span id="cb131-26"><a href="immune-system-dynamics-an-example.html#cb131-26" tabindex="-1"></a>)</span>
+<span id="cb131-27"><a href="immune-system-dynamics-an-example.html#cb131-27" tabindex="-1"></a></span>
+<span id="cb131-28"><a href="immune-system-dynamics-an-example.html#cb131-28" tabindex="-1"></a><span class="co"># Simulate long-term dynamics with relaxed tolerance</span></span>
+<span id="cb131-29"><a href="immune-system-dynamics-an-example.html#cb131-29" tabindex="-1"></a>times_long <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">150</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb131-30"><a href="immune-system-dynamics-an-example.html#cb131-30" tabindex="-1"></a>initial_periodic <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">V =</span> <span class="dv">400</span>, <span class="at">I =</span> <span class="dv">60</span>)</span>
+<span id="cb131-31"><a href="immune-system-dynamics-an-example.html#cb131-31" tabindex="-1"></a></span>
+<span id="cb131-32"><a href="immune-system-dynamics-an-example.html#cb131-32" tabindex="-1"></a>periodic_solution <span class="ot">&lt;-</span> <span class="fu">ode</span>(</span>
+<span id="cb131-33"><a href="immune-system-dynamics-an-example.html#cb131-33" tabindex="-1"></a>  <span class="at">y =</span> initial_periodic, </span>
+<span id="cb131-34"><a href="immune-system-dynamics-an-example.html#cb131-34" tabindex="-1"></a>  <span class="at">times =</span> times_long,</span>
+<span id="cb131-35"><a href="immune-system-dynamics-an-example.html#cb131-35" tabindex="-1"></a>  <span class="at">func =</span> reactivation_model, </span>
+<span id="cb131-36"><a href="immune-system-dynamics-an-example.html#cb131-36" tabindex="-1"></a>  <span class="at">parms =</span> periodic_params,</span>
+<span id="cb131-37"><a href="immune-system-dynamics-an-example.html#cb131-37" tabindex="-1"></a>  <span class="at">rtol =</span> <span class="fl">1e-6</span>,  <span class="co"># Relaxed tolerance</span></span>
+<span id="cb131-38"><a href="immune-system-dynamics-an-example.html#cb131-38" tabindex="-1"></a>  <span class="at">atol =</span> <span class="fl">1e-6</span></span>
+<span id="cb131-39"><a href="immune-system-dynamics-an-example.html#cb131-39" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.55388e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.55388e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.28714e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.28714e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.28714e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.02894e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 1.02894e-15
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 8.5231e-16
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 8.5231e-16
+##  
+## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
+##       such that in the machine, T + H = T on the next step  
+##      (H = step size). Solver will continue anyway.
+## In above message, R1 = 18.4627, R2 = 8.5231e-16
+##  
+## DLSODA-  Above warning has been issued I1 times.  
+##      It will not be issued again for this problem.
+## In above message, I1 = 10
+##  
+## DLSODA-  At T (=R1), too much accuracy requested  
+##       for precision of machine..  See TOLSF (=R2) 
+## In above message, R1 = 18.4627, R2 = nan
+## </code></pre>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): Excessive precision requested.  scale up `rtol&#39; and `atol&#39; e.g by the factor 10</code></pre>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are accurate, as far as they go</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="immune-system-dynamics-an-example.html#cb135-1" tabindex="-1"></a>periodic_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(periodic_solution)</span>
+<span id="cb135-2"><a href="immune-system-dynamics-an-example.html#cb135-2" tabindex="-1"></a></span>
+<span id="cb135-3"><a href="immune-system-dynamics-an-example.html#cb135-3" tabindex="-1"></a><span class="co"># Check if we have valid data</span></span>
+<span id="cb135-4"><a href="immune-system-dynamics-an-example.html#cb135-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Total rows:&quot;</span>, <span class="fu">nrow</span>(periodic_df), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Total rows: 186</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="immune-system-dynamics-an-example.html#cb137-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Time range:&quot;</span>, <span class="fu">range</span>(periodic_df<span class="sc">$</span>time), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Time range: 0 18.46266</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="immune-system-dynamics-an-example.html#cb139-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;V range:&quot;</span>, <span class="fu">range</span>(periodic_df<span class="sc">$</span>V), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## V range: NaN NaN</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="immune-system-dynamics-an-example.html#cb141-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;I range:&quot;</span>, <span class="fu">range</span>(periodic_df<span class="sc">$</span>I), <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## I range: NaN NaN</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="immune-system-dynamics-an-example.html#cb143-1" tabindex="-1"></a><span class="co"># Use data after transient - adjust threshold based on available data</span></span>
+<span id="cb143-2"><a href="immune-system-dynamics-an-example.html#cb143-2" tabindex="-1"></a>max_time <span class="ot">&lt;-</span> <span class="fu">max</span>(periodic_df<span class="sc">$</span>time)</span>
+<span id="cb143-3"><a href="immune-system-dynamics-an-example.html#cb143-3" tabindex="-1"></a>transient_cutoff <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">50</span>, max_time <span class="sc">*</span> <span class="fl">0.3</span>)  <span class="co"># Use 30% of data as transient</span></span>
+<span id="cb143-4"><a href="immune-system-dynamics-an-example.html#cb143-4" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> periodic_df[periodic_df<span class="sc">$</span>time <span class="sc">&gt;</span> transient_cutoff, ]</span>
+<span id="cb143-5"><a href="immune-system-dynamics-an-example.html#cb143-5" tabindex="-1"></a></span>
+<span id="cb143-6"><a href="immune-system-dynamics-an-example.html#cb143-6" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Plot data rows:&quot;</span>, <span class="fu">nrow</span>(plot_data), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Plot data rows: 130</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="immune-system-dynamics-an-example.html#cb145-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Plot time range:&quot;</span>, <span class="fu">range</span>(plot_data<span class="sc">$</span>time), <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Plot time range: 5.6 18.46266</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="immune-system-dynamics-an-example.html#cb147-1" tabindex="-1"></a><span class="co"># Only add points if we have enough data</span></span>
+<span id="cb147-2"><a href="immune-system-dynamics-an-example.html#cb147-2" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(plot_data) <span class="sc">&gt;</span> <span class="dv">10</span>) {</span>
+<span id="cb147-3"><a href="immune-system-dynamics-an-example.html#cb147-3" tabindex="-1"></a>  point_indices <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(plot_data), <span class="at">length.out =</span> <span class="fu">min</span>(<span class="dv">20</span>, <span class="fu">nrow</span>(plot_data)))</span>
+<span id="cb147-4"><a href="immune-system-dynamics-an-example.html#cb147-4" tabindex="-1"></a>  point_data <span class="ot">&lt;-</span> plot_data[point_indices, ]</span>
+<span id="cb147-5"><a href="immune-system-dynamics-an-example.html#cb147-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb147-6"><a href="immune-system-dynamics-an-example.html#cb147-6" tabindex="-1"></a>  point_data <span class="ot">&lt;-</span> plot_data</span>
+<span id="cb147-7"><a href="immune-system-dynamics-an-example.html#cb147-7" tabindex="-1"></a>}</span>
+<span id="cb147-8"><a href="immune-system-dynamics-an-example.html#cb147-8" tabindex="-1"></a></span>
+<span id="cb147-9"><a href="immune-system-dynamics-an-example.html#cb147-9" tabindex="-1"></a><span class="co"># Visualize limit cycle behavior</span></span>
+<span id="cb147-10"><a href="immune-system-dynamics-an-example.html#cb147-10" tabindex="-1"></a>cycle_phase <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> I)) <span class="sc">+</span></span>
+<span id="cb147-11"><a href="immune-system-dynamics-an-example.html#cb147-11" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">color =</span> <span class="st">&quot;purple&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb147-12"><a href="immune-system-dynamics-an-example.html#cb147-12" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> point_data,</span>
+<span id="cb147-13"><a href="immune-system-dynamics-an-example.html#cb147-13" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> I), <span class="at">color =</span> <span class="st">&quot;purple&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb147-14"><a href="immune-system-dynamics-an-example.html#cb147-14" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb147-15"><a href="immune-system-dynamics-an-example.html#cb147-15" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Recurrent Infection Limit Cycle&quot;</span>,</span>
+<span id="cb147-16"><a href="immune-system-dynamics-an-example.html#cb147-16" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Viral Load (V)&quot;</span>,</span>
+<span id="cb147-17"><a href="immune-system-dynamics-an-example.html#cb147-17" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Immune Response (I)&quot;</span>,</span>
+<span id="cb147-18"><a href="immune-system-dynamics-an-example.html#cb147-18" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Stable periodic reactivation pattern&quot;</span></span>
+<span id="cb147-19"><a href="immune-system-dynamics-an-example.html#cb147-19" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb147-20"><a href="immune-system-dynamics-an-example.html#cb147-20" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb147-21"><a href="immune-system-dynamics-an-example.html#cb147-21" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span>
+<span id="cb147-22"><a href="immune-system-dynamics-an-example.html#cb147-22" tabindex="-1"></a></span>
+<span id="cb147-23"><a href="immune-system-dynamics-an-example.html#cb147-23" tabindex="-1"></a>cycle_time <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb147-24"><a href="immune-system-dynamics-an-example.html#cb147-24" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> V, <span class="at">color =</span> <span class="st">&quot;Viral Load&quot;</span>), <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb147-25"><a href="immune-system-dynamics-an-example.html#cb147-25" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> I <span class="sc">*</span> <span class="dv">8</span>, <span class="at">color =</span> <span class="st">&quot;Immune Response (×8)&quot;</span>), <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb147-26"><a href="immune-system-dynamics-an-example.html#cb147-26" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Viral Load&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb147-27"><a href="immune-system-dynamics-an-example.html#cb147-27" tabindex="-1"></a>                                <span class="st">&quot;Immune Response (×8)&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb147-28"><a href="immune-system-dynamics-an-example.html#cb147-28" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb147-29"><a href="immune-system-dynamics-an-example.html#cb147-29" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Periodic Viral Reactivation&quot;</span>,</span>
+<span id="cb147-30"><a href="immune-system-dynamics-an-example.html#cb147-30" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Days&quot;</span>,</span>
+<span id="cb147-31"><a href="immune-system-dynamics-an-example.html#cb147-31" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Population Size&quot;</span>,</span>
+<span id="cb147-32"><a href="immune-system-dynamics-an-example.html#cb147-32" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb147-33"><a href="immune-system-dynamics-an-example.html#cb147-33" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb147-34"><a href="immune-system-dynamics-an-example.html#cb147-34" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb147-35"><a href="immune-system-dynamics-an-example.html#cb147-35" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>,</span>
+<span id="cb147-36"><a href="immune-system-dynamics-an-example.html#cb147-36" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>))</span>
+<span id="cb147-37"><a href="immune-system-dynamics-an-example.html#cb147-37" tabindex="-1"></a></span>
+<span id="cb147-38"><a href="immune-system-dynamics-an-example.html#cb147-38" tabindex="-1"></a><span class="fu">print</span>(cycle_phase)</span></code></pre></div>
+<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_path()`).</code></pre>
+<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_point()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="immune-system-dynamics-an-example.html#cb150-1" tabindex="-1"></a><span class="fu">print</span>(cycle_time)</span></code></pre></div>
+<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 1 row containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="immune-system-dynamics-an-example.html#cb153-1" tabindex="-1"></a><span class="co"># Print summary statistics</span></span>
+<span id="cb153-2"><a href="immune-system-dynamics-an-example.html#cb153-2" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(plot_data) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb153-3"><a href="immune-system-dynamics-an-example.html#cb153-3" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Summary of dynamics:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb153-4"><a href="immune-system-dynamics-an-example.html#cb153-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;V range:&quot;</span>, <span class="fu">round</span>(<span class="fu">range</span>(plot_data<span class="sc">$</span>V), <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb153-5"><a href="immune-system-dynamics-an-example.html#cb153-5" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;I range:&quot;</span>, <span class="fu">round</span>(<span class="fu">range</span>(plot_data<span class="sc">$</span>I), <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb153-6"><a href="immune-system-dynamics-an-example.html#cb153-6" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Mean V:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(plot_data<span class="sc">$</span>V), <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb153-7"><a href="immune-system-dynamics-an-example.html#cb153-7" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Mean I:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(plot_data<span class="sc">$</span>I), <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb153-8"><a href="immune-system-dynamics-an-example.html#cb153-8" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb153-9"><a href="immune-system-dynamics-an-example.html#cb153-9" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Warning: No data available for plotting!</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb153-10"><a href="immune-system-dynamics-an-example.html#cb153-10" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## 
+## Summary of dynamics:
+## V range: NaN NaN 
+## I range: NaN NaN 
+## Mean V: NaN 
+## Mean I: NaN</code></pre>
+<p>The limit cycle represents structurally stable oscillations—unlike the damped spirals approaching equilibrium, these persist indefinitely. Clinically, they manifest as periodic flares where viral load increases trigger symptomatic episodes followed by immune-mediated suppression, creating the characteristic reactivation pattern of chronic viral infections.</p>
+</div>
+<div id="bifurcations-parameter-thresholds-and-disease-transitions" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Bifurcations: Parameter Thresholds and Disease Transitions<a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As physiological parameters vary due to age, immune status, or pathogen characteristics, the infection dynamics undergo bifurcations that qualitatively alter disease outcome. The transition from acute clearance to chronic persistence occurs through a <strong>transcritical bifurcation</strong> when immune efficacy crosses a critical threshold.</p>
+<p>Examining how the chronic equilibrium’s stability changes with immune response strength <span class="math inline">\(b\)</span> reveals this transition. For small <span class="math inline">\(b\)</span> (immunocompromised hosts), no stable chronic equilibrium exists—viral load either overwhelms the host or clears spontaneously. As <span class="math inline">\(b\)</span> increases past <span class="math inline">\(b_c = d/K\)</span>, the chronic fixed point emerges and becomes stable, creating persistent infection. Further increases in <span class="math inline">\(b\)</span> can trigger a <strong>Hopf bifurcation</strong> where the spiral equilibrium destabilizes, spawning stable limit cycles representing periodic relapsing disease.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="immune-system-dynamics-an-example.html#cb155-1" tabindex="-1"></a><span class="co"># Bifurcation analysis varying immune response strength</span></span>
+<span id="cb155-2"><a href="immune-system-dynamics-an-example.html#cb155-2" tabindex="-1"></a>b_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.00005</span>, <span class="fl">0.0003</span>, <span class="at">length.out =</span> <span class="dv">50</span>)</span>
+<span id="cb155-3"><a href="immune-system-dynamics-an-example.html#cb155-3" tabindex="-1"></a>bifurcation_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb155-4"><a href="immune-system-dynamics-an-example.html#cb155-4" tabindex="-1"></a></span>
+<span id="cb155-5"><a href="immune-system-dynamics-an-example.html#cb155-5" tabindex="-1"></a><span class="cf">for</span> (b_val <span class="cf">in</span> b_values) {</span>
+<span id="cb155-6"><a href="immune-system-dynamics-an-example.html#cb155-6" tabindex="-1"></a>  params_bif <span class="ot">&lt;-</span> params</span>
+<span id="cb155-7"><a href="immune-system-dynamics-an-example.html#cb155-7" tabindex="-1"></a>  params_bif<span class="sc">$</span>b <span class="ot">&lt;-</span> b_val</span>
+<span id="cb155-8"><a href="immune-system-dynamics-an-example.html#cb155-8" tabindex="-1"></a>  </span>
+<span id="cb155-9"><a href="immune-system-dynamics-an-example.html#cb155-9" tabindex="-1"></a>  <span class="co"># Calculate chronic equilibrium</span></span>
+<span id="cb155-10"><a href="immune-system-dynamics-an-example.html#cb155-10" tabindex="-1"></a>  V_eq <span class="ot">&lt;-</span> params_bif<span class="sc">$</span>d <span class="sc">/</span> b_val</span>
+<span id="cb155-11"><a href="immune-system-dynamics-an-example.html#cb155-11" tabindex="-1"></a>  I_eq <span class="ot">&lt;-</span> (params_bif<span class="sc">$</span>r <span class="sc">/</span> params_bif<span class="sc">$</span>a) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> V_eq <span class="sc">/</span> params_bif<span class="sc">$</span>K)</span>
+<span id="cb155-12"><a href="immune-system-dynamics-an-example.html#cb155-12" tabindex="-1"></a>  </span>
+<span id="cb155-13"><a href="immune-system-dynamics-an-example.html#cb155-13" tabindex="-1"></a>  <span class="cf">if</span> (I_eq <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> V_eq <span class="sc">&lt;</span> params_bif<span class="sc">$</span>K) {</span>
+<span id="cb155-14"><a href="immune-system-dynamics-an-example.html#cb155-14" tabindex="-1"></a>    <span class="co"># Calculate eigenvalues at equilibrium</span></span>
+<span id="cb155-15"><a href="immune-system-dynamics-an-example.html#cb155-15" tabindex="-1"></a>    J <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb155-16"><a href="immune-system-dynamics-an-example.html#cb155-16" tabindex="-1"></a>      <span class="sc">-</span>params_bif<span class="sc">$</span>r <span class="sc">*</span> V_eq <span class="sc">/</span> params_bif<span class="sc">$</span>K,</span>
+<span id="cb155-17"><a href="immune-system-dynamics-an-example.html#cb155-17" tabindex="-1"></a>      <span class="sc">-</span>params_bif<span class="sc">$</span>a <span class="sc">*</span> V_eq,</span>
+<span id="cb155-18"><a href="immune-system-dynamics-an-example.html#cb155-18" tabindex="-1"></a>      b_val <span class="sc">*</span> I_eq,</span>
+<span id="cb155-19"><a href="immune-system-dynamics-an-example.html#cb155-19" tabindex="-1"></a>      <span class="dv">0</span></span>
+<span id="cb155-20"><a href="immune-system-dynamics-an-example.html#cb155-20" tabindex="-1"></a>    ), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb155-21"><a href="immune-system-dynamics-an-example.html#cb155-21" tabindex="-1"></a>    </span>
+<span id="cb155-22"><a href="immune-system-dynamics-an-example.html#cb155-22" tabindex="-1"></a>    eigs <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J)<span class="sc">$</span>values</span>
+<span id="cb155-23"><a href="immune-system-dynamics-an-example.html#cb155-23" tabindex="-1"></a>    max_real <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">Re</span>(eigs))</span>
+<span id="cb155-24"><a href="immune-system-dynamics-an-example.html#cb155-24" tabindex="-1"></a>    </span>
+<span id="cb155-25"><a href="immune-system-dynamics-an-example.html#cb155-25" tabindex="-1"></a>    bifurcation_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bifurcation_data, <span class="fu">data.frame</span>(</span>
+<span id="cb155-26"><a href="immune-system-dynamics-an-example.html#cb155-26" tabindex="-1"></a>      <span class="at">b =</span> b_val,</span>
+<span id="cb155-27"><a href="immune-system-dynamics-an-example.html#cb155-27" tabindex="-1"></a>      <span class="at">V_eq =</span> V_eq,</span>
+<span id="cb155-28"><a href="immune-system-dynamics-an-example.html#cb155-28" tabindex="-1"></a>      <span class="at">I_eq =</span> I_eq,</span>
+<span id="cb155-29"><a href="immune-system-dynamics-an-example.html#cb155-29" tabindex="-1"></a>      <span class="at">max_real_eig =</span> max_real,</span>
+<span id="cb155-30"><a href="immune-system-dynamics-an-example.html#cb155-30" tabindex="-1"></a>      <span class="at">stable =</span> max_real <span class="sc">&lt;</span> <span class="dv">0</span></span>
+<span id="cb155-31"><a href="immune-system-dynamics-an-example.html#cb155-31" tabindex="-1"></a>    ))</span>
+<span id="cb155-32"><a href="immune-system-dynamics-an-example.html#cb155-32" tabindex="-1"></a>  }</span>
+<span id="cb155-33"><a href="immune-system-dynamics-an-example.html#cb155-33" tabindex="-1"></a>}</span>
+<span id="cb155-34"><a href="immune-system-dynamics-an-example.html#cb155-34" tabindex="-1"></a></span>
+<span id="cb155-35"><a href="immune-system-dynamics-an-example.html#cb155-35" tabindex="-1"></a><span class="co"># Plot bifurcation diagram</span></span>
+<span id="cb155-36"><a href="immune-system-dynamics-an-example.html#cb155-36" tabindex="-1"></a>bifurcation_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bifurcation_data, </span>
+<span id="cb155-37"><a href="immune-system-dynamics-an-example.html#cb155-37" tabindex="-1"></a>                           <span class="fu">aes</span>(<span class="at">x =</span> b, <span class="at">y =</span> V_eq, <span class="at">color =</span> stable)) <span class="sc">+</span></span>
+<span id="cb155-38"><a href="immune-system-dynamics-an-example.html#cb155-38" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb155-39"><a href="immune-system-dynamics-an-example.html#cb155-39" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;TRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;FALSE&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb155-40"><a href="immune-system-dynamics-an-example.html#cb155-40" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Stable&quot;</span>, <span class="st">&quot;Unstable&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb155-41"><a href="immune-system-dynamics-an-example.html#cb155-41" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb155-42"><a href="immune-system-dynamics-an-example.html#cb155-42" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Bifurcation Diagram: Immune Response vs Chronic Viral Load&quot;</span>,</span>
+<span id="cb155-43"><a href="immune-system-dynamics-an-example.html#cb155-43" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Immune Response Strength (b)&quot;</span>,</span>
+<span id="cb155-44"><a href="immune-system-dynamics-an-example.html#cb155-44" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Equilibrium Viral Load&quot;</span>,</span>
+<span id="cb155-45"><a href="immune-system-dynamics-an-example.html#cb155-45" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Stability&quot;</span></span>
+<span id="cb155-46"><a href="immune-system-dynamics-an-example.html#cb155-46" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb155-47"><a href="immune-system-dynamics-an-example.html#cb155-47" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb155-48"><a href="immune-system-dynamics-an-example.html#cb155-48" tabindex="-1"></a></span>
+<span id="cb155-49"><a href="immune-system-dynamics-an-example.html#cb155-49" tabindex="-1"></a><span class="fu">print</span>(bifurcation_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>This bifurcation structure explains individual variation in infection outcomes. Patients with stronger innate immune responses (higher <span class="math inline">\(b\)</span>) maintain lower chronic viral loads and may completely clear infection. Those with compromised immunity face higher equilibrium viral loads and increased disease severity. The bifurcation points mark critical thresholds where small improvements in immune function trigger large improvements in clinical outcome—identifying optimal targets for immunotherapeutic intervention.</p>
+<p>The journey through viral infection dynamics illustrates how two-dimensional systems capture essential features of complex biological processes. From fixed point stability determining chronic infection existence to phase portraits revealing treatment timing windows to bifurcations explaining inter-individual outcome variation, the mathematical framework provides quantitative predictions with direct clinical relevance. These insights transform infection from an unpredictable biological phenomenon into a structured dynamical system whose behavior we can analyze, predict, and ultimately control through rationally designed interventions. The immune system’s response to pathogens exemplifies how coupling between variables creates rich temporal patterns, while geometric structures in phase space organize these patterns into comprehensible behavioral categories that guide medical decision-making.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introducion-to-systems.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/edit/main/06-Example_Sys.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/blob/main/06-Example_Sys.Rmd",
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

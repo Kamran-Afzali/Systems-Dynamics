@@ -23,7 +23,7 @@
 <meta name="author" content="Kamran Afzali" />
 
 
-<meta name="date" content="2025-10-10" />
+<meta name="date" content="2025-10-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -213,6 +213,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
 <li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html"><i class="fa fa-check"></i><b>7</b> Immune System Dynamics An Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes"><i class="fa fa-check"></i><b>7.1</b> Fixed Points and the Geography of Infection Outcomes</a></li>
+<li class="chapter" data-level="7.2" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories"><i class="fa fa-check"></i><b>7.2</b> Phase Portrait: Mapping Infection Trajectories</a></li>
+<li class="chapter" data-level="7.3" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection"><i class="fa fa-check"></i><b>7.3</b> Temporal Dynamics: The Clinical Course of Infection</a></li>
+<li class="chapter" data-level="7.4" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#basins-of-attraction-when-treatment-matters-most"><i class="fa fa-check"></i><b>7.4</b> Basins of Attraction: When Treatment Matters Most</a></li>
+<li class="chapter" data-level="7.5" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#limit-cycles-and-oscillatory-immune-responses"><i class="fa fa-check"></i><b>7.5</b> Limit Cycles and Oscillatory Immune Responses</a></li>
+<li class="chapter" data-level="7.6" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions"><i class="fa fa-check"></i><b>7.6</b> Bifurcations: Parameter Thresholds and Disease Transitions</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -301,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-28"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb1-28" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb1-29"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb1-29" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb1-30"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb1-30" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>The curve starts gently but becomes increasingly steep. After 35 years, our town of 1000 has doubled to about 2000 people. But notice how the growth accelerates—it takes only 15 more years to double again to 4000.</p>
 <p>This exponential behavior appears troubling for real populations, which can’t grow indefinitely. A small town doesn’t have infinite resources or space. We’ll need more sophisticated models to capture these constraints, but that’s a story for future posts.</p>
 </div>
@@ -349,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-35"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb2-35" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
 <span id="cb2-36"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb2-36" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> K, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb2-37"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#cb2-37" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">30</span>, <span class="at">y =</span> K <span class="sc">+</span> <span class="dv">200</span>, <span class="at">label =</span> <span class="st">&quot;Carrying Capacity&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>The logistic curve starts exponentially but gradually levels off as it approaches the carrying capacity. This S-shaped curve appears throughout biology and beyond—from the adoption of new technologies to the spread of information through social networks.</p>
 </div>
 <div id="the-bigger-picture" class="section level2 hasAnchor" number="2.6">

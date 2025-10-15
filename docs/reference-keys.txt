@@ -55,3 +55,10 @@ applications-across-disciplines
 bifurcations-in-two-dimensional-systems
 the-geometric-foundation-of-complexity
 beyond-two-dimensions-preparing-for-chaos
+immune-system-dynamics-an-example
+fixed-points-and-the-geography-of-infection-outcomes
+phase-portrait-mapping-infection-trajectories
+temporal-dynamics-the-clinical-course-of-infection
+basins-of-attraction-when-treatment-matters-most
+limit-cycles-and-oscillatory-immune-responses
+bifurcations-parameter-thresholds-and-disease-transitions
