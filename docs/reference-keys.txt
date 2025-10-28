@@ -62,3 +62,13 @@ temporal-dynamics-the-clinical-course-of-infection
 basins-of-attraction-when-treatment-matters-most
 limit-cycles-and-oscillatory-immune-responses
 bifurcations-parameter-thresholds-and-disease-transitions
+finding-balance-equilibrium-points-and-linear-stability
+the-nature-of-equilibrium
+linear-approximation-and-the-jacobian-matrix
+eigenvalue-analysis-and-stability-classification
+the-taxonomy-of-fixed-points
+application-to-epidemic-dynamics
+timescale-separation-and-dominant-dynamics
+nonhyperbolic-fixed-points-and-structural-stability
+the-dance-of-feedback-understanding-system-response
+conclusion-the-local-global-connection

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Finding Balance: Equilibrium Points and Linear Stability | Systems Dynamics</title>
+  <meta name="description" content="Chapter 8 Finding Balance: Equilibrium Points and Linear Stability | Systems Dynamics" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Finding Balance: Equilibrium Points and Linear Stability | Systems Dynamics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/EHRVAL.jpg" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Finding Balance: Equilibrium Points and Linear Stability | Systems Dynamics" />
+  
+  
+  <meta name="twitter:image" content="/EHRVAL.jpg" />
+
+<meta name="author" content="Kamran Afzali" />
+
+
+<meta name="date" content="2025-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="immune-system-dynamics-an-example.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Systems Dynamics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Differential Equations and Systems Dynamics</a></li>
+<li class="chapter" data-level="2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Why the World Changes: An Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-language-of-change"><i class="fa fa-check"></i><b>2.1</b> The Language of Change</a></li>
+<li class="chapter" data-level="2.2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#from-coffee-to-cosmos"><i class="fa fa-check"></i><b>2.2</b> From Coffee to Cosmos</a></li>
+<li class="chapter" data-level="2.3" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#getting-our-hands-dirty-solving-a-simple-example"><i class="fa fa-check"></i><b>2.3</b> Getting Our Hands Dirty: Solving a Simple Example</a></li>
+<li class="chapter" data-level="2.4" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#seeing-the-solution-in-action"><i class="fa fa-check"></i><b>2.4</b> Seeing the Solution in Action</a></li>
+<li class="chapter" data-level="2.5" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#when-theory-meets-reality"><i class="fa fa-check"></i><b>2.5</b> When Theory Meets Reality</a></li>
+<li class="chapter" data-level="2.6" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-bigger-picture"><i class="fa fa-check"></i><b>2.6</b> The Bigger Picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html"><i class="fa fa-check"></i><b>3</b> Solving Simple Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-art-of-separation"><i class="fa fa-check"></i><b>3.1</b> The Art of Separation</a></li>
+<li class="chapter" data-level="3.2" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#finding-the-missing-piece"><i class="fa fa-check"></i><b>3.2</b> Finding the Missing Piece</a></li>
+<li class="chapter" data-level="3.3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-method-in-action"><i class="fa fa-check"></i><b>3.3</b> The Method in Action</a></li>
+<li class="chapter" data-level="3.4" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#beyond-simple-cooling-the-exponential-family"><i class="fa fa-check"></i><b>3.4</b> Beyond Simple Cooling: The Exponential Family</a></li>
+<li class="chapter" data-level="3.5" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#when-variables-refuse-to-separate"><i class="fa fa-check"></i><b>3.5</b> When Variables Refuse to Separate</a></li>
+<li class="chapter" data-level="3.6" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#a-more-complex-example-mixing-problems"><i class="fa fa-check"></i><b>3.6</b> A More Complex Example: Mixing Problems</a></li>
+<li class="chapter" data-level="3.7" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-power-and-limits-of-separation"><i class="fa fa-check"></i><b>3.7</b> The Power and Limits of Separation</a></li>
+<li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
+<li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html"><i class="fa fa-check"></i><b>5</b> The Phase Line of One-Dimensional Dynamics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-geometry-of-flow"><i class="fa fa-check"></i><b>5.1</b> The Geometry of Flow</a></li>
+<li class="chapter" data-level="5.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-universal-patterns-of-creation-and-annihilation"><i class="fa fa-check"></i><b>5.2</b> The Universal Patterns of Creation and Annihilation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-saddle-node-bifurcation-creation-from-nothing"><i class="fa fa-check"></i><b>5.2.1</b> The Saddle-Node Bifurcation: Creation from Nothing</a></li>
+<li class="chapter" data-level="5.2.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-pitchfork-bifurcation-symmetry-breaking"><i class="fa fa-check"></i><b>5.2.2</b> The Pitchfork Bifurcation: Symmetry Breaking</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-bifurcation-diagram-mapping-parameter-space"><i class="fa fa-check"></i><b>5.3</b> The Bifurcation Diagram: Mapping Parameter Space</a></li>
+<li class="chapter" data-level="5.4" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#hysteresis-and-the-memory-of-systems"><i class="fa fa-check"></i><b>5.4</b> Hysteresis and the Memory of Systems</a></li>
+<li class="chapter" data-level="5.5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#beyond-classical-bifurcations-transcritical-and-complex-scenarios"><i class="fa fa-check"></i><b>5.5</b> Beyond Classical Bifurcations: Transcritical and Complex Scenarios</a></li>
+<li class="chapter" data-level="5.6" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#cusp-catastrophes-and-multiple-parameter-systems"><i class="fa fa-check"></i><b>5.6</b> Cusp Catastrophes and Multiple Parameter Systems</a></li>
+<li class="chapter" data-level="5.7" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#imperfect-bifurcations-and-structural-stability"><i class="fa fa-check"></i><b>5.7</b> Imperfect Bifurcations and Structural Stability</a></li>
+<li class="chapter" data-level="5.8" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#phase-line-analysis-a-universal-tool"><i class="fa fa-check"></i><b>5.8</b> Phase Line Analysis: A Universal Tool</a></li>
+<li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.9</b> The Landscape Perspective</a></li>
+<li class="chapter" data-level="5.10" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.10</b> Building Toward Higher Dimensions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html"><i class="fa fa-check"></i><b>7</b> Immune System Dynamics An Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes"><i class="fa fa-check"></i><b>7.1</b> Fixed Points and the Geography of Infection Outcomes</a></li>
+<li class="chapter" data-level="7.2" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories"><i class="fa fa-check"></i><b>7.2</b> Phase Portrait: Mapping Infection Trajectories</a></li>
+<li class="chapter" data-level="7.3" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection"><i class="fa fa-check"></i><b>7.3</b> Temporal Dynamics: The Clinical Course of Infection</a></li>
+<li class="chapter" data-level="7.4" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#basins-of-attraction-when-treatment-matters-most"><i class="fa fa-check"></i><b>7.4</b> Basins of Attraction: When Treatment Matters Most</a></li>
+<li class="chapter" data-level="7.5" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#limit-cycles-and-oscillatory-immune-responses"><i class="fa fa-check"></i><b>7.5</b> Limit Cycles and Oscillatory Immune Responses</a></li>
+<li class="chapter" data-level="7.6" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions"><i class="fa fa-check"></i><b>7.6</b> Bifurcations: Parameter Thresholds and Disease Transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html"><i class="fa fa-check"></i><b>8</b> Finding Balance: Equilibrium Points and Linear Stability</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-nature-of-equilibrium"><i class="fa fa-check"></i><b>8.1</b> The Nature of Equilibrium</a></li>
+<li class="chapter" data-level="8.2" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#linear-approximation-and-the-jacobian-matrix"><i class="fa fa-check"></i><b>8.2</b> Linear Approximation and the Jacobian Matrix</a></li>
+<li class="chapter" data-level="8.3" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#eigenvalue-analysis-and-stability-classification"><i class="fa fa-check"></i><b>8.3</b> Eigenvalue Analysis and Stability Classification</a></li>
+<li class="chapter" data-level="8.4" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-taxonomy-of-fixed-points"><i class="fa fa-check"></i><b>8.4</b> The Taxonomy of Fixed Points</a></li>
+<li class="chapter" data-level="8.5" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#application-to-epidemic-dynamics"><i class="fa fa-check"></i><b>8.5</b> Application to Epidemic Dynamics</a></li>
+<li class="chapter" data-level="8.6" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#timescale-separation-and-dominant-dynamics"><i class="fa fa-check"></i><b>8.6</b> Timescale Separation and Dominant Dynamics</a></li>
+<li class="chapter" data-level="8.7" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#nonhyperbolic-fixed-points-and-structural-stability"><i class="fa fa-check"></i><b>8.7</b> Nonhyperbolic Fixed Points and Structural Stability</a></li>
+<li class="chapter" data-level="8.8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-dance-of-feedback-understanding-system-response"><i class="fa fa-check"></i><b>8.8</b> The Dance of Feedback: Understanding System Response</a></li>
+<li class="chapter" data-level="8.9" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#conclusion-the-local-global-connection"><i class="fa fa-check"></i><b>8.9</b> Conclusion: The Local-Global Connection</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Systems Dynamics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="finding-balance-equilibrium-points-and-linear-stability" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Finding Balance: Equilibrium Points and Linear Stability<a href="finding-balance-equilibrium-points-and-linear-stability.html#finding-balance-equilibrium-points-and-linear-stability" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The emergency room operates in a delicate balance. Patients arrive seeking care while medical staff work to discharge them. When arrivals match discharges, the system reaches equilibrium—a steady state where the waiting room population remains constant. But not all equilibria are created equal. A stable equilibrium absorbs fluctuations gracefully: a sudden influx of patients gradually resolves as staff adjusts. An unstable equilibrium amplifies disturbances: minor variations spiral into overcrowding or empty waiting rooms. Understanding which type of equilibrium a system possesses, and how it responds to perturbations, forms the cornerstone of dynamical systems analysis.</p>
+<p>In our previous exploration of two-dimensional systems, we encountered fixed points as locations where trajectories could remain forever unchanged. Now we develop the mathematical machinery to classify these equilibria and predict their stability properties. This analysis transforms our understanding from merely identifying equilibria to comprehending the complete landscape of system behavior—knowing not just where a system might rest, but whether it will actually reach that rest state and how it will approach it.</p>
+<div id="the-nature-of-equilibrium" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> The Nature of Equilibrium<a href="finding-balance-equilibrium-points-and-linear-stability.html#the-nature-of-equilibrium" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An equilibrium point, also called a fixed point or steady state, represents a configuration where the system experiences no net change. Mathematically, for a two-dimensional system described by differential equations <span class="math inline">\(\dot{x} = f(x,y)\)</span> and <span class="math inline">\(\dot{y} = g(x,y)\)</span>, an equilibrium <span class="math inline">\((x^_, y^_)\)</span> satisfies the simultaneous conditions <span class="math inline">\(f(x^_, y^_) = 0\)</span> and <span class="math inline">\(g(x^_, y^_) = 0\)</span>. At such points, both time derivatives vanish—the system has no impetus to move in any direction.</p>
+<p>Consider a simple healthcare system model tracking patient flow through a hospital ward. Let <span class="math inline">\(x\)</span> represent the number of patients in the general ward and <span class="math inline">\(y\)</span> represent the number in intensive care. Patients arrive to the general ward at rate <span class="math inline">\(\lambda\)</span>, transfer from general to intensive care at rate <span class="math inline">\(\alpha x\)</span>, recover from general care and leave at rate <span class="math inline">\(\beta x\)</span>, recover from intensive care at rate <span class="math inline">\(\gamma y\)</span>, and unfortunately expire from intensive care at rate <span class="math inline">\(\delta y\)</span>. This gives us the system:</p>
+<p><span class="math display">\[\frac{dx}{dt} = \lambda - \alpha x - \beta x = \lambda - (\alpha + \beta)x\]</span></p>
+<p><span class="math display">\[\frac{dy}{dt} = \alpha x - \gamma y - \delta y = \alpha x - (\gamma + \delta)y\]</span></p>
+<p>To find equilibria, we set both derivatives to zero. From the first equation, <span class="math inline">\(\lambda = (\alpha + \beta)x^_\)</span>, giving <span class="math inline">\(x^_ = \lambda/(\alpha + \beta)\)</span>. Substituting into the second equation, <span class="math inline">\(\alpha x^* = (\gamma + \delta)y^_\)</span>, which yields <span class="math inline">\(y^_ = \alpha\lambda/((\alpha + \beta)(\gamma + \delta))\)</span>. This equilibrium represents the steady-state patient census when arrivals precisely balance departures across both units.</p>
+<p>But knowing an equilibrium exists tells us little about whether the system will actually reach it. A marble balanced atop a hill sits at an equilibrium, as does a marble resting at the bottom of a valley. Both experience zero net force, yet their responses to small disturbances differ dramatically. The hilltop equilibrium is unstable—any perturbation sends the marble rolling away. The valley equilibrium is stable—perturbations lead to oscillations that gradually decay, returning the marble to rest.</p>
+</div>
+<div id="linear-approximation-and-the-jacobian-matrix" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Linear Approximation and the Jacobian Matrix<a href="finding-balance-equilibrium-points-and-linear-stability.html#linear-approximation-and-the-jacobian-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The key insight enabling equilibrium classification comes from linear approximation. Near an equilibrium point, we can approximate the nonlinear system dynamics using a linear system that captures local behavior. This approximation, called linearization, reduces the problem to analyzing a linear system whose solutions we understand completely through eigenvalue analysis.</p>
+<p>Consider a small perturbation from equilibrium: let <span class="math inline">\(u = x - x^_\)</span> and <span class="math inline">\(v = y - y^_\)</span> represent small displacements from the fixed point <span class="math inline">\((x^_, y^_)\)</span>. The system dynamics for these perturbations can be approximated using Taylor expansion. For small perturbations, we keep only first-order terms:</p>
+<p><span class="math display">\[\frac{du}{dt} = \frac{\partial f}{\partial x}\bigg|_{(x^_,y^_)} u + \frac{\partial f}{\partial y}\bigg|_{(x^_,y^_)} v\]</span></p>
+<p><span class="math display">\[\frac{dv}{dt} = \frac{\partial g}{\partial x}\bigg|_{(x^_,y^_)} u + \frac{\partial g}{\partial y}\bigg|_{(x^_,y^_)} v\]</span></p>
+<p>This linear system can be written compactly in matrix form as <span class="math inline">\(\dot{\mathbf{u}} = \mathbf{J}\mathbf{u}\)</span>, where <span class="math inline">\(\mathbf{u} = (u, v)^T\)</span> is the perturbation vector and <span class="math inline">\(\mathbf{J}\)</span> is the Jacobian matrix:</p>
+<p><span class="math display">\[\mathbf{J} = \begin{pmatrix} \frac{\partial f}{\partial x} &amp; \frac{\partial f}{\partial y} \ \frac{\partial g}{\partial x} &amp; \frac{\partial g}{\partial y} \end{pmatrix}\]</span></p>
+<p>The Jacobian matrix encodes how the system responds to small displacements in each direction. The partial derivative <span class="math inline">\(\partial f/\partial x\)</span> measures how changes in <span class="math inline">\(x\)</span> affect the rate of change of <span class="math inline">\(x\)</span> itself—a self-feedback term. The partial derivative <span class="math inline">\(\partial f/\partial y\)</span> measures how changes in <span class="math inline">\(y\)</span> influence the rate of change of <span class="math inline">\(x\)</span>—a cross-coupling term. Together, these derivatives form a complete linear description of the system’s local dynamics.</p>
+<p>For our hospital ward model, the Jacobian becomes:</p>
+<p><span class="math display">\[\mathbf{J} = \begin{pmatrix} -(\alpha + \beta) &amp; 0 \ \alpha &amp; -(\gamma + \delta) \end{pmatrix}\]</span></p>
+<p>Notice this Jacobian is constant—independent of the equilibrium point. This simplification occurs because our model happens to be linear. For nonlinear systems, the Jacobian varies with position, and we must evaluate it specifically at each equilibrium point to understand local behavior there.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-1" tabindex="-1"></a><span class="co"># Hospital ward patient flow model</span></span>
+<span id="cb158-2"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb158-3"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-3" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb158-4"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb158-5"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-5" tabindex="-1"></a></span>
+<span id="cb158-6"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-6" tabindex="-1"></a><span class="co"># Define the system</span></span>
+<span id="cb158-7"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-7" tabindex="-1"></a>hospital_flow <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb158-8"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-8" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb158-9"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-9" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> lambda <span class="sc">-</span> (alpha <span class="sc">+</span> beta)<span class="sc">*</span>x</span>
+<span id="cb158-10"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-10" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> alpha<span class="sc">*</span>x <span class="sc">-</span> (gamma <span class="sc">+</span> delta)<span class="sc">*</span>y</span>
+<span id="cb158-11"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-11" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
+<span id="cb158-12"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-12" tabindex="-1"></a>  })</span>
+<span id="cb158-13"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-13" tabindex="-1"></a>}</span>
+<span id="cb158-14"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-14" tabindex="-1"></a></span>
+<span id="cb158-15"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-15" tabindex="-1"></a><span class="co"># Set realistic parameters (rates per day)</span></span>
+<span id="cb158-16"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-16" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb158-17"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-17" tabindex="-1"></a>  <span class="at">lambda =</span> <span class="dv">10</span>,    <span class="co"># 10 patients arrive per day</span></span>
+<span id="cb158-18"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-18" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.1</span>,    <span class="co"># 10% of general ward patients transfer to ICU per day</span></span>
+<span id="cb158-19"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-19" tabindex="-1"></a>  <span class="at">beta =</span> <span class="fl">0.3</span>,     <span class="co"># 30% of general ward patients discharge per day</span></span>
+<span id="cb158-20"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-20" tabindex="-1"></a>  <span class="at">gamma =</span> <span class="fl">0.15</span>,   <span class="co"># 15% of ICU patients recover and discharge per day</span></span>
+<span id="cb158-21"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-21" tabindex="-1"></a>  <span class="at">delta =</span> <span class="fl">0.05</span>    <span class="co"># 5% mortality rate in ICU per day</span></span>
+<span id="cb158-22"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-22" tabindex="-1"></a>)</span>
+<span id="cb158-23"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-23" tabindex="-1"></a></span>
+<span id="cb158-24"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-24" tabindex="-1"></a><span class="co"># Calculate equilibrium</span></span>
+<span id="cb158-25"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-25" tabindex="-1"></a>x_star <span class="ot">&lt;-</span> params<span class="sc">$</span>lambda <span class="sc">/</span> (params<span class="sc">$</span>alpha <span class="sc">+</span> params<span class="sc">$</span>beta)</span>
+<span id="cb158-26"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-26" tabindex="-1"></a>y_star <span class="ot">&lt;-</span> (params<span class="sc">$</span>alpha <span class="sc">*</span> params<span class="sc">$</span>lambda) <span class="sc">/</span> </span>
+<span id="cb158-27"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-27" tabindex="-1"></a>          ((params<span class="sc">$</span>alpha <span class="sc">+</span> params<span class="sc">$</span>beta) <span class="sc">*</span> (params<span class="sc">$</span>gamma <span class="sc">+</span> params<span class="sc">$</span>delta))</span>
+<span id="cb158-28"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-28" tabindex="-1"></a></span>
+<span id="cb158-29"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb158-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Equilibrium point:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Equilibrium point:</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb160-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;General ward: %.2f patients</span><span class="sc">\n</span><span class="st">&quot;</span>, x_star))</span></code></pre></div>
+<pre><code>## General ward: 25.00 patients</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb162-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;ICU: %.2f patients</span><span class="sc">\n\n</span><span class="st">&quot;</span>, y_star))</span></code></pre></div>
+<pre><code>## ICU: 12.50 patients</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-1" tabindex="-1"></a><span class="co"># Calculate Jacobian at equilibrium</span></span>
+<span id="cb164-2"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-2" tabindex="-1"></a>J <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb164-3"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-3" tabindex="-1"></a>  <span class="sc">-</span>(params<span class="sc">$</span>alpha <span class="sc">+</span> params<span class="sc">$</span>beta), <span class="dv">0</span>,</span>
+<span id="cb164-4"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-4" tabindex="-1"></a>  params<span class="sc">$</span>alpha, <span class="sc">-</span>(params<span class="sc">$</span>gamma <span class="sc">+</span> params<span class="sc">$</span>delta)</span>
+<span id="cb164-5"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-5" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb164-6"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-6" tabindex="-1"></a></span>
+<span id="cb164-7"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb164-7" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Jacobian matrix:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Jacobian matrix:</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb166-1" tabindex="-1"></a><span class="fu">print</span>(J)</span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,] -0.4  0.0
+## [2,]  0.1 -0.2</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb168-1" tabindex="-1"></a><span class="co"># Calculate eigenvalues and eigenvectors</span></span>
+<span id="cb168-2"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb168-2" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J)</span>
+<span id="cb168-3"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb168-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Eigenvalues:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## Eigenvalues:</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb170-1" tabindex="-1"></a><span class="fu">print</span>(eig<span class="sc">$</span>values)</span></code></pre></div>
+<pre><code>## [1] -0.4 -0.2</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb172-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Eigenvectors:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## Eigenvectors:</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb174-1" tabindex="-1"></a><span class="fu">print</span>(eig<span class="sc">$</span>vectors)</span></code></pre></div>
+<pre><code>##            [,1] [,2]
+## [1,]  0.8944272    0
+## [2,] -0.4472136    1</code></pre>
+</div>
+<div id="eigenvalue-analysis-and-stability-classification" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Eigenvalue Analysis and Stability Classification<a href="finding-balance-equilibrium-points-and-linear-stability.html#eigenvalue-analysis-and-stability-classification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The eigenvalues of the Jacobian matrix determine equilibrium stability. An eigenvalue <span class="math inline">\(\lambda\)</span> and its corresponding eigenvector <span class="math inline">\(\mathbf{v}\)</span> satisfy <span class="math inline">\(\mathbf{J}\mathbf{v} = \lambda\mathbf{v}\)</span>. The eigenvector points in a special direction where the linear transformation acts by simple scaling, and the eigenvalue gives the scaling factor.</p>
+<p>For a two-dimensional system, the characteristic equation <span class="math inline">\(\det(\mathbf{J} - \lambda\mathbf{I}) = 0\)</span> gives a quadratic whose roots are the eigenvalues:</p>
+<p><span class="math display">\[\lambda^2 - \text{tr}(\mathbf{J})\lambda + \det(\mathbf{J}) = 0\]</span></p>
+<p>Solving using the quadratic formula yields:</p>
+<p><span class="math display">\[\lambda_{1,2} = \frac{\text{tr}(\mathbf{J}) \pm \sqrt{\text{tr}(\mathbf{J})^2 - 4\det(\mathbf{J})}}{2}\]</span></p>
+<p>The trace <span class="math inline">\(\text{tr}(\mathbf{J}) = J_{11} + J_{22}\)</span> equals the sum of eigenvalues, while the determinant <span class="math inline">\(\det(\mathbf{J}) = J_{11}J_{22} - J_{12}J_{21}\)</span> equals their product. These two quantities completely determine the eigenvalue structure and thus the stability properties.</p>
+<p>When both eigenvalues have negative real parts, perturbations decay exponentially and the equilibrium is stable. When at least one eigenvalue has positive real part, perturbations grow and the equilibrium is unstable. The eigenvalue structure determines not only stability but also the geometric character of approach or departure from the equilibrium.</p>
+<p>For our hospital model, both diagonal entries of the Jacobian are negative (patients leave both units), while the off-diagonal entry in the upper right is zero (ICU patients don’t affect general ward admissions directly). This triangular structure gives eigenvalues <span class="math inline">\(\lambda_1 = -(\alpha + \beta) = -0.4\)</span> and <span class="math inline">\(\lambda_2 = -(\gamma + \delta) = -0.2\)</span>. Both eigenvalues are real and negative, indicating a stable node—perturbations decay monotonically without oscillation.</p>
+<p>The eigenvector corresponding to <span class="math inline">\(\lambda_1\)</span> is <span class="math inline">\((1, 0)^T\)</span>, pointing along the general ward axis. Perturbations in this direction decay at rate <span class="math inline">\(0.4\)</span> per day. The eigenvector for <span class="math inline">\(\lambda_2\)</span> is <span class="math inline">\((0, 1)^T\)</span> along the ICU axis, with slower decay at rate <span class="math inline">\(0.2\)</span> per day. The slower ICU dynamics reflect the more intensive nature of care there—patients take longer to recover or transition out.</p>
+</div>
+<div id="the-taxonomy-of-fixed-points" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> The Taxonomy of Fixed Points<a href="finding-balance-equilibrium-points-and-linear-stability.html#the-taxonomy-of-fixed-points" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The eigenvalue structure creates a complete taxonomy of two-dimensional fixed points. When eigenvalues are real and distinct with the same sign, the equilibrium is a node. If both are negative, we have a stable node where all trajectories approach the fixed point monotonically along straight lines or curves tangent to the eigenvectors. If both are positive, we have an unstable node where trajectories diverge.</p>
+<p>When eigenvalues are real with opposite signs, one positive and one negative, the equilibrium is a saddle point. Trajectories approach along the stable direction (negative eigenvalue eigenvector) but diverge along the unstable direction (positive eigenvalue eigenvector). Saddles are always unstable—only trajectories starting exactly on the stable manifold approach the saddle, while generic trajectories eventually diverge.</p>
+<p>When eigenvalues are complex conjugates <span class="math inline">\(\lambda = \sigma \pm i\omega\)</span>, the real part <span class="math inline">\(\sigma\)</span> determines stability while the imaginary part <span class="math inline">\(\omega\)</span> introduces oscillation. If <span class="math inline">\(\sigma &lt; 0\)</span>, we have a stable spiral where trajectories spiral inward to the equilibrium. If <span class="math inline">\(\sigma &gt; 0\)</span>, we have an unstable spiral where trajectories spiral outward. The special case <span class="math inline">\(\sigma = 0\)</span> gives a center with purely imaginary eigenvalues, creating neutral stability where trajectories neither approach nor depart but instead orbit indefinitely.</p>
+<p>The discriminant <span class="math inline">\(\Delta = \text{tr}(\mathbf{J})^2 - 4\det(\mathbf{J})\)</span> determines whether eigenvalues are real or complex. When <span class="math inline">\(\Delta &gt; 0\)</span>, eigenvalues are real. When <span class="math inline">\(\Delta &lt; 0\)</span>, eigenvalues form complex conjugate pairs. The boundary case <span class="math inline">\(\Delta = 0\)</span> gives repeated real eigenvalues, potentially creating a degenerate node.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-1" tabindex="-1"></a><span class="co"># Create trace-determinant phase portrait</span></span>
+<span id="cb176-2"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-2" tabindex="-1"></a>create_trace_det_diagram <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb176-3"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-3" tabindex="-1"></a>  tau_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb176-4"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-4" tabindex="-1"></a>  det_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb176-5"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-5" tabindex="-1"></a>  </span>
+<span id="cb176-6"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-6" tabindex="-1"></a>  grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">tau =</span> tau_seq, <span class="at">det =</span> det_seq)</span>
+<span id="cb176-7"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-7" tabindex="-1"></a>  </span>
+<span id="cb176-8"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-8" tabindex="-1"></a>  <span class="co"># Classify fixed points</span></span>
+<span id="cb176-9"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-9" tabindex="-1"></a>  grid<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">with</span>(grid, {</span>
+<span id="cb176-10"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-10" tabindex="-1"></a>    discriminant <span class="ot">&lt;-</span> tau<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>det</span>
+<span id="cb176-11"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-11" tabindex="-1"></a>    </span>
+<span id="cb176-12"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-12" tabindex="-1"></a>    <span class="fu">ifelse</span>(det <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Saddle&quot;</span>,</span>
+<span id="cb176-13"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-13" tabindex="-1"></a>    <span class="fu">ifelse</span>(det <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> discriminant <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Stable Node&quot;</span>,</span>
+<span id="cb176-14"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-14" tabindex="-1"></a>    <span class="fu">ifelse</span>(det <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> discriminant <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Stable Spiral&quot;</span>,</span>
+<span id="cb176-15"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-15" tabindex="-1"></a>    <span class="fu">ifelse</span>(det <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> discriminant <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Unstable Node&quot;</span>,</span>
+<span id="cb176-16"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-16" tabindex="-1"></a>    <span class="fu">ifelse</span>(det <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> tau <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> discriminant <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Unstable Spiral&quot;</span>,</span>
+<span id="cb176-17"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-17" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="fu">abs</span>(tau) <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">&amp;</span> det <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;Center&quot;</span>, <span class="st">&quot;Boundary&quot;</span>))))))</span>
+<span id="cb176-18"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-18" tabindex="-1"></a>  })</span>
+<span id="cb176-19"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-19" tabindex="-1"></a>  </span>
+<span id="cb176-20"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-20" tabindex="-1"></a>  <span class="co"># Plot</span></span>
+<span id="cb176-21"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-21" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(grid, <span class="fu">aes</span>(<span class="at">x =</span> tau, <span class="at">y =</span> det, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb176-22"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-22" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb176-23"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-23" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">tau =</span> tau_seq, <span class="at">det =</span> tau_seq<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">4</span>),</span>
+<span id="cb176-24"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-24" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> tau, <span class="at">y =</span> det), <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb176-25"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-25" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb176-26"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-26" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb176-27"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-27" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="fl">1.5</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">label =</span> <span class="st">&quot;Saddle&quot;</span>, <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb176-28"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-28" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="fl">1.3</span>, <span class="at">y =</span> <span class="dv">2</span>, <span class="at">label =</span> <span class="st">&quot;Stable</span><span class="sc">\n</span><span class="st">Spiral&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb176-29"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-29" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">1.3</span>, <span class="at">y =</span> <span class="dv">2</span>, <span class="at">label =</span> <span class="st">&quot;Unstable</span><span class="sc">\n</span><span class="st">Spiral&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb176-30"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-30" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="fl">1.5</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">&quot;Stable</span><span class="sc">\n</span><span class="st">Node&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb176-31"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-31" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">1.5</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">label =</span> <span class="st">&quot;Unstable</span><span class="sc">\n</span><span class="st">Node&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb176-32"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-32" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb176-33"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-33" tabindex="-1"></a>      <span class="st">&quot;Saddle&quot;</span> <span class="ot">=</span> <span class="st">&quot;#e74c3c&quot;</span>,</span>
+<span id="cb176-34"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-34" tabindex="-1"></a>      <span class="st">&quot;Stable Node&quot;</span> <span class="ot">=</span> <span class="st">&quot;#27ae60&quot;</span>,</span>
+<span id="cb176-35"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-35" tabindex="-1"></a>      <span class="st">&quot;Stable Spiral&quot;</span> <span class="ot">=</span> <span class="st">&quot;#2ecc71&quot;</span>,</span>
+<span id="cb176-36"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-36" tabindex="-1"></a>      <span class="st">&quot;Unstable Node&quot;</span> <span class="ot">=</span> <span class="st">&quot;#c0392b&quot;</span>,</span>
+<span id="cb176-37"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-37" tabindex="-1"></a>      <span class="st">&quot;Unstable Spiral&quot;</span> <span class="ot">=</span> <span class="st">&quot;#e67e22&quot;</span>,</span>
+<span id="cb176-38"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-38" tabindex="-1"></a>      <span class="st">&quot;Center&quot;</span> <span class="ot">=</span> <span class="st">&quot;#f39c12&quot;</span>,</span>
+<span id="cb176-39"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-39" tabindex="-1"></a>      <span class="st">&quot;Boundary&quot;</span> <span class="ot">=</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb176-40"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-40" tabindex="-1"></a>    )) <span class="sc">+</span></span>
+<span id="cb176-41"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-41" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb176-42"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-42" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">&quot;Fixed Point Classification via Trace-Determinant Analysis&quot;</span>,</span>
+<span id="cb176-43"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-43" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">&quot;Trace (τ = λ₁ + λ₂)&quot;</span>,</span>
+<span id="cb176-44"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-44" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">&quot;Determinant (Δ = λ₁λ₂)&quot;</span>,</span>
+<span id="cb176-45"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-45" tabindex="-1"></a>      <span class="at">fill =</span> <span class="st">&quot;Fixed Point Type&quot;</span></span>
+<span id="cb176-46"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-46" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb176-47"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-47" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb176-48"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-48" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span>
+<span id="cb176-49"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-49" tabindex="-1"></a>  </span>
+<span id="cb176-50"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-50" tabindex="-1"></a>  <span class="fu">return</span>(p)</span>
+<span id="cb176-51"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-51" tabindex="-1"></a>}</span>
+<span id="cb176-52"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-52" tabindex="-1"></a></span>
+<span id="cb176-53"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb176-53" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">create_trace_det_diagram</span>())</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+<div id="application-to-epidemic-dynamics" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Application to Epidemic Dynamics<a href="finding-balance-equilibrium-points-and-linear-stability.html#application-to-epidemic-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To illustrate the power of stability analysis, consider the SIR epidemic model tracking disease spread through a population. Let <span class="math inline">\(S\)</span> represent susceptible individuals, <span class="math inline">\(I\)</span> infected individuals, and <span class="math inline">\(R\)</span> recovered individuals. The dynamics follow:</p>
+<p><span class="math display">\[\frac{dS}{dt} = -\beta SI\]</span></p>
+<p><span class="math display">\[\frac{dI}{dt} = \beta SI - \gamma I\]</span></p>
+<p>Here <span class="math inline">\(\beta\)</span> measures transmission rate and <span class="math inline">\(\gamma\)</span> represents recovery rate. We ignore the recovered class since <span class="math inline">\(R = N - S - I\)</span> for constant total population <span class="math inline">\(N\)</span>.</p>
+<p>The disease-free equilibrium occurs at <span class="math inline">\((S^_, I^_) = (N, 0)\)</span>—entire population susceptible, no infections. To analyze stability, we compute the Jacobian:</p>
+<p><span class="math display">\[\mathbf{J} = \begin{pmatrix} -\beta I &amp; -\beta S \ \beta I &amp; \beta S - \gamma \end{pmatrix}\]</span></p>
+<p>At the disease-free equilibrium:</p>
+<p><span class="math display">\[\mathbf{J}(N, 0) = \begin{pmatrix} 0 &amp; -\beta N \ 0 &amp; \beta N - \gamma \end{pmatrix}\]</span></p>
+<p>The eigenvalues are <span class="math inline">\(\lambda_1 = 0\)</span> and <span class="math inline">\(\lambda_2 = \beta N - \gamma\)</span>. The zero eigenvalue reflects a conservation law—trajectories move along the manifold <span class="math inline">\(S + I + R = N\)</span>. The second eigenvalue determines disease invasion potential. When <span class="math inline">\(\beta N &lt; \gamma\)</span>, we have <span class="math inline">\(\lambda_2 &lt; 0\)</span> and the disease-free state is stable—infections cannot establish. When <span class="math inline">\(\beta N &gt; \gamma\)</span>, we have <span class="math inline">\(\lambda_2 &gt; 0\)</span> and disease invades successfully.</p>
+<p>The critical threshold <span class="math inline">\(\beta N = \gamma\)</span> defines the basic reproduction number <span class="math inline">\(R_0 = \beta N/\gamma\)</span>—the expected number of secondary infections from one infected individual in a fully susceptible population. When <span class="math inline">\(R_0 &lt; 1\)</span>, each infection produces less than one new infection and the disease dies out. When <span class="math inline">\(R_0 &gt; 1\)</span>, infections cascade and an epidemic occurs.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-1" tabindex="-1"></a><span class="co"># SIR epidemic model with stability analysis</span></span>
+<span id="cb177-2"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-2" tabindex="-1"></a>sir_model <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb177-3"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb177-4"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-4" tabindex="-1"></a>    dS <span class="ot">&lt;-</span> <span class="sc">-</span>beta <span class="sc">*</span> S <span class="sc">*</span> I</span>
+<span id="cb177-5"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-5" tabindex="-1"></a>    dI <span class="ot">&lt;-</span> beta <span class="sc">*</span> S <span class="sc">*</span> I <span class="sc">-</span> gamma <span class="sc">*</span> I</span>
+<span id="cb177-6"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-6" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dS, dI))</span>
+<span id="cb177-7"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-7" tabindex="-1"></a>  })</span>
+<span id="cb177-8"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-8" tabindex="-1"></a>}</span>
+<span id="cb177-9"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-9" tabindex="-1"></a></span>
+<span id="cb177-10"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-10" tabindex="-1"></a><span class="co"># Parameters for different epidemic scenarios</span></span>
+<span id="cb177-11"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-11" tabindex="-1"></a>params_subcritical <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> <span class="fl">0.0003</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>, <span class="at">N =</span> <span class="dv">1000</span>)</span>
+<span id="cb177-12"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-12" tabindex="-1"></a>params_supercritical <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">beta =</span> <span class="fl">0.0005</span>, <span class="at">gamma =</span> <span class="fl">0.1</span>, <span class="at">N =</span> <span class="dv">1000</span>)</span>
+<span id="cb177-13"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-13" tabindex="-1"></a></span>
+<span id="cb177-14"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-14" tabindex="-1"></a><span class="co"># Calculate R0 for each case</span></span>
+<span id="cb177-15"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-15" tabindex="-1"></a>R0_sub <span class="ot">&lt;-</span> params_subcritical<span class="sc">$</span>beta <span class="sc">*</span> params_subcritical<span class="sc">$</span>N <span class="sc">/</span> params_subcritical<span class="sc">$</span>gamma</span>
+<span id="cb177-16"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-16" tabindex="-1"></a>R0_super <span class="ot">&lt;-</span> params_supercritical<span class="sc">$</span>beta <span class="sc">*</span> params_supercritical<span class="sc">$</span>N <span class="sc">/</span> params_supercritical<span class="sc">$</span>gamma</span>
+<span id="cb177-17"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-17" tabindex="-1"></a></span>
+<span id="cb177-18"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb177-18" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Subcritical case: R₀ = %.2f (disease dies out)</span><span class="sc">\n</span><span class="st">&quot;</span>, R0_sub))</span></code></pre></div>
+<pre><code>## Subcritical case: R₀ = 3.00 (disease dies out)</code></pre>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb179-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Supercritical case: R₀ = %.2f (epidemic occurs)</span><span class="sc">\n\n</span><span class="st">&quot;</span>, R0_super))</span></code></pre></div>
+<pre><code>## Supercritical case: R₀ = 5.00 (epidemic occurs)</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-1" tabindex="-1"></a><span class="co"># Simulate both scenarios</span></span>
+<span id="cb181-2"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-2" tabindex="-1"></a>simulate_epidemic <span class="ot">&lt;-</span> <span class="cf">function</span>(params, <span class="at">I0 =</span> <span class="dv">10</span>) {</span>
+<span id="cb181-3"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-3" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb181-4"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-4" tabindex="-1"></a>  initial <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">S =</span> params<span class="sc">$</span>N <span class="sc">-</span> I0, <span class="at">I =</span> I0)</span>
+<span id="cb181-5"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-5" tabindex="-1"></a>  </span>
+<span id="cb181-6"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-6" tabindex="-1"></a>  solution <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> initial, <span class="at">times =</span> times, <span class="at">func =</span> sir_model, <span class="at">parms =</span> params)</span>
+<span id="cb181-7"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-7" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">as.data.frame</span>(solution))</span>
+<span id="cb181-8"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-8" tabindex="-1"></a>}</span>
+<span id="cb181-9"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-9" tabindex="-1"></a></span>
+<span id="cb181-10"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-10" tabindex="-1"></a>traj_sub <span class="ot">&lt;-</span> <span class="fu">simulate_epidemic</span>(params_subcritical)</span>
+<span id="cb181-11"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-11" tabindex="-1"></a>traj_super <span class="ot">&lt;-</span> <span class="fu">simulate_epidemic</span>(params_supercritical)</span>
+<span id="cb181-12"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-12" tabindex="-1"></a></span>
+<span id="cb181-13"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-13" tabindex="-1"></a><span class="co"># Plot phase portraits</span></span>
+<span id="cb181-14"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-14" tabindex="-1"></a>plot_sir_phase <span class="ot">&lt;-</span> <span class="cf">function</span>(traj, R0, title) {</span>
+<span id="cb181-15"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-15" tabindex="-1"></a>  <span class="co"># Create vector field</span></span>
+<span id="cb181-16"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-16" tabindex="-1"></a>  S_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb181-17"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-17" tabindex="-1"></a>  I_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">20</span>)</span>
+<span id="cb181-18"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-18" tabindex="-1"></a>  field <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">S =</span> S_seq, <span class="at">I =</span> I_seq)</span>
+<span id="cb181-19"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-19" tabindex="-1"></a>  </span>
+<span id="cb181-20"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-20" tabindex="-1"></a>  <span class="cf">if</span> (R0 <span class="sc">&lt;</span> <span class="dv">1</span>) {</span>
+<span id="cb181-21"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-21" tabindex="-1"></a>    params <span class="ot">&lt;-</span> params_subcritical</span>
+<span id="cb181-22"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-22" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb181-23"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-23" tabindex="-1"></a>    params <span class="ot">&lt;-</span> params_supercritical</span>
+<span id="cb181-24"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-24" tabindex="-1"></a>  }</span>
+<span id="cb181-25"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-25" tabindex="-1"></a>  </span>
+<span id="cb181-26"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-26" tabindex="-1"></a>  field<span class="sc">$</span>dS <span class="ot">&lt;-</span> <span class="sc">-</span>params<span class="sc">$</span>beta <span class="sc">*</span> field<span class="sc">$</span>S <span class="sc">*</span> field<span class="sc">$</span>I</span>
+<span id="cb181-27"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-27" tabindex="-1"></a>  field<span class="sc">$</span>dI <span class="ot">&lt;-</span> params<span class="sc">$</span>beta <span class="sc">*</span> field<span class="sc">$</span>S <span class="sc">*</span> field<span class="sc">$</span>I <span class="sc">-</span> params<span class="sc">$</span>gamma <span class="sc">*</span> field<span class="sc">$</span>I</span>
+<span id="cb181-28"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-28" tabindex="-1"></a>  </span>
+<span id="cb181-29"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-29" tabindex="-1"></a>  <span class="co"># Normalize</span></span>
+<span id="cb181-30"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-30" tabindex="-1"></a>  field<span class="sc">$</span>mag <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(field<span class="sc">$</span>dS<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> field<span class="sc">$</span>dI<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb181-31"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-31" tabindex="-1"></a>  field<span class="sc">$</span>dS_norm <span class="ot">&lt;-</span> field<span class="sc">$</span>dS <span class="sc">/</span> (field<span class="sc">$</span>mag <span class="sc">+</span> <span class="fl">1e-10</span>) <span class="sc">*</span> <span class="dv">20</span></span>
+<span id="cb181-32"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-32" tabindex="-1"></a>  field<span class="sc">$</span>dI_norm <span class="ot">&lt;-</span> field<span class="sc">$</span>dI <span class="sc">/</span> (field<span class="sc">$</span>mag <span class="sc">+</span> <span class="fl">1e-10</span>) <span class="sc">*</span> <span class="dv">8</span></span>
+<span id="cb181-33"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-33" tabindex="-1"></a>  </span>
+<span id="cb181-34"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-34" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb181-35"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-35" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> field[field<span class="sc">$</span>mag <span class="sc">&gt;</span> <span class="fl">0.1</span>,],</span>
+<span id="cb181-36"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-36" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> S, <span class="at">y =</span> I, <span class="at">xend =</span> S <span class="sc">+</span> dS_norm, <span class="at">yend =</span> I <span class="sc">+</span> dI_norm),</span>
+<span id="cb181-37"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-37" tabindex="-1"></a>                 <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.02</span>, <span class="st">&quot;npc&quot;</span>)),</span>
+<span id="cb181-38"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-38" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb181-39"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-39" tabindex="-1"></a>    <span class="fu">geom_path</span>(<span class="at">data =</span> traj, <span class="fu">aes</span>(<span class="at">x =</span> S, <span class="at">y =</span> I), </span>
+<span id="cb181-40"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-40" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb181-41"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-41" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> traj[<span class="dv">1</span>,], <span class="fu">aes</span>(<span class="at">x =</span> S, <span class="at">y =</span> I),</span>
+<span id="cb181-42"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-42" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb181-43"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-43" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> params<span class="sc">$</span>N, <span class="at">y =</span> <span class="dv">0</span>), </span>
+<span id="cb181-44"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-44" tabindex="-1"></a>               <span class="at">color =</span> <span class="fu">ifelse</span>(R0 <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), </span>
+<span id="cb181-45"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-45" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">19</span>) <span class="sc">+</span></span>
+<span id="cb181-46"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-46" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb181-47"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-47" tabindex="-1"></a>      <span class="at">title =</span> title,</span>
+<span id="cb181-48"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-48" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">sprintf</span>(<span class="st">&quot;R₀ = %.2f, Disease-free equilibrium is %s&quot;</span>,</span>
+<span id="cb181-49"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-49" tabindex="-1"></a>                        R0, <span class="fu">ifelse</span>(R0 <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="st">&quot;stable&quot;</span>, <span class="st">&quot;unstable&quot;</span>)),</span>
+<span id="cb181-50"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-50" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">&quot;Susceptible (S)&quot;</span>,</span>
+<span id="cb181-51"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-51" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">&quot;Infected (I)&quot;</span></span>
+<span id="cb181-52"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-52" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb181-53"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-53" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb181-54"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-54" tabindex="-1"></a>  </span>
+<span id="cb181-55"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-55" tabindex="-1"></a>  <span class="fu">return</span>(p)</span>
+<span id="cb181-56"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-56" tabindex="-1"></a>}</span>
+<span id="cb181-57"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-57" tabindex="-1"></a></span>
+<span id="cb181-58"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-58" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot_sir_phase</span>(traj_sub, R0_sub, <span class="st">&quot;Subcritical Epidemic (R₀ &lt; 1)&quot;</span>)</span>
+<span id="cb181-59"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-59" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot_sir_phase</span>(traj_super, R0_super, <span class="st">&quot;Supercritical Epidemic (R₀ &gt; 1)&quot;</span>)</span>
+<span id="cb181-60"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-60" tabindex="-1"></a></span>
+<span id="cb181-61"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb181-61" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="timescale-separation-and-dominant-dynamics" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Timescale Separation and Dominant Dynamics<a href="finding-balance-equilibrium-points-and-linear-stability.html#timescale-separation-and-dominant-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The magnitude of eigenvalues reveals timescales of system response. A large negative eigenvalue corresponds to fast decay—perturbations along that eigenvector direction vanish quickly. A small negative eigenvalue indicates slow decay—perturbations persist longer. This timescale separation creates fast and slow dynamics that can be exploited for model reduction and analysis.</p>
+<p>In our hospital model, the general ward eigenvalue <span class="math inline">\(\lambda_1 = -0.4\)</span> indicates faster dynamics than the ICU eigenvalue <span class="math inline">\(\lambda_2 = -0.2\)</span>. Patients move through general care relatively quickly, while ICU dynamics evolve more slowly. After a transient period of roughly <span class="math inline">\(1/|\lambda_1| = 2.5\)</span> days, general ward perturbations largely vanish and subsequent evolution is dominated by the slower ICU timescale of roughly <span class="math inline">\(1/|\lambda_2| = 5\)</span> days.</p>
+<p>This insight enables dimensional reduction for long-term predictions. Once fast transients decay, we can approximate the system as evolving along the slow manifold associated with the smallest eigenvalue magnitude. Such quasi-steady-state approximations appear throughout applied mathematics, from chemical kinetics to climate modeling.</p>
+</div>
+<div id="nonhyperbolic-fixed-points-and-structural-stability" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Nonhyperbolic Fixed Points and Structural Stability<a href="finding-balance-equilibrium-points-and-linear-stability.html#nonhyperbolic-fixed-points-and-structural-stability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our classification scheme encounters difficulties when eigenvalues have zero real part. A center with purely imaginary eigenvalues represents borderline stability—neither attracting nor repelling. Small nonlinear terms neglected in linearization can qualitatively change behavior near centers, making their stability structurally unstable.</p>
+<p>Similarly, when <span class="math inline">\(\det(\mathbf{J}) = 0\)</span>, at least one eigenvalue vanishes, indicating degeneracy. The Jacobian becomes singular and linearization captures only partial information. Such nonhyperbolic fixed points require more sophisticated analysis techniques including center manifold theory and normal form reductions.</p>
+<p>Hyperbolic fixed points—those with all eigenvalues having nonzero real parts—possess structural stability. Their stability properties persist under small perturbations to the system. This robustness makes hyperbolic analysis reliable for practical applications where system parameters cannot be known with perfect precision.</p>
+</div>
+<div id="the-dance-of-feedback-understanding-system-response" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> The Dance of Feedback: Understanding System Response<a href="finding-balance-equilibrium-points-and-linear-stability.html#the-dance-of-feedback-understanding-system-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Jacobian diagonal elements represent self-feedback: how each variable influences its own rate of change. Negative diagonal entries create stabilizing self-regulation—increases in a variable slow its own growth. Positive diagonal entries generate self-amplification—increases accelerate further growth. Off-diagonal elements encode coupling: how one variable affects the other’s dynamics.</p>
+<p>In predator-prey systems, prey self-regulation (negative diagonal term) can stabilize oscillations into spiral equilibria. In chemical reactions, autocatalytic feedback (positive diagonal terms) can create bistability between different steady states. In neural networks, inhibitory coupling (negative off-diagonal terms) generates oscillations through delayed negative feedback.</p>
+<p>Understanding this feedback architecture provides intuition beyond mere mathematical classification. We learn to read Jacobian matrices as maps of system interconnection, revealing which interactions stabilize, which destabilize, and which create oscillatory dynamics.</p>
+</div>
+<div id="conclusion-the-local-global-connection" class="section level2 hasAnchor" number="8.9">
+<h2><span class="header-section-number">8.9</span> Conclusion: The Local-Global Connection<a href="finding-balance-equilibrium-points-and-linear-stability.html#conclusion-the-local-global-connection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Linear stability analysis provides a powerful lens for understanding nonlinear systems near equilibria. By computing the Jacobian, calculating eigenvalues, and classifying fixed point types, we predict whether systems will settle to steady states, oscillate indefinitely, or diverge from equilibrium. This local analysis forms the foundation for global understanding.</p>
+<p>Yet linear analysis has limits. It reveals behavior only near fixed points, saying nothing about trajectories far from equilibrium. Multiple equilibria with different stability properties can coexist, creating complex basin structures. Limit cycles—oscillatory attractors that linearization cannot predict—may dominate long-term dynamics. These global phenomena require the phase portrait techniques we develop next, but they build upon the local stability framework established here.</p>
+<p>The marriage of local and global analysis—understanding both what happens near equilibria and how trajectories connect distant regions—unlocks the complete picture of system dynamics. Linear stability tells us where we might end up. Global analysis reveals which destinations we actually reach and the paths we take getting there.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="immune-system-dynamics-an-example.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/edit/main/07-Balance.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/blob/main/07-Balance.Rmd",
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
