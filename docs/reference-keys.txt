@@ -72,3 +72,14 @@ timescale-separation-and-dominant-dynamics
 nonhyperbolic-fixed-points-and-structural-stability
 the-dance-of-feedback-understanding-system-response
 conclusion-the-local-global-connection
+spirals-cycles-and-chaos-complex-behaviors-in-2d-systems
+the-poincaré-bendixson-theorem-and-the-topology-of-two-dimensions
+limit-cycles-self-sustained-oscillations
+stability-of-limit-cycles-and-floquet-theory
+hopf-bifurcations-the-birth-of-oscillations
+multiple-time-scales-and-relaxation-oscillations
+disease-states-as-dynamical-transitions
+sensitive-dependence-and-the-seeds-of-chaos
+the-boundary-between-order-and-chaos
+clinical-implications-and-therapeutic-interventions
+beyond-two-dimensions-the-gateway-to-chaos

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems | Systems Dynamics</title>
+  <meta name="description" content="Chapter 9 Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems | Systems Dynamics" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems | Systems Dynamics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/EHRVAL.jpg" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems | Systems Dynamics" />
+  
+  
+  <meta name="twitter:image" content="/EHRVAL.jpg" />
+
+<meta name="author" content="Kamran Afzali" />
+
+
+<meta name="date" content="2025-11-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="finding-balance-equilibrium-points-and-linear-stability.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Systems Dynamics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Differential Equations and Systems Dynamics</a></li>
+<li class="chapter" data-level="2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Why the World Changes: An Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-language-of-change"><i class="fa fa-check"></i><b>2.1</b> The Language of Change</a></li>
+<li class="chapter" data-level="2.2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#from-coffee-to-cosmos"><i class="fa fa-check"></i><b>2.2</b> From Coffee to Cosmos</a></li>
+<li class="chapter" data-level="2.3" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#getting-our-hands-dirty-solving-a-simple-example"><i class="fa fa-check"></i><b>2.3</b> Getting Our Hands Dirty: Solving a Simple Example</a></li>
+<li class="chapter" data-level="2.4" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#seeing-the-solution-in-action"><i class="fa fa-check"></i><b>2.4</b> Seeing the Solution in Action</a></li>
+<li class="chapter" data-level="2.5" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#when-theory-meets-reality"><i class="fa fa-check"></i><b>2.5</b> When Theory Meets Reality</a></li>
+<li class="chapter" data-level="2.6" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-bigger-picture"><i class="fa fa-check"></i><b>2.6</b> The Bigger Picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html"><i class="fa fa-check"></i><b>3</b> Solving Simple Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-art-of-separation"><i class="fa fa-check"></i><b>3.1</b> The Art of Separation</a></li>
+<li class="chapter" data-level="3.2" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#finding-the-missing-piece"><i class="fa fa-check"></i><b>3.2</b> Finding the Missing Piece</a></li>
+<li class="chapter" data-level="3.3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-method-in-action"><i class="fa fa-check"></i><b>3.3</b> The Method in Action</a></li>
+<li class="chapter" data-level="3.4" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#beyond-simple-cooling-the-exponential-family"><i class="fa fa-check"></i><b>3.4</b> Beyond Simple Cooling: The Exponential Family</a></li>
+<li class="chapter" data-level="3.5" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#when-variables-refuse-to-separate"><i class="fa fa-check"></i><b>3.5</b> When Variables Refuse to Separate</a></li>
+<li class="chapter" data-level="3.6" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#a-more-complex-example-mixing-problems"><i class="fa fa-check"></i><b>3.6</b> A More Complex Example: Mixing Problems</a></li>
+<li class="chapter" data-level="3.7" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-power-and-limits-of-separation"><i class="fa fa-check"></i><b>3.7</b> The Power and Limits of Separation</a></li>
+<li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
+<li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html"><i class="fa fa-check"></i><b>5</b> The Phase Line of One-Dimensional Dynamics</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-geometry-of-flow"><i class="fa fa-check"></i><b>5.1</b> The Geometry of Flow</a></li>
+<li class="chapter" data-level="5.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-universal-patterns-of-creation-and-annihilation"><i class="fa fa-check"></i><b>5.2</b> The Universal Patterns of Creation and Annihilation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-saddle-node-bifurcation-creation-from-nothing"><i class="fa fa-check"></i><b>5.2.1</b> The Saddle-Node Bifurcation: Creation from Nothing</a></li>
+<li class="chapter" data-level="5.2.2" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-pitchfork-bifurcation-symmetry-breaking"><i class="fa fa-check"></i><b>5.2.2</b> The Pitchfork Bifurcation: Symmetry Breaking</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-bifurcation-diagram-mapping-parameter-space"><i class="fa fa-check"></i><b>5.3</b> The Bifurcation Diagram: Mapping Parameter Space</a></li>
+<li class="chapter" data-level="5.4" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#hysteresis-and-the-memory-of-systems"><i class="fa fa-check"></i><b>5.4</b> Hysteresis and the Memory of Systems</a></li>
+<li class="chapter" data-level="5.5" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#beyond-classical-bifurcations-transcritical-and-complex-scenarios"><i class="fa fa-check"></i><b>5.5</b> Beyond Classical Bifurcations: Transcritical and Complex Scenarios</a></li>
+<li class="chapter" data-level="5.6" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#cusp-catastrophes-and-multiple-parameter-systems"><i class="fa fa-check"></i><b>5.6</b> Cusp Catastrophes and Multiple Parameter Systems</a></li>
+<li class="chapter" data-level="5.7" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#imperfect-bifurcations-and-structural-stability"><i class="fa fa-check"></i><b>5.7</b> Imperfect Bifurcations and Structural Stability</a></li>
+<li class="chapter" data-level="5.8" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#phase-line-analysis-a-universal-tool"><i class="fa fa-check"></i><b>5.8</b> Phase Line Analysis: A Universal Tool</a></li>
+<li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.9</b> The Landscape Perspective</a></li>
+<li class="chapter" data-level="5.10" data-path="the-phase-line-of-one-dimensional-dynamics.html"><a href="the-phase-line-of-one-dimensional-dynamics.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.10</b> Building Toward Higher Dimensions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html"><i class="fa fa-check"></i><b>7</b> Immune System Dynamics An Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes"><i class="fa fa-check"></i><b>7.1</b> Fixed Points and the Geography of Infection Outcomes</a></li>
+<li class="chapter" data-level="7.2" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories"><i class="fa fa-check"></i><b>7.2</b> Phase Portrait: Mapping Infection Trajectories</a></li>
+<li class="chapter" data-level="7.3" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection"><i class="fa fa-check"></i><b>7.3</b> Temporal Dynamics: The Clinical Course of Infection</a></li>
+<li class="chapter" data-level="7.4" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#basins-of-attraction-when-treatment-matters-most"><i class="fa fa-check"></i><b>7.4</b> Basins of Attraction: When Treatment Matters Most</a></li>
+<li class="chapter" data-level="7.5" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#limit-cycles-and-oscillatory-immune-responses"><i class="fa fa-check"></i><b>7.5</b> Limit Cycles and Oscillatory Immune Responses</a></li>
+<li class="chapter" data-level="7.6" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions"><i class="fa fa-check"></i><b>7.6</b> Bifurcations: Parameter Thresholds and Disease Transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html"><i class="fa fa-check"></i><b>8</b> Finding Balance: Equilibrium Points and Linear Stability</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-nature-of-equilibrium"><i class="fa fa-check"></i><b>8.1</b> The Nature of Equilibrium</a></li>
+<li class="chapter" data-level="8.2" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#linear-approximation-and-the-jacobian-matrix"><i class="fa fa-check"></i><b>8.2</b> Linear Approximation and the Jacobian Matrix</a></li>
+<li class="chapter" data-level="8.3" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#eigenvalue-analysis-and-stability-classification"><i class="fa fa-check"></i><b>8.3</b> Eigenvalue Analysis and Stability Classification</a></li>
+<li class="chapter" data-level="8.4" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-taxonomy-of-fixed-points"><i class="fa fa-check"></i><b>8.4</b> The Taxonomy of Fixed Points</a></li>
+<li class="chapter" data-level="8.5" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#application-to-epidemic-dynamics"><i class="fa fa-check"></i><b>8.5</b> Application to Epidemic Dynamics</a></li>
+<li class="chapter" data-level="8.6" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#timescale-separation-and-dominant-dynamics"><i class="fa fa-check"></i><b>8.6</b> Timescale Separation and Dominant Dynamics</a></li>
+<li class="chapter" data-level="8.7" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#nonhyperbolic-fixed-points-and-structural-stability"><i class="fa fa-check"></i><b>8.7</b> Nonhyperbolic Fixed Points and Structural Stability</a></li>
+<li class="chapter" data-level="8.8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-dance-of-feedback-understanding-system-response"><i class="fa fa-check"></i><b>8.8</b> The Dance of Feedback: Understanding System Response</a></li>
+<li class="chapter" data-level="8.9" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#conclusion-the-local-global-connection"><i class="fa fa-check"></i><b>8.9</b> Conclusion: The Local-Global Connection</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><i class="fa fa-check"></i><b>9</b> Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-poincaré-bendixson-theorem-and-the-topology-of-two-dimensions"><i class="fa fa-check"></i><b>9.1</b> The Poincaré-Bendixson Theorem and the Topology of Two Dimensions</a></li>
+<li class="chapter" data-level="9.2" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#limit-cycles-self-sustained-oscillations"><i class="fa fa-check"></i><b>9.2</b> Limit Cycles: Self-Sustained Oscillations</a></li>
+<li class="chapter" data-level="9.3" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#stability-of-limit-cycles-and-floquet-theory"><i class="fa fa-check"></i><b>9.3</b> Stability of Limit Cycles and Floquet Theory</a></li>
+<li class="chapter" data-level="9.4" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#hopf-bifurcations-the-birth-of-oscillations"><i class="fa fa-check"></i><b>9.4</b> Hopf Bifurcations: The Birth of Oscillations</a></li>
+<li class="chapter" data-level="9.5" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#multiple-time-scales-and-relaxation-oscillations"><i class="fa fa-check"></i><b>9.5</b> Multiple Time Scales and Relaxation Oscillations</a></li>
+<li class="chapter" data-level="9.6" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#disease-states-as-dynamical-transitions"><i class="fa fa-check"></i><b>9.6</b> Disease States as Dynamical Transitions</a></li>
+<li class="chapter" data-level="9.7" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#sensitive-dependence-and-the-seeds-of-chaos"><i class="fa fa-check"></i><b>9.7</b> Sensitive Dependence and the Seeds of Chaos</a></li>
+<li class="chapter" data-level="9.8" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-boundary-between-order-and-chaos"><i class="fa fa-check"></i><b>9.8</b> The Boundary Between Order and Chaos</a></li>
+<li class="chapter" data-level="9.9" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#clinical-implications-and-therapeutic-interventions"><i class="fa fa-check"></i><b>9.9</b> Clinical Implications and Therapeutic Interventions</a></li>
+<li class="chapter" data-level="9.10" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#beyond-two-dimensions-the-gateway-to-chaos"><i class="fa fa-check"></i><b>9.10</b> Beyond Two Dimensions: The Gateway to Chaos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Systems Dynamics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#spirals-cycles-and-chaos-complex-behaviors-in-2d-systems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The electrocardiogram trace on the hospital monitor shows a rhythmic pattern—regular peaks and valleys marking each heartbeat with metronomic precision. Yet this apparent regularity masks profound complexity. The heart’s electrical system represents a coupled dynamical system where pacemaker cells, conducting pathways, and muscle tissue interact through nonlinear feedback. When this delicate balance fails, the heart can transition from stable rhythm to dangerous oscillations, from coordinated contraction to chaotic fibrillation. Understanding these transitions—from stability to oscillation, from order to chaos—requires examining the deepest structures of two-dimensional dynamical systems.</p>
+<p>Our previous exploration revealed how coupled differential equations create phase portraits with fixed points, trajectories, and basins of attraction. Now we venture into the behaviors that make two-dimensional systems truly remarkable: self-sustained oscillations that emerge from instability, limit cycles that organize periodic behavior, and the boundary between order and chaos. While true chaos cannot exist in two-dimensional continuous systems, examining this boundary illuminates the mechanisms that generate complex dynamics in higher dimensions.</p>
+<div id="the-poincaré-bendixson-theorem-and-the-topology-of-two-dimensions" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> The Poincaré-Bendixson Theorem and the Topology of Two Dimensions<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-poincaré-bendixson-theorem-and-the-topology-of-two-dimensions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider a trajectory wandering through the two-dimensional phase plane, bounded within some finite region yet never settling to a fixed point. Where can it go? Intuition suggests many possibilities—perhaps intricate wandering patterns, aperiodic meanderings, or unpredictable jumps. The <strong>Poincaré-Bendixson theorem</strong> delivers a stunning constraint: any such trajectory must eventually approach a periodic orbit.</p>
+<p>This theorem represents one of the most profound results in dynamical systems theory. For a two-dimensional continuous-time system, suppose a trajectory remains bounded and doesn’t approach any fixed point. Then the trajectory must either be a closed orbit itself or approach a closed orbit as time goes to infinity. This eliminates an enormous space of potential behaviors—bounded trajectories in two dimensions cannot exhibit chaos, cannot wander aperiodically, cannot display sensitive dependence on initial conditions.</p>
+<p>The proof relies on fundamental topological properties of the plane. Trajectories cannot cross themselves or each other, creating rigid constraints on possible motions. In three or more dimensions, these constraints vanish—trajectories can weave around each other in complex patterns, enabling the strange attractors and chaotic dynamics impossible in two dimensions.</p>
+<p>For systems modeling biological oscillators, the Poincaré-Bendixson theorem provides crucial insight. If a model exhibits sustained bounded oscillations that don’t settle to fixed points, we know these oscillations must be periodic—either exactly periodic closed orbits or trajectories spiraling toward such orbits. This guides our analysis toward understanding limit cycles, their stability, and the bifurcations that create or destroy them.</p>
+</div>
+<div id="limit-cycles-self-sustained-oscillations" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Limit Cycles: Self-Sustained Oscillations<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#limit-cycles-self-sustained-oscillations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Unlike the neutral cycles of conservative systems where amplitude depends on initial conditions, <strong>limit cycles</strong> represent isolated periodic orbits that attract nearby trajectories. They emerge through nonlinear mechanisms that balance destabilizing and stabilizing effects, creating oscillations with fixed amplitude and period determined by system parameters rather than initial conditions.</p>
+<p>The distinction proves crucial for biological systems. The heart cannot function with neutral cycles—slight perturbations would permanently alter beat amplitude and timing. Instead, cardiac oscillations arise from limit cycles where feedback mechanisms restore the system to its natural rhythm after disturbances. This structural stability ensures reliable function despite continuous environmental fluctuations.</p>
+<p>Consider a simplified model of cardiac oscillation using the <strong>FitzHugh-Nagumo equations</strong>, originally developed to capture neural excitability but equally applicable to cardiac dynamics:</p>
+<p><span class="math display">\[\frac{dV}{dt} = c\left(V - \frac{V^3}{3} + R\right)\]</span></p>
+<p><span class="math display">\[\frac{dR}{dt} = -\frac{1}{c}(V - a + bR)\]</span></p>
+<p>Here <span class="math inline">\(V\)</span> represents the membrane potential (analogous to voltage in ECG measurements), <span class="math inline">\(R\)</span> models recovery variables encompassing ion channel dynamics, and the parameters control excitability and oscillation characteristics. The cubic nonlinearity in the first equation creates the essential feedback: at moderate voltages, the system amplifies deviations (positive feedback), while at extreme voltages, it suppresses further increases (negative feedback).</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb180-2"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb180-3"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-3" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb180-4"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb180-5"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-5" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb180-6"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-6" tabindex="-1"></a></span>
+<span id="cb180-7"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-7" tabindex="-1"></a><span class="co"># FitzHugh-Nagumo cardiac oscillator model</span></span>
+<span id="cb180-8"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-8" tabindex="-1"></a>fitzhugh_nagumo <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb180-9"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-9" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb180-10"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-10" tabindex="-1"></a>    dV <span class="ot">&lt;-</span> c <span class="sc">*</span> (V <span class="sc">-</span> V<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">+</span> R)</span>
+<span id="cb180-11"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-11" tabindex="-1"></a>    dR <span class="ot">&lt;-</span> <span class="sc">-</span>(V <span class="sc">-</span> a <span class="sc">+</span> b<span class="sc">*</span>R) <span class="sc">/</span> c</span>
+<span id="cb180-12"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-12" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dV, dR))</span>
+<span id="cb180-13"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-13" tabindex="-1"></a>  })</span>
+<span id="cb180-14"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-14" tabindex="-1"></a>}</span>
+<span id="cb180-15"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-15" tabindex="-1"></a></span>
+<span id="cb180-16"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-16" tabindex="-1"></a><span class="co"># Parameters for limit cycle behavior</span></span>
+<span id="cb180-17"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-17" tabindex="-1"></a>fn_params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">c =</span> <span class="dv">3</span>, <span class="at">a =</span> <span class="fl">0.7</span>, <span class="at">b =</span> <span class="fl">0.8</span>)</span>
+<span id="cb180-18"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-18" tabindex="-1"></a></span>
+<span id="cb180-19"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-19" tabindex="-1"></a><span class="co"># Create vector field</span></span>
+<span id="cb180-20"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-20" tabindex="-1"></a>V_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="at">by =</span> <span class="fl">0.15</span>)</span>
+<span id="cb180-21"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-21" tabindex="-1"></a>R_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.12</span>)</span>
+<span id="cb180-22"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-22" tabindex="-1"></a>vector_field <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">V =</span> V_range, <span class="at">R =</span> R_range)</span>
+<span id="cb180-23"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-23" tabindex="-1"></a></span>
+<span id="cb180-24"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-24" tabindex="-1"></a>vector_field<span class="sc">$</span>dV <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field, </span>
+<span id="cb180-25"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-25" tabindex="-1"></a>  fn_params<span class="sc">$</span>c <span class="sc">*</span> (V <span class="sc">-</span> V<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">+</span> R))</span>
+<span id="cb180-26"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-26" tabindex="-1"></a>vector_field<span class="sc">$</span>dR <span class="ot">&lt;-</span> <span class="fu">with</span>(vector_field, </span>
+<span id="cb180-27"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-27" tabindex="-1"></a>  <span class="sc">-</span>(V <span class="sc">-</span> fn_params<span class="sc">$</span>a <span class="sc">+</span> fn_params<span class="sc">$</span>b<span class="sc">*</span>R) <span class="sc">/</span> fn_params<span class="sc">$</span>c)</span>
+<span id="cb180-28"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-28" tabindex="-1"></a></span>
+<span id="cb180-29"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-29" tabindex="-1"></a><span class="co"># Normalize vectors</span></span>
+<span id="cb180-30"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-30" tabindex="-1"></a>vector_field<span class="sc">$</span>magnitude <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(vector_field<span class="sc">$</span>dV<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> vector_field<span class="sc">$</span>dR<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb180-31"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-31" tabindex="-1"></a>vector_field<span class="sc">$</span>dV_norm <span class="ot">&lt;-</span> vector_field<span class="sc">$</span>dV <span class="sc">/</span> (vector_field<span class="sc">$</span>magnitude <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">*</span> <span class="fl">0.12</span></span>
+<span id="cb180-32"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-32" tabindex="-1"></a>vector_field<span class="sc">$</span>dR_norm <span class="ot">&lt;-</span> vector_field<span class="sc">$</span>dR <span class="sc">/</span> (vector_field<span class="sc">$</span>magnitude <span class="sc">+</span> <span class="fl">0.1</span>) <span class="sc">*</span> <span class="fl">0.12</span></span>
+<span id="cb180-33"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-33" tabindex="-1"></a></span>
+<span id="cb180-34"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-34" tabindex="-1"></a><span class="co"># Integrate trajectory</span></span>
+<span id="cb180-35"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-35" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb180-36"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-36" tabindex="-1"></a>initial_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">V =</span> <span class="fl">0.5</span>, <span class="at">R =</span> <span class="dv">0</span>)</span>
+<span id="cb180-37"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-37" tabindex="-1"></a>trajectory <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> initial_state, <span class="at">times =</span> times, </span>
+<span id="cb180-38"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-38" tabindex="-1"></a>                  <span class="at">func =</span> fitzhugh_nagumo, <span class="at">parms =</span> fn_params)</span>
+<span id="cb180-39"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-39" tabindex="-1"></a>trajectory_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(trajectory)</span>
+<span id="cb180-40"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-40" tabindex="-1"></a></span>
+<span id="cb180-41"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-41" tabindex="-1"></a><span class="co"># Phase portrait</span></span>
+<span id="cb180-42"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-42" tabindex="-1"></a>phase_portrait <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb180-43"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-43" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> vector_field[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(vector_field), <span class="dv">3</span>),],</span>
+<span id="cb180-44"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-44" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> R, <span class="at">xend =</span> V <span class="sc">+</span> dV_norm, <span class="at">yend =</span> R <span class="sc">+</span> dR_norm),</span>
+<span id="cb180-45"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-45" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)),</span>
+<span id="cb180-46"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-46" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb180-47"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-47" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> trajectory_df, <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> R),</span>
+<span id="cb180-48"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-48" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb180-49"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-49" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> trajectory_df[<span class="dv">1</span>,], <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> R),</span>
+<span id="cb180-50"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-50" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;green&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb180-51"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-51" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">tail</span>(trajectory_df, <span class="dv">1</span>), <span class="fu">aes</span>(<span class="at">x =</span> V, <span class="at">y =</span> R),</span>
+<span id="cb180-52"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-52" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb180-53"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-53" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cardiac Oscillator: FitzHugh-Nagumo Limit Cycle&quot;</span>,</span>
+<span id="cb180-54"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-54" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Membrane Potential (V)&quot;</span>,</span>
+<span id="cb180-55"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-55" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Recovery Variable (R)&quot;</span>,</span>
+<span id="cb180-56"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-56" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Trajectory spirals toward stable periodic orbit&quot;</span>) <span class="sc">+</span></span>
+<span id="cb180-57"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-57" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb180-58"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-58" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb180-59"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-59" tabindex="-1"></a></span>
+<span id="cb180-60"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-60" tabindex="-1"></a><span class="co"># Time series showing ECG-like pattern</span></span>
+<span id="cb180-61"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-61" tabindex="-1"></a>timeseries_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(trajectory_df, <span class="fu">aes</span>(<span class="at">x =</span> time)) <span class="sc">+</span></span>
+<span id="cb180-62"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-62" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> V), <span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb180-63"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-63" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Simulated ECG Pattern&quot;</span>,</span>
+<span id="cb180-64"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-64" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Time (arbitrary units)&quot;</span>,</span>
+<span id="cb180-65"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-65" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Voltage (V)&quot;</span>,</span>
+<span id="cb180-66"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-66" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Self-sustained oscillations mimic cardiac rhythm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb180-67"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-67" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb180-68"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-68" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb180-69"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-69" tabindex="-1"></a></span>
+<span id="cb180-70"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb180-70" tabindex="-1"></a><span class="fu">print</span>(phase_portrait)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb181-1" tabindex="-1"></a><span class="fu">print</span>(timeseries_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-44-2.png" width="672" /></p>
+<p>The phase portrait reveals the limit cycle’s geometric structure. Trajectories starting near the unstable fixed point spiral outward as instability dominates. Trajectories starting far from the fixed point spiral inward as the cubic term’s damping effect prevails. Both converge to the same closed orbit—the limit cycle—where amplification and damping balance perfectly.</p>
+<p>The corresponding time series displays the characteristic shape of cardiac action potentials: rapid upstroke (depolarization), plateau phase, and gradual recovery. This pattern emerges not from external forcing but from the system’s internal dynamics, illustrating how limit cycles generate autonomous rhythms.</p>
+</div>
+<div id="stability-of-limit-cycles-and-floquet-theory" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Stability of Limit Cycles and Floquet Theory<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#stability-of-limit-cycles-and-floquet-theory" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Determining whether a periodic orbit attracts or repels nearby trajectories requires analyzing perturbations in directions transverse to the flow. <strong>Floquet theory</strong> provides the mathematical framework. Consider a small perturbation <span class="math inline">\(\delta(t)\)</span> from the periodic orbit <span class="math inline">\(\mathbf{x}_0(t)\)</span> with period <span class="math inline">\(T\)</span>. The linearized dynamics satisfy:</p>
+<p><span class="math display">\[\frac{d\delta}{dt} = \mathbf{J}(\mathbf{x}_0(t))\delta\]</span></p>
+<p>where <span class="math inline">\(\mathbf{J}\)</span> is the Jacobian matrix evaluated along the periodic orbit. This linear equation with periodic coefficients admits solutions of the form <span class="math inline">\(\delta(t) = e^{\mu t}\mathbf{p}(t)\)</span> where <span class="math inline">\(\mathbf{p}(t)\)</span> is periodic with period <span class="math inline">\(T\)</span>. The <strong>Floquet exponents</strong> <span class="math inline">\(\mu\)</span> determine stability: if all exponents (except the trivial zero exponent corresponding to perturbations along the orbit) have negative real parts, the limit cycle is stable.</p>
+<p>For limit cycles in two-dimensional systems, one Floquet exponent is always zero (perturbations along the orbit neither grow nor decay), leaving one non-trivial exponent. If this exponent is negative, the limit cycle attracts nearby trajectories; if positive, it repels them. Computing Floquet exponents generally requires numerical integration around the entire periodic orbit, though special cases admit analytical treatment.</p>
+</div>
+<div id="hopf-bifurcations-the-birth-of-oscillations" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Hopf Bifurcations: The Birth of Oscillations<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#hopf-bifurcations-the-birth-of-oscillations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One of the most important mechanisms creating limit cycles is the <strong>Hopf bifurcation</strong>, where a fixed point loses stability and spawns a periodic orbit as parameters vary. This bifurcation explains transitions between steady states and oscillatory behavior throughout science—from chemical reactions that suddenly begin oscillating as concentrations change, to ecosystems shifting from stable equilibrium to population cycles, to cardiac systems transitioning from normal rhythm to abnormal oscillations.</p>
+<p>Consider how parameter changes in the FitzHugh-Nagumo model affect dynamics. At certain parameter values, the fixed point is stable—all trajectories spiral inward to rest. As we vary the parameter <span class="math inline">\(a\)</span> (representing external current or stimulus), the fixed point’s stability can change. At the critical value where eigenvalues become purely imaginary, a Hopf bifurcation occurs, and a limit cycle emerges.</p>
+<p>In a <strong>supercritical Hopf bifurcation</strong>, the limit cycle appears continuously as the parameter crosses the critical value, with small amplitude near the bifurcation point growing smoothly as parameters move further from criticality. This represents a “soft” transition to oscillation. In a <strong>subcritical Hopf bifurcation</strong>, an unstable limit cycle exists before the bifurcation, and the transition to stable oscillation occurs discontinuously—a “hard” transition that can lead to sudden large-amplitude oscillations.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-1" tabindex="-1"></a><span class="co"># Demonstrate Hopf bifurcation by varying parameter</span></span>
+<span id="cb182-2"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-2" tabindex="-1"></a>a_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb182-3"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-3" tabindex="-1"></a>max_amplitudes <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(a_values))</span>
+<span id="cb182-4"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-4" tabindex="-1"></a></span>
+<span id="cb182-5"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-5" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(a_values)) {</span>
+<span id="cb182-6"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-6" tabindex="-1"></a>  params_temp <span class="ot">&lt;-</span> fn_params</span>
+<span id="cb182-7"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-7" tabindex="-1"></a>  params_temp<span class="sc">$</span>a <span class="ot">&lt;-</span> a_values[i]</span>
+<span id="cb182-8"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-8" tabindex="-1"></a>  </span>
+<span id="cb182-9"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-9" tabindex="-1"></a>  <span class="co"># Integrate for long time to reach attractor</span></span>
+<span id="cb182-10"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-10" tabindex="-1"></a>  times_long <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb182-11"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-11" tabindex="-1"></a>  traj_temp <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="at">V =</span> <span class="fl">0.5</span>, <span class="at">R =</span> <span class="dv">0</span>), <span class="at">times =</span> times_long,</span>
+<span id="cb182-12"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-12" tabindex="-1"></a>                   <span class="at">func =</span> fitzhugh_nagumo, <span class="at">parms =</span> params_temp)</span>
+<span id="cb182-13"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-13" tabindex="-1"></a>  </span>
+<span id="cb182-14"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-14" tabindex="-1"></a>  <span class="co"># Extract last period to measure amplitude</span></span>
+<span id="cb182-15"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-15" tabindex="-1"></a>  last_segment <span class="ot">&lt;-</span> <span class="fu">tail</span>(traj_temp, <span class="dv">200</span>)</span>
+<span id="cb182-16"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-16" tabindex="-1"></a>  max_amplitudes[i] <span class="ot">&lt;-</span> <span class="fu">max</span>(last_segment[, <span class="st">&quot;V&quot;</span>]) <span class="sc">-</span> <span class="fu">min</span>(last_segment[, <span class="st">&quot;V&quot;</span>])</span>
+<span id="cb182-17"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-17" tabindex="-1"></a>}</span>
+<span id="cb182-18"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-18" tabindex="-1"></a></span>
+<span id="cb182-19"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-19" tabindex="-1"></a>bifurcation_diagram <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> a_values, <span class="at">amplitude =</span> max_amplitudes)</span>
+<span id="cb182-20"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-20" tabindex="-1"></a></span>
+<span id="cb182-21"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-21" tabindex="-1"></a>bifurcation_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bifurcation_diagram, <span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> amplitude)) <span class="sc">+</span></span>
+<span id="cb182-22"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-22" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb182-23"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-23" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb182-24"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-24" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.65</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb182-25"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-25" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="dv">3</span>, <span class="at">label =</span> <span class="st">&quot;Stable</span><span class="sc">\n</span><span class="st">Fixed Point&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb182-26"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-26" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">0.85</span>, <span class="at">y =</span> <span class="dv">3</span>, <span class="at">label =</span> <span class="st">&quot;Limit Cycle</span><span class="sc">\n</span><span class="st">Oscillations&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb182-27"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Hopf Bifurcation in Cardiac Model&quot;</span>,</span>
+<span id="cb182-28"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-28" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Parameter a (stimulus strength)&quot;</span>,</span>
+<span id="cb182-29"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-29" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Oscillation Amplitude&quot;</span>,</span>
+<span id="cb182-30"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-30" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Transition from steady state to rhythmic beating&quot;</span>) <span class="sc">+</span></span>
+<span id="cb182-31"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-31" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb182-32"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-32" tabindex="-1"></a></span>
+<span id="cb182-33"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb182-33" tabindex="-1"></a><span class="fu">print</span>(bifurcation_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>This bifurcation diagram reveals how the system transitions from quiescence to oscillation. At low stimulus values (small <span class="math inline">\(a\)</span>), the system remains at a stable fixed point representing cardiac rest. As stimulus increases past the critical value, oscillations emerge—the heart begins to beat. The amplitude grows smoothly with further parameter increase, characteristic of supercritical Hopf bifurcation.</p>
+<p>Understanding Hopf bifurcations proves crucial for clinical applications. Cardiac arrhythmias often arise when parameters (ion channel properties, autonomic tone, metabolic state) push the system through bifurcations. Interventions aim to shift parameters back across bifurcation boundaries, restoring normal rhythm.</p>
+</div>
+<div id="multiple-time-scales-and-relaxation-oscillations" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Multiple Time Scales and Relaxation Oscillations<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#multiple-time-scales-and-relaxation-oscillations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many biological oscillators exhibit dynamics on widely separated time scales, creating <strong>relaxation oscillations</strong> characterized by alternating slow and fast phases. The cardiac action potential demonstrates this clearly: rapid depolarization occurs on millisecond time scales, while recovery unfolds over hundreds of milliseconds.</p>
+<p>The FitzHugh-Nagumo model captures this through the parameter <span class="math inline">\(c\)</span>, which controls the time scale separation between the fast voltage variable <span class="math inline">\(V\)</span> and the slow recovery variable <span class="math inline">\(R\)</span>. When <span class="math inline">\(c\)</span> is large, the system exhibits rapid voltage changes interspersed with slow recovery periods, producing the characteristic relaxation oscillation shape.</p>
+<p>Analyzing relaxation oscillations often employs <strong>singular perturbation theory</strong>, treating the system as alternating between fast dynamics (where slow variables remain essentially constant) and slow dynamics (where fast variables quickly equilibrate). This decomposition transforms complex two-dimensional dynamics into a sequence of one-dimensional problems, providing geometric insight into oscillation mechanisms.</p>
+<p>The <strong>slow manifold</strong>—the curve in phase space where fast dynamics equilibrate—organizes relaxation oscillations. Trajectories rapidly approach this manifold (fast phase), then slowly evolve along it (slow phase), periodically jumping to different manifold branches when reaching fold points. Understanding this geometry illuminates how oscillation amplitude and frequency depend on system parameters.</p>
+</div>
+<div id="disease-states-as-dynamical-transitions" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> Disease States as Dynamical Transitions<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#disease-states-as-dynamical-transitions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Cardiac pathologies often manifest as transitions between different dynamical regimes. <strong>Atrial fibrillation</strong>, the most common cardiac arrhythmia, represents a transition from organized periodic dynamics to high-frequency irregular activity. While the full complexity requires three-dimensional or higher models, two-dimensional systems reveal the underlying mechanisms.</p>
+<p>Consider a modified FitzHugh-Nagumo model incorporating <strong>refractory period dynamics</strong>—the time after excitation during which tissue cannot immediately re-excite:</p>
+<p><span class="math display">\[\frac{dV}{dt} = c(V - \frac{V^3}{3} + R) - I_{block}(V, T_{refract})\]</span></p>
+<p><span class="math display">\[\frac{dR}{dt} = -\frac{1}{c}(V - a + bR)\]</span></p>
+<p>The term <span class="math inline">\(I_{block}\)</span> models refractoriness, preventing immediate re-excitation. When refractory periods shorten (due to disease, drugs, or metabolic changes), the system can undergo bifurcations creating rapid oscillations or irregular dynamics.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-1" tabindex="-1"></a><span class="co"># Modified model with refractory dynamics</span></span>
+<span id="cb183-2"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-2" tabindex="-1"></a>fitzhugh_refractory <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb183-3"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb183-4"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-4" tabindex="-1"></a>    <span class="co"># Add refractory blocking current</span></span>
+<span id="cb183-5"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-5" tabindex="-1"></a>    I_block <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(V <span class="sc">&gt;</span> <span class="fl">0.5</span> <span class="sc">&amp;</span> R <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">0.3</span>, block_strength <span class="sc">*</span> V, <span class="dv">0</span>)</span>
+<span id="cb183-6"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-6" tabindex="-1"></a>    </span>
+<span id="cb183-7"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-7" tabindex="-1"></a>    dV <span class="ot">&lt;-</span> c <span class="sc">*</span> (V <span class="sc">-</span> V<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">+</span> R) <span class="sc">-</span> I_block</span>
+<span id="cb183-8"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-8" tabindex="-1"></a>    dR <span class="ot">&lt;-</span> <span class="sc">-</span>(V <span class="sc">-</span> a <span class="sc">+</span> b<span class="sc">*</span>R) <span class="sc">/</span> c</span>
+<span id="cb183-9"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-9" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dV, dR))</span>
+<span id="cb183-10"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-10" tabindex="-1"></a>  })</span>
+<span id="cb183-11"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-11" tabindex="-1"></a>}</span>
+<span id="cb183-12"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-12" tabindex="-1"></a></span>
+<span id="cb183-13"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-13" tabindex="-1"></a><span class="co"># Parameters for different disease states</span></span>
+<span id="cb183-14"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-14" tabindex="-1"></a>normal_params <span class="ot">&lt;-</span> <span class="fu">c</span>(fn_params, <span class="fu">list</span>(<span class="at">block_strength =</span> <span class="fl">0.3</span>))</span>
+<span id="cb183-15"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-15" tabindex="-1"></a>disease_params <span class="ot">&lt;-</span> <span class="fu">c</span>(fn_params, <span class="fu">list</span>(<span class="at">block_strength =</span> <span class="fl">0.05</span>))</span>
+<span id="cb183-16"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-16" tabindex="-1"></a></span>
+<span id="cb183-17"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-17" tabindex="-1"></a><span class="co"># Compare trajectories</span></span>
+<span id="cb183-18"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-18" tabindex="-1"></a>times_compare <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb183-19"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-19" tabindex="-1"></a></span>
+<span id="cb183-20"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-20" tabindex="-1"></a>traj_normal <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="at">V =</span> <span class="fl">0.5</span>, <span class="at">R =</span> <span class="dv">0</span>), <span class="at">times =</span> times_compare,</span>
+<span id="cb183-21"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-21" tabindex="-1"></a>                   <span class="at">func =</span> fitzhugh_refractory, <span class="at">parms =</span> normal_params)</span>
+<span id="cb183-22"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-22" tabindex="-1"></a>traj_disease <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="at">V =</span> <span class="fl">0.5</span>, <span class="at">R =</span> <span class="dv">0</span>), <span class="at">times =</span> times_compare,</span>
+<span id="cb183-23"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-23" tabindex="-1"></a>                    <span class="at">func =</span> fitzhugh_refractory, <span class="at">parms =</span> disease_params)</span>
+<span id="cb183-24"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-24" tabindex="-1"></a></span>
+<span id="cb183-25"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-25" tabindex="-1"></a>traj_normal_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(traj_normal)</span>
+<span id="cb183-26"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-26" tabindex="-1"></a>traj_disease_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(traj_disease)</span>
+<span id="cb183-27"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-27" tabindex="-1"></a></span>
+<span id="cb183-28"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-28" tabindex="-1"></a><span class="co"># Time series comparison</span></span>
+<span id="cb183-29"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-29" tabindex="-1"></a>compare_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb183-30"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-30" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> traj_normal_df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> V, <span class="at">color =</span> <span class="st">&quot;Normal&quot;</span>),</span>
+<span id="cb183-31"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-31" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb183-32"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-32" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> traj_disease_df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> V, <span class="at">color =</span> <span class="st">&quot;Disease&quot;</span>),</span>
+<span id="cb183-33"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-33" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb183-34"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-34" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Normal&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;Disease&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkred&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb183-35"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-35" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cardiac Dynamics: Normal vs. Disease State&quot;</span>,</span>
+<span id="cb183-36"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-36" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb183-37"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-37" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Voltage (V)&quot;</span>,</span>
+<span id="cb183-38"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-38" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;State&quot;</span>,</span>
+<span id="cb183-39"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-39" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Shortened refractoriness leads to rapid irregular activity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb183-40"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-40" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb183-41"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-41" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb183-42"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-42" tabindex="-1"></a></span>
+<span id="cb183-43"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb183-43" tabindex="-1"></a><span class="fu">print</span>(compare_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p>The comparison reveals how parameter changes representing pathological states alter oscillation patterns. Normal parameters produce regular, widely-spaced beats with appropriate refractory periods. Disease parameters generate rapid, irregular oscillations as shortened refractoriness allows premature re-excitation.</p>
+<p>This framework guides therapeutic strategies. Anti-arrhythmic drugs often work by shifting bifurcation parameters, lengthening refractory periods or modifying excitability to restore stable rhythmic dynamics. Understanding the dynamical mechanisms enables rational drug design and optimal dosing.</p>
+</div>
+<div id="sensitive-dependence-and-the-seeds-of-chaos" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> Sensitive Dependence and the Seeds of Chaos<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#sensitive-dependence-and-the-seeds-of-chaos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While two-dimensional continuous systems cannot exhibit chaos, they can display <strong>sensitive dependence on initial conditions</strong> near certain structures. Consider trajectories near a saddle point—nearby trajectories diverge exponentially along the unstable manifold while converging along the stable manifold. This creates effective unpredictability: small measurement errors in initial conditions lead to large differences in subsequent behavior.</p>
+<p>The <strong>Lyapunov exponent</strong> quantifies this sensitivity, measuring the average exponential rate of trajectory separation:</p>
+<p><span class="math display">\[\lambda = \lim_{t \to \infty} \frac{1}{t} \ln \frac{|\delta(t)|}{|\delta(0)|}\]</span></p>
+<p>where <span class="math inline">\(\delta(t)\)</span> represents the separation between initially nearby trajectories. Positive Lyapunov exponents indicate exponential divergence (sensitivity), while negative exponents indicate convergence. For two-dimensional systems, the sum of Lyapunov exponents equals the trace of the Jacobian matrix averaged along the trajectory, constraining possible dynamics.</p>
+<p>True chaos requires at least one positive Lyapunov exponent, at least one zero exponent (along the flow direction), and system volume contraction (sum of exponents negative). Two-dimensional systems can achieve at most one positive exponent at isolated locations (near saddles), insufficient for sustained chaotic behavior.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-1" tabindex="-1"></a><span class="co"># Load libraries</span></span>
+<span id="cb184-2"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;deSolve&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;deSolve&quot;</span>)</span>
+<span id="cb184-3"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-3" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ggplot2&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb184-4"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-4" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb184-5"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb184-6"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-6" tabindex="-1"></a></span>
+<span id="cb184-7"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-7" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb184-8"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-8" tabindex="-1"></a>fn_params <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fl">0.7</span>, <span class="at">b =</span> <span class="fl">0.8</span>, <span class="at">c =</span> <span class="fl">3.0</span>)</span>
+<span id="cb184-9"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-9" tabindex="-1"></a></span>
+<span id="cb184-10"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-10" tabindex="-1"></a><span class="co"># FitzHugh-Nagumo ODE system</span></span>
+<span id="cb184-11"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-11" tabindex="-1"></a>fitzhugh_nagumo <span class="ot">&lt;-</span> <span class="cf">function</span>(t, y, parms) {</span>
+<span id="cb184-12"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-12" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(y, parms)), {</span>
+<span id="cb184-13"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-13" tabindex="-1"></a>    dV <span class="ot">&lt;-</span> c <span class="sc">*</span> (V <span class="sc">-</span> V<span class="sc">^</span><span class="dv">3</span> <span class="sc">/</span> <span class="dv">3</span> <span class="sc">+</span> R)</span>
+<span id="cb184-14"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-14" tabindex="-1"></a>    dR <span class="ot">&lt;-</span> <span class="sc">-</span>(V <span class="sc">-</span> a <span class="sc">+</span> b <span class="sc">*</span> R) <span class="sc">/</span> c</span>
+<span id="cb184-15"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-15" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dV, dR))</span>
+<span id="cb184-16"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-16" tabindex="-1"></a>  })</span>
+<span id="cb184-17"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-17" tabindex="-1"></a>}</span>
+<span id="cb184-18"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-18" tabindex="-1"></a></span>
+<span id="cb184-19"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-19" tabindex="-1"></a><span class="co"># Find fixed point numerically (robust)</span></span>
+<span id="cb184-20"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-20" tabindex="-1"></a>find_fixed_point <span class="ot">&lt;-</span> <span class="cf">function</span>(p) {</span>
+<span id="cb184-21"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-21" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="cf">function</span>(V) {</span>
+<span id="cb184-22"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-22" tabindex="-1"></a>    R <span class="ot">&lt;-</span> V<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">-</span> V</span>
+<span id="cb184-23"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-23" tabindex="-1"></a>    V <span class="sc">-</span> p<span class="sc">$</span>a <span class="sc">+</span> p<span class="sc">$</span>b <span class="sc">*</span> R</span>
+<span id="cb184-24"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-24" tabindex="-1"></a>  }</span>
+<span id="cb184-25"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-25" tabindex="-1"></a>  V_fp <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(f, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>))<span class="sc">$</span>root</span>
+<span id="cb184-26"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-26" tabindex="-1"></a>  R_fp <span class="ot">&lt;-</span> V_fp<span class="sc">^</span><span class="dv">3</span><span class="sc">/</span><span class="dv">3</span> <span class="sc">-</span> V_fp</span>
+<span id="cb184-27"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-27" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">V =</span> V_fp, <span class="at">R =</span> R_fp)</span>
+<span id="cb184-28"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-28" tabindex="-1"></a>}</span>
+<span id="cb184-29"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-29" tabindex="-1"></a></span>
+<span id="cb184-30"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-30" tabindex="-1"></a>fp <span class="ot">&lt;-</span> <span class="fu">find_fixed_point</span>(fn_params)</span>
+<span id="cb184-31"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-31" tabindex="-1"></a></span>
+<span id="cb184-32"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-32" tabindex="-1"></a><span class="co"># Jacobian</span></span>
+<span id="cb184-33"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-33" tabindex="-1"></a>jacobian_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(V, R, params) {</span>
+<span id="cb184-34"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-34" tabindex="-1"></a>  <span class="fu">with</span>(params, {</span>
+<span id="cb184-35"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-35" tabindex="-1"></a>    <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb184-36"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-36" tabindex="-1"></a>      c <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> V<span class="sc">^</span><span class="dv">2</span>),  c,</span>
+<span id="cb184-37"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-37" tabindex="-1"></a>      <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>c,          <span class="sc">-</span>b<span class="sc">/</span>c</span>
+<span id="cb184-38"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-38" tabindex="-1"></a>    ), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb184-39"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-39" tabindex="-1"></a>  })</span>
+<span id="cb184-40"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-40" tabindex="-1"></a>}</span>
+<span id="cb184-41"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-41" tabindex="-1"></a></span>
+<span id="cb184-42"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-42" tabindex="-1"></a>J <span class="ot">&lt;-</span> <span class="fu">jacobian_fn</span>(fp[<span class="dv">1</span>], fp[<span class="dv">2</span>], fn_params)</span>
+<span id="cb184-43"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-43" tabindex="-1"></a>eigenvals <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J)<span class="sc">$</span>values</span>
+<span id="cb184-44"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-44" tabindex="-1"></a>lyap <span class="ot">&lt;-</span> <span class="fu">Re</span>(eigenvals)</span>
+<span id="cb184-45"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-45" tabindex="-1"></a></span>
+<span id="cb184-46"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb184-46" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Fixed point: V =&quot;</span>, fp[<span class="dv">1</span>], <span class="st">&quot;, R =&quot;</span>, fp[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Fixed point: V = 1.199408 , R = -0.6242602</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb186-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Lyapunov exponents:&quot;</span>, lyap, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## Lyapunov exponents: -0.7912014 -0.7912014</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-1" tabindex="-1"></a><span class="co"># Simulate nearby trajectories</span></span>
+<span id="cb188-2"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-2" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb188-3"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-3" tabindex="-1"></a>y0_plus  <span class="ot">&lt;-</span> <span class="fu">c</span>(fp[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.01</span>, fp[<span class="dv">2</span>])</span>
+<span id="cb188-4"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-4" tabindex="-1"></a>y0_minus <span class="ot">&lt;-</span> <span class="fu">c</span>(fp[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.01</span>, fp[<span class="dv">2</span>])</span>
+<span id="cb188-5"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-5" tabindex="-1"></a></span>
+<span id="cb188-6"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-6" tabindex="-1"></a><span class="co"># Run ODEs</span></span>
+<span id="cb188-7"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-7" tabindex="-1"></a>out1 <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> y0_plus,  <span class="at">times =</span> times, <span class="at">func =</span> fitzhugh_nagumo, <span class="at">parms =</span> fn_params)</span>
+<span id="cb188-8"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-8" tabindex="-1"></a>out2 <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">y =</span> y0_minus, <span class="at">times =</span> times, <span class="at">func =</span> fitzhugh_nagumo, <span class="at">parms =</span> fn_params)</span>
+<span id="cb188-9"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-9" tabindex="-1"></a></span>
+<span id="cb188-10"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-10" tabindex="-1"></a><span class="co"># 🔑 CRITICAL FIX: ode() may return a matrix with columns &quot;time&quot;, &quot;1&quot;, &quot;2&quot;</span></span>
+<span id="cb188-11"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-11" tabindex="-1"></a><span class="co"># So we CONVERT TO DATA FRAME and SET COLUMN NAMES EXPLICITLY</span></span>
+<span id="cb188-12"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-12" tabindex="-1"></a>traj1_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(out1)</span>
+<span id="cb188-13"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-13" tabindex="-1"></a>traj2_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(out2)</span>
+<span id="cb188-14"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-14" tabindex="-1"></a></span>
+<span id="cb188-15"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-15" tabindex="-1"></a><span class="co"># Force correct column names</span></span>
+<span id="cb188-16"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-16" tabindex="-1"></a><span class="fu">names</span>(traj1_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;time&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;R&quot;</span>)</span>
+<span id="cb188-17"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-17" tabindex="-1"></a><span class="fu">names</span>(traj2_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;time&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;R&quot;</span>)</span>
+<span id="cb188-18"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-18" tabindex="-1"></a></span>
+<span id="cb188-19"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-19" tabindex="-1"></a><span class="co"># Now compute separation — V and R are guaranteed to exist</span></span>
+<span id="cb188-20"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-20" tabindex="-1"></a>separation <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((traj1_df<span class="sc">$</span>V <span class="sc">-</span> traj2_df<span class="sc">$</span>V)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (traj1_df<span class="sc">$</span>R <span class="sc">-</span> traj2_df<span class="sc">$</span>R)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb188-21"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-21" tabindex="-1"></a>separation_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> traj1_df<span class="sc">$</span>time, <span class="at">separation =</span> separation)</span>
+<span id="cb188-22"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-22" tabindex="-1"></a></span>
+<span id="cb188-23"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-23" tabindex="-1"></a><span class="co"># Remove non-positive separations (log(0) = -Inf)</span></span>
+<span id="cb188-24"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-24" tabindex="-1"></a>separation_df <span class="ot">&lt;-</span> separation_df[separation_df<span class="sc">$</span>separation <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<span id="cb188-25"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-25" tabindex="-1"></a></span>
+<span id="cb188-26"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-26" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb188-27"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-27" tabindex="-1"></a><span class="fu">ggplot</span>(separation_df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> <span class="fu">log</span>(separation))) <span class="sc">+</span></span>
+<span id="cb188-28"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-28" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;darkblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb188-29"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-29" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb188-30"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-30" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb188-31"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-31" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Trajectory Divergence Near Saddle Point&quot;</span>,</span>
+<span id="cb188-32"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-32" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Time&quot;</span>,</span>
+<span id="cb188-33"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-33" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Log(Separation)&quot;</span></span>
+<span id="cb188-34"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-34" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb188-35"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#cb188-35" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>The logarithmic plot of trajectory separation reveals exponential divergence near the unstable fixed point. The slope of this plot estimates the local Lyapunov exponent, quantifying sensitivity to initial conditions. However, this sensitivity remains localized—trajectories eventually spiral toward the limit cycle where convergence dominates.</p>
+<p>This demonstrates a crucial distinction between local sensitivity and global chaos. Two-dimensional systems can exhibit transient sensitivity near saddle points or unstable cycles, but bounded trajectories ultimately converge to attractors where sensitivity vanishes. True chaos requires sustained sensitivity, impossible in two dimensions.</p>
+</div>
+<div id="the-boundary-between-order-and-chaos" class="section level2 hasAnchor" number="9.8">
+<h2><span class="header-section-number">9.8</span> The Boundary Between Order and Chaos<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-boundary-between-order-and-chaos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As we approach the limits of two-dimensional dynamics, we encounter phenomena hinting at higher-dimensional complexity. <strong>Homoclinic orbits</strong>—trajectories that leave and return to the same saddle point—create intricate phase space structures. When parameters vary, these orbits can undergo homoclinic bifurcations, spawning complex dynamics including saddle-node bifurcations of periodic orbits and the sudden appearance or disappearance of limit cycles.</p>
+<p>Systems exhibiting homoclinic tangencies (where stable and unstable manifolds touch tangentially) display particularly rich behavior. Small parameter changes can create infinite cascades of period-doubling bifurcations—each periodic orbit splitting into two as parameters vary. While individual systems remain non-chaotic, the bifurcation sequence converges to what would be a chaotic attractor in the three-dimensional version of the system.</p>
+<p>These structures provide crucial preparation for understanding chaos in higher dimensions. The geometric concepts—stable and unstable manifolds, homoclinic connections, bifurcation cascades—extend directly to three-dimensional systems where they generate strange attractors and sustained chaotic dynamics.</p>
+</div>
+<div id="clinical-implications-and-therapeutic-interventions" class="section level2 hasAnchor" number="9.9">
+<h2><span class="header-section-number">9.9</span> Clinical Implications and Therapeutic Interventions<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#clinical-implications-and-therapeutic-interventions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Understanding cardiac dynamics as a two-dimensional system informs clinical practice in profound ways. <strong>Heart rate variability analysis</strong> examines the time series of inter-beat intervals, revealing signatures of underlying dynamical changes. Healthy hearts show complex variability reflecting autonomic nervous system modulation and adaptive responses. Reduced variability often precedes adverse events, suggesting the system has moved toward a less flexible dynamical regime.</p>
+<p><strong>Cardiac pacing</strong> represents direct dynamical intervention. By delivering periodic electrical stimuli, pacemakers inject external forcing into the cardiac system. Analyzing the forced system requires understanding how external periodic inputs interact with intrinsic dynamics—potentially creating resonances, entrainment to forcing frequency, or complex quasi-periodic responses.</p>
+<p>Modern <strong>defibrillation</strong> strategies increasingly incorporate dynamical systems concepts. Rather than delivering massive shocks that reset all tissue simultaneously, newer approaches use low-energy perturbations timed to exploit system dynamics, pushing the system across basin boundaries toward normal rhythm with minimal energy.</p>
+<p>The field of <strong>cardiac chaos control</strong> develops from these insights. When cardiac tissue exhibits chaotic or near-chaotic dynamics, small well-timed perturbations can stabilize desired periodic orbits, restoring regular rhythm. This represents dynamical therapy—using understanding of system structure to guide minimal interventions maximizing therapeutic effect.</p>
+</div>
+<div id="beyond-two-dimensions-the-gateway-to-chaos" class="section level2 hasAnchor" number="9.10">
+<h2><span class="header-section-number">9.10</span> Beyond Two Dimensions: The Gateway to Chaos<a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#beyond-two-dimensions-the-gateway-to-chaos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our exploration of two-dimensional systems reveals both their richness and their limitations. We have encountered limit cycles creating self-sustained oscillations, Hopf bifurcations generating rhythms from steady states, relaxation oscillations with multiple time scales, and sensitive dependence near unstable structures. Yet the Poincaré-Bendixson theorem constrains us—true chaos remains forbidden.</p>
+<p>This limitation disappears in three dimensions, where the topological constraints vanish. Trajectories can weave around each other without crossing, stable and unstable manifolds can intersect transversely creating homoclinic tangles, and strange attractors with fractal structure emerge. The concepts developed in two dimensions—phase space geometry, stability analysis, bifurcation theory, Lyapunov exponents—provide the essential foundation for understanding these higher-dimensional phenomena.</p>
+<p>The cardiac system, in reality, involves far more than two variables. Spatial extent, multiple ionic currents, autonomic modulation, and mechanical coupling create high-dimensional dynamics where chaos becomes possible. The two-dimensional models serve as conceptual frameworks, isolating essential mechanisms while acknowledging that full complexity requires higher-dimensional analysis.</p>
+<p>As we prepare to venture into three dimensions and beyond, we carry with us the geometric intuition developed here—the ability to read phase portraits, understand how stability changes create new behaviors, recognize the signatures of different attractors, and appreciate how simple rules generate complex patterns. The two-dimensional phase plane has been our training ground, preparing us for the even more exotic and beautiful structures that await in the full richness of nonlinear dynamics.</p>
+<p>The journey from fixed points to limit cycles to the edge of chaos reveals a profound truth: complexity emerges not from complicated equations but from nonlinear feedback between simple elements. Two coupled variables, properly connected, generate rhythms, transitions, and the seeds of unpredictability. This principle extends throughout nature—from molecules to cells to organisms to ecosystems—wherever feedback creates the dynamic patterns underlying life itself.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="finding-balance-equilibrium-points-and-linear-stability.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/edit/main/08-Spiral.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/blob/main/08-Spiral.Rmd",
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
