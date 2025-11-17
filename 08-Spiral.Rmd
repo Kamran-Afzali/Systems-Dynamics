@@ -32,72 +32,108 @@ Here $V$ represents the membrane potential (analogous to voltage in ECG measurem
 # Load required libraries
 library(ggplot2)
 library(deSolve)
-library(gridExtra)
-library(viridis)
 
-# FitzHugh-Nagumo cardiac oscillator model
+# ------------------------------------------------------------
+# FitzHugh–Nagumo Model (canonical nondimensional form)
+# ------------------------------------------------------------
 fitzhugh_nagumo <- function(t, state, parameters) {
-  with(as.list(c(state, parameters)), {
-    dV <- c * (V - V^3/3 + R)
-    dR <- -(V - a + b*R) / c
-    list(c(dV, dR))
-  })
+  V <- state["V"]
+  R <- state["R"]
+
+  c_param <- parameters[["c"]]
+  a <- parameters[["a"]]
+  b <- parameters[["b"]]
+
+  dV <- V - V^3/3 - R
+  dR <- (V + a - b*R) / c_param
+
+  list(c(dV, dR))
 }
 
-# Parameters for limit cycle behavior
+# Parameters generating a stable limit cycle
 fn_params <- list(c = 3, a = 0.7, b = 0.8)
 
-# Create vector field
+# ------------------------------------------------------------
+# Vector field grid
+# ------------------------------------------------------------
 V_range <- seq(-2.5, 2.5, by = 0.15)
-R_range <- seq(-2, 2, by = 0.12)
+R_range <- seq(-2,  2,  by = 0.12)
+
 vector_field <- expand.grid(V = V_range, R = R_range)
 
-vector_field$dV <- with(vector_field, 
-  fn_params$c * (V - V^3/3 + R))
-vector_field$dR <- with(vector_field, 
-  -(V - fn_params$a + fn_params$b*R) / fn_params$c)
+# Compute derivatives
+vector_field$dV <- with(vector_field, V - V^3/3 - R)
+vector_field$dR <- with(vector_field, (V + fn_params$a - fn_params$b*R) / fn_params$c)
 
-# Normalize vectors
-vector_field$magnitude <- sqrt(vector_field$dV^2 + vector_field$dR^2)
-vector_field$dV_norm <- vector_field$dV / (vector_field$magnitude + 0.1) * 0.12
-vector_field$dR_norm <- vector_field$dR / (vector_field$magnitude + 0.1) * 0.12
+# Normalize vectors for visualization
+mag <- sqrt(vector_field$dV^2 + vector_field$dR^2)
+scale_factor <- 0.1
 
-# Integrate trajectory
+vector_field$dV_norm <- scale_factor * vector_field$dV / mag
+vector_field$dR_norm <- scale_factor * vector_field$dR / mag
+
+# Subsample vector field for readability
+vf_sub <- vector_field[seq(1, nrow(vector_field), by = 4), ]
+
+# ------------------------------------------------------------
+# Integrate one example trajectory
+# ------------------------------------------------------------
 times <- seq(0, 30, by = 0.01)
 initial_state <- c(V = 0.5, R = 0)
-trajectory <- ode(y = initial_state, times = times, 
+
+trajectory <- ode(y = initial_state, times = times,
                   func = fitzhugh_nagumo, parms = fn_params)
 trajectory_df <- as.data.frame(trajectory)
 
+# ------------------------------------------------------------
 # Phase portrait
+# ------------------------------------------------------------
 phase_portrait <- ggplot() +
-  geom_segment(data = vector_field[seq(1, nrow(vector_field), 3),],
-               aes(x = V, y = R, xend = V + dV_norm, yend = R + dR_norm),
-               arrow = arrow(length = unit(0.015, "npc")),
-               color = "lightblue", alpha = 0.5) +
-  geom_path(data = trajectory_df, aes(x = V, y = R),
-            color = "darkred", size = 1.2, alpha = 0.8) +
-  geom_point(data = trajectory_df[1,], aes(x = V, y = R),
-             color = "green", size = 3) +
-  geom_point(data = tail(trajectory_df, 1), aes(x = V, y = R),
-             color = "blue", size = 3) +
-  labs(title = "Cardiac Oscillator: FitzHugh-Nagumo Limit Cycle",
-       x = "Membrane Potential (V)",
-       y = "Recovery Variable (R)",
-       subtitle = "Trajectory spirals toward stable periodic orbit") +
+  geom_segment(
+    data = vf_sub,
+    aes(x = V, y = R, xend = V + dV_norm, yend = R + dR_norm),
+    arrow = arrow(length = unit(0.02, "inches")),
+    color = "lightblue", alpha = 0.6
+  ) +
+  geom_path(
+    data = trajectory_df,
+    aes(x = V, y = R),
+    color = "darkred", linewidth = 1.2, alpha = 0.9
+  ) +
+  geom_point(
+    data = trajectory_df[1,],
+    aes(x = V, y = R),
+    color = "green", size = 3
+  ) +
+  geom_point(
+    data = tail(trajectory_df, 1),
+    aes(x = V, y = R),
+    color = "blue", size = 3
+  ) +
+  labs(
+    title = "FitzHugh–Nagumo Oscillator: Phase Portrait",
+    subtitle = "Trajectory converges to a stable limit cycle",
+    x = "Membrane Potential V",
+    y = "Recovery Variable R"
+  ) +
   theme_minimal() +
   coord_equal(xlim = c(-2.5, 2.5), ylim = c(-2, 2))
 
-# Time series showing ECG-like pattern
+# ------------------------------------------------------------
+# Time-series plot
+# ------------------------------------------------------------
 timeseries_plot <- ggplot(trajectory_df, aes(x = time)) +
-  geom_line(aes(y = V), color = "darkred", size = 1) +
-  labs(title = "Simulated ECG Pattern",
-       x = "Time (arbitrary units)",
-       y = "Voltage (V)",
-       subtitle = "Self-sustained oscillations mimic cardiac rhythm") +
+  geom_line(aes(y = V), color = "darkred", linewidth = 1) +
+  labs(
+    title = "FitzHugh–Nagumo Time Series",
+    subtitle = "Self-sustained oscillations in membrane potential",
+    x = "Time",
+    y = "V(t)"
+  ) +
   theme_minimal() +
   theme(panel.grid.minor = element_blank())
 
+# Render
 print(phase_portrait)
 print(timeseries_plot)
 ```
@@ -125,39 +161,73 @@ Consider how parameter changes in the FitzHugh-Nagumo model affect dynamics. At 
 In a **supercritical Hopf bifurcation**, the limit cycle appears continuously as the parameter crosses the critical value, with small amplitude near the bifurcation point growing smoothly as parameters move further from criticality. This represents a "soft" transition to oscillation. In a **subcritical Hopf bifurcation**, an unstable limit cycle exists before the bifurcation, and the transition to stable oscillation occurs discontinuously—a "hard" transition that can lead to sudden large-amplitude oscillations.
 
 ```{r}
-# Demonstrate Hopf bifurcation by varying parameter
+library(deSolve)
+library(ggplot2)
+
+# --- FitzHugh–Nagumo system (example; replace with yours if already defined) ---
+fitzhugh_nagumo <- function(t, state, parms) {
+  with(as.list(c(state, parms)), {
+    dV <- V - (V^3)/3 - R + a
+    dR <- (V + b - c * R) / tau
+    list(c(dV, dR))
+  })
+}
+
+# --- Example parameters (replace with your own fn_params if defined elsewhere) ---
+fn_params <- list(a = 0.5, b = 0.8, c = 0.7, tau = 12)
+
+# --- Hopf Bifurcation Sweep ---
 a_values <- seq(0.3, 1.0, by = 0.05)
 max_amplitudes <- numeric(length(a_values))
 
 for (i in seq_along(a_values)) {
+  
   params_temp <- fn_params
   params_temp$a <- a_values[i]
   
-  # Integrate for long time to reach attractor
+  # Long integration to reach attractor
   times_long <- seq(0, 50, by = 0.05)
-  traj_temp <- ode(y = c(V = 0.5, R = 0), times = times_long,
-                   func = fitzhugh_nagumo, parms = params_temp)
+  traj_temp <- ode(
+    y = c(V = 0.5, R = 0),
+    times = times_long,
+    func = fitzhugh_nagumo,
+    parms = params_temp,
+    method = "lsoda",
+    atol = 1e-8,
+    rtol = 1e-8
+  )
   
-  # Extract last period to measure amplitude
-  last_segment <- tail(traj_temp, 200)
-  max_amplitudes[i] <- max(last_segment[, "V"]) - min(last_segment[, "V"])
+  traj_temp <- as.data.frame(traj_temp)
+  
+  # Extract last segment safely
+  seg_len <- min(200, nrow(traj_temp))
+  last_segment <- tail(traj_temp, seg_len)
+  
+  # Compute amplitude of V
+  max_amplitudes[i] <- max(last_segment$V) - min(last_segment$V)
 }
 
+# --- Build bifurcation diagram ---
 bifurcation_diagram <- data.frame(a = a_values, amplitude = max_amplitudes)
 
 bifurcation_plot <- ggplot(bifurcation_diagram, aes(x = a, y = amplitude)) +
-  geom_line(color = "darkblue", size = 1.2) +
+  geom_line(color = "darkblue", linewidth = 1.2) +
   geom_point(color = "darkred", size = 2) +
   geom_vline(xintercept = 0.65, linetype = "dashed", color = "red", alpha = 0.7) +
-  annotate("text", x = 0.5, y = 3, label = "Stable\nFixed Point", size = 4) +
-  annotate("text", x = 0.85, y = 3, label = "Limit Cycle\nOscillations", size = 4) +
-  labs(title = "Hopf Bifurcation in Cardiac Model",
-       x = "Parameter a (stimulus strength)",
-       y = "Oscillation Amplitude",
-       subtitle = "Transition from steady state to rhythmic beating") +
+  annotate("text", x = 0.5, y = max(max_amplitudes) * 0.9,
+           label = "Stable\nFixed Point", size = 4) +
+  annotate("text", x = 0.85, y = max(max_amplitudes) * 0.9,
+           label = "Limit Cycle\nOscillations", size = 4) +
+  labs(
+    title = "Hopf Bifurcation in Cardiac Model",
+    x = "Parameter a (stimulus strength)",
+    y = "Oscillation Amplitude",
+    subtitle = "Transition from steady state to rhythmic beating"
+  ) +
   theme_minimal()
 
 print(bifurcation_plot)
+
 ```
 
 This bifurcation diagram reveals how the system transitions from quiescence to oscillation. At low stimulus values (small $a$), the system remains at a stable fixed point representing cardiac rest. As stimulus increases past the critical value, oscillations emerge—the heart begins to beat. The amplitude grows smoothly with further parameter increase, characteristic of supercritical Hopf bifurcation.
@@ -187,49 +257,86 @@ $$\frac{dR}{dt} = -\frac{1}{c}(V - a + bR)$$
 The term $I_{block}$ models refractoriness, preventing immediate re-excitation. When refractory periods shorten (due to disease, drugs, or metabolic changes), the system can undergo bifurcations creating rapid oscillations or irregular dynamics.
 
 ```{r}
-# Modified model with refractory dynamics
+# Required packages
+library(deSolve)
+library(ggplot2)
+
+# Baseline FitzHugh–Nagumo parameters
+fn_params <- list(
+  a = 0.7,
+  b = 0.8,
+  c = 3
+)
+
+# Modified model with refractory dynamics -------------------------------------
 fitzhugh_refractory <- function(t, state, parameters) {
   with(as.list(c(state, parameters)), {
-    # Add refractory blocking current
+    
+    # Refractory blocking current (example thresholding)
     I_block <- ifelse(V > 0.5 & R < -0.3, block_strength * V, 0)
     
+    # FitzHugh–Nagumo dynamics with blockage
     dV <- c * (V - V^3/3 + R) - I_block
     dR <- -(V - a + b*R) / c
+    
     list(c(dV, dR))
   })
 }
 
-# Parameters for different disease states
-normal_params <- c(fn_params, list(block_strength = 0.3))
-disease_params <- c(fn_params, list(block_strength = 0.05))
+# Parameters for normal and impaired refractory behavior -----------------------
+normal_params  <- modifyList(fn_params, list(block_strength = 0.30))
+disease_params <- modifyList(fn_params, list(block_strength = 0.05))
 
-# Compare trajectories
+# Simulation settings ----------------------------------------------------------
 times_compare <- seq(0, 40, by = 0.01)
+initial_state <- c(V = 0.5, R = 0)
 
-traj_normal <- ode(y = c(V = 0.5, R = 0), times = times_compare,
-                   func = fitzhugh_refractory, parms = normal_params)
-traj_disease <- ode(y = c(V = 0.5, R = 0), times = times_compare,
-                    func = fitzhugh_refractory, parms = disease_params)
+# Solve ODEs -------------------------------------------------------------------
+traj_normal <- ode(
+  y = initial_state,
+  times = times_compare,
+  func = fitzhugh_refractory,
+  parms = normal_params
+)
 
-traj_normal_df <- as.data.frame(traj_normal)
+traj_disease <- ode(
+  y = initial_state,
+  times = times_compare,
+  func = fitzhugh_refractory,
+  parms = disease_params
+)
+
+traj_normal_df  <- as.data.frame(traj_normal)
 traj_disease_df <- as.data.frame(traj_disease)
 
-# Time series comparison
+# Plot comparison --------------------------------------------------------------
 compare_plot <- ggplot() +
-  geom_line(data = traj_normal_df, aes(x = time, y = V, color = "Normal"),
+  geom_line(data = traj_normal_df,
+            aes(x = time, y = V, color = "Normal"),
             size = 0.8, alpha = 0.7) +
-  geom_line(data = traj_disease_df, aes(x = time, y = V, color = "Disease"),
+  
+  geom_line(data = traj_disease_df,
+            aes(x = time, y = V, color = "Disease"),
             size = 0.8, alpha = 0.7) +
-  scale_color_manual(values = c("Normal" = "darkgreen", "Disease" = "darkred")) +
-  labs(title = "Cardiac Dynamics: Normal vs. Disease State",
-       x = "Time",
-       y = "Voltage (V)",
-       color = "State",
-       subtitle = "Shortened refractoriness leads to rapid irregular activity") +
+  
+  scale_color_manual(values = c(
+    "Normal"  = "darkgreen",
+    "Disease" = "darkred"
+  )) +
+  
+  labs(
+    title = "Cardiac Dynamics: Normal vs. Disease State",
+    subtitle = "Shortened refractoriness leads to rapid irregular activity",
+    x = "Time",
+    y = "Voltage (V)",
+    color = "State"
+  ) +
+  
   theme_minimal() +
   theme(legend.position = "top")
 
 print(compare_plot)
+
 ```
 
 The comparison reveals how parameter changes representing pathological states alter oscillation patterns. Normal parameters produce regular, widely-spaced beats with appropriate refractory periods. Disease parameters generate rapid, irregular oscillations as shortened refractoriness allows premature re-excitation.
