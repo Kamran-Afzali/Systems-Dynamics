@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective | Systems Dynamics</title>
+  <meta name="description" content="Chapter 5 The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective | Systems Dynamics" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective | Systems Dynamics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/EHRVAL.jpg" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective | Systems Dynamics" />
+  
+  
+  <meta name="twitter:image" content="/EHRVAL.jpg" />
+
+<meta name="author" content="Kamran Afzali" />
+
+
+<meta name="date" content="2025-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="nonlinear-dynamics-in-one-dimension.html"/>
+<link rel="next" href="introducion-to-systems.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Systems Dynamics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Differential Equations and Systems Dynamics</a></li>
+<li class="chapter" data-level="2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Why the World Changes: An Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-language-of-change"><i class="fa fa-check"></i><b>2.1</b> The Language of Change</a></li>
+<li class="chapter" data-level="2.2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#from-coffee-to-cosmos"><i class="fa fa-check"></i><b>2.2</b> From Coffee to Cosmos</a></li>
+<li class="chapter" data-level="2.3" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#getting-our-hands-dirty-solving-a-simple-example"><i class="fa fa-check"></i><b>2.3</b> Getting Our Hands Dirty: Solving a Simple Example</a></li>
+<li class="chapter" data-level="2.4" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#seeing-the-solution-in-action"><i class="fa fa-check"></i><b>2.4</b> Seeing the Solution in Action</a></li>
+<li class="chapter" data-level="2.5" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#when-theory-meets-reality"><i class="fa fa-check"></i><b>2.5</b> When Theory Meets Reality</a></li>
+<li class="chapter" data-level="2.6" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-bigger-picture"><i class="fa fa-check"></i><b>2.6</b> The Bigger Picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html"><i class="fa fa-check"></i><b>3</b> Solving Simple Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-art-of-separation"><i class="fa fa-check"></i><b>3.1</b> The Art of Separation</a></li>
+<li class="chapter" data-level="3.2" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#finding-the-missing-piece"><i class="fa fa-check"></i><b>3.2</b> Finding the Missing Piece</a></li>
+<li class="chapter" data-level="3.3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-method-in-action"><i class="fa fa-check"></i><b>3.3</b> The Method in Action</a></li>
+<li class="chapter" data-level="3.4" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#beyond-simple-cooling-the-exponential-family"><i class="fa fa-check"></i><b>3.4</b> Beyond Simple Cooling: The Exponential Family</a></li>
+<li class="chapter" data-level="3.5" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#when-variables-refuse-to-separate"><i class="fa fa-check"></i><b>3.5</b> When Variables Refuse to Separate</a></li>
+<li class="chapter" data-level="3.6" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#a-more-complex-example-mixing-problems"><i class="fa fa-check"></i><b>3.6</b> A More Complex Example: Mixing Problems</a></li>
+<li class="chapter" data-level="3.7" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-power-and-limits-of-separation"><i class="fa fa-check"></i><b>3.7</b> The Power and Limits of Separation</a></li>
+<li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
+<li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><i class="fa fa-check"></i><b>5</b> The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-geometry-of-flow"><i class="fa fa-check"></i><b>5.1</b> The Geometry of Flow</a></li>
+<li class="chapter" data-level="5.2" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-universal-patterns-of-creation-and-annihilation"><i class="fa fa-check"></i><b>5.2</b> The Universal Patterns of Creation and Annihilation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-saddle-node-bifurcation-threshold-phenomena"><i class="fa fa-check"></i><b>5.2.1</b> The Saddle-Node Bifurcation: Threshold Phenomena</a></li>
+<li class="chapter" data-level="5.2.2" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-pitchfork-bifurcation-symmetry-breaking"><i class="fa fa-check"></i><b>5.2.2</b> The Pitchfork Bifurcation: Symmetry Breaking</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-bifurcation-diagram-mapping-parameter-space"><i class="fa fa-check"></i><b>5.3</b> The Bifurcation Diagram: Mapping Parameter Space</a></li>
+<li class="chapter" data-level="5.4" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#hysteresis-and-system-memory"><i class="fa fa-check"></i><b>5.4</b> Hysteresis and System Memory</a></li>
+<li class="chapter" data-level="5.5" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#beyond-classical-bifurcations-transcritical-transitions"><i class="fa fa-check"></i><b>5.5</b> Beyond Classical Bifurcations: Transcritical Transitions</a></li>
+<li class="chapter" data-level="5.6" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cusp-catastrophes-and-multiple-parameter-systems"><i class="fa fa-check"></i><b>5.6</b> Cusp Catastrophes and Multiple Parameter Systems</a></li>
+<li class="chapter" data-level="5.7" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#imperfect-bifurcations-and-structural-stability"><i class="fa fa-check"></i><b>5.7</b> Imperfect Bifurcations and Structural Stability</a></li>
+<li class="chapter" data-level="5.8" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.8</b> The Landscape Perspective</a></li>
+<li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.9</b> Building Toward Higher Dimensions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html"><i class="fa fa-check"></i><b>7</b> Immune System Dynamics An Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes"><i class="fa fa-check"></i><b>7.1</b> Fixed Points and the Geography of Infection Outcomes</a></li>
+<li class="chapter" data-level="7.2" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories"><i class="fa fa-check"></i><b>7.2</b> Phase Portrait: Mapping Infection Trajectories</a></li>
+<li class="chapter" data-level="7.3" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection"><i class="fa fa-check"></i><b>7.3</b> Temporal Dynamics: The Clinical Course of Infection</a></li>
+<li class="chapter" data-level="7.4" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#basins-of-attraction-when-treatment-matters-most"><i class="fa fa-check"></i><b>7.4</b> Basins of Attraction: When Treatment Matters Most</a></li>
+<li class="chapter" data-level="7.5" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#limit-cycles-and-oscillatory-immune-responses"><i class="fa fa-check"></i><b>7.5</b> Limit Cycles and Oscillatory Immune Responses</a></li>
+<li class="chapter" data-level="7.6" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions"><i class="fa fa-check"></i><b>7.6</b> Bifurcations: Parameter Thresholds and Disease Transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html"><i class="fa fa-check"></i><b>8</b> Finding Balance: Equilibrium Points and Linear Stability</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-nature-of-equilibrium"><i class="fa fa-check"></i><b>8.1</b> The Nature of Equilibrium</a></li>
+<li class="chapter" data-level="8.2" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#linear-approximation-and-the-jacobian-matrix"><i class="fa fa-check"></i><b>8.2</b> Linear Approximation and the Jacobian Matrix</a></li>
+<li class="chapter" data-level="8.3" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#eigenvalue-analysis-and-stability-classification"><i class="fa fa-check"></i><b>8.3</b> Eigenvalue Analysis and Stability Classification</a></li>
+<li class="chapter" data-level="8.4" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-taxonomy-of-fixed-points"><i class="fa fa-check"></i><b>8.4</b> The Taxonomy of Fixed Points</a></li>
+<li class="chapter" data-level="8.5" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#application-to-epidemic-dynamics"><i class="fa fa-check"></i><b>8.5</b> Application to Epidemic Dynamics</a></li>
+<li class="chapter" data-level="8.6" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#timescale-separation-and-dominant-dynamics"><i class="fa fa-check"></i><b>8.6</b> Timescale Separation and Dominant Dynamics</a></li>
+<li class="chapter" data-level="8.7" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#nonhyperbolic-fixed-points-and-structural-stability"><i class="fa fa-check"></i><b>8.7</b> Nonhyperbolic Fixed Points and Structural Stability</a></li>
+<li class="chapter" data-level="8.8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-dance-of-feedback-understanding-system-response"><i class="fa fa-check"></i><b>8.8</b> The Dance of Feedback: Understanding System Response</a></li>
+<li class="chapter" data-level="8.9" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#conclusion-the-local-global-connection"><i class="fa fa-check"></i><b>8.9</b> Conclusion: The Local-Global Connection</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><i class="fa fa-check"></i><b>9</b> Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-poincaré-bendixson-theorem-and-the-topology-of-two-dimensions"><i class="fa fa-check"></i><b>9.1</b> The Poincaré-Bendixson Theorem and the Topology of Two Dimensions</a></li>
+<li class="chapter" data-level="9.2" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#limit-cycles-self-sustained-oscillations"><i class="fa fa-check"></i><b>9.2</b> Limit Cycles: Self-Sustained Oscillations</a></li>
+<li class="chapter" data-level="9.3" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#stability-of-limit-cycles-and-floquet-theory"><i class="fa fa-check"></i><b>9.3</b> Stability of Limit Cycles and Floquet Theory</a></li>
+<li class="chapter" data-level="9.4" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#hopf-bifurcations-the-birth-of-oscillations"><i class="fa fa-check"></i><b>9.4</b> Hopf Bifurcations: The Birth of Oscillations</a></li>
+<li class="chapter" data-level="9.5" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#multiple-time-scales-and-relaxation-oscillations"><i class="fa fa-check"></i><b>9.5</b> Multiple Time Scales and Relaxation Oscillations</a></li>
+<li class="chapter" data-level="9.6" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#disease-states-as-dynamical-transitions"><i class="fa fa-check"></i><b>9.6</b> Disease States as Dynamical Transitions</a></li>
+<li class="chapter" data-level="9.7" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#sensitive-dependence-and-the-seeds-of-chaos"><i class="fa fa-check"></i><b>9.7</b> Sensitive Dependence and the Seeds of Chaos</a></li>
+<li class="chapter" data-level="9.8" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-boundary-between-order-and-chaos"><i class="fa fa-check"></i><b>9.8</b> The Boundary Between Order and Chaos</a></li>
+<li class="chapter" data-level="9.9" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#clinical-implications-and-therapeutic-interventions"><i class="fa fa-check"></i><b>9.9</b> Clinical Implications and Therapeutic Interventions</a></li>
+<li class="chapter" data-level="9.10" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#beyond-two-dimensions-the-gateway-to-chaos"><i class="fa fa-check"></i><b>9.10</b> Beyond Two Dimensions: The Gateway to Chaos</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Systems Dynamics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>You’re managing patient capacity in an emergency department. At low admission rates, the system hums smoothly—patients flow through triage, treatment, and discharge in a stable rhythm. Increase admissions slightly, and suddenly two patterns emerge: one where the department maintains efficiency, another where it descends into gridlock. Push admissions higher still, and something remarkable happens: both stable states vanish, leaving only chaotic oscillations between overcrowding and brief respites.</p>
+<p>This isn’t a nightmare scenario—it’s the everyday reality of nonlinear healthcare systems undergoing bifurcations. Where our previous exploration revealed the rich dynamics possible within single parameter regimes, today we venture into the more fascinating territory of how these dynamics transform as system parameters change.</p>
+<p>The <strong>phase line</strong> becomes our primary tool for this investigation. Unlike static snapshots of behavior at fixed parameters, phase line analysis reveals the complete evolutionary story of a dynamical system as conditions change. We’ll discover how stable and unstable states appear, collide, and disappear through mathematical catastrophes called bifurcations.</p>
+<div id="the-geometry-of-flow" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> The Geometry of Flow<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-geometry-of-flow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before diving into parameter-dependent behavior, we need to sharpen our visualization tools. For any one-dimensional system <span class="math inline">\(\dot{x} = f(x)\)</span>, the <strong>phase line</strong> provides a complete geometric picture of all possible dynamics.</p>
+<p>Consider a model of disease transmission in a closed population:</p>
+<p><span class="math display">\[\dot{x} = x^2 - 1\]</span></p>
+<p>where <span class="math inline">\(x\)</span> represents the deviation from baseline infection rate. Rather than immediately solving this algebraically, let’s understand it geometrically. The phase line is constructed by plotting the function <span class="math inline">\(f(x) = x^2 - 1\)</span> and examining where it crosses the x-axis (our equilibrium states) and whether it lies above or below the axis (determining flow direction).</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb16-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb16-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb16-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb16-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb16-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb16-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb16-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb16-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb16-5" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code></pre></div>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-1" tabindex="-1"></a><span class="co"># Define the function f(x) = x^2 - 1</span></span>
+<span id="cb18-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-2" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb18-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-4" tabindex="-1"></a><span class="co"># Create phase line data</span></span>
+<span id="cb18-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-5" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb18-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-6" tabindex="-1"></a>fx_vals <span class="ot">&lt;-</span> <span class="fu">f</span>(x_vals)</span>
+<span id="cb18-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-8" tabindex="-1"></a>phase_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-9" tabindex="-1"></a>  <span class="at">x =</span> x_vals,</span>
+<span id="cb18-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-10" tabindex="-1"></a>  <span class="at">fx =</span> fx_vals</span>
+<span id="cb18-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-11" tabindex="-1"></a>)</span>
+<span id="cb18-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-12" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-13" tabindex="-1"></a><span class="co"># Find fixed points</span></span>
+<span id="cb18-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-14" tabindex="-1"></a>fixed_points <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb18-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-15" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-16" tabindex="-1"></a><span class="co"># Create phase line plot</span></span>
+<span id="cb18-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-17" tabindex="-1"></a>phase_line_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(phase_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx)) <span class="sc">+</span></span>
+<span id="cb18-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-18" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb18-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-19" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb18-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-20" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> fixed_points, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-21" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> fixed_points, <span class="at">fx =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)), </span>
+<span id="cb18-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-22" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb18-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-23" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="fl">2.5</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="sc">-</span><span class="fl">2.3</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb18-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-24" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb18-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-25" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb18-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-26" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb18-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-27" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.3</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="fl">2.5</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb18-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-28" tabindex="-1"></a>               <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb18-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-29" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">label =</span> <span class="st">&quot;Stable&quot;</span>, <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-30" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">label =</span> <span class="st">&quot;Unstable&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-31" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, <span class="at">xmin =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">xmax =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">ymax =</span> <span class="fl">0.1</span>, </span>
+<span id="cb18-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-32" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-33" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, <span class="at">xmin =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">xmax =</span> <span class="dv">1</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">ymax =</span> <span class="fl">0.1</span>, </span>
+<span id="cb18-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-34" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-35" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;rect&quot;</span>, <span class="at">xmin =</span> <span class="dv">1</span>, <span class="at">xmax =</span> <span class="dv">3</span>, <span class="at">ymin =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">ymax =</span> <span class="fl">0.1</span>, </span>
+<span id="cb18-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-36" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-37"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-37" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-38"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-38" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Phase Line Analysis: x² - 1&quot;</span>,</span>
+<span id="cb18-39"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-39" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Infection Rate Deviation (x)&quot;</span>,</span>
+<span id="cb18-40"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-40" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;f(x) = x² - 1&quot;</span>,</span>
+<span id="cb18-41"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-41" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Equilibrium states and flow direction revealed geometrically&quot;</span></span>
+<span id="cb18-42"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-42" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-43"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-43" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-44"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-44" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb18-45"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-45" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">6</span>)</span>
+<span id="cb18-46"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-46" tabindex="-1"></a></span>
+<span id="cb18-47"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb18-47" tabindex="-1"></a><span class="fu">print</span>(phase_line_plot)</span></code></pre></div>
+<pre><code>## Warning in geom_segment(aes(x = -2.5, y = 0, xend = -2.3, yend = 0), arrow = arrow(length = unit(0.3, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 0, y = 0, xend = -0.2, yend = 0), arrow = arrow(length = unit(0.3, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 2.3, y = 0, xend = 2.5, yend = 0), arrow = arrow(length = unit(0.3, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning: Removed 8 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>The phase line immediately reveals the system’s complete behavior. Where <span class="math inline">\(f(x) &gt; 0\)</span> (above the x-axis), we have <span class="math inline">\(\dot{x} &gt; 0\)</span>, so infection rates increase—flow moves rightward. Where <span class="math inline">\(f(x) &lt; 0\)</span> (below the x-axis), we have <span class="math inline">\(\dot{x} &lt; 0\)</span>, so infection rates decrease—flow moves leftward.</p>
+<p>The fixed points at <span class="math inline">\(x = -1\)</span> and <span class="math inline">\(x = 1\)</span> exhibit different stability. The point at <span class="math inline">\(x = -1\)</span> is stable—any small perturbation decays back. The point at <span class="math inline">\(x = 1\)</span> is unstable—perturbations grow. Initial conditions in <span class="math inline">\((-\infty, -1)\)</span> flow leftward toward <span class="math inline">\(x = -1\)</span>. Conditions in <span class="math inline">\((1, \infty)\)</span> flow rightward toward infinity. In the interval <span class="math inline">\((-1, 1)\)</span>, all trajectories flow leftward toward <span class="math inline">\(x = -1\)</span>.</p>
+<p>This geometric approach transforms the abstract differential equation into a vivid landscape of attraction and repulsion. We can immediately identify basins of attraction, understand long-term behavior, and predict system response to interventions—all without solving a single integral.</p>
+</div>
+<div id="the-universal-patterns-of-creation-and-annihilation" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> The Universal Patterns of Creation and Annihilation<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-universal-patterns-of-creation-and-annihilation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now we explore how these geometric patterns change as we vary parameters. The most fundamental bifurcations in one-dimensional systems follow universal templates that appear across disciplines, from epidemiology to hospital operations.</p>
+<div id="the-saddle-node-bifurcation-threshold-phenomena" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> The Saddle-Node Bifurcation: Threshold Phenomena<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-saddle-node-bifurcation-threshold-phenomena" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider a hospital bed occupancy model:</p>
+<p><span class="math display">\[\dot{x} = \mu - x^2\]</span></p>
+<p>where <span class="math inline">\(x\)</span> represents bed occupancy relative to capacity, and <span class="math inline">\(\mu\)</span> captures admission pressure. This simple equation contains a profound story about how equilibrium states appear and disappear.</p>
+<p>For <span class="math inline">\(\mu &lt; 0\)</span>, we have <span class="math inline">\(f(x) = \mu - x^2 &lt; 0\)</span> for all <span class="math inline">\(x\)</span> (since <span class="math inline">\(x^2 \geq 0\)</span> always). The phase line lies entirely below the x-axis, creating uniform leftward flow with no equilibrium states. Every trajectory heads toward empty beds at <span class="math inline">\(x = -\infty\)</span>.</p>
+<p>For <span class="math inline">\(\mu = 0\)</span>, something special happens. The function <span class="math inline">\(f(x) = -x^2\)</span> touches the x-axis at exactly one point: <span class="math inline">\(x = 0\)</span>. This creates a <strong>semi-stable equilibrium</strong>—trajectories approach from one side but not the other.</p>
+<p>For <span class="math inline">\(\mu &gt; 0\)</span>, two equilibria suddenly appear where <span class="math inline">\(\mu - x^2 = 0\)</span>, giving us <span class="math inline">\(x = \pm\sqrt{\mu}\)</span>. The negative equilibrium <span class="math inline">\(x = -\sqrt{\mu}\)</span> is stable, while the positive equilibrium <span class="math inline">\(x = +\sqrt{\mu}\)</span> is unstable.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-1" tabindex="-1"></a><span class="co"># Saddle-node bifurcation analysis</span></span>
+<span id="cb23-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-2" tabindex="-1"></a>mu_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.25</span>, <span class="dv">0</span>, <span class="fl">0.25</span>, <span class="dv">1</span>)</span>
+<span id="cb23-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-4" tabindex="-1"></a>saddle_node_plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb23-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-5" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(mu_values)) {</span>
+<span id="cb23-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-7" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> mu_values[i]</span>
+<span id="cb23-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-8" tabindex="-1"></a>  f_sn <span class="ot">&lt;-</span> <span class="cf">function</span>(x) mu <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb23-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-9" tabindex="-1"></a>  </span>
+<span id="cb23-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-10" tabindex="-1"></a>  x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb23-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-11" tabindex="-1"></a>  fx_vals <span class="ot">&lt;-</span> <span class="fu">f_sn</span>(x_vals)</span>
+<span id="cb23-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-12" tabindex="-1"></a>  </span>
+<span id="cb23-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-13" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_vals, <span class="at">fx =</span> fx_vals)</span>
+<span id="cb23-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-14" tabindex="-1"></a>  </span>
+<span id="cb23-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-15" tabindex="-1"></a>  <span class="co"># Find fixed points</span></span>
+<span id="cb23-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-16" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb23-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-17" tabindex="-1"></a>    fixed_points <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">0</span>)</span>
+<span id="cb23-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-18" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="dv">0</span>)</span>
+<span id="cb23-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-19" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (mu <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb23-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-20" tabindex="-1"></a>    fixed_points <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb23-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-21" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="st">&quot;orange&quot;</span></span>
+<span id="cb23-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-22" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-23" tabindex="-1"></a>    fixed_points <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sqrt</span>(mu), <span class="fu">sqrt</span>(mu))</span>
+<span id="cb23-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-24" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb23-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-25" tabindex="-1"></a>  }</span>
+<span id="cb23-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-26" tabindex="-1"></a>  </span>
+<span id="cb23-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-27" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx)) <span class="sc">+</span></span>
+<span id="cb23-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-28" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;purple&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb23-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-29" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb23-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-30" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb23-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-31" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&quot;μ =&quot;</span>, mu),</span>
+<span id="cb23-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-32" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">&quot;Bed Occupancy (x)&quot;</span>,</span>
+<span id="cb23-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-33" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">&quot;μ - x²&quot;</span>,</span>
+<span id="cb23-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-34" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">ifelse</span>(mu <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;No equilibrium&quot;</span>, </span>
+<span id="cb23-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-35" tabindex="-1"></a>                       <span class="fu">ifelse</span>(mu <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;Critical threshold&quot;</span>,</span>
+<span id="cb23-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-36" tabindex="-1"></a>                             <span class="st">&quot;Two equilibria&quot;</span>))</span>
+<span id="cb23-37"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-37" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb23-38"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-38" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-39"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-39" tabindex="-1"></a>    <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb23-40"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-40" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb23-41"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-41" tabindex="-1"></a>  </span>
+<span id="cb23-42"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-42" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(fixed_points) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb23-43"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-43" tabindex="-1"></a>    p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> fixed_points, <span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(fixed_points))),</span>
+<span id="cb23-44"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-44" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> fp_colors, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb23-45"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-45" tabindex="-1"></a>  }</span>
+<span id="cb23-46"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-46" tabindex="-1"></a>  </span>
+<span id="cb23-47"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-47" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
+<span id="cb23-48"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-48" tabindex="-1"></a>    p <span class="ot">&lt;-</span> p <span class="sc">+</span> </span>
+<span id="cb23-49"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-49" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="fl">1.8</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb23-50"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-50" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-51"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-51" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb23-52"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-52" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-53"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-53" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="fl">1.8</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb23-54"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-54" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb23-55"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-55" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-56"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-56" tabindex="-1"></a>    p <span class="ot">&lt;-</span> p <span class="sc">+</span> </span>
+<span id="cb23-57"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-57" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="sc">-</span><span class="fl">1.8</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb23-58"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-58" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-59"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-59" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.2</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb23-60"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-60" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-61"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-61" tabindex="-1"></a>      <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.8</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">2</span>, <span class="at">yend =</span> <span class="dv">0</span>), </span>
+<span id="cb23-62"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-62" tabindex="-1"></a>                   <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.2</span>, <span class="st">&quot;cm&quot;</span>)), <span class="at">color =</span> <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb23-63"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-63" tabindex="-1"></a>  }</span>
+<span id="cb23-64"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-64" tabindex="-1"></a>  </span>
+<span id="cb23-65"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-65" tabindex="-1"></a>  saddle_node_plots[[i]] <span class="ot">&lt;-</span> p</span>
+<span id="cb23-66"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-66" tabindex="-1"></a>}</span>
+<span id="cb23-67"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-67" tabindex="-1"></a></span>
+<span id="cb23-68"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb23-68" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(saddle_node_plots, <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## Warning in geom_segment(aes(x = -1.8, y = 0, xend = -2, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 0.2, y = 0, xend = 0, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 2, y = 0, xend = 1.8, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning: Removed 32 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = -1.8, y = 0, xend = -2, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 0.2, y = 0, xend = 0, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 2, y = 0, xend = 1.8, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning: Removed 28 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = -1.8, y = 0, xend = -2, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 0.2, y = 0, xend = 0, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 2, y = 0, xend = 1.8, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning: Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = -2, y = 0, xend = -1.8, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 0.2, y = 0, xend = 0, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 1.8, y = 0, xend = 2, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning: Removed 24 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = -2, y = 0, xend = -1.8, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 0.2, y = 0, xend = 0, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_segment(aes(x = 1.8, y = 0, xend = 2, yend = 0), arrow = arrow(length = unit(0.2, : All aesthetics have length 1, but the data has 61 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
+<pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>This sequence reveals the <strong>saddle-node bifurcation</strong>—the most common way equilibria appear in dynamical systems. At the critical parameter value <span class="math inline">\(\mu = 0\)</span>, stable and unstable equilibria are born simultaneously, emerging from nothing in a process called a <strong>tangent bifurcation</strong>.</p>
+<p>The saddle-node bifurcation appears throughout healthcare. In emergency departments, it describes the threshold where patient flow suddenly transitions from smooth to gridlocked. In disease dynamics, it models tipping points where infections suddenly take hold. In surgical suites, it explains how scheduling systems abruptly shift from efficient to chaotic when case volume exceeds critical thresholds.</p>
+</div>
+<div id="the-pitchfork-bifurcation-symmetry-breaking" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> The Pitchfork Bifurcation: Symmetry Breaking<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-pitchfork-bifurcation-symmetry-breaking" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While saddle-node bifurcations create equilibria from nothing, <strong>pitchfork bifurcations</strong> redistribute stability among existing equilibria, often breaking system symmetry in the process.</p>
+<p>Consider a vaccination coverage model:</p>
+<p><span class="math display">\[\dot{x} = \mu x - x^3\]</span></p>
+<p>where <span class="math inline">\(x\)</span> represents population immunity deviation from baseline, and <span class="math inline">\(\mu\)</span> captures vaccine efficacy. This system always has an equilibrium at <span class="math inline">\(x = 0\)</span>, but its stability and the existence of other equilibria depend critically on <span class="math inline">\(\mu\)</span>.</p>
+<p>For <span class="math inline">\(\mu &lt; 0\)</span>, the only equilibrium is <span class="math inline">\(x = 0\)</span>, and it’s stable. We verify this by checking <span class="math inline">\(f&#39;(0) = \mu &lt; 0\)</span>, confirming that small perturbations decay back to baseline.</p>
+<p>For <span class="math inline">\(\mu = 0\)</span>, we have <span class="math inline">\(\dot{x} = -x^3\)</span>. The baseline remains the only equilibrium, but its stability becomes marginal. Small perturbations decay as <span class="math inline">\(x^3\)</span>, much slower than exponential decay.</p>
+<p>For <span class="math inline">\(\mu &gt; 0\)</span>, everything changes. Setting <span class="math inline">\(\mu x - x^3 = x(\mu - x^2) = 0\)</span> gives us three equilibria: <span class="math inline">\(x = 0\)</span>, <span class="math inline">\(x = -\sqrt{\mu}\)</span>, and <span class="math inline">\(x = +\sqrt{\mu}\)</span>. The baseline becomes unstable (<span class="math inline">\(f&#39;(0) = \mu &gt; 0\)</span>), while the two symmetric equilibria <span class="math inline">\(x = \pm\sqrt{\mu}\)</span> are stable.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-1" tabindex="-1"></a><span class="co"># Pitchfork bifurcation analysis</span></span>
+<span id="cb44-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-2" tabindex="-1"></a>mu_values_pf <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)</span>
+<span id="cb44-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-4" tabindex="-1"></a>pitchfork_plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb44-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-5" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(mu_values_pf)) {</span>
+<span id="cb44-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-7" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> mu_values_pf[i]</span>
+<span id="cb44-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-8" tabindex="-1"></a>  f_pf <span class="ot">&lt;-</span> <span class="cf">function</span>(x) mu <span class="sc">*</span> x <span class="sc">-</span> x<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb44-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-9" tabindex="-1"></a>  </span>
+<span id="cb44-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-10" tabindex="-1"></a>  x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb44-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-11" tabindex="-1"></a>  fx_vals <span class="ot">&lt;-</span> <span class="fu">f_pf</span>(x_vals)</span>
+<span id="cb44-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-12" tabindex="-1"></a>  </span>
+<span id="cb44-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-13" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_vals, <span class="at">fx =</span> fx_vals)</span>
+<span id="cb44-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-14" tabindex="-1"></a>  </span>
+<span id="cb44-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-15" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
+<span id="cb44-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-16" tabindex="-1"></a>    fixed_points <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb44-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-17" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mu <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb44-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-18" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb44-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-19" tabindex="-1"></a>    fixed_points <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sqrt</span>(mu), <span class="dv">0</span>, <span class="fu">sqrt</span>(mu))</span>
+<span id="cb44-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-20" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb44-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-21" tabindex="-1"></a>  }</span>
+<span id="cb44-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-22" tabindex="-1"></a>  </span>
+<span id="cb44-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-23" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx)) <span class="sc">+</span></span>
+<span id="cb44-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-24" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb44-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-25" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb44-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-26" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> fixed_points, <span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(fixed_points))),</span>
+<span id="cb44-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-27" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> fp_colors, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb44-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-28" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb44-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-29" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&quot;μ =&quot;</span>, mu),</span>
+<span id="cb44-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-30" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">&quot;Immunity Deviation (x)&quot;</span>,</span>
+<span id="cb44-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-31" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">&quot;μx - x³&quot;</span>,</span>
+<span id="cb44-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-32" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">ifelse</span>(mu <span class="sc">&lt;=</span> <span class="dv">0</span>, <span class="st">&quot;Single equilibrium&quot;</span>, <span class="st">&quot;Three equilibria&quot;</span>)</span>
+<span id="cb44-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-33" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb44-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-34" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb44-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-35" tabindex="-1"></a>    <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb44-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-36" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb44-37"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-37" tabindex="-1"></a>  </span>
+<span id="cb44-38"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-38" tabindex="-1"></a>  pitchfork_plots[[i]] <span class="ot">&lt;-</span> p</span>
+<span id="cb44-39"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-39" tabindex="-1"></a>}</span>
+<span id="cb44-40"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-40" tabindex="-1"></a></span>
+<span id="cb44-41"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb44-41" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(pitchfork_plots, <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## Warning: Removed 30 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).
+## Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).
+## Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The pitchfork bifurcation at <span class="math inline">\(\mu = 0\)</span> represents a <strong>symmetry-breaking transition</strong>. For <span class="math inline">\(\mu &lt; 0\)</span>, the system has a unique stable state at baseline. For <span class="math inline">\(\mu &gt; 0\)</span>, this central state becomes unstable, and the system must “choose” between two symmetric alternatives at <span class="math inline">\(x = \pm\sqrt{\mu}\)</span>.</p>
+<p>This pattern appears when healthcare systems transition from unique to multiple stable states. In vaccination programs, it describes how populations can suddenly bifurcate into high-coverage and low-coverage subgroups when public health messaging exceeds a threshold. In treatment adherence, it models how patient populations split into compliant and non-compliant groups when intervention intensity crosses critical values.</p>
+</div>
+</div>
+<div id="the-bifurcation-diagram-mapping-parameter-space" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> The Bifurcation Diagram: Mapping Parameter Space<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-bifurcation-diagram-mapping-parameter-space" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Individual phase line snapshots reveal system behavior for specific parameter values, but the complete story emerges when we track equilibria across the entire parameter range. The <strong>bifurcation diagram</strong> provides this global perspective.</p>
+<p>For the pitchfork bifurcation <span class="math inline">\(\dot{x} = \mu x - x^3\)</span>, we plot the location of all equilibria as a function of <span class="math inline">\(\mu\)</span>:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-1" tabindex="-1"></a><span class="co"># Create bifurcation diagram for pitchfork</span></span>
+<span id="cb48-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-2" tabindex="-1"></a>mu_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb48-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-3" tabindex="-1"></a>bifurcation_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb48-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-4" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-5" tabindex="-1"></a><span class="cf">for</span> (mu <span class="cf">in</span> mu_range) {</span>
+<span id="cb48-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-6" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
+<span id="cb48-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-7" tabindex="-1"></a>    temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb48-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-8" tabindex="-1"></a>      <span class="at">mu =</span> mu,</span>
+<span id="cb48-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-9" tabindex="-1"></a>      <span class="at">x_fixed =</span> <span class="dv">0</span>,</span>
+<span id="cb48-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-10" tabindex="-1"></a>      <span class="at">stability =</span> <span class="st">&quot;stable&quot;</span></span>
+<span id="cb48-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-11" tabindex="-1"></a>    )</span>
+<span id="cb48-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-12" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb48-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-13" tabindex="-1"></a>    temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb48-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-14" tabindex="-1"></a>      <span class="at">mu =</span> <span class="fu">c</span>(mu, mu, mu),</span>
+<span id="cb48-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-15" tabindex="-1"></a>      <span class="at">x_fixed =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sqrt</span>(mu), <span class="dv">0</span>, <span class="fu">sqrt</span>(mu)),</span>
+<span id="cb48-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-16" tabindex="-1"></a>      <span class="at">stability =</span> <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span>, <span class="st">&quot;unstable&quot;</span>, <span class="st">&quot;stable&quot;</span>)</span>
+<span id="cb48-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-17" tabindex="-1"></a>    )</span>
+<span id="cb48-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-18" tabindex="-1"></a>  }</span>
+<span id="cb48-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-19" tabindex="-1"></a>  bifurcation_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bifurcation_data, temp_data)</span>
+<span id="cb48-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-20" tabindex="-1"></a>}</span>
+<span id="cb48-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-21" tabindex="-1"></a></span>
+<span id="cb48-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-22" tabindex="-1"></a>bifurcation_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bifurcation_data, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x_fixed, <span class="at">color =</span> stability)) <span class="sc">+</span></span>
+<span id="cb48-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-23" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(x_fixed <span class="sc">&gt;=</span> <span class="dv">0</span>, stability)), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb48-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-24" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb48-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-25" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;unstable&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb48-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-26" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-27" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Pitchfork Bifurcation Diagram&quot;</span>,</span>
+<span id="cb48-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-28" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parameter μ&quot;</span>,</span>
+<span id="cb48-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-29" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Equilibrium State&quot;</span>,</span>
+<span id="cb48-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-30" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Stability&quot;</span>,</span>
+<span id="cb48-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-31" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Symmetry breaking at μ = 0&quot;</span></span>
+<span id="cb48-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-32" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-33" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb48-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-34" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb48-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-35" tabindex="-1"></a></span>
+<span id="cb48-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb48-36" tabindex="-1"></a><span class="fu">print</span>(bifurcation_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-1" tabindex="-1"></a><span class="co"># Create saddle-node bifurcation diagram</span></span>
+<span id="cb49-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-2" tabindex="-1"></a>mu_range_sn <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb49-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-3" tabindex="-1"></a>bifurcation_data_sn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb49-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-4" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-5" tabindex="-1"></a><span class="cf">for</span> (mu <span class="cf">in</span> mu_range_sn) {</span>
+<span id="cb49-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-6" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb49-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-7" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb49-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-8" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (mu <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb49-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-9" tabindex="-1"></a>    temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mu =</span> mu, <span class="at">x_fixed =</span> <span class="dv">0</span>, <span class="at">stability =</span> <span class="st">&quot;semi-stable&quot;</span>)</span>
+<span id="cb49-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-10" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb49-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-11" tabindex="-1"></a>    temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb49-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-12" tabindex="-1"></a>      <span class="at">mu =</span> <span class="fu">c</span>(mu, mu),</span>
+<span id="cb49-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-13" tabindex="-1"></a>      <span class="at">x_fixed =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">sqrt</span>(mu), <span class="fu">sqrt</span>(mu)),</span>
+<span id="cb49-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-14" tabindex="-1"></a>      <span class="at">stability =</span> <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span>, <span class="st">&quot;unstable&quot;</span>)</span>
+<span id="cb49-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-15" tabindex="-1"></a>    )</span>
+<span id="cb49-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-16" tabindex="-1"></a>  }</span>
+<span id="cb49-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-17" tabindex="-1"></a>  bifurcation_data_sn <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bifurcation_data_sn, temp_data)</span>
+<span id="cb49-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-18" tabindex="-1"></a>}</span>
+<span id="cb49-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-19" tabindex="-1"></a></span>
+<span id="cb49-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-20" tabindex="-1"></a>bifurcation_plot_sn <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bifurcation_data_sn, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x_fixed, <span class="at">color =</span> stability)) <span class="sc">+</span></span>
+<span id="cb49-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-21" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(x_fixed <span class="sc">&gt;=</span> <span class="dv">0</span>, stability)), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb49-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-22" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb49-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-23" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;unstable&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, <span class="st">&quot;semi-stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb49-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-24" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb49-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-25" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Saddle-Node Bifurcation Diagram&quot;</span>,</span>
+<span id="cb49-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-26" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parameter μ&quot;</span>,</span>
+<span id="cb49-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-27" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Equilibrium State&quot;</span>,</span>
+<span id="cb49-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-28" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Stability&quot;</span>,</span>
+<span id="cb49-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-29" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Equilibria appear at μ = 0&quot;</span></span>
+<span id="cb49-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-30" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb49-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-31" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb49-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-32" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb49-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-33" tabindex="-1"></a></span>
+<span id="cb49-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb49-34" tabindex="-1"></a><span class="fu">grid.arrange</span>(bifurcation_plot, bifurcation_plot_sn, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
+<p>These bifurcation diagrams encode the complete parametric behavior of each system. Solid lines represent stable equilibria (where solutions converge), while dashed lines represent unstable equilibria (where solutions diverge). The vertical line at <span class="math inline">\(\mu = 0\)</span> marks the bifurcation point where qualitative behavior changes.</p>
+<p>For the pitchfork bifurcation, we see the characteristic “fork” shape. The stable branch splits into two as <span class="math inline">\(\mu\)</span> increases through zero, while an unstable branch emerges along the original trajectory.</p>
+<p>For the saddle-node bifurcation, the two branches approach each other as <span class="math inline">\(\mu\)</span> decreases toward zero, meeting tangentially at the bifurcation point before disappearing entirely for <span class="math inline">\(\mu &lt; 0\)</span>.</p>
+</div>
+<div id="hysteresis-and-system-memory" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Hysteresis and System Memory<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#hysteresis-and-system-memory" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Some of the most fascinating behavior in nonlinear systems emerges when we consider not just static parameter values, but <strong>parameter variation</strong> itself. Many systems exhibit <strong>hysteresis</strong>—their state depends not only on current parameter values but also on the history of how those parameters changed.</p>
+<p>Consider a hospital system undergoing a saddle-node bifurcation as we slowly increase admission pressure <span class="math inline">\(\mu\)</span> from negative to positive values, then decrease it back. If we start with <span class="math inline">\(\mu &lt; 0\)</span>, no stable equilibria exist. As we increase <span class="math inline">\(\mu\)</span> through zero, stable and unstable equilibria appear, and the system jumps to the stable branch.</p>
+<p>But here’s where hysteresis appears: if we now decrease <span class="math inline">\(\mu\)</span> back through zero, the system doesn’t immediately return to its original state. Instead, it remains on the stable branch until <span class="math inline">\(\mu\)</span> becomes sufficiently negative that the stable equilibrium disappears in a reverse saddle-node bifurcation.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb50-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-2" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-3" tabindex="-1"></a><span class="co"># Proper hysteresis system</span></span>
+<span id="cb50-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-4" tabindex="-1"></a>dx <span class="ot">&lt;-</span> <span class="cf">function</span>(x, mu) mu <span class="sc">+</span> x <span class="sc">-</span> x<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb50-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-5" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-6" tabindex="-1"></a><span class="co"># Parameter sweeps</span></span>
+<span id="cb50-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-7" tabindex="-1"></a>mu_forward  <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb50-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-8" tabindex="-1"></a>mu_backward <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="dv">2</span>,<span class="sc">-</span><span class="dv">2</span>, <span class="at">by =</span> <span class="sc">-</span><span class="fl">0.01</span>)</span>
+<span id="cb50-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-9" tabindex="-1"></a></span>
+<span id="cb50-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-10" tabindex="-1"></a>x_forward  <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(mu_forward))</span>
+<span id="cb50-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-11" tabindex="-1"></a>x_backward <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(mu_backward))</span>
+<span id="cb50-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-12" tabindex="-1"></a></span>
+<span id="cb50-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-13" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb50-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-14" tabindex="-1"></a></span>
+<span id="cb50-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-15" tabindex="-1"></a><span class="co"># Forward sweep</span></span>
+<span id="cb50-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-16" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb50-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-17" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(mu_forward)) {</span>
+<span id="cb50-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-18" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> mu_forward[i]</span>
+<span id="cb50-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-19" tabindex="-1"></a>  <span class="cf">for</span> (step <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2000</span>) {</span>
+<span id="cb50-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-20" tabindex="-1"></a>    x <span class="ot">&lt;-</span> x <span class="sc">+</span> dt <span class="sc">*</span> <span class="fu">dx</span>(x, mu)</span>
+<span id="cb50-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-21" tabindex="-1"></a>  }</span>
+<span id="cb50-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-22" tabindex="-1"></a>  x_forward[i] <span class="ot">&lt;-</span> x</span>
+<span id="cb50-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-23" tabindex="-1"></a>}</span>
+<span id="cb50-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-24" tabindex="-1"></a></span>
+<span id="cb50-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-25" tabindex="-1"></a><span class="co"># Backward sweep</span></span>
+<span id="cb50-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-26" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">tail</span>(x_forward, <span class="dv">1</span>)</span>
+<span id="cb50-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-27" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(mu_backward)) {</span>
+<span id="cb50-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-28" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> mu_backward[i]</span>
+<span id="cb50-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-29" tabindex="-1"></a>  <span class="cf">for</span> (step <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2000</span>) {</span>
+<span id="cb50-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-30" tabindex="-1"></a>    x <span class="ot">&lt;-</span> x <span class="sc">+</span> dt <span class="sc">*</span> <span class="fu">dx</span>(x, mu)</span>
+<span id="cb50-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-31" tabindex="-1"></a>  }</span>
+<span id="cb50-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-32" tabindex="-1"></a>  x_backward[i] <span class="ot">&lt;-</span> x</span>
+<span id="cb50-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-33" tabindex="-1"></a>}</span>
+<span id="cb50-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-34" tabindex="-1"></a></span>
+<span id="cb50-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-35" tabindex="-1"></a><span class="co"># Combine data</span></span>
+<span id="cb50-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-36" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb50-37"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-37" tabindex="-1"></a>  <span class="at">mu  =</span> <span class="fu">c</span>(mu_forward, mu_backward),</span>
+<span id="cb50-38"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-38" tabindex="-1"></a>  <span class="at">x   =</span> <span class="fu">c</span>(x_forward, x_backward),</span>
+<span id="cb50-39"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-39" tabindex="-1"></a>  <span class="at">dir =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Forward&quot;</span>, <span class="st">&quot;Backward&quot;</span>),</span>
+<span id="cb50-40"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-40" tabindex="-1"></a>            <span class="fu">c</span>(<span class="fu">length</span>(mu_forward), <span class="fu">length</span>(mu_backward)))</span>
+<span id="cb50-41"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-41" tabindex="-1"></a>)</span>
+<span id="cb50-42"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-42" tabindex="-1"></a></span>
+<span id="cb50-43"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-43" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb50-44"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-44" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(mu, x, <span class="at">color =</span> dir)) <span class="sc">+</span></span>
+<span id="cb50-45"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-45" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb50-46"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-46" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb50-47"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-47" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-48"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-48" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Hysteresis in Cubic Saddle-Node System&quot;</span>,</span>
+<span id="cb50-49"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-49" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Classic S-shaped fold bifurcation with memory&quot;</span>,</span>
+<span id="cb50-50"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-50" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Parameter μ&quot;</span>,</span>
+<span id="cb50-51"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-51" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;State x&quot;</span></span>
+<span id="cb50-52"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-52" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-53"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-53" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-54"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb50-54" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>The hysteresis loop reveals how nonlinear systems can have “memory”—their current state encodes information about their past parameter values. This phenomenon appears throughout healthcare. Emergency departments can remain in crisis mode even after admission rates return to normal levels. Healthcare-associated infection rates may require different interventions to recover from outbreaks than to prevent them initially. Mental health systems can remain in high-acuity states even after precipitating stressors have resolved.</p>
+</div>
+<div id="beyond-classical-bifurcations-transcritical-transitions" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Beyond Classical Bifurcations: Transcritical Transitions<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#beyond-classical-bifurcations-transcritical-transitions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While saddle-node and pitchfork bifurcations represent the most common transitions in one-dimensional systems, the complete taxonomy is richer. The <strong>transcritical bifurcation</strong> describes scenarios where equilibria pass through each other, exchanging stability in the process.</p>
+<p>Consider a chronic disease management model:</p>
+<p><span class="math display">\[\dot{x} = \mu x - x^2\]</span></p>
+<p>where <span class="math inline">\(x\)</span> represents disease burden and <span class="math inline">\(\mu\)</span> represents treatment effectiveness. This equation always has equilibria at <span class="math inline">\(x = 0\)</span> and <span class="math inline">\(x = \mu\)</span>, but their relative stability depends on the sign of <span class="math inline">\(\mu\)</span>.</p>
+<p>For <span class="math inline">\(\mu &lt; 0\)</span>, the disease-free state <span class="math inline">\(x = 0\)</span> is stable (<span class="math inline">\(f&#39;(0) = \mu &lt; 0\)</span>), while <span class="math inline">\(x = \mu &lt; 0\)</span> is unstable. For <span class="math inline">\(\mu &gt; 0\)</span>, the roles reverse: <span class="math inline">\(x = 0\)</span> becomes unstable (<span class="math inline">\(f&#39;(0) = \mu &gt; 0\)</span>), while <span class="math inline">\(x = \mu &gt; 0\)</span> becomes stable.</p>
+<p>At <span class="math inline">\(\mu = 0\)</span>, both equilibria coincide at the origin, creating a <strong>transcritical bifurcation</strong> where stability is exchanged between branches.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-1" tabindex="-1"></a><span class="co"># Transcritical bifurcation analysis</span></span>
+<span id="cb51-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-2" tabindex="-1"></a>mu_values_tc <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb51-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-3" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-4" tabindex="-1"></a>transcritical_plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb51-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-5" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(mu_values_tc)) {</span>
+<span id="cb51-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-7" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> mu_values_tc[i]</span>
+<span id="cb51-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-8" tabindex="-1"></a>  f_tc <span class="ot">&lt;-</span> <span class="cf">function</span>(x) mu <span class="sc">*</span> x <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb51-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-9" tabindex="-1"></a>  </span>
+<span id="cb51-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-10" tabindex="-1"></a>  x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb51-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-11" tabindex="-1"></a>  fx_vals <span class="ot">&lt;-</span> <span class="fu">f_tc</span>(x_vals)</span>
+<span id="cb51-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-12" tabindex="-1"></a>  </span>
+<span id="cb51-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-13" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_vals, <span class="at">fx =</span> fx_vals)</span>
+<span id="cb51-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-14" tabindex="-1"></a>  </span>
+<span id="cb51-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-15" tabindex="-1"></a>  fixed_points <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, mu)</span>
+<span id="cb51-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-16" tabindex="-1"></a>  </span>
+<span id="cb51-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-17" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb51-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-18" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb51-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-19" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (mu <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb51-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-20" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb51-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-21" tabindex="-1"></a>    fixed_points <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>)</span>
+<span id="cb51-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-22" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb51-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-23" tabindex="-1"></a>    fp_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;darkgreen&quot;</span>)</span>
+<span id="cb51-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-24" tabindex="-1"></a>  }</span>
+<span id="cb51-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-25" tabindex="-1"></a>  </span>
+<span id="cb51-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-26" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> fx)) <span class="sc">+</span></span>
+<span id="cb51-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-27" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb51-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-28" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb51-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-29" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> fixed_points, <span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(fixed_points))),</span>
+<span id="cb51-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-30" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> fp_colors, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb51-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-31" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb51-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-32" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&quot;μ =&quot;</span>, mu),</span>
+<span id="cb51-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-33" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">&quot;Disease Burden (x)&quot;</span>,</span>
+<span id="cb51-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-34" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">&quot;μx - x²&quot;</span>,</span>
+<span id="cb51-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-35" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="st">&quot;Transcritical bifurcation&quot;</span></span>
+<span id="cb51-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-36" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb51-37"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-37" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb51-38"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-38" tabindex="-1"></a>    <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb51-39"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-39" tabindex="-1"></a>    <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">0.8</span>, <span class="fl">1.2</span>)</span>
+<span id="cb51-40"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-40" tabindex="-1"></a>  </span>
+<span id="cb51-41"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-41" tabindex="-1"></a>  transcritical_plots[[i]] <span class="ot">&lt;-</span> p</span>
+<span id="cb51-42"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-42" tabindex="-1"></a>}</span>
+<span id="cb51-43"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-43" tabindex="-1"></a></span>
+<span id="cb51-44"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb51-44" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(transcritical_plots, <span class="at">ncol =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## Warning: Removed 27 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 28 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 30 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 29 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 26 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-1" tabindex="-1"></a><span class="co"># Create transcritical bifurcation diagram</span></span>
+<span id="cb57-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-2" tabindex="-1"></a>mu_range_tc <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.8</span>, <span class="fl">0.8</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb57-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-3" tabindex="-1"></a>bifurcation_data_tc <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb57-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-4" tabindex="-1"></a></span>
+<span id="cb57-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-5" tabindex="-1"></a><span class="cf">for</span> (mu <span class="cf">in</span> mu_range_tc) {</span>
+<span id="cb57-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-6" tabindex="-1"></a>  <span class="cf">if</span> (mu <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb57-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-7" tabindex="-1"></a>    temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mu =</span> mu, <span class="at">x_fixed =</span> <span class="dv">0</span>, <span class="at">stability =</span> <span class="st">&quot;critical&quot;</span>)</span>
+<span id="cb57-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-8" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb57-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-9" tabindex="-1"></a>    stabilities <span class="ot">&lt;-</span> <span class="cf">if</span> (mu <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span>, <span class="st">&quot;unstable&quot;</span>) <span class="cf">else</span> <span class="fu">c</span>(<span class="st">&quot;unstable&quot;</span>, <span class="st">&quot;stable&quot;</span>)</span>
+<span id="cb57-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-10" tabindex="-1"></a>    temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb57-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-11" tabindex="-1"></a>      <span class="at">mu =</span> <span class="fu">c</span>(mu, mu),</span>
+<span id="cb57-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-12" tabindex="-1"></a>      <span class="at">x_fixed =</span> <span class="fu">c</span>(<span class="dv">0</span>, mu),</span>
+<span id="cb57-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-13" tabindex="-1"></a>      <span class="at">stability =</span> stabilities</span>
+<span id="cb57-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-14" tabindex="-1"></a>    )</span>
+<span id="cb57-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-15" tabindex="-1"></a>  }</span>
+<span id="cb57-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-16" tabindex="-1"></a>  bifurcation_data_tc <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bifurcation_data_tc, temp_data)</span>
+<span id="cb57-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-17" tabindex="-1"></a>}</span>
+<span id="cb57-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-18" tabindex="-1"></a></span>
+<span id="cb57-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-19" tabindex="-1"></a>bifurcation_plot_tc <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(bifurcation_data_tc, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x_fixed, <span class="at">color =</span> stability)) <span class="sc">+</span></span>
+<span id="cb57-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-20" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">interaction</span>(x_fixed <span class="sc">==</span> <span class="dv">0</span>)), <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb57-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-21" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb57-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-22" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;unstable&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>, <span class="st">&quot;critical&quot;</span> <span class="ot">=</span> <span class="st">&quot;orange&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb57-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-23" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb57-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-24" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Transcritical Bifurcation Diagram&quot;</span>,</span>
+<span id="cb57-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-25" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Treatment Effectiveness (μ)&quot;</span>,</span>
+<span id="cb57-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-26" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Disease Burden&quot;</span>,</span>
+<span id="cb57-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-27" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Stability&quot;</span>,</span>
+<span id="cb57-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-28" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Equilibria exchange stability at μ = 0&quot;</span></span>
+<span id="cb57-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-29" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb57-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-30" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb57-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-31" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb57-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-32" tabindex="-1"></a></span>
+<span id="cb57-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb57-33" tabindex="-1"></a><span class="fu">print</span>(bifurcation_plot_tc)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<p>The transcritical bifurcation appears frequently in healthcare dynamics, often modeling the transition between disease elimination and endemic persistence. One branch represents the disease-free state (<span class="math inline">\(x = 0\)</span>), while the other represents an endemic burden (<span class="math inline">\(x = \mu\)</span>, when positive). As treatment effectiveness improves (<span class="math inline">\(\mu\)</span> increases), the system transitions from stable disease-free conditions to unstable ones, while the endemic state transitions from unstable to stable—a reversal that occurs at the critical threshold.</p>
+</div>
+<div id="cusp-catastrophes-and-multiple-parameter-systems" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Cusp Catastrophes and Multiple Parameter Systems<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cusp-catastrophes-and-multiple-parameter-systems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Real healthcare systems rarely depend on single parameters. When we extend our analysis to two-parameter families, we discover <strong>cusp catastrophes</strong>—regions of parameter space where small changes trigger dramatic behavioral transitions.</p>
+<p>Consider a two-parameter model of patient satisfaction:</p>
+<p><span class="math display">\[\dot{x} = \mu + \nu x - x^2\]</span></p>
+<p>where <span class="math inline">\(\mu\)</span> represents baseline service quality and <span class="math inline">\(\nu\)</span> represents system responsiveness. Here, both parameters control system behavior. The equilibria satisfy:</p>
+<p><span class="math display">\[\mu + \nu x - x^2 = 0\]</span></p>
+<p>or equivalently:</p>
+<p><span class="math display">\[x^2 - \nu x - \mu = 0\]</span></p>
+<p>Using the quadratic formula:</p>
+<p><span class="math display">\[x = \frac{\nu \pm \sqrt{\nu^2 + 4\mu}}{2}\]</span></p>
+<p>For real equilibria, we need <span class="math inline">\(\nu^2 + 4\mu \geq 0\)</span>, which defines a parabolic boundary in <span class="math inline">\((\mu, \nu)\)</span> parameter space. The <strong>cusp point</strong> occurs at <span class="math inline">\(\mu = \nu = 0\)</span>, where the two equilibrium branches meet.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-1" tabindex="-1"></a><span class="co"># Create cusp catastrophe visualization</span></span>
+<span id="cb58-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-2" tabindex="-1"></a>mu_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb58-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-3" tabindex="-1"></a>nu_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb58-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-4" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-5" tabindex="-1"></a>param_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">mu =</span> mu_range, <span class="at">nu =</span> nu_range)</span>
+<span id="cb58-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-6" tabindex="-1"></a>param_grid<span class="sc">$</span>num_fixed_points <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(param_grid<span class="sc">$</span>nu<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span>param_grid<span class="sc">$</span>mu <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>)</span>
+<span id="cb58-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-7" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-8" tabindex="-1"></a><span class="co"># Define the cusp boundary</span></span>
+<span id="cb58-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-9" tabindex="-1"></a>cusp_boundary_mu <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb58-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-10" tabindex="-1"></a>cusp_boundary_nu_pos <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="sc">-</span>cusp_boundary_mu)</span>
+<span id="cb58-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-11" tabindex="-1"></a>cusp_boundary_nu_neg <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="sc">-</span>cusp_boundary_mu)</span>
+<span id="cb58-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-12" tabindex="-1"></a></span>
+<span id="cb58-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-13" tabindex="-1"></a>cusp_boundary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb58-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-14" tabindex="-1"></a>  <span class="at">mu =</span> <span class="fu">rep</span>(cusp_boundary_mu, <span class="dv">2</span>),</span>
+<span id="cb58-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-15" tabindex="-1"></a>  <span class="at">nu =</span> <span class="fu">c</span>(cusp_boundary_nu_pos, cusp_boundary_nu_neg)</span>
+<span id="cb58-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-16" tabindex="-1"></a>)</span>
+<span id="cb58-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-17" tabindex="-1"></a></span>
+<span id="cb58-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-18" tabindex="-1"></a>cusp_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb58-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-19" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">data =</span> param_grid, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> nu, <span class="at">fill =</span> <span class="fu">factor</span>(num_fixed_points)), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb58-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-20" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> cusp_boundary, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> nu), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb58-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-21" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb58-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-22" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;2&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightcoral&quot;</span>), </span>
+<span id="cb58-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-23" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;No equilibria&quot;</span>, <span class="st">&quot;2&quot;</span> <span class="ot">=</span> <span class="st">&quot;Two equilibria&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb58-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-24" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb58-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-25" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Cusp Catastrophe: Two-Parameter Bifurcation&quot;</span>,</span>
+<span id="cb58-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-26" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Service Quality (μ)&quot;</span>,</span>
+<span id="cb58-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-27" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;System Responsiveness (ν)&quot;</span>,</span>
+<span id="cb58-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-28" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">&quot;Number of</span><span class="sc">\n</span><span class="st">Equilibria&quot;</span>,</span>
+<span id="cb58-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-29" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Dramatic transitions occur near the cusp boundary&quot;</span></span>
+<span id="cb58-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-30" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb58-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-31" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb58-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-32" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fl">0.1</span>, <span class="at">label =</span> <span class="st">&quot;Cusp Point&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>)</span>
+<span id="cb58-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-33" tabindex="-1"></a></span>
+<span id="cb58-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb58-34" tabindex="-1"></a><span class="fu">print</span>(cusp_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-1" tabindex="-1"></a><span class="co"># Create visualization of the cusp surface</span></span>
+<span id="cb59-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-2" tabindex="-1"></a>mu_3d <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb59-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-3" tabindex="-1"></a>nu_3d <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb59-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-4" tabindex="-1"></a>cusp_3d_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">mu =</span> mu_3d, <span class="at">nu =</span> nu_3d)</span>
+<span id="cb59-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-5" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-6" tabindex="-1"></a>cusp_3d_grid<span class="sc">$</span>discriminant <span class="ot">&lt;-</span> cusp_3d_grid<span class="sc">$</span>nu<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span><span class="sc">*</span>cusp_3d_grid<span class="sc">$</span>mu</span>
+<span id="cb59-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-7" tabindex="-1"></a>cusp_3d_grid<span class="sc">$</span>x1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(cusp_3d_grid<span class="sc">$</span>discriminant <span class="sc">&gt;=</span> <span class="dv">0</span>, </span>
+<span id="cb59-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb59-8" tabindex="-1"></a>                          (cusp_3d_grid<span class="sc">$</span>nu <span class="sc">+</span> <span class="fu">sqrt</span>(cusp_3d_grid<span class="sc">$</span>discriminant))<span class="sc">/</span><span class="dv">2</span>, <span class="cn">NA</span>)</span></code></pre></div>
+<pre><code>## Warning in sqrt(cusp_3d_grid$discriminant): NaNs produced</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb61-1" tabindex="-1"></a>cusp_3d_grid<span class="sc">$</span>x2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(cusp_3d_grid<span class="sc">$</span>discriminant <span class="sc">&gt;=</span> <span class="dv">0</span>, </span>
+<span id="cb61-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb61-2" tabindex="-1"></a>                          (cusp_3d_grid<span class="sc">$</span>nu <span class="sc">-</span> <span class="fu">sqrt</span>(cusp_3d_grid<span class="sc">$</span>discriminant))<span class="sc">/</span><span class="dv">2</span>, <span class="cn">NA</span>)</span></code></pre></div>
+<pre><code>## Warning in sqrt(cusp_3d_grid$discriminant): NaNs produced</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-1" tabindex="-1"></a>sheet1 <span class="ot">&lt;-</span> cusp_3d_grid[<span class="sc">!</span><span class="fu">is.na</span>(cusp_3d_grid<span class="sc">$</span>x1), <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;nu&quot;</span>, <span class="st">&quot;x1&quot;</span>)]</span>
+<span id="cb63-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-2" tabindex="-1"></a><span class="fu">names</span>(sheet1)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;x&quot;</span></span>
+<span id="cb63-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-3" tabindex="-1"></a>sheet2 <span class="ot">&lt;-</span> cusp_3d_grid[<span class="sc">!</span><span class="fu">is.na</span>(cusp_3d_grid<span class="sc">$</span>x2), <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;nu&quot;</span>, <span class="st">&quot;x2&quot;</span>)]</span>
+<span id="cb63-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-4" tabindex="-1"></a><span class="fu">names</span>(sheet2)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;x&quot;</span></span>
+<span id="cb63-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-5" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-6" tabindex="-1"></a>cusp_surface_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sheet1, sheet2)</span>
+<span id="cb63-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-7" tabindex="-1"></a></span>
+<span id="cb63-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-8" tabindex="-1"></a>cusp_surface_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cusp_surface_data, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x, <span class="at">color =</span> nu)) <span class="sc">+</span></span>
+<span id="cb63-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb63-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-10" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb63-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-11" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb63-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-12" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Cusp Surface: Equilibria vs Parameters&quot;</span>,</span>
+<span id="cb63-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-13" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Service Quality (μ)&quot;</span>,</span>
+<span id="cb63-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-14" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Patient Satisfaction (x)&quot;</span>,</span>
+<span id="cb63-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-15" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Responsiveness (ν)&quot;</span>,</span>
+<span id="cb63-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-16" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;The folded surface creates multiple equilibria&quot;</span></span>
+<span id="cb63-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-17" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb63-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-18" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb63-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-19" tabindex="-1"></a></span>
+<span id="cb63-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb63-20" tabindex="-1"></a><span class="fu">print</span>(cusp_surface_plot)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p>The cusp catastrophe reveals how two-parameter systems can exhibit sudden jumps between different stable states as parameters vary continuously. Inside the cusp region (where <span class="math inline">\(\nu^2 + 4\mu &lt; 0\)</span>), no equilibria exist. Outside the cusp, two equilibria coexist, creating potential for hysteresis and sudden transitions.</p>
+<p>This geometric structure appears throughout healthcare. In patient satisfaction surveys, it describes sudden shifts between positive and negative perceptions as service quality and responsiveness change. In treatment adherence, it models abrupt transitions between compliant and non-compliant behavior. In organizational culture, it explains how hospital morale can suddenly collapse when workload and support cross critical thresholds.</p>
+</div>
+<div id="imperfect-bifurcations-and-structural-stability" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Imperfect Bifurcations and Structural Stability<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#imperfect-bifurcations-and-structural-stability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Real-world systems rarely exhibit the perfect symmetries assumed in our idealized models. Small perturbations—unavoidable noise, measurement errors, or unmodeled effects—can qualitatively change bifurcation behavior. This leads us to consider <strong>structural stability</strong>: which bifurcation patterns persist under small perturbations, and which disappear entirely?</p>
+<p>Consider our pitchfork bifurcation <span class="math inline">\(\dot{x} = \mu x - x^3\)</span> with a small asymmetric perturbation:</p>
+<p><span class="math inline">\(\dot{x} = \mu x - x^3 + \epsilon\)</span></p>
+<p>where <span class="math inline">\(\epsilon\)</span> represents some small bias or offset—perhaps differential access to care, or systematic measurement error. Even tiny values of <span class="math inline">\(\epsilon\)</span> destroy the perfect symmetry that created the pitchfork structure.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-1" tabindex="-1"></a><span class="co"># Imperfect pitchfork bifurcation</span></span>
+<span id="cb64-2"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-2" tabindex="-1"></a>epsilon_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.02</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>)</span>
+<span id="cb64-3"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-3" tabindex="-1"></a>mu_range_imperfect <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb64-4"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-4" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-5" tabindex="-1"></a>imperfect_bifurcation_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb64-6"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-6" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-7" tabindex="-1"></a><span class="cf">for</span> (eps <span class="cf">in</span> epsilon_values) {</span>
+<span id="cb64-8"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-8" tabindex="-1"></a>  <span class="cf">for</span> (mu <span class="cf">in</span> mu_range_imperfect) {</span>
+<span id="cb64-9"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-9" tabindex="-1"></a>    f_imperfect <span class="ot">&lt;-</span> <span class="cf">function</span>(x) mu<span class="sc">*</span>x <span class="sc">-</span> x<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> eps</span>
+<span id="cb64-10"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-10" tabindex="-1"></a>    </span>
+<span id="cb64-11"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-11" tabindex="-1"></a>    roots <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">0</span>)</span>
+<span id="cb64-12"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-12" tabindex="-1"></a>    test_points <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb64-13"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-13" tabindex="-1"></a>    </span>
+<span id="cb64-14"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-14" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(test_points)<span class="sc">-</span><span class="dv">1</span>)) {</span>
+<span id="cb64-15"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-15" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">f_imperfect</span>(test_points[i]) <span class="sc">*</span> <span class="fu">f_imperfect</span>(test_points[i<span class="sc">+</span><span class="dv">1</span>]) <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb64-16"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-16" tabindex="-1"></a>        root <span class="ot">&lt;-</span> <span class="fu">uniroot</span>(f_imperfect, <span class="fu">c</span>(test_points[i], test_points[i<span class="sc">+</span><span class="dv">1</span>]))<span class="sc">$</span>root</span>
+<span id="cb64-17"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-17" tabindex="-1"></a>        roots <span class="ot">&lt;-</span> <span class="fu">c</span>(roots, root)</span>
+<span id="cb64-18"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-18" tabindex="-1"></a>      }</span>
+<span id="cb64-19"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-19" tabindex="-1"></a>    }</span>
+<span id="cb64-20"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-20" tabindex="-1"></a>    </span>
+<span id="cb64-21"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-21" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(roots) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb64-22"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-22" tabindex="-1"></a>      roots <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">round</span>(roots, <span class="dv">6</span>))</span>
+<span id="cb64-23"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-23" tabindex="-1"></a>      f_prime <span class="ot">&lt;-</span> <span class="cf">function</span>(x) mu <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb64-24"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-24" tabindex="-1"></a>      </span>
+<span id="cb64-25"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-25" tabindex="-1"></a>      <span class="cf">for</span> (root <span class="cf">in</span> roots) {</span>
+<span id="cb64-26"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-26" tabindex="-1"></a>        stability <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">f_prime</span>(root) <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;stable&quot;</span>, <span class="st">&quot;unstable&quot;</span>)</span>
+<span id="cb64-27"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-27" tabindex="-1"></a>        temp_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb64-28"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-28" tabindex="-1"></a>          <span class="at">epsilon =</span> eps,</span>
+<span id="cb64-29"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-29" tabindex="-1"></a>          <span class="at">mu =</span> mu,</span>
+<span id="cb64-30"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-30" tabindex="-1"></a>          <span class="at">x_fixed =</span> root,</span>
+<span id="cb64-31"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-31" tabindex="-1"></a>          <span class="at">stability =</span> stability</span>
+<span id="cb64-32"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-32" tabindex="-1"></a>        )</span>
+<span id="cb64-33"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-33" tabindex="-1"></a>        imperfect_bifurcation_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(imperfect_bifurcation_data, temp_data)</span>
+<span id="cb64-34"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-34" tabindex="-1"></a>      }</span>
+<span id="cb64-35"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-35" tabindex="-1"></a>    }</span>
+<span id="cb64-36"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-36" tabindex="-1"></a>  }</span>
+<span id="cb64-37"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-37" tabindex="-1"></a>}</span>
+<span id="cb64-38"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-38" tabindex="-1"></a></span>
+<span id="cb64-39"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-39" tabindex="-1"></a>imperfect_plots <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb64-40"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-40" tabindex="-1"></a></span>
+<span id="cb64-41"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-41" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(epsilon_values)) {</span>
+<span id="cb64-42"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-42" tabindex="-1"></a>  eps <span class="ot">&lt;-</span> epsilon_values[i]</span>
+<span id="cb64-43"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-43" tabindex="-1"></a>  subset_data <span class="ot">&lt;-</span> imperfect_bifurcation_data[imperfect_bifurcation_data<span class="sc">$</span>epsilon <span class="sc">==</span> eps,]</span>
+<span id="cb64-44"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-44" tabindex="-1"></a>  </span>
+<span id="cb64-45"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-45" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(subset_data, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x_fixed, <span class="at">color =</span> stability)) <span class="sc">+</span></span>
+<span id="cb64-46"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-46" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb64-47"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-47" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb64-48"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-48" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;unstable&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb64-49"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-49" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb64-50"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-50" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&quot;ε =&quot;</span>, eps),</span>
+<span id="cb64-51"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-51" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">&quot;Parameter μ&quot;</span>,</span>
+<span id="cb64-52"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-52" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">&quot;Equilibrium x&quot;</span>,</span>
+<span id="cb64-53"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-53" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">ifelse</span>(eps <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;Perfect pitchfork&quot;</span>, <span class="st">&quot;Imperfect bifurcation&quot;</span>)</span>
+<span id="cb64-54"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-54" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb64-55"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-55" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb64-56"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-56" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb64-57"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-57" tabindex="-1"></a>    <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb64-58"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-58" tabindex="-1"></a>  </span>
+<span id="cb64-59"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-59" tabindex="-1"></a>  imperfect_plots[[i]] <span class="ot">&lt;-</span> p</span>
+<span id="cb64-60"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-60" tabindex="-1"></a>}</span>
+<span id="cb64-61"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-61" tabindex="-1"></a></span>
+<span id="cb64-62"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cb64-62" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(imperfect_plots, <span class="at">ncol =</span> <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>The imperfect pitchfork reveals how small perturbations can fundamentally alter system behavior. The symmetric pitchfork structure breaks into separate saddle-node bifurcations, eliminating the region of bistability that existed in the perfect case. This demonstrates that pitchfork bifurcations are <strong>structurally unstable</strong>—they disappear under generic perturbations.</p>
+<p>In contrast, saddle-node bifurcations are <strong>structurally stable</strong>. Small perturbations may shift the bifurcation point but preserve the basic creation/annihilation mechanism. This structural stability explains why saddle-node bifurcations are ubiquitous in healthcare applications, while perfect pitchfork bifurcations are rare in real clinical systems.</p>
+</div>
+<div id="the-landscape-perspective" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> The Landscape Perspective<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-landscape-perspective" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Phase line analysis reveals dynamical systems as <strong>landscapes</strong> of attraction and repulsion. Stable equilibria correspond to valleys where trajectories converge. Unstable equilibria correspond to peaks where trajectories diverge. The height of the landscape at any point reflects the “velocity” <span class="math inline">\(\dot{x} = f(x)\)</span> of trajectories passing through.</p>
+<p>Bifurcations represent topological changes in this landscape. Saddle-node bifurcations create new valleys and peaks from flat regions. Pitchfork bifurcations redistribute the depth of existing valleys. Transcritical bifurcations cause valleys and peaks to exchange positions.</p>
+<p>This landscape metaphor provides intuition for more complex phenomena. <strong>Metastability</strong> occurs when shallow valleys separate deep valleys—healthcare systems can remain trapped in suboptimal states for extended periods before eventually reaching global optima. <strong>Noise-induced transitions</strong> happen when random fluctuations provide enough energy to escape shallow valleys—explaining why stressed healthcare systems can suddenly transition to crisis states. <strong>Hysteresis loops</strong> arise when parameter changes alter the landscape faster than trajectories can respond—why hospitals struggle to recover after disruptions.</p>
+</div>
+<div id="building-toward-higher-dimensions" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Building Toward Higher Dimensions<a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#building-toward-higher-dimensions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The tools developed in this exploration—geometric thinking, stability analysis, bifurcation tracking—form the foundation for understanding dynamics in any dimension. Every multi-dimensional system can be understood by building up from these one-dimensional building blocks.</p>
+<p>In our next exploration, we’ll extend these concepts to two-dimensional systems, where entirely new phenomena become possible. We’ll discover <strong>limit cycles</strong>—closed orbital trajectories that don’t exist in one dimension. We’ll explore epidemic models like SIR dynamics and see how disease-host interactions create oscillatory patterns. We’ll investigate <strong>homoclinic bifurcations</strong> where stable and unstable manifolds connect, creating complex transitional behavior.</p>
+<p>But the geometric intuition we’ve developed—reading landscapes of attraction and repulsion, tracking how these landscapes change with parameters, understanding the universal patterns of creation, annihilation, and exchange—remains central to everything that follows.</p>
+<p>The phase line has taught us to see dynamics as geometry, parameters as landscape architects, and bifurcations as moments of topological transformation. These insights, born from our careful study of one-dimensional flows, illuminate the hidden structure underlying all complex dynamical behavior.</p>
+<p>In one dimension, we discovered that complexity emerges not from chaos, but from the interplay between stability and instability, between attraction and repulsion, between the local and the global. This is the fundamental lesson of nonlinear dynamics: simple rules, when allowed to operate in nonlinear feedback loops, generate the rich patterns we observe throughout healthcare and beyond.</p>
+<p>The dance between order and complexity begins with understanding how single variables change over time. From this foundation, we can build toward understanding how entire systems—healthcare delivery networks, disease dynamics, patient populations, and organizational cultures—navigate the landscapes of possibility that govern their behavior.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="nonlinear-dynamics-in-one-dimension.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducion-to-systems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/edit/main/04-PhaseLine.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/blob/main/04-PhaseLine.Rmd",
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
