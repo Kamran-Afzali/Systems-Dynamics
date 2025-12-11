@@ -58,8 +58,8 @@ immune-system-dynamics-an-example
 fixed-points-and-the-geography-of-infection-outcomes
 phase-portrait-mapping-infection-trajectories
 temporal-dynamics-the-clinical-course-of-infection
-basins-of-attraction-when-treatment-matters-most
-limit-cycles-and-oscillatory-immune-responses
+treatment-intervention-timing-windows
+periodic-reactivation-dynamics
 bifurcations-parameter-thresholds-and-disease-transitions
 finding-balance-equilibrium-points-and-linear-stability
 the-nature-of-equilibrium
