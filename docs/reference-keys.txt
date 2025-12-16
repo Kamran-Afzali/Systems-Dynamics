@@ -82,3 +82,15 @@ sensitive-dependence-and-the-seeds-of-chaos
 the-boundary-between-order-and-chaos
 clinical-implications-and-therapeutic-interventions
 beyond-two-dimensions-the-gateway-to-chaos
+memory-matters-introduction-to-delay-differential-equations
+the-mathematical-structure-of-delay-systems
+stability-analysis-and-characteristic-equations
+numerical-implementation
+population-dynamics-with-maturation-delays
+medical-applications-infectious-disease-with-latency
+drug-pharmacokinetics-and-treatment-delays
+immunological-memory-and-delayed-response
+healthcare-resource-allocation-with-treatment-delays
+the-mathematical-landscape-of-infinite-dimensions
+distributed-delays-and-integral-formulations
+connecting-past-and-future
