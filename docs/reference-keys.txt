@@ -90,7 +90,4 @@ population-dynamics-with-maturation-delays
 medical-applications-infectious-disease-with-latency
 drug-pharmacokinetics-and-treatment-delays
 immunological-memory-and-delayed-response
-healthcare-resource-allocation-with-treatment-delays
-the-mathematical-landscape-of-infinite-dimensions
-distributed-delays-and-integral-formulations
 connecting-past-and-future
