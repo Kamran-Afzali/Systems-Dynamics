@@ -99,3 +99,16 @@ the-hopf-bifurcation-at-the-critical-delay
 hospital-bed-occupancy-a-healthcare-stability-analysis
 what-infinitely-many-roots-mean-in-practice
 reading-stability-through-the-lens-of-history
+tipping-points-bifurcation-theory-and-critical-transitions
+what-a-bifurcation-is
+the-saddle-node-bifurcation
+the-hopf-bifurcation-normal-form
+critical-slowing-down
+hysteresis-and-the-difficulty-of-recovery
+applications-to-mental-health
+depression-as-a-tipping-point
+bipolar-disorder-as-a-hopf-type-cycle
+obsessive-compulsive-disorder-and-thresholds
+bifurcation-diagrams-for-mental-health
+what-bifurcation-theory-adds-to-clinical-thinking
+references

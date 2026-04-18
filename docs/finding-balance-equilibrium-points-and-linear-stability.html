@@ -23,7 +23,7 @@
 <meta name="author" content="Kamran Afzali" />
 
 
-<meta name="date" content="2026-03-08" />
+<meta name="date" content="2026-04-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,6 +267,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.6" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#what-infinitely-many-roots-mean-in-practice"><i class="fa fa-check"></i><b>11.6</b> What Infinitely Many Roots Mean in Practice</a></li>
 <li class="chapter" data-level="11.7" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#reading-stability-through-the-lens-of-history"><i class="fa fa-check"></i><b>11.7</b> Reading Stability Through the Lens of History</a></li>
 </ul></li>
+<li class="chapter" data-level="12" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html"><i class="fa fa-check"></i><b>12</b> Tipping Points: Bifurcation Theory and Critical Transitions</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#what-a-bifurcation-is"><i class="fa fa-check"></i><b>12.1</b> What a Bifurcation Is</a></li>
+<li class="chapter" data-level="12.2" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#the-saddle-node-bifurcation"><i class="fa fa-check"></i><b>12.2</b> The Saddle-Node Bifurcation</a></li>
+<li class="chapter" data-level="12.3" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#the-hopf-bifurcation-normal-form"><i class="fa fa-check"></i><b>12.3</b> The Hopf Bifurcation (Normal Form)</a></li>
+<li class="chapter" data-level="12.4" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#critical-slowing-down"><i class="fa fa-check"></i><b>12.4</b> Critical Slowing Down</a></li>
+<li class="chapter" data-level="12.5" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#hysteresis-and-the-difficulty-of-recovery"><i class="fa fa-check"></i><b>12.5</b> Hysteresis and the Difficulty of Recovery</a></li>
+<li class="chapter" data-level="12.6" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#applications-to-mental-health"><i class="fa fa-check"></i><b>12.6</b> Applications to Mental Health</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#depression-as-a-tipping-point"><i class="fa fa-check"></i><b>12.6.1</b> Depression as a Tipping Point</a></li>
+<li class="chapter" data-level="12.6.2" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#bipolar-disorder-as-a-hopf-type-cycle"><i class="fa fa-check"></i><b>12.6.2</b> Bipolar Disorder as a Hopf-Type Cycle</a></li>
+<li class="chapter" data-level="12.6.3" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#obsessive-compulsive-disorder-and-thresholds"><i class="fa fa-check"></i><b>12.6.3</b> Obsessive-Compulsive Disorder and Thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#bifurcation-diagrams-for-mental-health"><i class="fa fa-check"></i><b>12.7</b> Bifurcation Diagrams for Mental Health</a></li>
+<li class="chapter" data-level="12.8" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#what-bifurcation-theory-adds-to-clinical-thinking"><i class="fa fa-check"></i><b>12.8</b> What Bifurcation Theory Adds to Clinical Thinking</a></li>
+<li class="chapter" data-level="12.9" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#references"><i class="fa fa-check"></i><b>12.9</b> References</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -405,7 +422,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb160-32"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb160-32" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning in geom_point(aes(x = x_star, y = y_star), color = &quot;red&quot;, size = 4, : All aesthetics have length 1, but the data has 1204 rows.
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 </div>
 <div id="eigenvalue-analysis-and-stability-classification" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Eigenvalue Analysis and Stability Classification<a href="finding-balance-equilibrium-points-and-linear-stability.html#eigenvalue-analysis-and-stability-classification" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -476,7 +493,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb162-49"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb162-49" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb162-50"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb162-50" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
 <span id="cb162-51"><a href="finding-balance-equilibrium-points-and-linear-stability.html#cb162-51" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 </div>
 <div id="application-to-epidemic-dynamics" class="section level2 hasAnchor" number="8.5">
 <h2><span class="header-section-number">8.5</span> Application to Epidemic Dynamics<a href="finding-balance-equilibrium-points-and-linear-stability.html#application-to-epidemic-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -568,7 +585,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
 ## All aesthetics have length 1, but the data has 1503 rows.
 ## ℹ Please consider using `annotate()` or provide this layer with data containing a single row.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 </div>
 <div id="timescale-separation-and-dominant-dynamics" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> Timescale Separation and Dominant Dynamics<a href="finding-balance-equilibrium-points-and-linear-stability.html#timescale-separation-and-dominant-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h2>

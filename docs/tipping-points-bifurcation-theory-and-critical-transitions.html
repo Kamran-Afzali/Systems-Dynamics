@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Tipping Points: Bifurcation Theory and Critical Transitions | Systems Dynamics</title>
+  <meta name="description" content="Chapter 12 Tipping Points: Bifurcation Theory and Critical Transitions | Systems Dynamics" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Tipping Points: Bifurcation Theory and Critical Transitions | Systems Dynamics" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/EHRVAL.jpg" />
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Tipping Points: Bifurcation Theory and Critical Transitions | Systems Dynamics" />
+  
+  
+  <meta name="twitter:image" content="/EHRVAL.jpg" />
+
+<meta name="author" content="Kamran Afzali" />
+
+
+<meta name="date" content="2026-04-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="when-the-past-shapes-the-present-stability-in-delay-systems.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Systems Dynamics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Differential Equations and Systems Dynamics</a></li>
+<li class="chapter" data-level="2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html"><i class="fa fa-check"></i><b>2</b> Why the World Changes: An Introduction to Differential Equations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-language-of-change"><i class="fa fa-check"></i><b>2.1</b> The Language of Change</a></li>
+<li class="chapter" data-level="2.2" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#from-coffee-to-cosmos"><i class="fa fa-check"></i><b>2.2</b> From Coffee to Cosmos</a></li>
+<li class="chapter" data-level="2.3" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#getting-our-hands-dirty-solving-a-simple-example"><i class="fa fa-check"></i><b>2.3</b> Getting Our Hands Dirty: Solving a Simple Example</a></li>
+<li class="chapter" data-level="2.4" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#seeing-the-solution-in-action"><i class="fa fa-check"></i><b>2.4</b> Seeing the Solution in Action</a></li>
+<li class="chapter" data-level="2.5" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#when-theory-meets-reality"><i class="fa fa-check"></i><b>2.5</b> When Theory Meets Reality</a></li>
+<li class="chapter" data-level="2.6" data-path="why-the-world-changes-an-introduction-to-differential-equations.html"><a href="why-the-world-changes-an-introduction-to-differential-equations.html#the-bigger-picture"><i class="fa fa-check"></i><b>2.6</b> The Bigger Picture</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html"><i class="fa fa-check"></i><b>3</b> Solving Simple Differential Equations</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-art-of-separation"><i class="fa fa-check"></i><b>3.1</b> The Art of Separation</a></li>
+<li class="chapter" data-level="3.2" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#finding-the-missing-piece"><i class="fa fa-check"></i><b>3.2</b> Finding the Missing Piece</a></li>
+<li class="chapter" data-level="3.3" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-method-in-action"><i class="fa fa-check"></i><b>3.3</b> The Method in Action</a></li>
+<li class="chapter" data-level="3.4" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#beyond-simple-cooling-the-exponential-family"><i class="fa fa-check"></i><b>3.4</b> Beyond Simple Cooling: The Exponential Family</a></li>
+<li class="chapter" data-level="3.5" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#when-variables-refuse-to-separate"><i class="fa fa-check"></i><b>3.5</b> When Variables Refuse to Separate</a></li>
+<li class="chapter" data-level="3.6" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#a-more-complex-example-mixing-problems"><i class="fa fa-check"></i><b>3.6</b> A More Complex Example: Mixing Problems</a></li>
+<li class="chapter" data-level="3.7" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#the-power-and-limits-of-separation"><i class="fa fa-check"></i><b>3.7</b> The Power and Limits of Separation</a></li>
+<li class="chapter" data-level="3.8" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#building-intuition"><i class="fa fa-check"></i><b>3.8</b> Building Intuition</a></li>
+<li class="chapter" data-level="3.9" data-path="solving-simple-differential-equations.html"><a href="solving-simple-differential-equations.html#whats-next"><i class="fa fa-check"></i><b>3.9</b> What’s Next</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html"><i class="fa fa-check"></i><b>4</b> Nonlinear Dynamics in One Dimension</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#when-more-becomes-different"><i class="fa fa-check"></i><b>4.1</b> When More Becomes Different</a></li>
+<li class="chapter" data-level="4.2" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#finding-the-balance-points"><i class="fa fa-check"></i><b>4.2</b> Finding the Balance Points</a></li>
+<li class="chapter" data-level="4.3" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-logistic-portrait"><i class="fa fa-check"></i><b>4.3</b> The Logistic Portrait</a></li>
+<li class="chapter" data-level="4.4" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#beyond-simple-equilibrium-bistable-systems"><i class="fa fa-check"></i><b>4.4</b> Beyond Simple Equilibrium: Bistable Systems</a></li>
+<li class="chapter" data-level="4.5" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-geometry-of-dynamics"><i class="fa fa-check"></i><b>4.5</b> The Geometry of Dynamics</a></li>
+<li class="chapter" data-level="4.6" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#harvesting-and-catastrophic-collapse"><i class="fa fa-check"></i><b>4.6</b> Harvesting and Catastrophic Collapse</a></li>
+<li class="chapter" data-level="4.7" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-richness-of-one-dimension"><i class="fa fa-check"></i><b>4.7</b> The Richness of One Dimension</a></li>
+<li class="chapter" data-level="4.8" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#building-intuition-for-the-nonlinear-world"><i class="fa fa-check"></i><b>4.8</b> Building Intuition for the Nonlinear World</a></li>
+<li class="chapter" data-level="4.9" data-path="nonlinear-dynamics-in-one-dimension.html"><a href="nonlinear-dynamics-in-one-dimension.html#the-path-forward"><i class="fa fa-check"></i><b>4.9</b> The Path Forward</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><i class="fa fa-check"></i><b>5</b> The Phase Line of One-Dimensional Dynamics: A Healthcare Perspective</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-geometry-of-flow"><i class="fa fa-check"></i><b>5.1</b> The Geometry of Flow</a></li>
+<li class="chapter" data-level="5.2" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-universal-patterns-of-creation-and-annihilation"><i class="fa fa-check"></i><b>5.2</b> The Universal Patterns of Creation and Annihilation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-saddle-node-bifurcation-threshold-phenomena"><i class="fa fa-check"></i><b>5.2.1</b> The Saddle-Node Bifurcation: Threshold Phenomena</a></li>
+<li class="chapter" data-level="5.2.2" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-pitchfork-bifurcation-symmetry-breaking"><i class="fa fa-check"></i><b>5.2.2</b> The Pitchfork Bifurcation: Symmetry Breaking</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-bifurcation-diagram-mapping-parameter-space"><i class="fa fa-check"></i><b>5.3</b> The Bifurcation Diagram: Mapping Parameter Space</a></li>
+<li class="chapter" data-level="5.4" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#hysteresis-and-system-memory"><i class="fa fa-check"></i><b>5.4</b> Hysteresis and System Memory</a></li>
+<li class="chapter" data-level="5.5" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#beyond-classical-bifurcations-transcritical-transitions"><i class="fa fa-check"></i><b>5.5</b> Beyond Classical Bifurcations: Transcritical Transitions</a></li>
+<li class="chapter" data-level="5.6" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#cusp-catastrophes-and-multiple-parameter-systems"><i class="fa fa-check"></i><b>5.6</b> Cusp Catastrophes and Multiple Parameter Systems</a></li>
+<li class="chapter" data-level="5.7" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#imperfect-bifurcations-and-structural-stability"><i class="fa fa-check"></i><b>5.7</b> Imperfect Bifurcations and Structural Stability</a></li>
+<li class="chapter" data-level="5.8" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#the-landscape-perspective"><i class="fa fa-check"></i><b>5.8</b> The Landscape Perspective</a></li>
+<li class="chapter" data-level="5.9" data-path="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html"><a href="the-phase-line-of-one-dimensional-dynamics-a-healthcare-perspective.html#building-toward-higher-dimensions"><i class="fa fa-check"></i><b>5.9</b> Building Toward Higher Dimensions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html"><i class="fa fa-check"></i><b>6</b> Introducion to Systems</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-architecture-of-coupled-systems"><i class="fa fa-check"></i><b>6.1</b> The Architecture of Coupled Systems</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#fixed-points-and-local-stability-analysis"><i class="fa fa-check"></i><b>6.1.1</b> Fixed Points and Local Stability Analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-phase-portrait-visualizing-global-behavior"><i class="fa fa-check"></i><b>6.1.2</b> The Phase Portrait: Visualizing Global Behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-simple-oscillations-modified-predator-prey-systems"><i class="fa fa-check"></i><b>6.2</b> Beyond Simple Oscillations: Modified Predator-Prey Systems</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#competitive-systems-and-exclusion-principles"><i class="fa fa-check"></i><b>6.2.1</b> Competitive Systems and Exclusion Principles</a></li>
+<li class="chapter" data-level="6.2.2" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#nullclines-and-phase-plane-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Nullclines and Phase Plane Analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometry-of-stability"><i class="fa fa-check"></i><b>6.2.3</b> The Geometry of Stability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#time-series-and-oscillatory-dynamics"><i class="fa fa-check"></i><b>6.3</b> Time Series and Oscillatory Dynamics</a></li>
+<li class="chapter" data-level="6.4" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#basins-of-attraction-and-global-dynamics"><i class="fa fa-check"></i><b>6.4</b> Basins of Attraction and Global Dynamics</a></li>
+<li class="chapter" data-level="6.5" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-road-to-chaos-nonlinear-feedback-and-complex-dynamics"><i class="fa fa-check"></i><b>6.5</b> The Road to Chaos: Nonlinear Feedback and Complex Dynamics</a></li>
+<li class="chapter" data-level="6.6" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#limit-cycles-and-oscillatory-attractors"><i class="fa fa-check"></i><b>6.6</b> Limit Cycles and Oscillatory Attractors</a></li>
+<li class="chapter" data-level="6.7" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#applications-across-disciplines"><i class="fa fa-check"></i><b>6.7</b> Applications Across Disciplines</a></li>
+<li class="chapter" data-level="6.8" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#bifurcations-in-two-dimensional-systems"><i class="fa fa-check"></i><b>6.8</b> Bifurcations in Two-Dimensional Systems</a></li>
+<li class="chapter" data-level="6.9" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#the-geometric-foundation-of-complexity"><i class="fa fa-check"></i><b>6.9</b> The Geometric Foundation of Complexity</a></li>
+<li class="chapter" data-level="6.10" data-path="introducion-to-systems.html"><a href="introducion-to-systems.html#beyond-two-dimensions-preparing-for-chaos"><i class="fa fa-check"></i><b>6.10</b> Beyond Two Dimensions: Preparing for Chaos</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html"><i class="fa fa-check"></i><b>7</b> Immune System Dynamics: An Example</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#fixed-points-and-the-geography-of-infection-outcomes"><i class="fa fa-check"></i><b>7.1</b> Fixed Points and the Geography of Infection Outcomes</a></li>
+<li class="chapter" data-level="7.2" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#phase-portrait-mapping-infection-trajectories"><i class="fa fa-check"></i><b>7.2</b> Phase Portrait: Mapping Infection Trajectories</a></li>
+<li class="chapter" data-level="7.3" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#temporal-dynamics-the-clinical-course-of-infection"><i class="fa fa-check"></i><b>7.3</b> Temporal Dynamics: The Clinical Course of Infection</a></li>
+<li class="chapter" data-level="7.4" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#treatment-intervention-timing-windows"><i class="fa fa-check"></i><b>7.4</b> Treatment Intervention: Timing Windows</a></li>
+<li class="chapter" data-level="7.5" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#periodic-reactivation-dynamics"><i class="fa fa-check"></i><b>7.5</b> Periodic Reactivation Dynamics</a></li>
+<li class="chapter" data-level="7.6" data-path="immune-system-dynamics-an-example.html"><a href="immune-system-dynamics-an-example.html#bifurcations-parameter-thresholds-and-disease-transitions"><i class="fa fa-check"></i><b>7.6</b> Bifurcations: Parameter Thresholds and Disease Transitions</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html"><i class="fa fa-check"></i><b>8</b> Finding Balance: Equilibrium Points and Linear Stability</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-nature-of-equilibrium"><i class="fa fa-check"></i><b>8.1</b> The Nature of Equilibrium</a></li>
+<li class="chapter" data-level="8.2" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#linear-approximation-and-the-jacobian-matrix"><i class="fa fa-check"></i><b>8.2</b> Linear Approximation and the Jacobian Matrix</a></li>
+<li class="chapter" data-level="8.3" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#eigenvalue-analysis-and-stability-classification"><i class="fa fa-check"></i><b>8.3</b> Eigenvalue Analysis and Stability Classification</a></li>
+<li class="chapter" data-level="8.4" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-taxonomy-of-fixed-points"><i class="fa fa-check"></i><b>8.4</b> The Taxonomy of Fixed Points</a></li>
+<li class="chapter" data-level="8.5" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#application-to-epidemic-dynamics"><i class="fa fa-check"></i><b>8.5</b> Application to Epidemic Dynamics</a></li>
+<li class="chapter" data-level="8.6" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#timescale-separation-and-dominant-dynamics"><i class="fa fa-check"></i><b>8.6</b> Timescale Separation and Dominant Dynamics</a></li>
+<li class="chapter" data-level="8.7" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#nonhyperbolic-fixed-points-and-structural-stability"><i class="fa fa-check"></i><b>8.7</b> Nonhyperbolic Fixed Points and Structural Stability</a></li>
+<li class="chapter" data-level="8.8" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#the-dance-of-feedback-understanding-system-response"><i class="fa fa-check"></i><b>8.8</b> The Dance of Feedback: Understanding System Response</a></li>
+<li class="chapter" data-level="8.9" data-path="finding-balance-equilibrium-points-and-linear-stability.html"><a href="finding-balance-equilibrium-points-and-linear-stability.html#conclusion-the-local-global-connection"><i class="fa fa-check"></i><b>8.9</b> Conclusion: The Local-Global Connection</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><i class="fa fa-check"></i><b>9</b> Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-poincaré-bendixson-theorem-and-the-topology-of-two-dimensions"><i class="fa fa-check"></i><b>9.1</b> The Poincaré-Bendixson Theorem and the Topology of Two Dimensions</a></li>
+<li class="chapter" data-level="9.2" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#limit-cycles-self-sustained-oscillations"><i class="fa fa-check"></i><b>9.2</b> Limit Cycles: Self-Sustained Oscillations</a></li>
+<li class="chapter" data-level="9.3" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#stability-of-limit-cycles-and-floquet-theory"><i class="fa fa-check"></i><b>9.3</b> Stability of Limit Cycles and Floquet Theory</a></li>
+<li class="chapter" data-level="9.4" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#hopf-bifurcations-the-birth-of-oscillations"><i class="fa fa-check"></i><b>9.4</b> Hopf Bifurcations: The Birth of Oscillations</a></li>
+<li class="chapter" data-level="9.5" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#multiple-time-scales-and-relaxation-oscillations"><i class="fa fa-check"></i><b>9.5</b> Multiple Time Scales and Relaxation Oscillations</a></li>
+<li class="chapter" data-level="9.6" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#disease-states-as-dynamical-transitions"><i class="fa fa-check"></i><b>9.6</b> Disease States as Dynamical Transitions</a></li>
+<li class="chapter" data-level="9.7" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#sensitive-dependence-and-the-seeds-of-chaos"><i class="fa fa-check"></i><b>9.7</b> Sensitive Dependence and the Seeds of Chaos</a></li>
+<li class="chapter" data-level="9.8" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#the-boundary-between-order-and-chaos"><i class="fa fa-check"></i><b>9.8</b> The Boundary Between Order and Chaos</a></li>
+<li class="chapter" data-level="9.9" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#clinical-implications-and-therapeutic-interventions"><i class="fa fa-check"></i><b>9.9</b> Clinical Implications and Therapeutic Interventions</a></li>
+<li class="chapter" data-level="9.10" data-path="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html"><a href="spirals-cycles-and-chaos-complex-behaviors-in-2d-systems.html#beyond-two-dimensions-the-gateway-to-chaos"><i class="fa fa-check"></i><b>9.10</b> Beyond Two Dimensions: The Gateway to Chaos</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html"><i class="fa fa-check"></i><b>10</b> Memory Matters: Introduction to Delay Differential Equations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#the-mathematical-structure-of-delay-systems"><i class="fa fa-check"></i><b>10.1</b> The Mathematical Structure of Delay Systems</a></li>
+<li class="chapter" data-level="10.2" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#stability-analysis-and-characteristic-equations"><i class="fa fa-check"></i><b>10.2</b> Stability Analysis and Characteristic Equations</a></li>
+<li class="chapter" data-level="10.3" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#numerical-implementation"><i class="fa fa-check"></i><b>10.3</b> Numerical Implementation</a></li>
+<li class="chapter" data-level="10.4" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#population-dynamics-with-maturation-delays"><i class="fa fa-check"></i><b>10.4</b> Population Dynamics with Maturation Delays</a></li>
+<li class="chapter" data-level="10.5" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#medical-applications-infectious-disease-with-latency"><i class="fa fa-check"></i><b>10.5</b> Medical Applications: Infectious Disease with Latency</a></li>
+<li class="chapter" data-level="10.6" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#drug-pharmacokinetics-and-treatment-delays"><i class="fa fa-check"></i><b>10.6</b> Drug Pharmacokinetics and Treatment Delays</a></li>
+<li class="chapter" data-level="10.7" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#immunological-memory-and-delayed-response"><i class="fa fa-check"></i><b>10.7</b> Immunological Memory and Delayed Response</a></li>
+<li class="chapter" data-level="10.8" data-path="memory-matters-introduction-to-delay-differential-equations.html"><a href="memory-matters-introduction-to-delay-differential-equations.html#connecting-past-and-future"><i class="fa fa-check"></i><b>10.8</b> Connecting Past and Future</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html"><i class="fa fa-check"></i><b>11</b> When the Past Shapes the Present: Stability in Delay Systems</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#linearization-and-the-characteristic-equation"><i class="fa fa-check"></i><b>11.1</b> Linearization and the Characteristic Equation</a></li>
+<li class="chapter" data-level="11.2" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#the-scalar-case-where-intuition-lives"><i class="fa fa-check"></i><b>11.2</b> The Scalar Case: Where Intuition Lives</a></li>
+<li class="chapter" data-level="11.3" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#stability-switches-the-delay-as-a-bifurcation-parameter"><i class="fa fa-check"></i><b>11.3</b> Stability Switches: The Delay as a Bifurcation Parameter</a></li>
+<li class="chapter" data-level="11.4" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#the-hopf-bifurcation-at-the-critical-delay"><i class="fa fa-check"></i><b>11.4</b> The Hopf Bifurcation at the Critical Delay</a></li>
+<li class="chapter" data-level="11.5" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#hospital-bed-occupancy-a-healthcare-stability-analysis"><i class="fa fa-check"></i><b>11.5</b> Hospital Bed Occupancy: A Healthcare Stability Analysis</a></li>
+<li class="chapter" data-level="11.6" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#what-infinitely-many-roots-mean-in-practice"><i class="fa fa-check"></i><b>11.6</b> What Infinitely Many Roots Mean in Practice</a></li>
+<li class="chapter" data-level="11.7" data-path="when-the-past-shapes-the-present-stability-in-delay-systems.html"><a href="when-the-past-shapes-the-present-stability-in-delay-systems.html#reading-stability-through-the-lens-of-history"><i class="fa fa-check"></i><b>11.7</b> Reading Stability Through the Lens of History</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html"><i class="fa fa-check"></i><b>12</b> Tipping Points: Bifurcation Theory and Critical Transitions</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#what-a-bifurcation-is"><i class="fa fa-check"></i><b>12.1</b> What a Bifurcation Is</a></li>
+<li class="chapter" data-level="12.2" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#the-saddle-node-bifurcation"><i class="fa fa-check"></i><b>12.2</b> The Saddle-Node Bifurcation</a></li>
+<li class="chapter" data-level="12.3" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#the-hopf-bifurcation-normal-form"><i class="fa fa-check"></i><b>12.3</b> The Hopf Bifurcation (Normal Form)</a></li>
+<li class="chapter" data-level="12.4" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#critical-slowing-down"><i class="fa fa-check"></i><b>12.4</b> Critical Slowing Down</a></li>
+<li class="chapter" data-level="12.5" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#hysteresis-and-the-difficulty-of-recovery"><i class="fa fa-check"></i><b>12.5</b> Hysteresis and the Difficulty of Recovery</a></li>
+<li class="chapter" data-level="12.6" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#applications-to-mental-health"><i class="fa fa-check"></i><b>12.6</b> Applications to Mental Health</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#depression-as-a-tipping-point"><i class="fa fa-check"></i><b>12.6.1</b> Depression as a Tipping Point</a></li>
+<li class="chapter" data-level="12.6.2" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#bipolar-disorder-as-a-hopf-type-cycle"><i class="fa fa-check"></i><b>12.6.2</b> Bipolar Disorder as a Hopf-Type Cycle</a></li>
+<li class="chapter" data-level="12.6.3" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#obsessive-compulsive-disorder-and-thresholds"><i class="fa fa-check"></i><b>12.6.3</b> Obsessive-Compulsive Disorder and Thresholds</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#bifurcation-diagrams-for-mental-health"><i class="fa fa-check"></i><b>12.7</b> Bifurcation Diagrams for Mental Health</a></li>
+<li class="chapter" data-level="12.8" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#what-bifurcation-theory-adds-to-clinical-thinking"><i class="fa fa-check"></i><b>12.8</b> What Bifurcation Theory Adds to Clinical Thinking</a></li>
+<li class="chapter" data-level="12.9" data-path="tipping-points-bifurcation-theory-and-critical-transitions.html"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#references"><i class="fa fa-check"></i><b>12.9</b> References</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Systems Dynamics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tipping-points-bifurcation-theory-and-critical-transitions" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Tipping Points: Bifurcation Theory and Critical Transitions<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#tipping-points-bifurcation-theory-and-critical-transitions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The previous post showed how delay converts a stable equilibrium into sustained oscillation — a continuous, gradual erosion of stability as the bifurcation parameter <span class="math inline">\(\tau\)</span> crosses a threshold. This post addresses a different and in some ways more alarming class of transitions: those that are <strong>abrupt, asymmetric, and difficult to reverse</strong>. These are the hallmarks of bifurcations in non-delayed systems where the architecture of the phase plane itself changes as a parameter moves. The central objects are the saddle-node bifurcation, which governs the sudden appearance and disappearance of equilibria, and the Hopf bifurcation, which governs the birth of oscillation. Together, they provide the mathematical skeleton of what the complexity sciences call <em>tipping points</em> — and what clinicians observe as the onset of, or recovery from, psychiatric disorders.</p>
+<div id="what-a-bifurcation-is" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> What a Bifurcation Is<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#what-a-bifurcation-is" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>bifurcation</strong> is a qualitative change in the long-run behavior of a dynamical system as a parameter passes through a critical value. Below the threshold, the system may have one attractor; above it, it may have two, or none, or a cycle. The parameter itself — call it <span class="math inline">\(\mu\)</span> — does not need to change dramatically. A small, continuous shift can cross the system into a regime with structurally different dynamics. This is what distinguishes a bifurcation from an ordinary smooth deformation: the change in geometry is discontinuous even when the change in parameter is not.</p>
+<p><strong>Parameter space</strong> is the set of all possible values of <span class="math inline">\(\mu\)</span> (or, in multi-parameter systems, the <span class="math inline">\((\mu_1, \mu_2, \ldots)\)</span> plane). The <strong>bifurcation diagram</strong> plots the system’s equilibria and their stability as a function of <span class="math inline">\(\mu\)</span>. Solid branches denote stable fixed points; dashed branches denote unstable ones. Reading a bifurcation diagram is the fastest way to understand what a model predicts about transitions, multistability, and irreversibility.</p>
+</div>
+<div id="the-saddle-node-bifurcation" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> The Saddle-Node Bifurcation<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#the-saddle-node-bifurcation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The canonical form is</p>
+<p><span class="math display">\[
+\dot{x} = \mu - x^2
+\]</span></p>
+<p>For <span class="math inline">\(\mu &lt; 0\)</span>, there are no real fixed points — the right-hand side is always negative and the system drifts without rest. At <span class="math inline">\(\mu = 0\)</span>, a single fixed point appears at <span class="math inline">\(x^* = 0\)</span>, but it is non-hyperbolic: the linearization has a zero eigenvalue. For <span class="math inline">\(\mu &gt; 0\)</span>, two fixed points emerge at <span class="math inline">\(x^* = \pm\sqrt{\mu}\)</span>. The upper branch <span class="math inline">\(x^* = +\sqrt{\mu}\)</span> has linearized eigenvalue <span class="math inline">\(-2\sqrt{\mu} &lt; 0\)</span> and is stable; the lower branch <span class="math inline">\(x^* = -\sqrt{\mu}\)</span> has eigenvalue <span class="math inline">\(+2\sqrt{\mu} &gt; 0\)</span> and is unstable. The two branches collide and annihilate each other as <span class="math inline">\(\mu\)</span> decreases back through zero — this collision is what gives the bifurcation its name (a saddle and a node merging).</p>
+<p>The key behavioral signature is <strong>irreversibility under hysteresis</strong>. Suppose <span class="math inline">\(\mu\)</span> decreases slowly from a positive value. The system tracks the stable upper branch until <span class="math inline">\(\mu = 0\)</span>, at which point the attractor vanishes and the state falls abruptly. To recover the upper branch, <span class="math inline">\(\mu\)</span> must be increased back past <span class="math inline">\(\mu = 0\)</span> — but depending on the full system, the state may not simply climb back; it may require a much larger forcing to re-enter the basin of attraction of the recovered equilibrium. This is hysteresis: the system’s state depends not just on the current parameter value but on the history of how it arrived there.</p>
+</div>
+<div id="the-hopf-bifurcation-normal-form" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> The Hopf Bifurcation (Normal Form)<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#the-hopf-bifurcation-normal-form" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While the saddle-node involves equilibria appearing and vanishing, the Hopf bifurcation involves an equilibrium <em>losing</em> stability to a limit cycle. The normal form in polar coordinates is</p>
+<p><span class="math display">\[
+\dot{r} = \mu r - r^3, \qquad \dot{\theta} = 1
+\]</span></p>
+<p>The fixed point at the origin (<span class="math inline">\(r = 0\)</span>) exists for all <span class="math inline">\(\mu\)</span>. Its stability is governed by the radial equation: linearizing around <span class="math inline">\(r = 0\)</span> gives eigenvalue <span class="math inline">\(\mu\)</span>, so the origin is stable for <span class="math inline">\(\mu &lt; 0\)</span> and unstable for <span class="math inline">\(\mu &gt; 0\)</span>. At <span class="math inline">\(\mu = 0\)</span> the stability switches — and for <span class="math inline">\(\mu &gt; 0\)</span>, a stable limit cycle appears at radius <span class="math inline">\(r^* = \sqrt{\mu}\)</span>, oscillating with angular frequency <span class="math inline">\(\dot{\theta} = 1\)</span>.</p>
+<p>This is the <strong>supercritical</strong> case: the limit cycle is born at zero amplitude and grows continuously as <span class="math inline">\(\mu\)</span> increases, so the transition to oscillation is gradual and the new attractor is always stable. In the <strong>subcritical</strong> Hopf, the limit cycle appears with finite amplitude and is initially unstable; the system can jump abruptly to a large-amplitude oscillation with no gradual warning. The distinction between super- and subcritical is clinically consequential, as we will see.</p>
+</div>
+<div id="critical-slowing-down" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Critical Slowing Down<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#critical-slowing-down" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Near any bifurcation, the dominant eigenvalue of the linearized system approaches zero — the system loses its ability to recover from small perturbations. This phenomenon, known as <strong>critical slowing down</strong>, has a precise statistical signature: the <strong>autocorrelation</strong> of the state variable at lag-1 increases toward 1, and the <strong>variance</strong> of fluctuations grows, as the parameter approaches the critical value. Both indicators reflect the same underlying geometry: the restoring force in the potential well is flattening, so random perturbations persist longer before being damped. <a href="https://www.pnas.org/doi/10.1073/pnas.1312114110">pnas</a></p>
+<p>For the saddle-node normal form <span class="math inline">\(\dot{x} = \mu - x^2\)</span>, the equilibrium is <span class="math inline">\(x^* = \sqrt{\mu}\)</span> with linearized eigenvalue <span class="math inline">\(\lambda = -2\sqrt{\mu}\)</span>. As <span class="math inline">\(\mu \to 0^+\)</span>, <span class="math inline">\(\lambda \to 0\)</span>, and the relaxation time <span class="math inline">\(T_{\text{relax}} = 1/|\lambda| = 1/(2\sqrt{\mu})\)</span> diverges. In an empirical time series, this manifests as the system appearing “sluggish” — mood scores, symptom counts, or physiological markers fluctuate more slowly and become more self-correlated before a transition <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3890822/">pmc.ncbi.nlm.nih</a>. This is the theoretical basis for <strong>early warning systems</strong> in psychiatry.</p>
+</div>
+<div id="hysteresis-and-the-difficulty-of-recovery" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Hysteresis and the Difficulty of Recovery<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#hysteresis-and-the-difficulty-of-recovery" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Hysteresis — the property that the path into a state and the path out of it are different — is one of the most clinically important predictions of saddle-node bifurcation theory. In a bistable system (two co-existing stable equilibria), the state can be driven into the lower well by a parameter shift, but returning to the upper well requires crossing a potential barrier that may demand a much larger intervention in the <em>opposite</em> direction than the one that caused the fall. This is not a failure of willpower or treatment resistance in some mysterious sense; it is the geometry of the landscape. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9407425/">pmc.ncbi.nlm.nih</a></p>
+<p>A standard way to visualize this is the <strong>cusp catastrophe surface</strong> in <span class="math inline">\((x, \mu_1, \mu_2)\)</span> space, where <span class="math inline">\(\mu_1\)</span> is a “normal factor” (overall stress level) and <span class="math inline">\(\mu_2\)</span> is a “splitting factor” (vulnerability or sensitization). For low <span class="math inline">\(\mu_2\)</span>, the system transitions smoothly between states as <span class="math inline">\(\mu_1\)</span> varies. For high <span class="math inline">\(\mu_2\)</span>, the surface folds — creating a region of bistability with a lower and upper sheet connected by an unstable middle branch. Moving across this fold produces the sudden onset and difficult reversal that characterizes many psychiatric episodes. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9407425/">pmc.ncbi.nlm.nih</a></p>
+</div>
+<div id="applications-to-mental-health" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">12.6</span> Applications to Mental Health<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#applications-to-mental-health" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="depression-as-a-tipping-point" class="section level3 hasAnchor" number="12.6.1">
+<h3><span class="header-section-number">12.6.1</span> Depression as a Tipping Point<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#depression-as-a-tipping-point" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The most empirically developed application is <strong>major depression</strong>. The network theory of psychopathology frames depression not as a latent disease entity but as a self-sustaining attractor: a dense web of mutually reinforcing symptoms (low energy → reduced activity → reduced reward → lower mood → less motivation → lower energy) that, once activated, maintains itself against interventions that would be sufficient to prevent onset. The saddle-node bifurcation provides the mathematical form: the healthy state and the depressed state co-exist as two stable attracta across a range of stress parameter values, separated by an unstable equilibrium that acts as a threshold. <a href="https://www.orygen.org.au/About/News-And-Events/2024/Mental-health-can-have-tipping-points-just-like-ec">orygen.org</a></p>
+<p>A landmark study in <em>PNAS</em> by Wichers and colleagues confirmed that <strong>critical slowing down</strong> — measured as rising autocorrelation and variance in daily mood time series — preceded the onset of a depressive episode in an intensively monitored individual. The signal appeared weeks before the clinical transition, suggesting that smartphones recording ecological momentary assessment data could function as real-time bifurcation detectors. Subsequent work showed that the same indicators anticipated not just onset but the <em>direction</em> of the transition — whether symptoms would increase or decrease — with the sign of the leading eigenvalue encoding this directional information. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8781362/">pmc.ncbi.nlm.nih</a></p>
+<p>Hysteresis explains a well-documented clinical asymmetry: antidepressant doses sufficient to prevent the onset of a first episode often fail to achieve remission once the patient has crossed into the depressed attractor. The parameter must be driven to a value significantly more favorable than the original tipping point to push the system back across the fold. This is not a paradox — it is precisely what the cusp catastrophe model predicts. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9407425/">pmc.ncbi.nlm.nih</a></p>
+</div>
+<div id="bipolar-disorder-as-a-hopf-type-cycle" class="section level3 hasAnchor" number="12.6.2">
+<h3><span class="header-section-number">12.6.2</span> Bipolar Disorder as a Hopf-Type Cycle<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#bipolar-disorder-as-a-hopf-type-cycle" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Where depression maps naturally to saddle-node dynamics (two equilibria, abrupt transitions, hysteresis), <strong>bipolar disorder</strong> maps more naturally to Hopf-type dynamics: a stable equilibrium loses stability and a limit cycle emerges, alternating between depressive and manic phases. The normal form <span class="math inline">\(\dot{r} = \mu r - r^3\)</span> is instructive here — when <span class="math inline">\(\mu\)</span> (interpreted as a stress/sensitization parameter) crosses zero, the resting mood state becomes unstable and the system is captured by a cycle. Whether the Hopf is super- or subcritical determines whether the oscillation onset is gradual (supercritical) or whether the person abruptly enters a full manic or depressive episode with no intermediate amplitude (subcritical). <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6317753/">pmc.ncbi.nlm.nih</a></p>
+<p>Research by Goldbeter (2011) used a two-variable model of mood dynamics governed by inhibitory and excitatory interactions, showing that the transition between euthymia and cycling is indeed governed by Hopf-like bifurcations, and that the period of the resulting limit cycle — days to weeks — is consistent with observed bipolar cycling frequencies. Critical slowing down has been detected preceding transitions between depressed and manic episodes in bipolar time series, consistent with the theoretical prediction that the dominant Floquet multiplier of the limit cycle approaches 1 near the bifurcation boundary. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6317753/">pmc.ncbi.nlm.nih</a></p>
+</div>
+<div id="obsessive-compulsive-disorder-and-thresholds" class="section level3 hasAnchor" number="12.6.3">
+<h3><span class="header-section-number">12.6.3</span> Obsessive-Compulsive Disorder and Thresholds<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#obsessive-compulsive-disorder-and-thresholds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>OCD and related compulsive disorders exhibit a different bifurcation structure: rather than two mood states, there is a transition between a low-frequency compulsive behavior regime and a high-frequency one as stress or intrusive thought intensity crosses a threshold. This maps to a subcritical Hopf or, in simpler models, to a saddle-node on an invariant circle (SNIC) bifurcation, where a fixed point and a limit cycle collide. The clinical implication is that once compulsive cycles are established, reducing trigger intensity below the original onset threshold is insufficient for extinction — the system is trapped in the oscillatory attractor. Exposure and response prevention works, in part, by actively suppressing the cycle at above-threshold intensity, forcing the system off the limit cycle rather than waiting for the parameter to recede below the saddle. <a href="https://sprott.physics.wisc.edu/pubs/paper251/paper251.pdf">sprott.physics.wisc</a></p>
+</div>
+</div>
+<div id="bifurcation-diagrams-for-mental-health" class="section level2 hasAnchor" number="12.7">
+<h2><span class="header-section-number">12.7</span> Bifurcation Diagrams for Mental Health<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#bifurcation-diagrams-for-mental-health" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The following R code constructs three bifurcation diagrams:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Saddle-node</strong>: equilibria of <span class="math inline">\(\dot{x} = \mu - x^2\)</span> as a function of <span class="math inline">\(\mu\)</span>, with the stable/unstable branches, annotated with the hysteresis loop for a full system with a fold.</li>
+<li><strong>Hopf normal form</strong>: equilibrium amplitude and limit cycle amplitude as a function of <span class="math inline">\(\mu\)</span> for <span class="math inline">\(\dot{r} = \mu r - r^3\)</span>.</li>
+<li><strong>Mood bifurcation surface</strong>: a schematic cusp catastrophe projection in <span class="math inline">\((\text{stress}, x)\)</span> space, showing the bistable region with the unstable branch, and annotating the onset and recovery thresholds that differ under hysteresis.</li>
+</ol>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb189-2"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb189-3"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-3" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb189-4"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-4" tabindex="-1"></a></span>
+<span id="cb189-5"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-5" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-6"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-6" tabindex="-1"></a><span class="co"># 1. Saddle-node bifurcation: x_dot = mu - x^2</span></span>
+<span id="cb189-7"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-7" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-8"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-8" tabindex="-1"></a>mu_sn <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">400</span>)</span>
+<span id="cb189-9"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-9" tabindex="-1"></a>df_sn <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb189-10"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-10" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">mu =</span> mu_sn[mu_sn <span class="sc">&gt;=</span> <span class="dv">0</span>],</span>
+<span id="cb189-11"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-11" tabindex="-1"></a>             <span class="at">x  =</span> <span class="fu">sqrt</span>(mu_sn[mu_sn <span class="sc">&gt;=</span> <span class="dv">0</span>]),</span>
+<span id="cb189-12"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-12" tabindex="-1"></a>             <span class="at">branch =</span> <span class="st">&quot;Stable&quot;</span>),</span>
+<span id="cb189-13"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-13" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">mu =</span> mu_sn[mu_sn <span class="sc">&gt;=</span> <span class="dv">0</span>],</span>
+<span id="cb189-14"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-14" tabindex="-1"></a>             <span class="at">x  =</span> <span class="sc">-</span><span class="fu">sqrt</span>(mu_sn[mu_sn <span class="sc">&gt;=</span> <span class="dv">0</span>]),</span>
+<span id="cb189-15"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-15" tabindex="-1"></a>             <span class="at">branch =</span> <span class="st">&quot;Unstable&quot;</span>)</span>
+<span id="cb189-16"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-16" tabindex="-1"></a>)</span>
+<span id="cb189-17"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-17" tabindex="-1"></a></span>
+<span id="cb189-18"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-18" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_sn, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x, <span class="at">linetype =</span> branch, <span class="at">color =</span> branch)) <span class="sc">+</span></span>
+<span id="cb189-19"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-19" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb189-20"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-20" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span></span>
+<span id="cb189-21"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-21" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;Unstable&quot;</span> <span class="ot">=</span> <span class="st">&quot;coral&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb189-22"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-22" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Stable&quot;</span> <span class="ot">=</span> <span class="st">&quot;solid&quot;</span>, <span class="st">&quot;Unstable&quot;</span> <span class="ot">=</span> <span class="st">&quot;dashed&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb189-23"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-23" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;point&quot;</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb189-24"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-24" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">0.05</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.15</span>,</span>
+<span id="cb189-25"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-25" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Bifurcation</span><span class="sc">\n</span><span class="st">point&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb189-26"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-26" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb189-27"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-27" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">&quot;Saddle-Node Bifurcation&quot;</span>,</span>
+<span id="cb189-28"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-28" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">dot</span>(x) <span class="sc">==</span> mu <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb189-29"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-29" tabindex="-1"></a>    <span class="at">x        =</span> <span class="fu">expression</span>(mu <span class="sc">~</span> <span class="st">&quot;(stress / allostatic load)&quot;</span>),</span>
+<span id="cb189-30"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-30" tabindex="-1"></a>    <span class="at">y        =</span> <span class="fu">expression</span>(x<span class="sc">^</span><span class="st">&quot;*&quot;</span> <span class="sc">~</span> <span class="st">&quot;(mood / symptom state)&quot;</span>),</span>
+<span id="cb189-31"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-31" tabindex="-1"></a>    <span class="at">color    =</span> <span class="cn">NULL</span>, <span class="at">linetype =</span> <span class="cn">NULL</span></span>
+<span id="cb189-32"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-32" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb189-33"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-33" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb189-34"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-34" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb189-35"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-35" tabindex="-1"></a></span>
+<span id="cb189-36"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-36" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-37"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-37" tabindex="-1"></a><span class="co"># 2. Hopf normal form: r_dot = mu*r - r^3</span></span>
+<span id="cb189-38"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-38" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-39"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-39" tabindex="-1"></a>mu_hopf <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">400</span>)</span>
+<span id="cb189-40"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-40" tabindex="-1"></a>df_hopf <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb189-41"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-41" tabindex="-1"></a>  <span class="co"># Fixed point r=0: stable for mu&lt;0, unstable for mu&gt;0</span></span>
+<span id="cb189-42"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-42" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">mu =</span> mu_hopf, <span class="at">r =</span> <span class="dv">0</span>,</span>
+<span id="cb189-43"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-43" tabindex="-1"></a>             <span class="at">branch =</span> <span class="fu">ifelse</span>(mu_hopf <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Fixed point (stable)&quot;</span>,</span>
+<span id="cb189-44"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-44" tabindex="-1"></a>                             <span class="st">&quot;Fixed point (unstable)&quot;</span>)),</span>
+<span id="cb189-45"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-45" tabindex="-1"></a>  <span class="co"># Limit cycle amplitude sqrt(mu) for mu &gt; 0</span></span>
+<span id="cb189-46"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-46" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">mu =</span> mu_hopf[mu_hopf <span class="sc">&gt;</span> <span class="dv">0</span>],</span>
+<span id="cb189-47"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-47" tabindex="-1"></a>             <span class="at">r  =</span> <span class="fu">sqrt</span>(mu_hopf[mu_hopf <span class="sc">&gt;</span> <span class="dv">0</span>]),</span>
+<span id="cb189-48"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-48" tabindex="-1"></a>             <span class="at">branch =</span> <span class="st">&quot;Limit cycle (stable)&quot;</span>)</span>
+<span id="cb189-49"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-49" tabindex="-1"></a>)</span>
+<span id="cb189-50"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-50" tabindex="-1"></a></span>
+<span id="cb189-51"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-51" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_hopf, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> r, <span class="at">color =</span> branch, <span class="at">linetype =</span> branch)) <span class="sc">+</span></span>
+<span id="cb189-52"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-52" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb189-53"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-53" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span></span>
+<span id="cb189-54"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-54" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb189-55"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-55" tabindex="-1"></a>    <span class="st">&quot;Fixed point (stable)&quot;</span>   <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb189-56"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-56" tabindex="-1"></a>    <span class="st">&quot;Fixed point (unstable)&quot;</span> <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb189-57"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-57" tabindex="-1"></a>    <span class="st">&quot;Limit cycle (stable)&quot;</span>   <span class="ot">=</span> <span class="st">&quot;goldenrod3&quot;</span></span>
+<span id="cb189-58"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-58" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb189-59"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-59" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb189-60"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-60" tabindex="-1"></a>    <span class="st">&quot;Fixed point (stable)&quot;</span>   <span class="ot">=</span> <span class="st">&quot;solid&quot;</span>,</span>
+<span id="cb189-61"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-61" tabindex="-1"></a>    <span class="st">&quot;Fixed point (unstable)&quot;</span> <span class="ot">=</span> <span class="st">&quot;dashed&quot;</span>,</span>
+<span id="cb189-62"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-62" tabindex="-1"></a>    <span class="st">&quot;Limit cycle (stable)&quot;</span>   <span class="ot">=</span> <span class="st">&quot;solid&quot;</span></span>
+<span id="cb189-63"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-63" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb189-64"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-64" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">1.2</span>, <span class="at">y =</span> <span class="fl">0.7</span>,</span>
+<span id="cb189-65"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-65" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Bipolar cycling</span><span class="sc">\n</span><span class="st">regime&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb189-66"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-66" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;goldenrod4&quot;</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb189-67"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-67" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.15</span>,</span>
+<span id="cb189-68"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-68" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Euthymia&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;steelblue4&quot;</span>) <span class="sc">+</span></span>
+<span id="cb189-69"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-69" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb189-70"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-70" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">&quot;Supercritical Hopf Bifurcation&quot;</span>,</span>
+<span id="cb189-71"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-71" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">dot</span>(r) <span class="sc">==</span> mu<span class="sc">*</span>r <span class="sc">-</span> r<span class="sc">^</span><span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;, &quot;</span> <span class="sc">~</span> <span class="fu">dot</span>(theta) <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb189-72"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-72" tabindex="-1"></a>    <span class="at">x        =</span> <span class="fu">expression</span>(mu <span class="sc">~</span> <span class="st">&quot;(sensitization / kindling)&quot;</span>),</span>
+<span id="cb189-73"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-73" tabindex="-1"></a>    <span class="at">y        =</span> <span class="fu">expression</span>(<span class="st">&quot;Amplitude &quot;</span> <span class="sc">~</span> r),</span>
+<span id="cb189-74"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-74" tabindex="-1"></a>    <span class="at">color    =</span> <span class="cn">NULL</span>, <span class="at">linetype =</span> <span class="cn">NULL</span></span>
+<span id="cb189-75"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-75" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb189-76"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-76" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb189-77"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-77" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb189-78"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-78" tabindex="-1"></a></span>
+<span id="cb189-79"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-79" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-80"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-80" tabindex="-1"></a><span class="co"># 3. Cusp / fold: hysteresis loop for depression</span></span>
+<span id="cb189-81"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-81" tabindex="-1"></a><span class="co">#    Full system: x_dot = mu + nu*x - x^3</span></span>
+<span id="cb189-82"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-82" tabindex="-1"></a><span class="co">#    Fold curve: mu = x^3 - nu*x, plotted for nu = 1.5</span></span>
+<span id="cb189-83"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-83" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-84"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-84" tabindex="-1"></a>nu   <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
+<span id="cb189-85"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-85" tabindex="-1"></a>x_c  <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">600</span>)</span>
+<span id="cb189-86"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-86" tabindex="-1"></a>mu_c <span class="ot">&lt;-</span> x_c<span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> nu <span class="sc">*</span> x_c   <span class="co"># fold curve in (mu, x) space</span></span>
+<span id="cb189-87"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-87" tabindex="-1"></a></span>
+<span id="cb189-88"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-88" tabindex="-1"></a>df_fold <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mu =</span> mu_c, <span class="at">x =</span> x_c) <span class="sc">%&gt;%</span></span>
+<span id="cb189-89"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-89" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">branch =</span> <span class="fu">case_when</span>(</span>
+<span id="cb189-90"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-90" tabindex="-1"></a>    x <span class="sc">&gt;</span> <span class="fu">sqrt</span>(nu <span class="sc">/</span> <span class="dv">3</span>)  <span class="sc">~</span> <span class="st">&quot;Upper stable (healthy)&quot;</span>,</span>
+<span id="cb189-91"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-91" tabindex="-1"></a>    x <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">sqrt</span>(nu <span class="sc">/</span> <span class="dv">3</span>) <span class="sc">~</span> <span class="st">&quot;Lower stable (depressed)&quot;</span>,</span>
+<span id="cb189-92"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-92" tabindex="-1"></a>    <span class="cn">TRUE</span>              <span class="sc">~</span> <span class="st">&quot;Unstable (threshold)&quot;</span></span>
+<span id="cb189-93"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-93" tabindex="-1"></a>  ))</span>
+<span id="cb189-94"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-94" tabindex="-1"></a></span>
+<span id="cb189-95"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-95" tabindex="-1"></a><span class="co"># Hysteresis arrows: onset (upper → lower) and recovery (lower → upper)</span></span>
+<span id="cb189-96"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-96" tabindex="-1"></a>mu_fold_pos <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> nu <span class="sc">*</span> <span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>)   <span class="co"># right fold</span></span>
+<span id="cb189-97"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-97" tabindex="-1"></a>mu_fold_neg <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>)<span class="sc">^</span><span class="dv">3</span> <span class="sc">+</span> nu <span class="sc">*</span> <span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>)  <span class="co"># left fold  (sign flip)</span></span>
+<span id="cb189-98"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-98" tabindex="-1"></a>mu_fold_neg2 <span class="ot">&lt;-</span> (<span class="sc">-</span><span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>))<span class="sc">^</span><span class="dv">3</span> <span class="sc">-</span> nu<span class="sc">*</span>(<span class="sc">-</span><span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>))</span>
+<span id="cb189-99"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-99" tabindex="-1"></a></span>
+<span id="cb189-100"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-100" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_fold, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> x, <span class="at">color =</span> branch, <span class="at">linetype =</span> branch)) <span class="sc">+</span></span>
+<span id="cb189-101"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-101" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb189-102"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-102" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb189-103"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-103" tabindex="-1"></a>    <span class="st">&quot;Upper stable (healthy)&quot;</span>    <span class="ot">=</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb189-104"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-104" tabindex="-1"></a>    <span class="st">&quot;Lower stable (depressed)&quot;</span>  <span class="ot">=</span> <span class="st">&quot;coral&quot;</span>,</span>
+<span id="cb189-105"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-105" tabindex="-1"></a>    <span class="st">&quot;Unstable (threshold)&quot;</span>      <span class="ot">=</span> <span class="st">&quot;gray50&quot;</span></span>
+<span id="cb189-106"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-106" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb189-107"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-107" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb189-108"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-108" tabindex="-1"></a>    <span class="st">&quot;Upper stable (healthy)&quot;</span>   <span class="ot">=</span> <span class="st">&quot;solid&quot;</span>,</span>
+<span id="cb189-109"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-109" tabindex="-1"></a>    <span class="st">&quot;Lower stable (depressed)&quot;</span> <span class="ot">=</span> <span class="st">&quot;solid&quot;</span>,</span>
+<span id="cb189-110"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-110" tabindex="-1"></a>    <span class="st">&quot;Unstable (threshold)&quot;</span>     <span class="ot">=</span> <span class="st">&quot;dashed&quot;</span></span>
+<span id="cb189-111"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-111" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb189-112"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-112" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>,</span>
+<span id="cb189-113"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-113" tabindex="-1"></a>           <span class="at">x =</span> mu_fold_pos, <span class="at">xend =</span> mu_fold_neg2 <span class="sc">-</span> <span class="fl">0.1</span>,</span>
+<span id="cb189-114"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-114" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fl">0.05</span>, <span class="at">yend =</span> <span class="sc">-</span><span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>) <span class="sc">-</span> <span class="fl">0.05</span>,</span>
+<span id="cb189-115"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-115" tabindex="-1"></a>           <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>,<span class="st">&quot;cm&quot;</span>)),</span>
+<span id="cb189-116"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-116" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;coral&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb189-117"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-117" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> mu_fold_pos <span class="sc">+</span> <span class="fl">0.05</span>, <span class="at">y =</span> <span class="fl">0.6</span>,</span>
+<span id="cb189-118"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-118" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Onset</span><span class="sc">\n</span><span class="st">(collapse)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;coral&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb189-119"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-119" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;segment&quot;</span>,</span>
+<span id="cb189-120"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-120" tabindex="-1"></a>           <span class="at">x =</span> mu_fold_neg2, <span class="at">xend =</span> mu_fold_pos <span class="sc">-</span> <span class="fl">0.1</span>,</span>
+<span id="cb189-121"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-121" tabindex="-1"></a>           <span class="at">y =</span> <span class="sc">-</span><span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>) <span class="sc">-</span> <span class="fl">0.05</span>, <span class="at">yend =</span> <span class="fu">sqrt</span>(nu<span class="sc">/</span><span class="dv">3</span>) <span class="sc">+</span> <span class="fl">0.05</span>,</span>
+<span id="cb189-122"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-122" tabindex="-1"></a>           <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>,<span class="st">&quot;cm&quot;</span>)),</span>
+<span id="cb189-123"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-123" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb189-124"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-124" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> mu_fold_neg2 <span class="sc">-</span> <span class="fl">0.05</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.6</span>,</span>
+<span id="cb189-125"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-125" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Recovery</span><span class="sc">\n</span><span class="st">(requires larger shift)&quot;</span>,</span>
+<span id="cb189-126"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-126" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">hjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb189-127"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-127" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb189-128"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-128" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">&quot;Cusp Catastrophe: Depression Hysteresis&quot;</span>,</span>
+<span id="cb189-129"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-129" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">dot</span>(x) <span class="sc">==</span> mu <span class="sc">+</span> nu<span class="sc">*</span>x <span class="sc">-</span> x<span class="sc">^</span><span class="dv">3</span> <span class="sc">~</span> <span class="st">&quot;, &quot;</span> <span class="sc">~</span> nu <span class="sc">==</span> <span class="fl">1.5</span>),</span>
+<span id="cb189-130"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-130" tabindex="-1"></a>    <span class="at">x        =</span> <span class="fu">expression</span>(mu <span class="sc">~</span> <span class="st">&quot;(net stress load)&quot;</span>),</span>
+<span id="cb189-131"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-131" tabindex="-1"></a>    <span class="at">y        =</span> <span class="fu">expression</span>(x <span class="sc">~</span> <span class="st">&quot;(mood state)&quot;</span>),</span>
+<span id="cb189-132"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-132" tabindex="-1"></a>    <span class="at">color    =</span> <span class="cn">NULL</span>, <span class="at">linetype =</span> <span class="cn">NULL</span></span>
+<span id="cb189-133"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-133" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb189-134"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-134" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb189-135"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-135" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb189-136"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-136" tabindex="-1"></a></span>
+<span id="cb189-137"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-137" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-138"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-138" tabindex="-1"></a><span class="co"># 4. Critical slowing down: relaxation time vs mu</span></span>
+<span id="cb189-139"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-139" tabindex="-1"></a><span class="co">#    For saddle-node at x* = sqrt(mu): lambda = -2*sqrt(mu)</span></span>
+<span id="cb189-140"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-140" tabindex="-1"></a><span class="co"># -------------------------------------------------------</span></span>
+<span id="cb189-141"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-141" tabindex="-1"></a>mu_csd <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.02</span>, <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">300</span>)</span>
+<span id="cb189-142"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-142" tabindex="-1"></a>T_relax <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(mu_csd))</span>
+<span id="cb189-143"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-143" tabindex="-1"></a></span>
+<span id="cb189-144"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-144" tabindex="-1"></a>df_csd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mu =</span> mu_csd, <span class="at">T_relax =</span> T_relax)</span>
+<span id="cb189-145"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-145" tabindex="-1"></a></span>
+<span id="cb189-146"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-146" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_csd, <span class="fu">aes</span>(<span class="at">x =</span> mu, <span class="at">y =</span> T_relax)) <span class="sc">+</span></span>
+<span id="cb189-147"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-147" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;purple4&quot;</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb189-148"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-148" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">color =</span> <span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span></span>
+<span id="cb189-149"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-149" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="fl">0.15</span>, <span class="at">y =</span> <span class="fl">2.8</span>,</span>
+<span id="cb189-150"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-150" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">&quot;Diverging recovery</span><span class="sc">\n</span><span class="st">time near \u03bc\u2192 0&quot;</span>,</span>
+<span id="cb189-151"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-151" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;purple4&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb189-152"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-152" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb189-153"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-153" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">&quot;Critical Slowing Down&quot;</span>,</span>
+<span id="cb189-154"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-154" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Relaxation time diverges as bifurcation is approached&quot;</span>,</span>
+<span id="cb189-155"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-155" tabindex="-1"></a>    <span class="at">x        =</span> <span class="fu">expression</span>(mu <span class="sc">~</span> <span class="st">&quot;(distance from tipping point)&quot;</span>),</span>
+<span id="cb189-156"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-156" tabindex="-1"></a>    <span class="at">y        =</span> <span class="fu">expression</span>(T[relax] <span class="sc">==</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span><span class="sc">*</span><span class="fu">sqrt</span>(mu)))</span>
+<span id="cb189-157"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-157" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb189-158"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-158" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb189-159"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-159" tabindex="-1"></a></span>
+<span id="cb189-160"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-160" tabindex="-1"></a><span class="co"># ---- Combine -------------------------------------------</span></span>
+<span id="cb189-161"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-161" tabindex="-1"></a>(p1 <span class="sc">+</span> p2) <span class="sc">/</span> (p3 <span class="sc">+</span> p4) <span class="sc">+</span></span>
+<span id="cb189-162"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-162" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb189-163"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-163" tabindex="-1"></a>    <span class="at">title   =</span> <span class="st">&quot;Tipping Points: Bifurcation Theory and Critical Transitions&quot;</span>,</span>
+<span id="cb189-164"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-164" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Mental health applications of saddle-node, Hopf, and cusp catastrophe&quot;</span>,</span>
+<span id="cb189-165"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-165" tabindex="-1"></a>    <span class="at">theme   =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="dv">14</span>))</span>
+<span id="cb189-166"><a href="tipping-points-bifurcation-theory-and-critical-transitions.html#cb189-166" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>The four panels form a coherent visual argument. The <strong>saddle-node diagram</strong> shows the birth of two equilibria at <span class="math inline">\(\mu = 0\)</span> — health and disorder as co-existing attractors. The <strong>Hopf diagram</strong> shows the euthymic fixed point giving way to a mood cycle as sensitization crosses the bifurcation threshold, with the limit cycle amplitude growing as <span class="math inline">\(\sqrt{\mu}\)</span> — a gradual but irreversible shift into cyclic dynamics. The <strong>cusp/hysteresis panel</strong> shows how the onset of depression and the path to recovery trace different routes through the fold — a precise geometric account of why the parameter must be driven <em>further</em> to recover than it moved to cause the transition. The <strong>critical slowing down panel</strong> shows the diverging relaxation time as the system approaches <span class="math inline">\(\mu = 0\)</span>, providing the mechanistic basis for early warning.</p>
+</div>
+<div id="what-bifurcation-theory-adds-to-clinical-thinking" class="section level2 hasAnchor" number="12.8">
+<h2><span class="header-section-number">12.8</span> What Bifurcation Theory Adds to Clinical Thinking<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#what-bifurcation-theory-adds-to-clinical-thinking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Standard psychiatric nosology treats disorders as categories — present or absent, in remission or relapsed. Bifurcation theory offers a different grammar. The relevant question is not “has a threshold been crossed?” but “where in parameter space is the system, and which direction is it moving?” A patient whose autocorrelation in daily mood has been rising for three weeks has not yet crossed the tipping point — but the geometry of the phase portrait is shifting beneath them. An intervention now, while the well is still shallow, requires far less force than one deployed after the saddle-node collapse. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3890822/">pmc.ncbi.nlm.nih</a></p>
+<p>This reframes several clinical phenomena: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8781362/">pmc.ncbi.nlm.nih</a></p>
+<ul>
+<li><strong>Kindling in mood disorders</strong> — the observation that successive depressive episodes require lower stress triggers — corresponds to a reduction in <span class="math inline">\(\mu_c\)</span> with each episode, meaning the fold of the cusp moves progressively closer to the patient’s habitual operating point.</li>
+<li><strong>Antidepressant lag</strong> — the weeks-long delay before response — may partly reflect the time required for the restoring eigenvalue to grow large enough after the parameter shift, consistent with the slow dynamics near a fold.</li>
+<li><strong>Relapse after medication discontinuation</strong> — if stopping medication moves <span class="math inline">\(\mu\)</span> back below the fold, the upper stable branch disappears and the state falls again, even if the symptom-level improvement was complete.</li>
+</ul>
+<p>The transcendental characteristic equation of the previous post encoded memory in the spectrum of a delay system. The bifurcation diagrams of this post encode vulnerability in the geometry of a potential landscape. Together, they suggest a unified operational principle: <strong>the clinical state of a system at any moment is less informative than its position relative to the nearest bifurcation boundary</strong>, and the goal of both monitoring and intervention is to measure and actively manage that distance.</p>
+</div>
+<div id="references" class="section level2 hasAnchor" number="12.9">
+<h2><span class="header-section-number">12.9</span> References<a href="tipping-points-bifurcation-theory-and-critical-transitions.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>The empirical grounding for <strong>critical slowing down in depression</strong> is from the Wichers et al. <em>PNAS</em> 2014 study and Schreuder et al. 2022, which are among the most cited papers in the computational psychiatry literature. <a href="https://www.pnas.org/doi/10.1073/pnas.1312114110">pnas</a></li>
+<li>The <strong>bipolar Hopf model</strong> draws on Goldbeter’s published dynamical model, which is the most mathematically explicit existing treatment. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6317753/">pmc.ncbi.nlm.nih</a></li>
+<li>The <strong>cusp catastrophe depression model</strong> connects to Grasman et al. and subsequent catastrophe-theoretic work in neuropsychology, and the OCD application references the Sprott et al. thresholds paper. <a href="https://sprott.physics.wisc.edu/pubs/paper251/paper251.pdf">sprott.physics.wisc</a></li>
+<li>The notation is kept consistent with the previous post: <span class="math inline">\(\mu\)</span> as the bifurcation parameter throughout, with the Hopf normal form using <span class="math inline">\((r, \theta)\)</span> coordinates as you specified.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="when-the-past-shapes-the-present-stability-in-delay-systems.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/edit/main/11-TippingPoints.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/Kamran-Afzali/Systems-Dynamics/blob/main/11-TippingPoints.Rmd",
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
