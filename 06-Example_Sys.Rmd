@@ -1,125 +1,125 @@
-# Immune System Dynamics: An Example
+# Mental Health Dynamics: An Example
 
-The human immune system represents one of nature's most sophisticated dynamical systems. When a pathogen invades the body, a complex interplay begins between the proliferating invader and the mobilizing immune response. This interaction—pathogens reproducing while immune cells mount coordinated attacks—creates temporal patterns that determine whether infection resolves, persists chronically, or overwhelms the host. Understanding these dynamics through mathematical modeling provides crucial insights for treatment timing, vaccine design, and predicting disease progression.
+The human mind represents one of nature's most sophisticated dynamical systems. When psychological stress invades daily life, a complex interplay begins between escalating symptom burden and the mobilizing coping response. This interaction—distress compounding while resilience mechanisms mount coordinated counter-responses—creates temporal patterns that determine whether a mental health episode resolves, persists chronically, or overwhelms the individual. Understanding these dynamics through mathematical modeling provides crucial insights for intervention timing, therapy design, and predicting episode progression.
 
-We examine a fundamental model of acute viral infection that captures the essential interplay between viral load and immune response. Let \(V(t)\) represent viral population and \(I(t)\) denote activated immune cells (cytotoxic T lymphocytes). The coupled dynamics follow:
+We examine a fundamental model of acute psychological distress that captures the essential interplay between symptom burden and coping capacity. Let $S(t)$ represent symptom intensity (anxiety, depression, or generalized distress) and $C(t)$ denote activated coping resources (behavioral, cognitive, and social). The coupled dynamics follow:
 
-\[\frac{dV}{dt} = rV\left(1 - \frac{V}{K}\right) - aVI\]
+$$\frac{dS}{dt} = rS\left(1 - \frac{S}{K}\right) - aSC$$
 
-\[\frac{dI}{dt} = bVI - dI\]
+$$\frac{dC}{dt} = bSC - dC$$
 
-The first equation describes viral replication with intrinsic growth rate \(r\) limited by carrying capacity \(K\) (representing host resource constraints such as available target cells), minus viral clearance proportional to encounters between virus and immune cells at rate \(a\). The second equation models immune cell proliferation stimulated by viral presence (rate \(b\)) minus natural immune cell decay (rate \(d\)). This formulation mirrors the classical Lotka-Volterra predator-prey framework, but with crucial biological differences: viruses face resource limitations from finite host cells, and immune responses decay without sustained antigenic stimulation.
+The first equation describes symptom escalation with intrinsic growth rate $r$ limited by carrying capacity $K$ (representing the finite psychological and somatic resource pool available to sustain distress), minus symptom reduction proportional to encounters between distress and coping resources at rate $a$. The second equation models coping resource activation stimulated by symptom presence (rate $b$) minus natural decay of coping reserves (rate $d$). This formulation mirrors the classical Lotka-Volterra predator-prey framework, but with crucial psychological differences: symptoms face resource limitations from finite cognitive and somatic bandwidth, and coping responses decay without sustained engagement or social reinforcement.
 
-## Fixed Points and the Geography of Infection Outcomes
+## Fixed Points and the Geography of Episode Outcomes
 
-To understand possible infection trajectories, we identify the system's fixed points where both viral replication and immune dynamics reach equilibrium. Setting both derivatives to zero yields:
+To understand possible episode trajectories, we identify the system's fixed points where both symptom escalation and coping dynamics reach equilibrium. Setting both derivatives to zero yields:
 
-\[V^*\left(r\left(1 - \frac{V^*}{K}\right) - aI^*\right) = 0\]
+$$S^*\left(r\left(1 - \frac{S^*}{K}\right) - aC^*\right) = 0$$
 
-\[I^*(bV^* - d) = 0\]
+$$C^*(bS^* - d) = 0$$
 
-The trivial solution \((V^*, I^*) = (0, 0)\) represents pathogen clearance with no residual immune activation—the desired outcome of successful infection resolution. However, we must examine its stability to determine whether the system naturally approaches this healthy state.
+The trivial solution $(S^*, C^*) = (0, 0)$ represents full remission with no residual coping activation—the desired outcome of successful episode resolution. However, we must examine its stability to determine whether the system naturally approaches this well state.
 
-A non-trivial fixed point exists at \((V^*, I^*) = (d/b, (r/a)(1 - d/(bK)))\), representing chronic infection where viral load and immune response balance in persistent equilibrium. This fixed point only exists biologically when \(I^* > 0\), requiring \(d/b < K\)—the immune activation threshold must lie below viral carrying capacity.
+A non-trivial fixed point exists at $(S^*, C^*) = (d/b,\ (r/a)(1 - d/(bK)))$, representing chronic distress where symptom burden and coping resources balance in persistent equilibrium. This fixed point only exists biologically when $C^* > 0$, requiring $d/b < K$—the coping activation threshold must lie below the symptom carrying capacity.
 
 To analyze stability, we compute the Jacobian matrix:
 
-\[\mathbf{J}(V,I) = \begin{pmatrix} r - \frac{2rV}{K} - aI & -aV \\ bI & bV - d \end{pmatrix}\]
+$$\mathbf{J}(S,C) = \begin{pmatrix} r - \frac{2rS}{K} - aC & -aS \\ bC & bS - d \end{pmatrix}$$
 
-At the clearance fixed point \((0,0)\):
+At the remission fixed point $(0,0)$:
 
-\[\mathbf{J}(0,0) = \begin{pmatrix} r & 0 \\ 0 & -d \end{pmatrix}\]
+$$\mathbf{J}(0,0) = \begin{pmatrix} r & 0 \\ 0 & -d \end{pmatrix}$$
 
-The eigenvalues \(\lambda_1 = r > 0\) and \(\lambda_2 = -d < 0\) identify this as a saddle point. This mathematical classification carries profound medical meaning: the infection-free state is unstable. Any introduction of virus, no matter how small, will initially grow exponentially along the unstable direction. The host cannot maintain pathogen-free status without active immune surveillance or intervention.
+The eigenvalues $\lambda_1 = r > 0$ and $\lambda_2 = -d < 0$ identify this as a saddle point. This mathematical classification carries profound clinical meaning: the symptom-free state is unstable. Any introduction of stress, no matter how small, will initially grow exponentially along the unstable direction. An individual cannot maintain distress-free status without active coping engagement or supportive intervention.
 
-At the chronic infection equilibrium, the Jacobian becomes:
+At the chronic distress equilibrium, the Jacobian becomes:
 
-\[\mathbf{J}\left(\frac{d}{b}, \frac{r}{a}\left(1 - \frac{d}{bK}\right)\right) = \begin{pmatrix} -\frac{rd}{bK} & -\frac{ad}{b} \\ \frac{br}{a}\left(1 - \frac{d}{bK}\right) & 0 \end{pmatrix}\]
+$$\mathbf{J}\!\left(\frac{d}{b},\ \frac{r}{a}\!\left(1 - \frac{d}{bK}\right)\right) = \begin{pmatrix} -\frac{rd}{bK} & -\frac{ad}{b} \\ \frac{br}{a}\!\left(1 - \frac{d}{bK}\right) & 0 \end{pmatrix}$$
 
-Computing the trace and determinant: \(\tau = -rd/(bK) < 0\) and \(\Delta = rd(1 - d/(bK)) > 0\) (when the fixed point exists). The negative trace with positive determinant indicates stability. Furthermore, examining \(\tau^2 - 4\Delta\) determines whether trajectories spiral or approach monotonically. For typical parameter values in viral infections, \(\tau^2 < 4\Delta\), creating a stable spiral—the system exhibits damped oscillations as it approaches chronic equilibrium.
+Computing the trace and determinant: $\tau = -rd/(bK) < 0$ and $\Delta = rd(1 - d/(bK)) > 0$ (when the fixed point exists). The negative trace with positive determinant indicates stability. Furthermore, examining $\tau^2 - 4\Delta$ determines whether trajectories spiral or approach monotonically. For typical parameter values in psychological distress, $\tau^2 < 4\Delta$, creating a stable spiral—the system exhibits damped oscillations as it approaches chronic equilibrium.
 
-```{r}
+``` r
 library(ggplot2)
 library(deSolve)
 library(dplyr)
 
-# Define viral infection model
-viral_model <- function(t, state, parameters) {
+# Define mental health distress model
+distress_model <- function(t, state, parameters) {
   with(as.list(c(state, parameters)), {
-    dV <- r*V*(1 - V/K) - a*V*I
-    dI <- b*V*I - d*I
-    list(c(dV, dI))
+    dS <- r*S*(1 - S/K) - a*S*C
+    dC <- b*S*C - d*C
+    list(c(dS, dC))
   })
 }
 
-# Parameters for chronic infection scenario
+# Parameters for chronic distress scenario
 params <- list(r = 2, K = 1000, a = 0.01, b = 0.0001, d = 0.1)
 
 # Calculate fixed points
-fp_clearance <- c(V = 0, I = 0)
-V_chronic <- params$d / params$b
-I_chronic <- (params$r / params$a) * (1 - V_chronic / params$K)
-fp_chronic <- c(V = V_chronic, I = I_chronic)
+fp_remission <- c(S = 0, C = 0)
+S_chronic <- params$d / params$b
+C_chronic <- (params$r / params$a) * (1 - S_chronic / params$K)
+fp_chronic <- c(S = S_chronic, C = C_chronic)
 
 # Jacobian analysis at chronic equilibrium
 J_chronic <- matrix(c(
-  -params$r * V_chronic / params$K,
-  -params$a * V_chronic,
-  params$b * I_chronic,
+  -params$r * S_chronic / params$K,
+  -params$a * S_chronic,
+  params$b * C_chronic,
   0
 ), nrow = 2, byrow = TRUE)
 
 eigen_chronic <- eigen(J_chronic)
-cat("Chronic Infection Fixed Point:\n")
-cat("Viral Load:", round(V_chronic, 2), "\n")
-cat("Immune Response:", round(I_chronic, 2), "\n")
+cat("Chronic Distress Fixed Point:\n")
+cat("Symptom Intensity:", round(S_chronic, 2), "\n")
+cat("Coping Resources:", round(C_chronic, 2), "\n")
 cat("Eigenvalues:", eigen_chronic$values, "\n")
 cat("Type: Stable Spiral\n\n")
 ```
 
-This stability analysis reveals a concerning clinical reality: without intervention, infections satisfying the chronic existence condition naturally evolve toward persistent viral presence. The immune system mounts a response, but rather than clearing the pathogen, reaches a dynamic equilibrium where viral replication balances immune-mediated clearance.
+This stability analysis reveals a concerning clinical reality: without intervention, distress episodes satisfying the chronic existence condition naturally evolve toward persistent symptom burden. The coping system mobilizes a response, but rather than achieving remission, reaches a dynamic equilibrium where symptom escalation balances coping-mediated relief.
 
-## Phase Portrait: Mapping Infection Trajectories
+## Phase Portrait: Mapping Episode Trajectories
 
-To visualize how infections progress from initial exposure, we construct the phase portrait showing viral load versus immune response. The vector field reveals the instantaneous direction of system evolution at each point in this two-dimensional space, while integrated trajectories trace complete infection courses.
+To visualize how episodes progress from initial onset, we construct the phase portrait showing symptom burden versus coping resources. The vector field reveals the instantaneous direction of system evolution at each point in this two-dimensional space, while integrated trajectories trace complete episode courses.
 
-```{r}
+``` r
 # Create vector field
-V_range <- seq(10, 1200, by = 50)
-I_range <- seq(5, 250, by = 10)
+S_range <- seq(10, 1200, by = 50)
+C_range <- seq(5, 250, by = 10)
 
-vector_field <- expand.grid(V = V_range, I = I_range)
+vector_field <- expand.grid(S = S_range, C = C_range)
 
-vector_field$dV <- with(vector_field, 
-  params$r*V*(1 - V/params$K) - params$a*V*I)
-vector_field$dI <- with(vector_field, 
-  params$b*V*I - params$d*I)
+vector_field$dS <- with(vector_field,
+  params$r*S*(1 - S/params$K) - params$a*S*C)
+vector_field$dC <- with(vector_field,
+  params$b*S*C - params$d*C)
 
 # Normalize for visualization
-vector_field$magnitude <- sqrt(vector_field$dV^2 + vector_field$dI^2)
-vector_field$dV_norm <- vector_field$dV / vector_field$magnitude * 30
-vector_field$dI_norm <- vector_field$dI / vector_field$magnitude * 7
+vector_field$magnitude <- sqrt(vector_field$dS^2 + vector_field$dC^2)
+vector_field$dS_norm <- vector_field$dS / vector_field$magnitude * 30
+vector_field$dC_norm <- vector_field$dC / vector_field$magnitude * 7
 
-# Generate infection trajectories from different initial conditions
-simulate_infection <- function(V0, I0, t_max = 30) {
+# Generate episode trajectories from different initial conditions
+simulate_episode <- function(S0, C0, t_max = 30) {
   times <- seq(0, t_max, by = 0.01)
-  initial <- c(V = V0, I = I0)
-  solution <- ode(y = initial, times = times, 
-                  func = viral_model, parms = params)
+  initial <- c(S = S0, C = C0)
+  solution <- ode(y = initial, times = times,
+                  func = distress_model, parms = params)
   return(as.data.frame(solution))
 }
 
-# Different infection scenarios
+# Different episode scenarios
 initial_conditions <- data.frame(
-  V0 = c(50, 100, 300, 500, 800),
-  I0 = c(20, 50, 100, 30, 150),
-  scenario = c("Mild", "Moderate", "Severe", "Late", "Strong")
+  S0 = c(50, 100, 300, 500, 800),
+  C0 = c(20, 50, 100, 30, 150),
+  scenario = c("Mild", "Moderate", "Severe", "Late", "Strong Coping")
 )
 
 all_trajectories <- data.frame()
 for (i in 1:nrow(initial_conditions)) {
-  traj <- simulate_infection(initial_conditions$V0[i], 
-                             initial_conditions$I0[i])
+  traj <- simulate_episode(initial_conditions$S0[i],
+                           initial_conditions$C0[i])
   traj$scenario <- initial_conditions$scenario[i]
   all_trajectories <- rbind(all_trajectories, traj)
 }
@@ -127,24 +127,24 @@ for (i in 1:nrow(initial_conditions)) {
 # Create phase portrait
 phase_plot <- ggplot() +
   geom_segment(data = vector_field[seq(1, nrow(vector_field), by = 4),],
-               aes(x = V, y = I, xend = V + dV_norm, yend = I + dI_norm),
+               aes(x = S, y = C, xend = S + dS_norm, yend = C + dC_norm),
                arrow = arrow(length = unit(0.015, "npc")),
                color = "lightblue", alpha = 0.6) +
   geom_path(data = all_trajectories,
-            aes(x = V, y = I, group = scenario, color = scenario),
+            aes(x = S, y = C, group = scenario, color = scenario),
             linewidth = 1, alpha = 0.8) +
-  geom_point(aes(x = fp_chronic[1], y = fp_chronic[2]),
+  geom_point(aes(x = fp_chronic [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC7604758/), y = fp_chronic [frontiersin](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2026.1719213/full)),
              color = "darkred", size = 4, shape = 19) +
   geom_point(data = initial_conditions,
-             aes(x = V0, y = I0, color = scenario),
+             aes(x = S0, y = C0, color = scenario),
              size = 3, shape = 1, stroke = 1.5) +
-  annotate("text", x = fp_chronic[1] + 100, y = fp_chronic[2] + 20,
+  annotate("text", x = fp_chronic [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC7604758/) + 100, y = fp_chronic [frontiersin](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2026.1719213/full) + 20,
            label = "Chronic\nEquilibrium", color = "darkred", size = 3) +
   labs(
-    title = "Viral Infection Phase Portrait",
-    x = "Viral Load (V)",
-    y = "Activated Immune Cells (I)",
-    color = "Infection\nSeverity"
+    title = "Mental Health Episode Phase Portrait",
+    x = "Symptom Intensity (S)",
+    y = "Activated Coping Resources (C)",
+    color = "Episode\nSeverity"
   ) +
   theme_minimal() +
   coord_cartesian(xlim = c(0, 1200), ylim = c(0, 250)) +
@@ -153,31 +153,31 @@ phase_plot <- ggplot() +
 print(phase_plot)
 ```
 
-The phase portrait reveals several critical features of infection dynamics. Trajectories spiral inward toward the chronic equilibrium, indicating damped oscillations where viral load surges are met with delayed immune responses, creating alternating periods of viral increase and immune-mediated suppression. The spiral pattern reflects the inherent time lag between viral replication and immune cell proliferation—viruses reproduce quickly while cytotoxic T cell responses require days to fully mobilize.
+The phase portrait reveals several critical features of distress dynamics. Trajectories spiral inward toward the chronic equilibrium, indicating damped oscillations where symptom surges are met with delayed coping responses, creating alternating periods of worsening and partial relief. The spiral pattern reflects the inherent time lag between symptom escalation and the mobilization of effective coping strategies—distress can compound quickly while cognitive reappraisal, social support activation, and behavioral engagement require time to fully organize.
 
-Different initial conditions—representing variations in viral inoculum size and pre-existing immune status—follow distinct paths but converge toward the same chronic state. A patient exposed to high initial viral load experiences more severe acute symptoms as the system swings through larger amplitude oscillations before settling. Conversely, low initial exposure with robust pre-existing immunity (higher \(I_0\)) follows tighter spirals with less dramatic symptom fluctuation.
+Different initial conditions—representing variations in initial stressor intensity and pre-existing coping reserves—follow distinct paths but converge toward the same chronic state. An individual exposed to sudden, high-intensity stress experiences more severe acute distress as the system swings through larger amplitude oscillations before settling. Conversely, low initial stress with robust pre-existing coping capacity (higher $C_0$) follows tighter spirals with less dramatic symptom fluctuation.
 
-The nullclines provide additional insight. The viral nullcline where \(dV/dt = 0\) satisfies \(I = (r/a)(1 - V/K)\), a line with negative slope. Above this line, viral populations decline; below it, they grow. The immune nullcline where \(dI/dt = 0\) occurs at \(V = d/b\), a vertical line. To the right, immune responses strengthen; to the left, they wane. Their intersection marks the chronic equilibrium, and the flow patterns between nullclines partition the phase plane into regions of consistent directional movement.
+The nullclines provide additional insight. The symptom nullcline where $dS/dt = 0$ satisfies $C = (r/a)(1 - S/K)$, a line with negative slope. Above this line, symptoms decline; below it, they grow. The coping nullcline where $dC/dt = 0$ occurs at $S = d/b$, a vertical line. To the right, coping resources strengthen; to the left, they wane. Their intersection marks the chronic equilibrium, and the flow patterns between nullclines partition the phase plane into regions of consistent directional movement.
 
-## Temporal Dynamics: The Clinical Course of Infection
+## Temporal Dynamics: The Clinical Course of an Episode
 
-While phase portraits reveal geometric structure, clinicians observe disease progression through time. Plotting viral load and immune response against time transforms abstract phase space trajectories into familiar infection timecourses with acute, chronic, and resolution phases.
+While phase portraits reveal geometric structure, clinicians observe illness progression through time. Plotting symptom intensity and coping resources against time transforms abstract phase space trajectories into familiar episode timecourses with acute, chronic, and resolution phases.
 
-```{r}
-# Extract time series for moderate infection
-moderate_infection <- all_trajectories %>%
+``` r
+# Extract time series for moderate episode
+moderate_episode <- all_trajectories %>%
   filter(scenario == "Moderate")
 
 # Create time series visualization
-time_plot <- ggplot(moderate_infection, aes(x = time)) +
-  geom_line(aes(y = V, color = "Viral Load"), linewidth = 1.2) +
-  geom_line(aes(y = I * 5, color = "Immune Response (×5)"), linewidth = 1.2) +
-  scale_color_manual(values = c("Viral Load" = "red", 
-                                "Immune Response (×5)" = "blue")) +
+time_plot <- ggplot(moderate_episode, aes(x = time)) +
+  geom_line(aes(y = S, color = "Symptom Intensity"), linewidth = 1.2) +
+  geom_line(aes(y = C * 5, color = "Coping Resources (×5)"), linewidth = 1.2) +
+  scale_color_manual(values = c("Symptom Intensity" = "red",
+                                "Coping Resources (×5)" = "blue")) +
   labs(
-    title = "Infection Time Course",
-    x = "Days Post-Infection",
-    y = "Population Size",
+    title = "Episode Time Course",
+    x = "Days Post-Onset",
+    y = "Level",
     color = "",
     subtitle = "Damped oscillations approaching chronic equilibrium"
   ) +
@@ -187,86 +187,86 @@ time_plot <- ggplot(moderate_infection, aes(x = time)) +
 print(time_plot)
 
 # Calculate key clinical metrics
-peak_viral <- max(moderate_infection$V)
-peak_time <- moderate_infection$time[which.max(moderate_infection$V)]
-peak_immune <- max(moderate_infection$I)
-immune_peak_time <- moderate_infection$time[which.max(moderate_infection$I)]
+peak_symptom <- max(moderate_episode$S)
+peak_time    <- moderate_episode$time[which.max(moderate_episode$S)]
+peak_coping  <- max(moderate_episode$C)
+coping_peak_time <- moderate_episode$time[which.max(moderate_episode$C)]
 
 cat("\nClinical Metrics:\n")
-cat("Peak viral load:", round(peak_viral, 0), "at day", round(peak_time, 1), "\n")
-cat("Peak immune response:", round(peak_immune, 0), 
-    "at day", round(immune_peak_time, 1), "\n")
-cat("Immune response lag:", round(immune_peak_time - peak_time, 1), "days\n")
+cat("Peak symptom intensity:", round(peak_symptom, 0),
+    "at day", round(peak_time, 1), "\n")
+cat("Peak coping activation:", round(peak_coping, 0),
+    "at day", round(coping_peak_time, 1), "\n")
+cat("Coping response lag:", round(coping_peak_time - peak_time, 1), "days\n")
 ```
 
-The temporal dynamics reveal the characteristic pattern of acute viral infection. Initial exposure triggers exponential viral growth as the pathogen exploits available host resources. Viral load peaks around day five to seven, corresponding to maximum symptom severity. The immune response, stimulated by rising viral antigens, lags behind by several days, reaching peak activation after viral load has already begun declining. This delay creates the damped oscillatory approach to equilibrium rather than monotonic convergence.
+The temporal dynamics reveal the characteristic pattern of an acute distress episode. Initial onset triggers exponential symptom escalation as distress exploits available cognitive bandwidth. Symptom intensity peaks around day five to seven, corresponding to maximum subjective suffering and functional impairment. The coping response, stimulated by rising distress signals, lags behind by several days, reaching peak activation after symptoms have already begun declining. This delay creates the damped oscillatory approach to equilibrium rather than monotonic convergence.
 
-Subsequent oscillations, though diminishing in amplitude, explain the relapsing symptoms sometimes observed during convalescence. Patients may experience waves of fatigue or malaise as the system oscillates through the chronic equilibrium region. Eventually, both viral load and immune activation settle into steady coexistence, or in cases where treatment or acquired immunity shifts parameters, potentially achieve complete clearance.
+Subsequent oscillations, though diminishing in amplitude, explain the relapsing difficulties sometimes observed during recovery. Individuals may experience waves of anxiety or low mood as the system oscillates through the chronic equilibrium region. Eventually, both symptom intensity and coping activation settle into steady coexistence, or in cases where therapy or acquired resilience shifts parameters, potentially achieve complete remission.
 
 ## Treatment Intervention: Timing Windows
 
-The phase portrait's global structure determines which infection outcomes are accessible from different initial states. The basin of attraction for chronic infection encompasses most of the biologically relevant phase space, but the system's spiral approach creates temporal windows where therapeutic intervention proves most effective.
+The phase portrait's global structure determines which episode outcomes are accessible from different initial states. The basin of attraction for chronic distress encompasses most of the clinically relevant phase space, but the system's spiral approach creates temporal windows where therapeutic intervention proves most effective.
 
-```{r}
+``` r
 # Analyze treatment intervention timing
 treatment_effect <- function(t, state, parameters, treat_start, treat_end, efficacy) {
   with(as.list(c(state, parameters)), {
-    # Treatment reduces viral replication
+    # Treatment reduces symptom escalation rate
     effective_r <- if (t >= treat_start && t <= treat_end) {
       r * (1 - efficacy)
     } else {
       r
     }
-    
-    dV <- effective_r*V*(1 - V/K) - a*V*I
-    dI <- b*V*I - d*I
-    list(c(dV, dI))
+
+    dS <- effective_r*S*(1 - S/K) - a*S*C
+    dC <- b*S*C - d*C
+    list(c(dS, dC))
   })
 }
 
 # Simulate early vs late treatment
-simulate_treatment <- function(V0, I0, treat_day, duration = 10, efficacy = 0.7) {
+simulate_treatment <- function(S0, C0, treat_day, duration = 10, efficacy = 0.7) {
   times <- seq(0, 40, by = 0.01)
-  initial <- c(V = V0, I = I0)
-  
-  # Create parameters for treatment application
-  params_treat <- c(params, list(treat_start = treat_day, 
-                                 treat_end = treat_day + duration,
-                                 efficacy = efficacy))
-  
+  initial <- c(S = S0, C = C0)
+
+  params_treat <- c(params, list(treat_start = treat_day,
+                                 treat_end   = treat_day + duration,
+                                 efficacy    = efficacy))
+
   solution <- ode(y = initial, times = times,
                   func = treatment_effect, parms = params_treat)
   return(as.data.frame(solution))
 }
 
 # Compare treatment timing
-no_treatment <- simulate_infection(100, 50, t_max = 40)
+no_treatment    <- simulate_episode(100, 50, t_max = 40)
 no_treatment$condition <- "No Treatment"
 
 early_treatment <- simulate_treatment(100, 50, treat_day = 2)
 early_treatment$condition <- "Early (Day 2)"
 
-late_treatment <- simulate_treatment(100, 50, treat_day = 10)
+late_treatment  <- simulate_treatment(100, 50, treat_day = 10)
 late_treatment$condition <- "Late (Day 10)"
 
 treatment_comparison <- rbind(no_treatment, early_treatment, late_treatment)
 
 # Visualize treatment outcomes
-treatment_plot <- ggplot(treatment_comparison, aes(x = time, y = V, 
-                                                    color = condition)) +
+treatment_plot <- ggplot(treatment_comparison,
+                         aes(x = time, y = S, color = condition)) +
   geom_line(linewidth = 1) +
   geom_vline(xintercept = c(2, 10), linetype = "dashed", alpha = 0.5) +
-  annotate("rect", xmin = 2, xmax = 12, ymin = 0, ymax = 1200,
+  annotate("rect", xmin = 2,  xmax = 12, ymin = 0, ymax = 1200,
            alpha = 0.1, fill = "green") +
   annotate("rect", xmin = 10, xmax = 20, ymin = 0, ymax = 1200,
            alpha = 0.1, fill = "orange") +
-  scale_color_manual(values = c("No Treatment" = "red",
-                                "Early (Day 2)" = "darkgreen",
-                                "Late (Day 10)" = "orange")) +
+  scale_color_manual(values = c("No Treatment"    = "red",
+                                "Early (Day 2)"   = "darkgreen",
+                                "Late (Day 10)"   = "orange")) +
   labs(
-    title = "Treatment Timing Impact on Viral Load",
-    x = "Days Post-Infection",
-    y = "Viral Load",
+    title = "Treatment Timing Impact on Symptom Intensity",
+    x = "Days Post-Onset",
+    y = "Symptom Intensity",
     color = "Intervention"
   ) +
   theme_minimal() +
@@ -275,107 +275,103 @@ treatment_plot <- ggplot(treatment_comparison, aes(x = time, y = V,
 print(treatment_plot)
 ```
 
-Early intervention during the exponential growth phase dramatically reduces peak viral load and accelerates resolution. Treatment initiated before the first peak intercepts the spiral trajectory, pushing it toward regions of phase space where immune clearance dominates. Late treatment, applied after several oscillatory cycles, proves less effective—the system has already settled near chronic equilibrium where perturbations decay rapidly.
+Early intervention during the acute escalation phase dramatically reduces peak symptom intensity and accelerates remission. Treatment initiated before the first symptom peak intercepts the spiral trajectory, pushing it toward regions of phase space where coping-mediated relief dominates. Late treatment, applied after several oscillatory cycles, proves less effective—the system has already settled near chronic equilibrium where perturbations decay slowly and symptom burden remains elevated.
 
-This timing sensitivity explains why antiviral therapies show maximum efficacy when administered within the first forty-eight hours of symptom onset. The mathematical structure reveals that early treatment doesn't merely reduce symptoms; it fundamentally alters the infection trajectory, potentially shifting the system from chronic persistence toward complete clearance.
+This timing sensitivity explains why psychological and pharmacological therapies show maximum efficacy when initiated during the early acute phase. The mathematical structure reveals that early intervention doesn't merely reduce suffering; it fundamentally alters the episode trajectory, potentially shifting the system from chronic persistence toward complete remission.
 
-## Periodic Reactivation Dynamics
+## Periodic Relapse Dynamics
 
-Modifying the model to incorporate immune memory and periodic environmental stressors reveals richer dynamics including stable limit cycles. Consider an extended system where immune cells develop memory but face periodically reactivating viral populations:
+Modifying the model to incorporate resilience memory and periodic psychosocial stressors reveals richer dynamics including stable limit cycles. Consider an extended system where coping resources develop habitual strength but face periodically reactivating stressors:
 
-\[\frac{dV}{dt} = rV\left(1 - \frac{V}{K}\right) - aVI - \mu V + \theta\sin(\omega t)\]
+$$\frac{dS}{dt} = rS\left(1 - \frac{S}{K}\right) - aSC - \mu S + \theta\sin(\omega t)$$
 
-\[\frac{dI}{dt} = bVI - dI + \frac{M}{1 + e^{-\alpha(V - V_{\text{threshold}})}}\]
+$$\frac{dC}{dt} = bSC - dC + \frac{M}{1 + e^{-\alpha(S - S_{\text{threshold}})}}$$
 
-Here \(M\) represents the magnitude of memory-mediated immune boost, \(\theta\sin(\omega t)\) captures periodic viral reactivation from latent reservoirs, and \(\mu\) represents baseline viral clearance. The sigmoid function models threshold-dependent memory cell activation when viral load exceeds \(V_{\text{threshold}}\).
+Here $M$ represents the magnitude of resilience-memory-mediated coping boost, $\theta\sin(\omega t)$ captures periodic stressor reactivation from life circumstances (e.g., seasonal, occupational, or relational cycles), and $\mu$ represents baseline symptom attenuation. The sigmoid function models threshold-dependent resilience activation when symptom intensity exceeds $S_{\text{threshold}}$.
 
-```{r}
+``` r
 library(ggplot2)
 library(deSolve)
 library(dplyr)
 
-# Simplified periodic reactivation model
-reactivation_model <- function(t, state, parameters) {
+# Simplified periodic relapse model
+relapse_model <- function(t, state, parameters) {
   with(as.list(c(state, parameters)), {
-    dV <- r*V*(1 - V/K) - a*V*I - mu*V + theta*sin(omega*t)
-    dI <- b*V*I - d*I + memory_boost/(1 + exp(-10*(V - V_threshold)))
-    list(c(dV, dI))
+    dS <- r*S*(1 - S/K) - a*S*C - mu*S + theta*sin(omega*t)
+    dC <- b*S*C - d*C + memory_boost/(1 + exp(-10*(S - S_threshold)))
+    list(c(dS, dC))
   })
 }
 
-# Revised parameters for stable periodic behavior
+# Parameters for stable periodic behavior
 periodic_params <- list(
-  r = 0.8,           # Reduced viral growth rate
-  K = 1000,          # Viral carrying capacity
-  a = 0.005,         # Viral clearance rate
-  b = 0.0008,        # Immune stimulation rate
-  d = 0.08,          # Immune decay rate
-  mu = 0.1,          # Viral mutation/loss rate
-  theta = 80,        # Amplitude of periodic forcing
-  omega = 0.3,       # Frequency of periodic forcing
-  memory_boost = 20, # Memory immune boost
-  V_threshold = 300  # Threshold for memory activation
+  r           = 0.8,
+  K           = 1000,
+  a           = 0.005,
+  b           = 0.0008,
+  d           = 0.08,
+  mu          = 0.1,
+  theta       = 80,
+  omega       = 0.3,
+  memory_boost = 20,
+  S_threshold  = 300
 )
 
 # Simulate long-term dynamics
-times_long <- seq(0, 150, by = 0.1)
-initial_periodic <- c(V = 400, I = 60)
+times_long       <- seq(0, 150, by = 0.1)
+initial_periodic <- c(S = 400, C = 60)
 
 periodic_solution <- ode(
-  y = initial_periodic, 
+  y    = initial_periodic,
   times = times_long,
-  func = reactivation_model, 
+  func  = relapse_model,
   parms = periodic_params,
-  rtol = 1e-6,
-  atol = 1e-6
+  rtol  = 1e-6,
+  atol  = 1e-6
 )
 
 periodic_df <- as.data.frame(periodic_solution)
 
 cat("Total simulation points:", nrow(periodic_df), "\n")
 cat("Time range:", range(periodic_df$time), "\n")
-cat("V range:", range(periodic_df$V), "\n")
-cat("I range:", range(periodic_df$I), "\n\n")
+cat("S range:", range(periodic_df$S), "\n")
+cat("C range:", range(periodic_df$C), "\n\n")
 
 # Use data after transient period
-max_time <- max(periodic_df$time)
+max_time         <- max(periodic_df$time)
 transient_cutoff <- min(50, max_time * 0.3)
-plot_data <- periodic_df[periodic_df$time > transient_cutoff, ]
+plot_data        <- periodic_df[periodic_df$time > transient_cutoff, ]
 
 cat("Points after transient:", nrow(plot_data), "\n\n")
 
 # Select representative points for visualization
-if (nrow(plot_data) > 10) {
-  point_indices <- seq(1, nrow(plot_data), length.out = min(20, nrow(plot_data)))
-  point_data <- plot_data[point_indices, ]
-} else {
-  point_data <- plot_data
-}
+point_indices <- seq(1, nrow(plot_data), length.out = min(20, nrow(plot_data)))
+point_data    <- plot_data[point_indices, ]
 
 # Visualize limit cycle behavior
-cycle_phase <- ggplot(plot_data, aes(x = V, y = I)) +
+cycle_phase <- ggplot(plot_data, aes(x = S, y = C)) +
   geom_path(color = "purple", linewidth = 1.2, alpha = 0.8) +
-  geom_point(data = point_data,
-             aes(x = V, y = I), color = "purple", size = 2, alpha = 0.5) +
+  geom_point(data = point_data, aes(x = S, y = C),
+             color = "purple", size = 2, alpha = 0.5) +
   labs(
-    title = "Recurrent Infection Limit Cycle",
-    x = "Viral Load (V)",
-    y = "Immune Response (I)",
-    subtitle = "Stable periodic reactivation pattern"
+    title    = "Recurrent Episode Limit Cycle",
+    x        = "Symptom Intensity (S)",
+    y        = "Coping Resources (C)",
+    subtitle = "Stable periodic relapse–remission pattern"
   ) +
   theme_minimal() +
   theme(plot.title = element_text(face = "bold"))
 
 cycle_time <- ggplot(plot_data, aes(x = time)) +
-  geom_line(aes(y = V, color = "Viral Load"), linewidth = 1) +
-  geom_line(aes(y = I * 8, color = "Immune Response (×8)"), linewidth = 1) +
-  scale_color_manual(values = c("Viral Load" = "red",
-                                "Immune Response (×8)" = "blue")) +
+  geom_line(aes(y = S,     color = "Symptom Intensity"),    linewidth = 1) +
+  geom_line(aes(y = C * 8, color = "Coping Resources (×8)"), linewidth = 1) +
+  scale_color_manual(values = c("Symptom Intensity"       = "red",
+                                "Coping Resources (×8)"   = "blue")) +
   labs(
-    title = "Periodic Viral Reactivation",
-    x = "Days",
-    y = "Population Size",
-    color = ""
+    title    = "Periodic Symptom Reactivation",
+    x        = "Days",
+    y        = "Level",
+    color    = ""
   ) +
   theme_minimal() +
   theme(legend.position = "top",
@@ -384,75 +380,72 @@ cycle_time <- ggplot(plot_data, aes(x = time)) +
 print(cycle_phase)
 print(cycle_time)
 
-# Summary statistics
 cat("\nDynamics summary:\n")
-cat("Mean viral load:", round(mean(plot_data$V), 1), "\n")
-cat("Mean immune response:", round(mean(plot_data$I), 1), "\n")
-cat("Viral load range:", round(range(plot_data$V), 1), "\n")
-cat("Immune response range:", round(range(plot_data$I), 1), "\n")
+cat("Mean symptom intensity:", round(mean(plot_data$S), 1), "\n")
+cat("Mean coping resources:", round(mean(plot_data$C), 1), "\n")
+cat("Symptom range:", round(range(plot_data$S), 1), "\n")
+cat("Coping range:", round(range(plot_data$C), 1), "\n")
 ```
 
-The limit cycle represents structurally stable oscillations—unlike the damped spirals approaching equilibrium, these persist indefinitely. A Hopf bifurcation occurs when the stable spiral loses stability as system parameters cross critical thresholds, giving birth to stable periodic orbits. Clinically, they manifest as periodic flares where viral load increases trigger symptomatic episodes followed by immune-mediated suppression, creating the characteristic reactivation pattern of chronic viral infections such as herpes simplex or hepatitis B.
+The limit cycle represents structurally stable oscillations—unlike the damped spirals approaching equilibrium, these persist indefinitely. A Hopf bifurcation occurs when the stable spiral loses stability as system parameters cross critical thresholds, giving birth to stable periodic orbits. Clinically, they manifest as periodic relapse–remission cycles where stressor-driven symptom escalation triggers renewed coping activation, followed by partial recovery, creating the characteristic cycling pattern of conditions such as bipolar disorder, seasonal affective disorder, or recurrent depressive episodes.
 
-## Bifurcations: Parameter Thresholds and Disease Transitions
+## Bifurcations: Parameter Thresholds and Illness Transitions
 
-As physiological parameters vary due to age, immune status, or pathogen characteristics, the infection dynamics undergo bifurcations that qualitatively alter disease outcomes. The transition from acute clearance to chronic persistence occurs through a transcritical bifurcation when immune efficacy crosses a critical threshold.
+As psychological and biological parameters vary due to aging, trauma history, medication, or therapy, mental health dynamics undergo bifurcations that qualitatively alter episode outcomes. The transition from acute resolution to chronic distress occurs through a transcritical bifurcation when coping efficacy crosses a critical threshold.
 
-Examining how the chronic equilibrium's stability changes with immune response strength \(b\) reveals this transition. For small \(b\) (immunocompromised hosts), no stable chronic equilibrium exists—viral load either overwhelms the host or clears spontaneously. As \(b\) increases past \(b_c = d/K\), the chronic fixed point emerges and becomes stable through a transcritical bifurcation where the clearance and chronic equilibria exchange stability. Further increases in \(b\) can trigger a Hopf bifurcation where the spiral equilibrium destabilizes, spawning stable limit cycles representing periodic relapsing disease.
+Examining how the chronic equilibrium's stability changes with coping activation strength $b$ reveals this transition. For small $b$ (low coping capacity, as in severely depleted individuals), no stable chronic equilibrium exists—symptoms either overwhelm the person or resolve spontaneously. As $b$ increases past $b_c = d/K$, the chronic fixed point emerges and becomes stable through a transcritical bifurcation where the remission and chronic equilibria exchange stability. Further increases in $b$ can trigger a Hopf bifurcation where the spiral equilibrium destabilizes, spawning stable limit cycles representing periodic relapsing illness.
 
-```{r}
-# Bifurcation analysis varying immune response strength
-b_values <- seq(0.00005, 0.0003, length.out = 50)
+``` r
+# Bifurcation analysis varying coping activation strength
+b_values       <- seq(0.00005, 0.0003, length.out = 50)
 bifurcation_data <- data.frame()
 
 for (b_val in b_values) {
-  params_bif <- params
+  params_bif   <- params
   params_bif$b <- b_val
-  
+
   # Calculate chronic equilibrium
-  V_eq <- params_bif$d / b_val
-  I_eq <- (params_bif$r / params_bif$a) * (1 - V_eq / params_bif$K)
-  
-  if (I_eq > 0 && V_eq < params_bif$K) {
-    # Calculate eigenvalues at equilibrium
+  S_eq <- params_bif$d / b_val
+  C_eq <- (params_bif$r / params_bif$a) * (1 - S_eq / params_bif$K)
+
+  if (C_eq > 0 && S_eq < params_bif$K) {
     J <- matrix(c(
-      -params_bif$r * V_eq / params_bif$K,
-      -params_bif$a * V_eq,
-      b_val * I_eq,
+      -params_bif$r * S_eq / params_bif$K,
+      -params_bif$a * S_eq,
+      b_val * C_eq,
       0
     ), nrow = 2, byrow = TRUE)
-    
-    eigs <- eigen(J)$values
-    max_real <- max(Re(eigs))
-    
+
+    eigs       <- eigen(J)$values
+    max_real   <- max(Re(eigs))
+
     bifurcation_data <- rbind(bifurcation_data, data.frame(
-      b = b_val,
-      V_eq = V_eq,
-      I_eq = I_eq,
+      b           = b_val,
+      S_eq        = S_eq,
+      C_eq        = C_eq,
       max_real_eig = max_real,
-      stable = max_real < 0
+      stable      = max_real < 0
     ))
   }
 }
 
 # Plot bifurcation diagram
-bifurcation_plot <- ggplot(bifurcation_data, 
-                           aes(x = b, y = V_eq, color = stable)) +
+bifurcation_plot <- ggplot(bifurcation_data,
+                           aes(x = b, y = S_eq, color = stable)) +
   geom_line(linewidth = 1.2) +
   scale_color_manual(values = c("TRUE" = "darkgreen", "FALSE" = "red"),
-                    labels = c("Stable", "Unstable")) +
+                     labels = c("Stable", "Unstable")) +
   labs(
-    title = "Bifurcation Diagram: Immune Response vs Chronic Viral Load",
-    x = "Immune Response Strength (b)",
-    y = "Equilibrium Viral Load",
-    color = "Stability"
+    title  = "Bifurcation Diagram: Coping Strength vs Chronic Symptom Level",
+    x      = "Coping Activation Strength (b)",
+    y      = "Equilibrium Symptom Intensity",
+    color  = "Stability"
   ) +
   theme_minimal()
 
 print(bifurcation_plot)
 ```
 
-This bifurcation structure explains individual variation in infection outcomes. Patients with stronger innate immune responses (higher \(b\)) maintain lower chronic viral loads and may completely clear infection. Those with compromised immunity face higher equilibrium viral loads and increased disease severity. The bifurcation points mark critical thresholds where small improvements in immune function trigger large improvements in clinical outcome—identifying optimal targets for immunotherapeutic intervention.
+This bifurcation structure explains individual variation in episode outcomes. Individuals with stronger coping activation capacity (higher $b$)—whether from therapy, social support, or neurobiological factors—maintain lower chronic symptom levels and may achieve complete remission. Those with depleted coping face higher equilibrium symptom burdens and increased chronicity. The bifurcation points mark critical thresholds where small improvements in coping capacity trigger large improvements in clinical outcome—identifying optimal targets for psychotherapeutic and pharmacological intervention.
 
-The journey through viral infection dynamics illustrates how two-dimensional systems capture essential features of complex biological processes. From fixed point stability determining chronic infection existence to phase portraits revealing treatment timing windows to bifurcations explaining inter-individual outcome variation, the mathematical framework provides quantitative predictions with direct clinical relevance. These insights transform infection from an unpredictable biological phenomenon into a structured dynamical system whose behavior we can analyze, predict, and ultimately control through rationally designed interventions.
-
+The journey through mental health episode dynamics illustrates how two-dimensional systems capture essential features of complex psychological processes. From fixed point stability determining chronic distress existence to phase portraits revealing intervention timing windows to bifurcations explaining inter-individual outcome variation, the mathematical framework provides quantitative predictions with direct clinical relevance. These insights transform a mental health episode from an unpredictable subjective phenomenon into a structured dynamical system whose behavior we can analyze, predict, and ultimately influence through rationally timed and designed interventions.
