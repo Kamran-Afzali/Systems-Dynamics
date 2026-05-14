@@ -1,0 +1,563 @@
+# Equilibrium Points and Linear Stability in Mental Health
+
+Mental health systems often live in a state of dynamic balance. Stressors accumulate, coping mechanisms respond, symptoms rise or recede, and support systems either stabilize or fail to stabilize the person’s internal state. Sometimes a disturbance passes and equilibrium is restored. Other times, the same disturbance pushes the system into a worsening cycle of anxiety, insomnia, withdrawal, or burnout. Dynamical systems language gives us a useful way to describe these patterns: not as fixed labels, but as trajectories shaped by feedback, thresholds, and recovery processes.
+
+In this post, we develop a formal model of equilibrium points and linear stability using a mental health example. The aim is not to reduce lived experience to equations. Rather, it is to show how mathematical structure can help us reason about resilience, destabilization, and recovery in systems where multiple processes interact over time. We will build a simple two-dimensional model, derive its equilibrium, compute the Jacobian, classify its stability, and simulate trajectories numerically.
+
+## A simple mental health model
+
+Consider a minimal model with two state variables:
+
+- $x(t)$: psychological distress, such as anxiety, overwhelm, or emotional burden.
+- $y(t)$: coping capacity, such as sleep quality, social support, regulation skills, or adaptive functioning.
+
+We assume distress increases because of external stress exposure, decreases through self-regulation and coping, and may also be amplified by its own momentum. At the same time, coping capacity is eroded by high distress but replenished through recovery processes and supportive conditions.
+
+A simple nonlinear model is
+
+$$
+\frac{dx}{dt} = s + a x - b y - c x^2
+$$
+
+$$
+\frac{dy}{dt} = r - d x - e y
+$$
+
+where:
+
+- $s > 0$ is the baseline stress load.
+- $a > 0$ captures self-amplification of distress; rumination, hypervigilance, and avoidance can make distress feed on itself.
+- $b > 0$ measures how strongly coping capacity reduces distress.
+- $c > 0$ limits runaway growth in distress; this term can represent saturation or bounded symptom intensity.
+- $r > 0$ is the baseline replenishment of coping resources.
+- $d > 0$ measures how distress depletes coping.
+- $e > 0$ is the natural decay or expenditure of coping resources over time.
+
+This model is deliberately simple. It does not capture diagnosis, trauma history, medication effects, interpersonal dynamics, or heterogeneity across people. Its purpose is to formalize a familiar intuition: distress and coping form a coupled feedback system.
+
+## Equilibrium points
+
+An equilibrium $(x^*, y^*)$ satisfies
+
+$$
+0 = s + a x^* - b y^* - c (x^*)^2
+$$
+
+$$
+0 = r - d x^* - e y^*
+$$
+
+From the second equation, we can solve for coping capacity at equilibrium:
+
+$$
+y^* = \frac{r - d x^*}{e}
+$$
+
+Substituting into the first equation gives
+
+$$
+0 = s + a x^* - b \left(\frac{r - d x^*}{e}\right) - c (x^*)^2
+$$
+
+which simplifies to
+
+$$
+0 = s - \frac{br}{e} + \left(a + \frac{bd}{e}\right)x^* - c (x^*)^2
+$$
+
+or, written in standard quadratic form,
+
+$$
+c (x^*)^2 - \left(a + \frac{bd}{e}\right)x^* - \left(s - \frac{br}{e}\right) = 0
+$$
+
+This equation may have zero, one, or two real roots depending on parameter values. When there are two real equilibria, the model can represent two qualitatively different regimes: one with relatively low distress and stronger coping, another with higher distress and impaired coping. In mental health language, this resembles the idea that the same system can settle into either a resilient or a vulnerable state depending on conditions and perturbations.
+
+Using the quadratic formula,
+
+$$
+x^* =
+\frac{
+\left(a + \frac{bd}{e}\right)
+\pm
+\sqrt{
+\left(a + \frac{bd}{e}\right)^2 + 4c\left(s - \frac{br}{e}\right)
+}
+}{2c}
+$$
+
+and then
+
+$$
+y^* = \frac{r - d x^*}{e}
+$$
+
+provided the discriminant is nonnegative.
+
+## Interpreting the equilibrium
+
+Suppose distress is low and coping is high at equilibrium. Then the person’s internal system is balancing ongoing stress with sufficient restoration and regulation. Small disruptions may occur, but the system tends to return toward that state. This would correspond to a stable equilibrium.
+
+By contrast, if distress is high and coping is depleted, the system may sit near a threshold where even modest perturbations push it further into dysregulation. That kind of equilibrium may be unstable, or it may be locally stable but clinically undesirable. Stability in mathematics does not mean health; it only means persistence under small disturbances. A chronically distressed state can be mathematically stable while still representing substantial suffering.
+
+That distinction is worth emphasizing. In applied mental health modeling, the key question is often not merely whether a state is stable, but whether it is a state we want the system to inhabit.
+
+## Linearization and the Jacobian
+
+To study local behavior near an equilibrium, we linearize the system. Let
+
+$$
+u = x - x^*, \qquad v = y - y^*
+$$
+
+be small perturbations from equilibrium. The Jacobian matrix is
+
+$$
+\mathbf{J}(x,y) =
+\begin{pmatrix}
+\frac{\partial}{\partial x}(s + ax - by - cx^2) &
+\frac{\partial}{\partial y}(s + ax - by - cx^2) \\
+\frac{\partial}{\partial x}(r - dx - ey) &
+\frac{\partial}{\partial y}(r - dx - ey)
+\end{pmatrix}
+$$
+
+which becomes
+
+$$
+\mathbf{J}(x,y) =
+\begin{pmatrix}
+a - 2cx & -b \\
+-d & -e
+\end{pmatrix}
+$$
+
+Evaluating at an equilibrium $(x^*, y^*)$ gives
+
+$$
+\mathbf{J}(x^*, y^*) =
+\begin{pmatrix}
+a - 2cx^* & -b \\
+-d & -e
+\end{pmatrix}
+$$
+
+This matrix captures how small changes in distress and coping affect the future evolution of the system near the equilibrium.
+
+- The term $a - 2cx^*$ is the local self-feedback of distress.
+- The term $-b$ shows that greater coping reduces distress.
+- The term $-d$ shows that greater distress erodes coping.
+- The term $-e$ reflects the tendency of coping resources to dissipate unless replenished.
+
+
+## Stability criteria
+
+The eigenvalues of the Jacobian determine local stability. For a two-dimensional system, they satisfy
+
+$$
+\lambda^2 - \operatorname{tr}(\mathbf{J})\lambda + \det(\mathbf{J}) = 0
+$$
+
+where
+
+$$
+\operatorname{tr}(\mathbf{J}) = (a - 2cx^*) - e
+$$
+
+and
+
+$$
+\det(\mathbf{J}) = (a - 2cx^*)(-e) - (-b)(-d)
+$$
+
+so
+
+$$
+\det(\mathbf{J}) = -e(a - 2cx^*) - bd
+$$
+
+The equilibrium is locally stable if both eigenvalues have negative real parts. In two dimensions, this occurs when
+
+$$
+\operatorname{tr}(\mathbf{J}) < 0
+\qquad \text{and} \qquad
+\det(\mathbf{J}) > 0
+$$
+
+The discriminant
+
+$$
+D = \operatorname{tr}(\mathbf{J})^2 - 4\det(\mathbf{J})
+$$
+
+then determines whether the equilibrium is a node or a spiral.
+
+- $D > 0$: real eigenvalues.
+- $D < 0$: complex conjugate eigenvalues.
+- $\det(\mathbf{J}) < 0$: saddle point, always unstable.
+
+In this mental health model, several local patterns are possible:
+
+- A stable node: distress and coping return smoothly to baseline after disruption.
+- A stable spiral: the system oscillates before settling, perhaps corresponding to recurrent but damped cycles of activation and recovery.
+- A saddle: some perturbations recover, but others trigger divergence toward a different regime.
+- An unstable equilibrium: small disruptions grow rather than decay.
+
+
+## A worked example
+
+Let us choose parameter values
+
+- $s = 1.2$
+- $a = 0.8$
+- $b = 1.0$
+- $c = 0.25$
+- $r = 2.0$
+- $d = 0.6$
+- $e = 0.8$
+
+The equilibrium equations become
+
+$$
+\frac{dx}{dt} = 1.2 + 0.8x - y - 0.25x^2
+$$
+
+$$
+\frac{dy}{dt} = 2.0 - 0.6x - 0.8y
+$$
+
+From the second equation,
+
+$$
+y^* = \frac{2.0 - 0.6x^*}{0.8} = 2.5 - 0.75x^*
+$$
+
+Substituting into the first equation gives
+
+$$
+0 = 1.2 + 0.8x^* - (2.5 - 0.75x^*) - 0.25(x^*)^2
+$$
+
+so
+
+$$
+0 = -1.3 + 1.55x^* - 0.25(x^*)^2
+$$
+
+or
+
+$$
+0.25(x^*)^2 - 1.55x^* + 1.3 = 0
+$$
+
+Multiplying by 4,
+
+$$
+(x^*)^2 - 6.2x^* + 5.2 = 0
+$$
+
+The roots are approximately
+
+$$
+x_1^* \approx 0.98, \qquad x_2^* \approx 5.22
+$$
+
+The corresponding coping equilibria are
+
+$$
+y_1^* \approx 2.5 - 0.75(0.98) \approx 1.77
+$$
+
+$$
+y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
+$$
+
+Only the first equilibrium is psychologically interpretable if we restrict coping capacity to nonnegative values. So we focus on
+
+$$
+(x^*, y^*) \approx (0.98, 1.77)
+$$
+
+The Jacobian there is
+
+$$
+\mathbf{J} =
+\begin{pmatrix}
+0.8 - 2(0.25)(0.98) & -1.0 \\
+-0.6 & -0.8
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.31 & -1.0 \\
+-0.6 & -0.8
+\end{pmatrix}
+$$
+
+The trace is
+
+$$
+\tau = 0.31 - 0.8 = -0.49
+$$
+
+and the determinant is
+
+$$
+\Delta = (0.31)(-0.8) - (-1)(-0.6) = -0.248 - 0.6 = -0.848
+$$
+
+Since the determinant is negative, this equilibrium is a saddle point. That means it is unstable: some perturbations may move back toward it briefly, but generic nearby trajectories are pushed away along an unstable direction.
+
+This is an interesting modeling outcome. It suggests a threshold-like regime: the apparent “middle” state is not truly resilient. Instead, it lies on a boundary between recovery and worsening. In mental health terms, this could represent a fragile balance where symptom escalation and coping erosion interact in a way that makes the person vulnerable to tipping into a different state.
+
+## A more stable parameter regime
+
+If we strengthen coping and weaken distress amplification, we can obtain a stable equilibrium. For example, let
+
+- $s = 1.0$
+- $a = 0.4$
+- $b = 1.2$
+- $c = 0.2$
+- $r = 2.5$
+- $d = 0.4$
+- $e = 0.9$
+
+Then the system becomes
+
+$$
+\frac{dx}{dt} = 1.0 + 0.4x - 1.2y - 0.2x^2
+$$
+
+$$
+\frac{dy}{dt} = 2.5 - 0.4x - 0.9y
+$$
+
+This regime typically yields a low-distress, positive-coping equilibrium with negative trace and positive determinant. Interpreted clinically, stronger buffering and replenishment create resilience: disturbances do not disappear instantly, but they decay rather than amplify.
+
+## R code for analysis and simulation
+
+Here is a full R script that defines the system, computes equilibria numerically, evaluates the Jacobian, classifies stability, and plots trajectories in phase space.
+
+```{r}
+library(deSolve)
+library(ggplot2)
+library(rootSolve)
+library(gridExtra)
+
+# Bug fix 1: renamed 'c' -> 'kc' and 'e' -> 'ke' to avoid shadowing
+# R base functions c() inside with() environments
+
+mental_health_model <- function(t, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dx <- s + a*x - b*y - kc*x^2
+    dy <- r - d*x - ke*y
+    list(c(dx, dy))
+  })
+}
+
+jacobian_mh <- function(x, y, parameters) {
+  with(as.list(parameters), {
+    matrix(c(
+      a - 2*kc*x, -b,
+      -d,         -ke
+    ), nrow = 2, byrow = TRUE)
+  })
+}
+
+classify_equilibrium <- function(J) {
+  eig  <- eigen(J)$values
+  tr   <- sum(diag(J))
+  detJ <- det(J)
+  disc <- tr^2 - 4*detJ
+
+  type <- if (detJ < 0) {
+    "Saddle (unstable)"
+  } else if (Re(eig[1]) < 0 && Re(eig[2]) < 0) {
+    if (disc > 0) "Stable node" else "Stable spiral"
+  } else if (Re(eig[1]) > 0 || Re(eig[2]) > 0) {
+    if (disc > 0) "Unstable node" else "Unstable spiral"
+  } else {
+    "Nonhyperbolic"
+  }
+
+  list(eigenvalues = eig, trace = tr,
+       determinant = detJ, discriminant = disc, type = type)
+}
+
+find_equilibria <- function(parameters, guesses) {
+  eqs <- list()
+
+  for (i in seq_len(nrow(guesses))) {
+    guess <- guesses[i, ]
+    sol <- try(multiroot(
+      f = function(z) {
+        x <- z[1]; y <- z[2]
+        with(as.list(parameters), {
+          c(s + a*x - b*y - kc*x^2,
+            r - d*x  - ke*y)
+        })
+      },
+      start = c(guess$x, guess$y)
+    ), silent = TRUE)
+
+    if (!inherits(sol, "try-error")) {
+      candidate  <- round(sol$root, 6)
+      duplicate  <- FALSE
+
+      for (j in seq_along(eqs)) {
+        if (max(abs(eqs[[j]] - candidate)) < 1e-4) {
+          duplicate <- TRUE; break
+        }
+      }
+
+      if (!duplicate) eqs[[length(eqs) + 1]] <- candidate
+    }
+  }
+
+  # Bug fix 2: guard against empty list before rbind
+  if (length(eqs) == 0)
+    return(data.frame(x = numeric(0), y = numeric(0)))
+
+  eq_df <- do.call(rbind, lapply(eqs, function(z)
+    data.frame(x = z[1], y = z[2])))
+  rownames(eq_df) <- NULL
+  eq_df
+}
+
+simulate_trajectory <- function(parameters, init,
+                                times = seq(0, 100, by = 0.1)) {
+  out <- ode(
+    y     = c(x = init[1], y = init[2]),
+    times = times,
+    func  = mental_health_model,
+    parms = parameters
+  )
+  as.data.frame(out)
+}
+
+plot_phase_portrait <- function(parameters, trajectories,
+                                equilibria, title_text) {
+  x_seq <- seq(-1, 8, by = 0.5)
+  y_seq <- seq(-2, 4, by = 0.5)
+  field <- expand.grid(x = x_seq, y = y_seq)
+
+  # Direct assignment avoids with() scoping issue
+  field$dx  <- parameters$s + parameters$a * field$x -
+               parameters$b * field$y - parameters$kc * field$x^2
+  field$dy  <- parameters$r - parameters$d * field$x -
+               parameters$ke * field$y
+  field$mag <- sqrt(field$dx^2 + field$dy^2)
+  field$dxn <- field$dx / (field$mag + 1e-9) * 0.25
+  field$dyn <- field$dy / (field$mag + 1e-9) * 0.25
+
+  # Add trajectory id for distinct colors
+  traj_df <- do.call(rbind, lapply(seq_along(trajectories), function(i) {
+    df      <- trajectories[[i]]
+    df$id   <- factor(i)
+    df
+  }))
+
+  p <- ggplot() +
+    geom_segment(
+      data  = field,
+      aes(x = x, y = y, xend = x + dxn, yend = y + dyn),
+      arrow = arrow(length = unit(0.015, "npc")),
+      alpha = 0.35, color = "steelblue"
+    ) +
+    geom_path(
+      data = traj_df,
+      aes(x = x, y = y, color = id),
+      linewidth = 1, show.legend = FALSE
+    ) +
+    scale_color_brewer(palette = "Dark2") +
+    theme_minimal() +
+    labs(title = title_text, x = "Distress", y = "Coping capacity")
+
+  if (!is.null(equilibria) && nrow(equilibria) > 0) {
+    p <- p + geom_point(
+      data  = equilibria,
+      aes(x = x, y = y),
+      color = "red", size = 4, shape = 4, stroke = 2
+    )
+  }
+
+  p
+}
+
+# Parameters — 'kc' replaces 'c', 'ke' replaces 'e'
+params_fragile <- list(
+  s = 1.2, a = 0.8, b = 1.0, kc = 0.25,
+  r = 2.0, d = 0.6, ke = 0.8
+)
+
+params_stable <- list(
+  s = 1.0, a = 0.4, b = 1.2, kc = 0.2,
+  r = 2.5, d = 0.4, ke = 0.9
+)
+
+guesses <- expand.grid(x = seq(-1, 8, by = 1.5),
+                       y = seq(-2, 4, by = 1.5))
+
+eq_fragile <- find_equilibria(params_fragile, guesses)
+eq_stable  <- find_equilibria(params_stable,  guesses)
+
+cat("Fragile regime equilibria:\n"); print(eq_fragile)
+for (i in seq_len(nrow(eq_fragile))) {
+  J    <- jacobian_mh(eq_fragile$x[i], eq_fragile$y[i], params_fragile)
+  info <- classify_equilibrium(J)
+  cat("\nEquilibrium:", round(eq_fragile$x[i], 3),
+      round(eq_fragile$y[i], 3), "\n")
+  print(J); print(info)
+}
+
+cat("\nStable regime equilibria:\n"); print(eq_stable)
+for (i in seq_len(nrow(eq_stable))) {
+  J    <- jacobian_mh(eq_stable$x[i], eq_stable$y[i], params_stable)
+  info <- classify_equilibrium(J)
+  cat("\nEquilibrium:", round(eq_stable$x[i], 3),
+      round(eq_stable$y[i], 3), "\n")
+  print(J); print(info)
+}
+
+inits <- list(c(0.5, 2.5), c(2.0, 2.0), c(3.0, 1.0), c(1.0, 0.0))
+
+traj_fragile <- lapply(inits, simulate_trajectory, parameters = params_fragile)
+traj_stable  <- lapply(inits, simulate_trajectory, parameters = params_stable)
+
+p_fragile <- plot_phase_portrait(params_fragile, traj_fragile,
+                                 eq_fragile, "Fragile mental health regime")
+p_stable  <- plot_phase_portrait(params_stable,  traj_stable,
+                                 eq_stable,  "Stable mental health regime")
+
+grid.arrange(p_fragile, p_stable, ncol = 2)
+```
+
+
+## What the code shows
+
+The script does four things.
+
+1. It defines a nonlinear system for distress and coping.
+2. It searches numerically for equilibrium points from multiple starting guesses.
+3. It computes the Jacobian and classifies each equilibrium using eigenvalues.
+4. It simulates trajectories from several initial conditions and overlays them on a vector field.
+
+This workflow is useful because nonlinear systems may have multiple equilibria, and analytical solutions are not always convenient. Numerical root-finding and simulation let us move from formalism to interpretation.
+
+## Interpreting the phase portrait
+
+In a stable regime, trajectories from different initial conditions converge toward the same equilibrium. Distress may briefly rise or coping may briefly fall, but the system eventually settles. This corresponds to resilience in the dynamical sense: perturbations decay.
+
+In a fragile regime, trajectories may separate sharply depending on where they begin. Some recover, others move away, and the equilibrium acts like a threshold rather than a destination. That picture resembles the idea of tipping points in mental health, where a system can remain apparently manageable until a disturbance pushes it into a very different pattern.
+
+## Cautions about interpretation
+
+A model like this should be treated as a conceptual scaffold, not a literal clinical theory. Mental health is shaped by biology, development, relationships, culture, institutions, treatment access, and chance. No two-dimensional system can represent all of that.
+
+Still, simple models can be valuable. They make assumptions explicit, clarify feedback structure, and help us distinguish questions about equilibrium, local stability, thresholds, and recovery time. They are especially useful when the goal is understanding mechanism rather than prediction.
+
+## Closing perspective
+
+The language of equilibrium points and linear stability gives us a mathematically precise way to talk about resilience and fragility. A stable equilibrium represents a state that absorbs disturbance. A saddle point marks a threshold. Complex eigenvalues signal oscillatory adjustment. The Jacobian tells us how self-reinforcement and cross-coupling shape those outcomes.
+
+In mental health applications, that perspective can be illuminating. It suggests that distress is not merely something that rises or falls in isolation; it interacts continuously with coping, recovery, and feedback. Once those interactions are formalized, stability becomes something we can analyze rather than merely describe.
+
