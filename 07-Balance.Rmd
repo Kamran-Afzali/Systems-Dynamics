@@ -8,7 +8,7 @@ In our previous exploration of two-dimensional systems, we encountered fixed poi
 
 An equilibrium point, also called a fixed point or steady state, represents a configuration where the system experiences no net change. Mathematically, for a two-dimensional system described by differential equations $\dot{x} = f(x,y)$ and $\dot{y} = g(x,y)$, an equilibrium $(x^*, y^*)$ satisfies the simultaneous conditions $f(x^*, y^*) = 0$ and $g(x^*, y^*) = 0$. At such points, both time derivatives vanish—the system has no impetus to move in any direction.
 
-Consider a simple healthcare system model tracking patient flow through a hospital ward. Let $x$ represent the number of patients in the general ward and $y$ represent the number in intensive care. Patients arrive to the general ward at rate $\lambda$, transfer from general to intensive care at rate $\alpha x$, recover from general care and leave at rate $\beta x$, recover from intensive care at rate $\gamma y$, and unfortunately expire from intensive care at rate $\delta y$. This gives us the system:
+Consider a simple healthcare system model tracking patient flow through a hospital ward. Let $x$ represent the number of patients in the general ward and $y$ represent the number in intensive care. Patients arrive to the general ward at rate $\lambda$, transfer from general to intensive care at rate $\alpha x$, recover from general care and leave at rate $\beta x$, recover from intensive care at rate $\gamma y$, and die in intensive care at rate $\delta y$. This gives us the system:
 
 $$\frac{dx}{dt} = \lambda - \alpha x - \beta x = \lambda - (\alpha + \beta)x$$
 

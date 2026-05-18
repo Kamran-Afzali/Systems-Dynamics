@@ -23,7 +23,7 @@
 <meta name="author" content="Kamran Afzali" />
 
 
-<meta name="date" content="2026-05-14" />
+<meta name="date" content="2026-05-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -600,167 +600,167 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 <div id="r-code-for-analysis-and-simulation" class="section level2 hasAnchor" number="10.8">
 <h2><span class="header-section-number">10.8</span> R code for analysis and simulation<a href="equilibrium-points-and-linear-stability-in-mental-health.html#r-code-for-analysis-and-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Here is a full R script that defines the system, computes equilibria numerically, evaluates the Jacobian, classifies stability, and plots trajectories in phase space.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-1" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
-<span id="cb152-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb152-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-3" tabindex="-1"></a><span class="fu">library</span>(rootSolve)</span>
-<span id="cb152-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb152-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-5" tabindex="-1"></a></span>
-<span id="cb152-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-6" tabindex="-1"></a><span class="co"># Bug fix 1: renamed &#39;c&#39; -&gt; &#39;kc&#39; and &#39;e&#39; -&gt; &#39;ke&#39; to avoid shadowing</span></span>
-<span id="cb152-7"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-7" tabindex="-1"></a><span class="co"># R base functions c() inside with() environments</span></span>
-<span id="cb152-8"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-8" tabindex="-1"></a></span>
-<span id="cb152-9"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-9" tabindex="-1"></a>mental_health_model <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
-<span id="cb152-10"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-10" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
-<span id="cb152-11"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-11" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> s <span class="sc">+</span> a<span class="sc">*</span>x <span class="sc">-</span> b<span class="sc">*</span>y <span class="sc">-</span> kc<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb152-12"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-12" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> r <span class="sc">-</span> d<span class="sc">*</span>x <span class="sc">-</span> ke<span class="sc">*</span>y</span>
-<span id="cb152-13"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-13" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
-<span id="cb152-14"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-14" tabindex="-1"></a>  })</span>
-<span id="cb152-15"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-15" tabindex="-1"></a>}</span>
-<span id="cb152-16"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-16" tabindex="-1"></a></span>
-<span id="cb152-17"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-17" tabindex="-1"></a>jacobian_mh <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, parameters) {</span>
-<span id="cb152-18"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-18" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(parameters), {</span>
-<span id="cb152-19"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-19" tabindex="-1"></a>    <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
-<span id="cb152-20"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-20" tabindex="-1"></a>      a <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>kc<span class="sc">*</span>x, <span class="sc">-</span>b,</span>
-<span id="cb152-21"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-21" tabindex="-1"></a>      <span class="sc">-</span>d,         <span class="sc">-</span>ke</span>
-<span id="cb152-22"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-22" tabindex="-1"></a>    ), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb152-23"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-23" tabindex="-1"></a>  })</span>
-<span id="cb152-24"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-24" tabindex="-1"></a>}</span>
-<span id="cb152-25"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-25" tabindex="-1"></a></span>
-<span id="cb152-26"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-26" tabindex="-1"></a>classify_equilibrium <span class="ot">&lt;-</span> <span class="cf">function</span>(J) {</span>
-<span id="cb152-27"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-27" tabindex="-1"></a>  eig  <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J)<span class="sc">$</span>values</span>
-<span id="cb152-28"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-28" tabindex="-1"></a>  tr   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(J))</span>
-<span id="cb152-29"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-29" tabindex="-1"></a>  detJ <span class="ot">&lt;-</span> <span class="fu">det</span>(J)</span>
-<span id="cb152-30"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-30" tabindex="-1"></a>  disc <span class="ot">&lt;-</span> tr<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>detJ</span>
-<span id="cb152-31"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-31" tabindex="-1"></a></span>
-<span id="cb152-32"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-32" tabindex="-1"></a>  type <span class="ot">&lt;-</span> <span class="cf">if</span> (detJ <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb152-33"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-33" tabindex="-1"></a>    <span class="st">&quot;Saddle (unstable)&quot;</span></span>
-<span id="cb152-34"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-34" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">Re</span>(eig[<span class="dv">1</span>]) <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">Re</span>(eig[<span class="dv">2</span>]) <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb152-35"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-35" tabindex="-1"></a>    <span class="cf">if</span> (disc <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="st">&quot;Stable node&quot;</span> <span class="cf">else</span> <span class="st">&quot;Stable spiral&quot;</span></span>
-<span id="cb152-36"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-36" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">Re</span>(eig[<span class="dv">1</span>]) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">||</span> <span class="fu">Re</span>(eig[<span class="dv">2</span>]) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb152-37"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-37" tabindex="-1"></a>    <span class="cf">if</span> (disc <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="st">&quot;Unstable node&quot;</span> <span class="cf">else</span> <span class="st">&quot;Unstable spiral&quot;</span></span>
-<span id="cb152-38"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-38" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb152-39"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-39" tabindex="-1"></a>    <span class="st">&quot;Nonhyperbolic&quot;</span></span>
-<span id="cb152-40"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-40" tabindex="-1"></a>  }</span>
-<span id="cb152-41"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-41" tabindex="-1"></a></span>
-<span id="cb152-42"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-42" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">eigenvalues =</span> eig, <span class="at">trace =</span> tr,</span>
-<span id="cb152-43"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-43" tabindex="-1"></a>       <span class="at">determinant =</span> detJ, <span class="at">discriminant =</span> disc, <span class="at">type =</span> type)</span>
-<span id="cb152-44"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-44" tabindex="-1"></a>}</span>
-<span id="cb152-45"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-45" tabindex="-1"></a></span>
-<span id="cb152-46"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-46" tabindex="-1"></a>find_equilibria <span class="ot">&lt;-</span> <span class="cf">function</span>(parameters, guesses) {</span>
-<span id="cb152-47"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-47" tabindex="-1"></a>  eqs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb152-48"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-48" tabindex="-1"></a></span>
-<span id="cb152-49"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-49" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(guesses))) {</span>
-<span id="cb152-50"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-50" tabindex="-1"></a>    guess <span class="ot">&lt;-</span> guesses[i, ]</span>
-<span id="cb152-51"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-51" tabindex="-1"></a>    sol <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">multiroot</span>(</span>
-<span id="cb152-52"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-52" tabindex="-1"></a>      <span class="at">f =</span> <span class="cf">function</span>(z) {</span>
-<span id="cb152-53"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-53" tabindex="-1"></a>        x <span class="ot">&lt;-</span> z[<span class="dv">1</span>]; y <span class="ot">&lt;-</span> z[<span class="dv">2</span>]</span>
-<span id="cb152-54"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-54" tabindex="-1"></a>        <span class="fu">with</span>(<span class="fu">as.list</span>(parameters), {</span>
-<span id="cb152-55"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-55" tabindex="-1"></a>          <span class="fu">c</span>(s <span class="sc">+</span> a<span class="sc">*</span>x <span class="sc">-</span> b<span class="sc">*</span>y <span class="sc">-</span> kc<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb152-56"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-56" tabindex="-1"></a>            r <span class="sc">-</span> d<span class="sc">*</span>x  <span class="sc">-</span> ke<span class="sc">*</span>y)</span>
-<span id="cb152-57"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-57" tabindex="-1"></a>        })</span>
-<span id="cb152-58"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-58" tabindex="-1"></a>      },</span>
-<span id="cb152-59"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-59" tabindex="-1"></a>      <span class="at">start =</span> <span class="fu">c</span>(guess<span class="sc">$</span>x, guess<span class="sc">$</span>y)</span>
-<span id="cb152-60"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-60" tabindex="-1"></a>    ), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb152-61"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-61" tabindex="-1"></a></span>
-<span id="cb152-62"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-62" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(sol, <span class="st">&quot;try-error&quot;</span>)) {</span>
-<span id="cb152-63"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-63" tabindex="-1"></a>      candidate  <span class="ot">&lt;-</span> <span class="fu">round</span>(sol<span class="sc">$</span>root, <span class="dv">6</span>)</span>
-<span id="cb152-64"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-64" tabindex="-1"></a>      duplicate  <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb152-65"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-65" tabindex="-1"></a></span>
-<span id="cb152-66"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-66" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_along</span>(eqs)) {</span>
-<span id="cb152-67"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-67" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">max</span>(<span class="fu">abs</span>(eqs[[j]] <span class="sc">-</span> candidate)) <span class="sc">&lt;</span> <span class="fl">1e-4</span>) {</span>
-<span id="cb152-68"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-68" tabindex="-1"></a>          duplicate <span class="ot">&lt;-</span> <span class="cn">TRUE</span>; <span class="cf">break</span></span>
-<span id="cb152-69"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-69" tabindex="-1"></a>        }</span>
-<span id="cb152-70"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-70" tabindex="-1"></a>      }</span>
-<span id="cb152-71"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-71" tabindex="-1"></a></span>
-<span id="cb152-72"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-72" tabindex="-1"></a>      <span class="cf">if</span> (<span class="sc">!</span>duplicate) eqs[[<span class="fu">length</span>(eqs) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> candidate</span>
-<span id="cb152-73"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-73" tabindex="-1"></a>    }</span>
-<span id="cb152-74"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-74" tabindex="-1"></a>  }</span>
-<span id="cb152-75"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-75" tabindex="-1"></a></span>
-<span id="cb152-76"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-76" tabindex="-1"></a>  <span class="co"># Bug fix 2: guard against empty list before rbind</span></span>
-<span id="cb152-77"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-77" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(eqs) <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb152-78"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-78" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">numeric</span>(<span class="dv">0</span>), <span class="at">y =</span> <span class="fu">numeric</span>(<span class="dv">0</span>)))</span>
-<span id="cb152-79"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-79" tabindex="-1"></a></span>
-<span id="cb152-80"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-80" tabindex="-1"></a>  eq_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(eqs, <span class="cf">function</span>(z)</span>
-<span id="cb152-81"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-81" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">x =</span> z[<span class="dv">1</span>], <span class="at">y =</span> z[<span class="dv">2</span>])))</span>
-<span id="cb152-82"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-82" tabindex="-1"></a>  <span class="fu">rownames</span>(eq_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb152-83"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-83" tabindex="-1"></a>  eq_df</span>
-<span id="cb152-84"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-84" tabindex="-1"></a>}</span>
-<span id="cb152-85"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-85" tabindex="-1"></a></span>
-<span id="cb152-86"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-86" tabindex="-1"></a>simulate_trajectory <span class="ot">&lt;-</span> <span class="cf">function</span>(parameters, init,</span>
-<span id="cb152-87"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-87" tabindex="-1"></a>                                <span class="at">times =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.1</span>)) {</span>
-<span id="cb152-88"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-88" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">ode</span>(</span>
-<span id="cb152-89"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-89" tabindex="-1"></a>    <span class="at">y     =</span> <span class="fu">c</span>(<span class="at">x =</span> init[<span class="dv">1</span>], <span class="at">y =</span> init[<span class="dv">2</span>]),</span>
-<span id="cb152-90"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-90" tabindex="-1"></a>    <span class="at">times =</span> times,</span>
-<span id="cb152-91"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-91" tabindex="-1"></a>    <span class="at">func  =</span> mental_health_model,</span>
-<span id="cb152-92"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-92" tabindex="-1"></a>    <span class="at">parms =</span> parameters</span>
-<span id="cb152-93"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-93" tabindex="-1"></a>  )</span>
-<span id="cb152-94"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-94" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(out)</span>
-<span id="cb152-95"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-95" tabindex="-1"></a>}</span>
-<span id="cb152-96"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-96" tabindex="-1"></a></span>
-<span id="cb152-97"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-97" tabindex="-1"></a>plot_phase_portrait <span class="ot">&lt;-</span> <span class="cf">function</span>(parameters, trajectories,</span>
-<span id="cb152-98"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-98" tabindex="-1"></a>                                equilibria, title_text) {</span>
-<span id="cb152-99"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-99" tabindex="-1"></a>  x_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
-<span id="cb152-100"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-100" tabindex="-1"></a>  y_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
-<span id="cb152-101"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-101" tabindex="-1"></a>  field <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_seq, <span class="at">y =</span> y_seq)</span>
-<span id="cb152-102"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-102" tabindex="-1"></a></span>
-<span id="cb152-103"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-103" tabindex="-1"></a>  <span class="co"># Direct assignment avoids with() scoping issue</span></span>
-<span id="cb152-104"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-104" tabindex="-1"></a>  field<span class="sc">$</span>dx  <span class="ot">&lt;-</span> parameters<span class="sc">$</span>s <span class="sc">+</span> parameters<span class="sc">$</span>a <span class="sc">*</span> field<span class="sc">$</span>x <span class="sc">-</span></span>
-<span id="cb152-105"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-105" tabindex="-1"></a>               parameters<span class="sc">$</span>b <span class="sc">*</span> field<span class="sc">$</span>y <span class="sc">-</span> parameters<span class="sc">$</span>kc <span class="sc">*</span> field<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb152-106"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-106" tabindex="-1"></a>  field<span class="sc">$</span>dy  <span class="ot">&lt;-</span> parameters<span class="sc">$</span>r <span class="sc">-</span> parameters<span class="sc">$</span>d <span class="sc">*</span> field<span class="sc">$</span>x <span class="sc">-</span></span>
-<span id="cb152-107"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-107" tabindex="-1"></a>               parameters<span class="sc">$</span>ke <span class="sc">*</span> field<span class="sc">$</span>y</span>
-<span id="cb152-108"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-108" tabindex="-1"></a>  field<span class="sc">$</span>mag <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(field<span class="sc">$</span>dx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> field<span class="sc">$</span>dy<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb152-109"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-109" tabindex="-1"></a>  field<span class="sc">$</span>dxn <span class="ot">&lt;-</span> field<span class="sc">$</span>dx <span class="sc">/</span> (field<span class="sc">$</span>mag <span class="sc">+</span> <span class="fl">1e-9</span>) <span class="sc">*</span> <span class="fl">0.25</span></span>
-<span id="cb152-110"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-110" tabindex="-1"></a>  field<span class="sc">$</span>dyn <span class="ot">&lt;-</span> field<span class="sc">$</span>dy <span class="sc">/</span> (field<span class="sc">$</span>mag <span class="sc">+</span> <span class="fl">1e-9</span>) <span class="sc">*</span> <span class="fl">0.25</span></span>
-<span id="cb152-111"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-111" tabindex="-1"></a></span>
-<span id="cb152-112"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-112" tabindex="-1"></a>  <span class="co"># Add trajectory id for distinct colors</span></span>
-<span id="cb152-113"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-113" tabindex="-1"></a>  traj_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">seq_along</span>(trajectories), <span class="cf">function</span>(i) {</span>
-<span id="cb152-114"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-114" tabindex="-1"></a>    df      <span class="ot">&lt;-</span> trajectories[[i]]</span>
-<span id="cb152-115"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-115" tabindex="-1"></a>    df<span class="sc">$</span>id   <span class="ot">&lt;-</span> <span class="fu">factor</span>(i)</span>
-<span id="cb152-116"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-116" tabindex="-1"></a>    df</span>
-<span id="cb152-117"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-117" tabindex="-1"></a>  }))</span>
-<span id="cb152-118"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-118" tabindex="-1"></a></span>
-<span id="cb152-119"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-119" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb152-120"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-120" tabindex="-1"></a>    <span class="fu">geom_segment</span>(</span>
-<span id="cb152-121"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-121" tabindex="-1"></a>      <span class="at">data  =</span> field,</span>
-<span id="cb152-122"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-122" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> x <span class="sc">+</span> dxn, <span class="at">yend =</span> y <span class="sc">+</span> dyn),</span>
-<span id="cb152-123"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-123" tabindex="-1"></a>      <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)),</span>
-<span id="cb152-124"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-124" tabindex="-1"></a>      <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span></span>
-<span id="cb152-125"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-125" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb152-126"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-126" tabindex="-1"></a>    <span class="fu">geom_path</span>(</span>
-<span id="cb152-127"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-127" tabindex="-1"></a>      <span class="at">data =</span> traj_df,</span>
-<span id="cb152-128"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-128" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> id),</span>
-<span id="cb152-129"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-129" tabindex="-1"></a>      <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
-<span id="cb152-130"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-130" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb152-131"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-131" tabindex="-1"></a>    <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="sc">+</span></span>
-<span id="cb152-132"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-132" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb152-133"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-133" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title_text, <span class="at">x =</span> <span class="st">&quot;Distress&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Coping capacity&quot;</span>)</span>
-<span id="cb152-134"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-134" tabindex="-1"></a></span>
-<span id="cb152-135"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-135" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(equilibria) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(equilibria) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb152-136"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-136" tabindex="-1"></a>    p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_point</span>(</span>
-<span id="cb152-137"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-137" tabindex="-1"></a>      <span class="at">data  =</span> equilibria,</span>
-<span id="cb152-138"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-138" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y),</span>
-<span id="cb152-139"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-139" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">4</span>, <span class="at">stroke =</span> <span class="dv">2</span></span>
-<span id="cb152-140"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-140" tabindex="-1"></a>    )</span>
-<span id="cb152-141"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-141" tabindex="-1"></a>  }</span>
-<span id="cb152-142"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-142" tabindex="-1"></a></span>
-<span id="cb152-143"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-143" tabindex="-1"></a>  p</span>
-<span id="cb152-144"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-144" tabindex="-1"></a>}</span>
-<span id="cb152-145"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-145" tabindex="-1"></a></span>
-<span id="cb152-146"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-146" tabindex="-1"></a><span class="co"># Parameters — &#39;kc&#39; replaces &#39;c&#39;, &#39;ke&#39; replaces &#39;e&#39;</span></span>
-<span id="cb152-147"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-147" tabindex="-1"></a>params_fragile <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb152-148"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-148" tabindex="-1"></a>  <span class="at">s =</span> <span class="fl">1.2</span>, <span class="at">a =</span> <span class="fl">0.8</span>, <span class="at">b =</span> <span class="fl">1.0</span>, <span class="at">kc =</span> <span class="fl">0.25</span>,</span>
-<span id="cb152-149"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-149" tabindex="-1"></a>  <span class="at">r =</span> <span class="fl">2.0</span>, <span class="at">d =</span> <span class="fl">0.6</span>, <span class="at">ke =</span> <span class="fl">0.8</span></span>
-<span id="cb152-150"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-150" tabindex="-1"></a>)</span>
-<span id="cb152-151"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-151" tabindex="-1"></a></span>
-<span id="cb152-152"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-152" tabindex="-1"></a>params_stable <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb152-153"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-153" tabindex="-1"></a>  <span class="at">s =</span> <span class="fl">1.0</span>, <span class="at">a =</span> <span class="fl">0.4</span>, <span class="at">b =</span> <span class="fl">1.2</span>, <span class="at">kc =</span> <span class="fl">0.2</span>,</span>
-<span id="cb152-154"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-154" tabindex="-1"></a>  <span class="at">r =</span> <span class="fl">2.5</span>, <span class="at">d =</span> <span class="fl">0.4</span>, <span class="at">ke =</span> <span class="fl">0.9</span></span>
-<span id="cb152-155"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-155" tabindex="-1"></a>)</span>
-<span id="cb152-156"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-156" tabindex="-1"></a></span>
-<span id="cb152-157"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-157" tabindex="-1"></a>guesses <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="fl">1.5</span>),</span>
-<span id="cb152-158"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-158" tabindex="-1"></a>                       <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="fl">1.5</span>))</span>
-<span id="cb152-159"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-159" tabindex="-1"></a></span>
-<span id="cb152-160"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-160" tabindex="-1"></a>eq_fragile <span class="ot">&lt;-</span> <span class="fu">find_equilibria</span>(params_fragile, guesses)</span>
-<span id="cb152-161"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb152-161" tabindex="-1"></a>eq_stable  <span class="ot">&lt;-</span> <span class="fu">find_equilibria</span>(params_stable,  guesses)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb1-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(rootSolve)</span>
+<span id="cb1-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-6" tabindex="-1"></a><span class="co"># Bug fix 1: renamed &#39;c&#39; -&gt; &#39;kc&#39; and &#39;e&#39; -&gt; &#39;ke&#39; to avoid shadowing</span></span>
+<span id="cb1-7"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-7" tabindex="-1"></a><span class="co"># R base functions c() inside with() environments</span></span>
+<span id="cb1-8"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-9" tabindex="-1"></a>mental_health_model <span class="ot">&lt;-</span> <span class="cf">function</span>(t, state, parameters) {</span>
+<span id="cb1-10"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-10" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parameters)), {</span>
+<span id="cb1-11"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-11" tabindex="-1"></a>    dx <span class="ot">&lt;-</span> s <span class="sc">+</span> a<span class="sc">*</span>x <span class="sc">-</span> b<span class="sc">*</span>y <span class="sc">-</span> kc<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-12"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-12" tabindex="-1"></a>    dy <span class="ot">&lt;-</span> r <span class="sc">-</span> d<span class="sc">*</span>x <span class="sc">-</span> ke<span class="sc">*</span>y</span>
+<span id="cb1-13"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-13" tabindex="-1"></a>    <span class="fu">list</span>(<span class="fu">c</span>(dx, dy))</span>
+<span id="cb1-14"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-14" tabindex="-1"></a>  })</span>
+<span id="cb1-15"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-15" tabindex="-1"></a>}</span>
+<span id="cb1-16"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-17" tabindex="-1"></a>jacobian_mh <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, parameters) {</span>
+<span id="cb1-18"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-18" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(parameters), {</span>
+<span id="cb1-19"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-19" tabindex="-1"></a>    <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb1-20"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-20" tabindex="-1"></a>      a <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>kc<span class="sc">*</span>x, <span class="sc">-</span>b,</span>
+<span id="cb1-21"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-21" tabindex="-1"></a>      <span class="sc">-</span>d,         <span class="sc">-</span>ke</span>
+<span id="cb1-22"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-22" tabindex="-1"></a>    ), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-23"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-23" tabindex="-1"></a>  })</span>
+<span id="cb1-24"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-24" tabindex="-1"></a>}</span>
+<span id="cb1-25"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-26" tabindex="-1"></a>classify_equilibrium <span class="ot">&lt;-</span> <span class="cf">function</span>(J) {</span>
+<span id="cb1-27"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-27" tabindex="-1"></a>  eig  <span class="ot">&lt;-</span> <span class="fu">eigen</span>(J)<span class="sc">$</span>values</span>
+<span id="cb1-28"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-28" tabindex="-1"></a>  tr   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(J))</span>
+<span id="cb1-29"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-29" tabindex="-1"></a>  detJ <span class="ot">&lt;-</span> <span class="fu">det</span>(J)</span>
+<span id="cb1-30"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-30" tabindex="-1"></a>  disc <span class="ot">&lt;-</span> tr<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span><span class="sc">*</span>detJ</span>
+<span id="cb1-31"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-31" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-32" tabindex="-1"></a>  type <span class="ot">&lt;-</span> <span class="cf">if</span> (detJ <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-33"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-33" tabindex="-1"></a>    <span class="st">&quot;Saddle (unstable)&quot;</span></span>
+<span id="cb1-34"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-34" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">Re</span>(eig[<span class="dv">1</span>]) <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">Re</span>(eig[<span class="dv">2</span>]) <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-35"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-35" tabindex="-1"></a>    <span class="cf">if</span> (disc <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="st">&quot;Stable node&quot;</span> <span class="cf">else</span> <span class="st">&quot;Stable spiral&quot;</span></span>
+<span id="cb1-36"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-36" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">Re</span>(eig[<span class="dv">1</span>]) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">||</span> <span class="fu">Re</span>(eig[<span class="dv">2</span>]) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-37"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-37" tabindex="-1"></a>    <span class="cf">if</span> (disc <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="st">&quot;Unstable node&quot;</span> <span class="cf">else</span> <span class="st">&quot;Unstable spiral&quot;</span></span>
+<span id="cb1-38"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-38" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-39"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-39" tabindex="-1"></a>    <span class="st">&quot;Nonhyperbolic&quot;</span></span>
+<span id="cb1-40"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-40" tabindex="-1"></a>  }</span>
+<span id="cb1-41"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-41" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-42" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">eigenvalues =</span> eig, <span class="at">trace =</span> tr,</span>
+<span id="cb1-43"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-43" tabindex="-1"></a>       <span class="at">determinant =</span> detJ, <span class="at">discriminant =</span> disc, <span class="at">type =</span> type)</span>
+<span id="cb1-44"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-44" tabindex="-1"></a>}</span>
+<span id="cb1-45"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-45" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-46" tabindex="-1"></a>find_equilibria <span class="ot">&lt;-</span> <span class="cf">function</span>(parameters, guesses) {</span>
+<span id="cb1-47"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-47" tabindex="-1"></a>  eqs <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb1-48"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-48" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-49" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(guesses))) {</span>
+<span id="cb1-50"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-50" tabindex="-1"></a>    guess <span class="ot">&lt;-</span> guesses[i, ]</span>
+<span id="cb1-51"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-51" tabindex="-1"></a>    sol <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">multiroot</span>(</span>
+<span id="cb1-52"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-52" tabindex="-1"></a>      <span class="at">f =</span> <span class="cf">function</span>(z) {</span>
+<span id="cb1-53"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-53" tabindex="-1"></a>        x <span class="ot">&lt;-</span> z[<span class="dv">1</span>]; y <span class="ot">&lt;-</span> z[<span class="dv">2</span>]</span>
+<span id="cb1-54"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-54" tabindex="-1"></a>        <span class="fu">with</span>(<span class="fu">as.list</span>(parameters), {</span>
+<span id="cb1-55"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-55" tabindex="-1"></a>          <span class="fu">c</span>(s <span class="sc">+</span> a<span class="sc">*</span>x <span class="sc">-</span> b<span class="sc">*</span>y <span class="sc">-</span> kc<span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb1-56"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-56" tabindex="-1"></a>            r <span class="sc">-</span> d<span class="sc">*</span>x  <span class="sc">-</span> ke<span class="sc">*</span>y)</span>
+<span id="cb1-57"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-57" tabindex="-1"></a>        })</span>
+<span id="cb1-58"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-58" tabindex="-1"></a>      },</span>
+<span id="cb1-59"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-59" tabindex="-1"></a>      <span class="at">start =</span> <span class="fu">c</span>(guess<span class="sc">$</span>x, guess<span class="sc">$</span>y)</span>
+<span id="cb1-60"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-60" tabindex="-1"></a>    ), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-61"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-61" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-62" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(sol, <span class="st">&quot;try-error&quot;</span>)) {</span>
+<span id="cb1-63"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-63" tabindex="-1"></a>      candidate  <span class="ot">&lt;-</span> <span class="fu">round</span>(sol<span class="sc">$</span>root, <span class="dv">6</span>)</span>
+<span id="cb1-64"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-64" tabindex="-1"></a>      duplicate  <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb1-65"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-65" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-66" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_along</span>(eqs)) {</span>
+<span id="cb1-67"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-67" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">max</span>(<span class="fu">abs</span>(eqs[[j]] <span class="sc">-</span> candidate)) <span class="sc">&lt;</span> <span class="fl">1e-4</span>) {</span>
+<span id="cb1-68"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-68" tabindex="-1"></a>          duplicate <span class="ot">&lt;-</span> <span class="cn">TRUE</span>; <span class="cf">break</span></span>
+<span id="cb1-69"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-69" tabindex="-1"></a>        }</span>
+<span id="cb1-70"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-70" tabindex="-1"></a>      }</span>
+<span id="cb1-71"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-71" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-72" tabindex="-1"></a>      <span class="cf">if</span> (<span class="sc">!</span>duplicate) eqs[[<span class="fu">length</span>(eqs) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> candidate</span>
+<span id="cb1-73"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-73" tabindex="-1"></a>    }</span>
+<span id="cb1-74"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-74" tabindex="-1"></a>  }</span>
+<span id="cb1-75"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-75" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-76" tabindex="-1"></a>  <span class="co"># Bug fix 2: guard against empty list before rbind</span></span>
+<span id="cb1-77"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-77" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(eqs) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb1-78"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-78" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">numeric</span>(<span class="dv">0</span>), <span class="at">y =</span> <span class="fu">numeric</span>(<span class="dv">0</span>)))</span>
+<span id="cb1-79"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-79" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-80" tabindex="-1"></a>  eq_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(eqs, <span class="cf">function</span>(z)</span>
+<span id="cb1-81"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-81" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">x =</span> z[<span class="dv">1</span>], <span class="at">y =</span> z[<span class="dv">2</span>])))</span>
+<span id="cb1-82"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-82" tabindex="-1"></a>  <span class="fu">rownames</span>(eq_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb1-83"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-83" tabindex="-1"></a>  eq_df</span>
+<span id="cb1-84"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-84" tabindex="-1"></a>}</span>
+<span id="cb1-85"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-85" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-86" tabindex="-1"></a>simulate_trajectory <span class="ot">&lt;-</span> <span class="cf">function</span>(parameters, init,</span>
+<span id="cb1-87"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-87" tabindex="-1"></a>                                <span class="at">times =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.1</span>)) {</span>
+<span id="cb1-88"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-88" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">ode</span>(</span>
+<span id="cb1-89"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-89" tabindex="-1"></a>    <span class="at">y     =</span> <span class="fu">c</span>(<span class="at">x =</span> init[<span class="dv">1</span>], <span class="at">y =</span> init[<span class="dv">2</span>]),</span>
+<span id="cb1-90"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-90" tabindex="-1"></a>    <span class="at">times =</span> times,</span>
+<span id="cb1-91"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-91" tabindex="-1"></a>    <span class="at">func  =</span> mental_health_model,</span>
+<span id="cb1-92"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-92" tabindex="-1"></a>    <span class="at">parms =</span> parameters</span>
+<span id="cb1-93"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-93" tabindex="-1"></a>  )</span>
+<span id="cb1-94"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-94" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(out)</span>
+<span id="cb1-95"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-95" tabindex="-1"></a>}</span>
+<span id="cb1-96"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-96" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-97" tabindex="-1"></a>plot_phase_portrait <span class="ot">&lt;-</span> <span class="cf">function</span>(parameters, trajectories,</span>
+<span id="cb1-98"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-98" tabindex="-1"></a>                                equilibria, title_text) {</span>
+<span id="cb1-99"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-99" tabindex="-1"></a>  x_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-100"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-100" tabindex="-1"></a>  y_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-101"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-101" tabindex="-1"></a>  field <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x_seq, <span class="at">y =</span> y_seq)</span>
+<span id="cb1-102"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-102" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-103" tabindex="-1"></a>  <span class="co"># Direct assignment avoids with() scoping issue</span></span>
+<span id="cb1-104"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-104" tabindex="-1"></a>  field<span class="sc">$</span>dx  <span class="ot">&lt;-</span> parameters<span class="sc">$</span>s <span class="sc">+</span> parameters<span class="sc">$</span>a <span class="sc">*</span> field<span class="sc">$</span>x <span class="sc">-</span></span>
+<span id="cb1-105"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-105" tabindex="-1"></a>               parameters<span class="sc">$</span>b <span class="sc">*</span> field<span class="sc">$</span>y <span class="sc">-</span> parameters<span class="sc">$</span>kc <span class="sc">*</span> field<span class="sc">$</span>x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-106"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-106" tabindex="-1"></a>  field<span class="sc">$</span>dy  <span class="ot">&lt;-</span> parameters<span class="sc">$</span>r <span class="sc">-</span> parameters<span class="sc">$</span>d <span class="sc">*</span> field<span class="sc">$</span>x <span class="sc">-</span></span>
+<span id="cb1-107"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-107" tabindex="-1"></a>               parameters<span class="sc">$</span>ke <span class="sc">*</span> field<span class="sc">$</span>y</span>
+<span id="cb1-108"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-108" tabindex="-1"></a>  field<span class="sc">$</span>mag <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(field<span class="sc">$</span>dx<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> field<span class="sc">$</span>dy<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-109"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-109" tabindex="-1"></a>  field<span class="sc">$</span>dxn <span class="ot">&lt;-</span> field<span class="sc">$</span>dx <span class="sc">/</span> (field<span class="sc">$</span>mag <span class="sc">+</span> <span class="fl">1e-9</span>) <span class="sc">*</span> <span class="fl">0.25</span></span>
+<span id="cb1-110"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-110" tabindex="-1"></a>  field<span class="sc">$</span>dyn <span class="ot">&lt;-</span> field<span class="sc">$</span>dy <span class="sc">/</span> (field<span class="sc">$</span>mag <span class="sc">+</span> <span class="fl">1e-9</span>) <span class="sc">*</span> <span class="fl">0.25</span></span>
+<span id="cb1-111"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-111" tabindex="-1"></a></span>
+<span id="cb1-112"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-112" tabindex="-1"></a>  <span class="co"># Add trajectory id for distinct colors</span></span>
+<span id="cb1-113"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-113" tabindex="-1"></a>  traj_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">seq_along</span>(trajectories), <span class="cf">function</span>(i) {</span>
+<span id="cb1-114"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-114" tabindex="-1"></a>    df      <span class="ot">&lt;-</span> trajectories[[i]]</span>
+<span id="cb1-115"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-115" tabindex="-1"></a>    df<span class="sc">$</span>id   <span class="ot">&lt;-</span> <span class="fu">factor</span>(i)</span>
+<span id="cb1-116"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-116" tabindex="-1"></a>    df</span>
+<span id="cb1-117"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-117" tabindex="-1"></a>  }))</span>
+<span id="cb1-118"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-118" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-119" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb1-120"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-120" tabindex="-1"></a>    <span class="fu">geom_segment</span>(</span>
+<span id="cb1-121"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-121" tabindex="-1"></a>      <span class="at">data  =</span> field,</span>
+<span id="cb1-122"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-122" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> x <span class="sc">+</span> dxn, <span class="at">yend =</span> y <span class="sc">+</span> dyn),</span>
+<span id="cb1-123"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-123" tabindex="-1"></a>      <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.015</span>, <span class="st">&quot;npc&quot;</span>)),</span>
+<span id="cb1-124"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-124" tabindex="-1"></a>      <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">color =</span> <span class="st">&quot;steelblue&quot;</span></span>
+<span id="cb1-125"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-125" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb1-126"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-126" tabindex="-1"></a>    <span class="fu">geom_path</span>(</span>
+<span id="cb1-127"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-127" tabindex="-1"></a>      <span class="at">data =</span> traj_df,</span>
+<span id="cb1-128"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-128" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> id),</span>
+<span id="cb1-129"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-129" tabindex="-1"></a>      <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-130"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-130" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb1-131"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-131" tabindex="-1"></a>    <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-132"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-132" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-133"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-133" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title_text, <span class="at">x =</span> <span class="st">&quot;Distress&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Coping capacity&quot;</span>)</span>
+<span id="cb1-134"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-134" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-135" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(equilibria) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(equilibria) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-136"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-136" tabindex="-1"></a>    p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_point</span>(</span>
+<span id="cb1-137"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-137" tabindex="-1"></a>      <span class="at">data  =</span> equilibria,</span>
+<span id="cb1-138"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-138" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y),</span>
+<span id="cb1-139"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-139" tabindex="-1"></a>      <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">4</span>, <span class="at">stroke =</span> <span class="dv">2</span></span>
+<span id="cb1-140"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-140" tabindex="-1"></a>    )</span>
+<span id="cb1-141"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-141" tabindex="-1"></a>  }</span>
+<span id="cb1-142"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-142" tabindex="-1"></a></span>
+<span id="cb1-143"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-143" tabindex="-1"></a>  p</span>
+<span id="cb1-144"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-144" tabindex="-1"></a>}</span>
+<span id="cb1-145"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-145" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-146" tabindex="-1"></a><span class="co"># Parameters — &#39;kc&#39; replaces &#39;c&#39;, &#39;ke&#39; replaces &#39;e&#39;</span></span>
+<span id="cb1-147"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-147" tabindex="-1"></a>params_fragile <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-148"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-148" tabindex="-1"></a>  <span class="at">s =</span> <span class="fl">1.2</span>, <span class="at">a =</span> <span class="fl">0.8</span>, <span class="at">b =</span> <span class="fl">1.0</span>, <span class="at">kc =</span> <span class="fl">0.25</span>,</span>
+<span id="cb1-149"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-149" tabindex="-1"></a>  <span class="at">r =</span> <span class="fl">2.0</span>, <span class="at">d =</span> <span class="fl">0.6</span>, <span class="at">ke =</span> <span class="fl">0.8</span></span>
+<span id="cb1-150"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-150" tabindex="-1"></a>)</span>
+<span id="cb1-151"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-151" tabindex="-1"></a></span>
+<span id="cb1-152"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-152" tabindex="-1"></a>params_stable <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-153"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-153" tabindex="-1"></a>  <span class="at">s =</span> <span class="fl">1.0</span>, <span class="at">a =</span> <span class="fl">0.4</span>, <span class="at">b =</span> <span class="fl">1.2</span>, <span class="at">kc =</span> <span class="fl">0.2</span>,</span>
+<span id="cb1-154"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-154" tabindex="-1"></a>  <span class="at">r =</span> <span class="fl">2.5</span>, <span class="at">d =</span> <span class="fl">0.4</span>, <span class="at">ke =</span> <span class="fl">0.9</span></span>
+<span id="cb1-155"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-155" tabindex="-1"></a>)</span>
+<span id="cb1-156"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-156" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-157" tabindex="-1"></a>guesses <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="fl">1.5</span>),</span>
+<span id="cb1-158"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-158" tabindex="-1"></a>                       <span class="at">y =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="at">by =</span> <span class="fl">1.5</span>))</span>
+<span id="cb1-159"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-159" tabindex="-1"></a></span>
+<span id="cb1-160"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-160" tabindex="-1"></a>eq_fragile <span class="ot">&lt;-</span> <span class="fu">find_equilibria</span>(params_fragile, guesses)</span>
+<span id="cb1-161"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb1-161" tabindex="-1"></a>eq_stable  <span class="ot">&lt;-</span> <span class="fu">find_equilibria</span>(params_stable,  guesses)</span></code></pre></div>
 <pre><code>## Warning in stode(y, times, func, parms = parms, ...): steady-state not reached
 ## Warning in stode(y, times, func, parms = parms, ...): steady-state not reached
 ## Warning in stode(y, times, func, parms = parms, ...): steady-state not reached
@@ -796,18 +796,18 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ## Warning in stode(y, times, func, parms = parms, ...): steady-state not reached
 ## Warning in stode(y, times, func, parms = parms, ...): steady-state not reached
 ## Warning in stode(y, times, func, parms = parms, ...): steady-state not reached</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb154-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Fragile regime equilibria:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(eq_fragile)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb3-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;Fragile regime equilibria:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(eq_fragile)</span></code></pre></div>
 <pre><code>## Fragile regime equilibria:</code></pre>
 <pre><code>##     x     y
 ## 1 1.0  1.75
 ## 2 5.2 -1.40</code></pre>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(eq_fragile))) {</span>
-<span id="cb157-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-2" tabindex="-1"></a>  J    <span class="ot">&lt;-</span> <span class="fu">jacobian_mh</span>(eq_fragile<span class="sc">$</span>x[i], eq_fragile<span class="sc">$</span>y[i], params_fragile)</span>
-<span id="cb157-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-3" tabindex="-1"></a>  info <span class="ot">&lt;-</span> <span class="fu">classify_equilibrium</span>(J)</span>
-<span id="cb157-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Equilibrium:&quot;</span>, <span class="fu">round</span>(eq_fragile<span class="sc">$</span>x[i], <span class="dv">3</span>),</span>
-<span id="cb157-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-5" tabindex="-1"></a>      <span class="fu">round</span>(eq_fragile<span class="sc">$</span>y[i], <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb157-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-6" tabindex="-1"></a>  <span class="fu">print</span>(J); <span class="fu">print</span>(info)</span>
-<span id="cb157-7"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb157-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(eq_fragile))) {</span>
+<span id="cb6-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-2" tabindex="-1"></a>  J    <span class="ot">&lt;-</span> <span class="fu">jacobian_mh</span>(eq_fragile<span class="sc">$</span>x[i], eq_fragile<span class="sc">$</span>y[i], params_fragile)</span>
+<span id="cb6-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-3" tabindex="-1"></a>  info <span class="ot">&lt;-</span> <span class="fu">classify_equilibrium</span>(J)</span>
+<span id="cb6-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Equilibrium:&quot;</span>, <span class="fu">round</span>(eq_fragile<span class="sc">$</span>x[i], <span class="dv">3</span>),</span>
+<span id="cb6-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-5" tabindex="-1"></a>      <span class="fu">round</span>(eq_fragile<span class="sc">$</span>y[i], <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-6" tabindex="-1"></a>  <span class="fu">print</span>(J); <span class="fu">print</span>(info)</span>
+<span id="cb6-7"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb6-7" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## 
 ## Equilibrium: 1 1.75 
 ##      [,1] [,2]
@@ -847,7 +847,7 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ## 
 ## $type
 ## [1] &quot;Stable node&quot;</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb159-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Stable regime equilibria:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(eq_stable)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb8-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Stable regime equilibria:</span><span class="sc">\n</span><span class="st">&quot;</span>); <span class="fu">print</span>(eq_stable)</span></code></pre></div>
 <pre><code>## 
 ## Stable regime equilibria:</code></pre>
 <pre><code>##             x          y
@@ -886,13 +886,13 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ## 33   2.723442   1.567359
 ## 34   0.262247   2.661224
 ## 35  -0.211469   2.871764</code></pre>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(eq_stable))) {</span>
-<span id="cb162-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-2" tabindex="-1"></a>  J    <span class="ot">&lt;-</span> <span class="fu">jacobian_mh</span>(eq_stable<span class="sc">$</span>x[i], eq_stable<span class="sc">$</span>y[i], params_stable)</span>
-<span id="cb162-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-3" tabindex="-1"></a>  info <span class="ot">&lt;-</span> <span class="fu">classify_equilibrium</span>(J)</span>
-<span id="cb162-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Equilibrium:&quot;</span>, <span class="fu">round</span>(eq_stable<span class="sc">$</span>x[i], <span class="dv">3</span>),</span>
-<span id="cb162-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-5" tabindex="-1"></a>      <span class="fu">round</span>(eq_stable<span class="sc">$</span>y[i], <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb162-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-6" tabindex="-1"></a>  <span class="fu">print</span>(J); <span class="fu">print</span>(info)</span>
-<span id="cb162-7"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb162-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(eq_stable))) {</span>
+<span id="cb11-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-2" tabindex="-1"></a>  J    <span class="ot">&lt;-</span> <span class="fu">jacobian_mh</span>(eq_stable<span class="sc">$</span>x[i], eq_stable<span class="sc">$</span>y[i], params_stable)</span>
+<span id="cb11-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-3" tabindex="-1"></a>  info <span class="ot">&lt;-</span> <span class="fu">classify_equilibrium</span>(J)</span>
+<span id="cb11-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Equilibrium:&quot;</span>, <span class="fu">round</span>(eq_stable<span class="sc">$</span>x[i], <span class="dv">3</span>),</span>
+<span id="cb11-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-5" tabindex="-1"></a>      <span class="fu">round</span>(eq_stable<span class="sc">$</span>y[i], <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb11-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-6" tabindex="-1"></a>  <span class="fu">print</span>(J); <span class="fu">print</span>(info)</span>
+<span id="cb11-7"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb11-7" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## 
 ## Equilibrium: 1.968 1.903 
 ##            [,1] [,2]
@@ -1592,9 +1592,9 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ## 
 ## $type
 ## [1] &quot;Saddle (unstable)&quot;</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb164-1" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>), <span class="fu">c</span>(<span class="fl">2.0</span>, <span class="fl">2.0</span>), <span class="fu">c</span>(<span class="fl">3.0</span>, <span class="fl">1.0</span>), <span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.0</span>))</span>
-<span id="cb164-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb164-2" tabindex="-1"></a></span>
-<span id="cb164-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb164-3" tabindex="-1"></a>traj_fragile <span class="ot">&lt;-</span> <span class="fu">lapply</span>(inits, simulate_trajectory, <span class="at">parameters =</span> params_fragile)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb13-1" tabindex="-1"></a>inits <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>), <span class="fu">c</span>(<span class="fl">2.0</span>, <span class="fl">2.0</span>), <span class="fu">c</span>(<span class="fl">3.0</span>, <span class="fl">1.0</span>), <span class="fu">c</span>(<span class="fl">1.0</span>, <span class="fl">0.0</span>))</span>
+<span id="cb13-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb13-3" tabindex="-1"></a>traj_fragile <span class="ot">&lt;-</span> <span class="fu">lapply</span>(inits, simulate_trajectory, <span class="at">parameters =</span> params_fragile)</span></code></pre></div>
 <pre><code>## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
 ##       such that in the machine, T + H = T on the next step  
 ##      (H = step size). Solver will continue anyway.
@@ -1655,10 +1655,11 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ##  
 ## In above message, R1 = 2.3434
 ## </code></pre>
-<pre><code>## Warning in lsoda(y, times, func, parms, ...): an excessive amount of work (&gt; maxsteps ) was done, but integration was not successful - increase
-## maxsteps</code></pre>
-<pre><code>## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are accurate, as far as they go</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb168-1" tabindex="-1"></a>traj_stable  <span class="ot">&lt;-</span> <span class="fu">lapply</span>(inits, simulate_trajectory, <span class="at">parameters =</span> params_stable)</span></code></pre></div>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): an excessive amount of work (&gt;
+## maxsteps ) was done, but integration was not successful - increase maxsteps</code></pre>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are
+## accurate, as far as they go</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb17-1" tabindex="-1"></a>traj_stable  <span class="ot">&lt;-</span> <span class="fu">lapply</span>(inits, simulate_trajectory, <span class="at">parameters =</span> params_stable)</span></code></pre></div>
 <pre><code>## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
 ##       such that in the machine, T + H = T on the next step  
 ##      (H = step size). Solver will continue anyway.
@@ -1719,9 +1720,10 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ##  
 ## In above message, R1 = 2.18747
 ## </code></pre>
-<pre><code>## Warning in lsoda(y, times, func, parms, ...): an excessive amount of work (&gt; maxsteps ) was done, but integration was not successful - increase
-## maxsteps
-## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are accurate, as far as they go</code></pre>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): an excessive amount of work (&gt;
+## maxsteps ) was done, but integration was not successful - increase maxsteps
+## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are
+## accurate, as far as they go</code></pre>
 <pre><code>## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
 ##       such that in the machine, T + H = T on the next step  
 ##      (H = step size). Solver will continue anyway.
@@ -1782,9 +1784,10 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ##  
 ## In above message, R1 = 3.45852
 ## </code></pre>
-<pre><code>## Warning in lsoda(y, times, func, parms, ...): an excessive amount of work (&gt; maxsteps ) was done, but integration was not successful - increase
-## maxsteps
-## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are accurate, as far as they go</code></pre>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): an excessive amount of work (&gt;
+## maxsteps ) was done, but integration was not successful - increase maxsteps
+## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are
+## accurate, as far as they go</code></pre>
 <pre><code>## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
 ##       such that in the machine, T + H = T on the next step  
 ##      (H = step size). Solver will continue anyway.
@@ -1843,8 +1846,10 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ##       for precision of machine..  See TOLSF (=R2) 
 ## In above message, R1 = 5.18891, R2 = nan
 ## </code></pre>
-<pre><code>## Warning in lsoda(y, times, func, parms, ...): Excessive precision requested.  scale up `rtol&#39; and `atol&#39; e.g by the factor 10
-## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are accurate, as far as they go</code></pre>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): Excessive precision requested.
+## scale up `rtol&#39; and `atol&#39; e.g by the factor 10
+## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are
+## accurate, as far as they go</code></pre>
 <pre><code>## DLSODA-  Warning..Internal T (=R1) and H (=R2) are
 ##       such that in the machine, T + H = T on the next step  
 ##      (H = step size). Solver will continue anyway.
@@ -1903,16 +1908,19 @@ y_2^* \approx 2.5 - 0.75(5.22) \approx -1.42
 ##       for precision of machine..  See TOLSF (=R2) 
 ## In above message, R1 = 4.39688, R2 = nan
 ## </code></pre>
-<pre><code>## Warning in lsoda(y, times, func, parms, ...): Excessive precision requested.  scale up `rtol&#39; and `atol&#39; e.g by the factor 10
-## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are accurate, as far as they go</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb177-1" tabindex="-1"></a>p_fragile <span class="ot">&lt;-</span> <span class="fu">plot_phase_portrait</span>(params_fragile, traj_fragile,</span>
-<span id="cb177-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb177-2" tabindex="-1"></a>                                 eq_fragile, <span class="st">&quot;Fragile mental health regime&quot;</span>)</span>
-<span id="cb177-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb177-3" tabindex="-1"></a>p_stable  <span class="ot">&lt;-</span> <span class="fu">plot_phase_portrait</span>(params_stable,  traj_stable,</span>
-<span id="cb177-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb177-4" tabindex="-1"></a>                                 eq_stable,  <span class="st">&quot;Stable mental health regime&quot;</span>)</span>
-<span id="cb177-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb177-5" tabindex="-1"></a></span>
-<span id="cb177-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb177-6" tabindex="-1"></a><span class="fu">grid.arrange</span>(p_fragile, p_stable, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_path()`).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<pre><code>## Warning in lsoda(y, times, func, parms, ...): Excessive precision requested.
+## scale up `rtol&#39; and `atol&#39; e.g by the factor 10
+## Warning in lsoda(y, times, func, parms, ...): Returning early. Results are
+## accurate, as far as they go</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb26-1" tabindex="-1"></a>p_fragile <span class="ot">&lt;-</span> <span class="fu">plot_phase_portrait</span>(params_fragile, traj_fragile,</span>
+<span id="cb26-2"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb26-2" tabindex="-1"></a>                                 eq_fragile, <span class="st">&quot;Fragile mental health regime&quot;</span>)</span>
+<span id="cb26-3"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb26-3" tabindex="-1"></a>p_stable  <span class="ot">&lt;-</span> <span class="fu">plot_phase_portrait</span>(params_stable,  traj_stable,</span>
+<span id="cb26-4"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb26-4" tabindex="-1"></a>                                 eq_stable,  <span class="st">&quot;Stable mental health regime&quot;</span>)</span>
+<span id="cb26-5"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb26-5" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="equilibrium-points-and-linear-stability-in-mental-health.html#cb26-6" tabindex="-1"></a><span class="fu">grid.arrange</span>(p_fragile, p_stable, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_path()`).</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
 <div id="what-the-code-shows" class="section level2 hasAnchor" number="10.9">
 <h2><span class="header-section-number">10.9</span> What the code shows<a href="equilibrium-points-and-linear-stability-in-mental-health.html#what-the-code-shows" class="anchor-section" aria-label="Anchor link to header"></a></h2>
