@@ -26,9 +26,7 @@ where:
 
 Under some parameter choices, this system has a stable fixed point (resilient mood). Under others, it can exhibit a stable oscillation (recurrent mood episodes). Poincaré–Bendixson tells us that in this 2D setting, if there is persistent bounded non‑stationary behavior, it must be periodic, not chaotic.
 
-### R code: phase portrait and trajectories
-
-```r
+```{r}
 library(deSolve)
 library(ggplot2)
 
@@ -81,8 +79,6 @@ Many mental health conditions show **self‑sustained symptom rhythms**: circadi
 
 In dynamical‑systems terms, these are modeled as **limit cycles**: isolated closed orbits that are attracting. Nearby trajectories are drawn to the cycle; perturbations fade, and the system returns to its symptomatic rhythm.[^5][^6]
 
-### A symptom oscillation model
-
 Let $X(t)$ represent an aggregate “symptom activation” (e.g., avoidance behavior), and $R(t)$ a slower “regulatory resource” (e.g., coping capacity):
 
 $$
@@ -99,9 +95,7 @@ adapted from FitzHugh–Nagumo.[^6][^7]
 - For others, it has a stable limit cycle: symptom spikes and partial recoveries repeat autonomously, reminiscent of recurrent compulsive behaviors or cyclical mood disorders.
 
 
-### R code: limit cycle in symptom dynamics
-
-```r
+```{r}
 library(deSolve)
 library(ggplot2)
 
@@ -154,8 +148,6 @@ where $J$ is the Jacobian along the cycle. The nontrivial Floquet exponent $\mu$
 - Grow (Re$\,\mu > 0$): the routine is structurally fragile.
 
 
-### A basic treatment‑adherence cycle
-
 Let $A(t)$ be “adherence” to a treatment routine (e.g., doing CBT homework), and $D(t)$ be “distress level”:
 
 $$
@@ -166,55 +158,119 @@ We can implement a simplified FHN‑like system that has a stable cycle correspo
 
 To illustrate numerically, we can approximate the largest Floquet multiplier for a periodic orbit by tracking how a small perturbation evolves over one period.
 
-### R code: approximate Floquet multiplier
-
-```r
+```{r}
 library(deSolve)
+
+# Use a NAMED NUMERIC VECTOR, not a list
+parms <- c(a = 0.5, b = 0.8, tau = 10, u = 0.3)
 
 adherence_system <- function(t, state, parms) {
   with(as.list(c(state, parms)), {
-    dA <- A - A^3/3 - D + u
+    dA <- A - A^3 / 3 - D + u
     dD <- (A + a - b * D) / tau
     list(c(dA, dD))
   })
 }
 
-parms <- list(a = 0.5, b = 0.8, tau = 10, u = 0.3)
-
-# 1) Find a long trajectory and estimate period
+# 1) Long trajectory
 times <- seq(0, 300, by = 0.05)
 y0 <- c(A = 0.2, D = 0)
-traj <- as.data.frame(ode(y = y0, times = times,
-                          func = adherence_system, parms = parms))
 
-# crude period estimate: detect peaks in A
-A <- traj$A
-t <- traj$time
-peak_idx <- which(diff(sign(diff(A))) == -2) + 1
-T_est <- mean(diff(t[peak_idx]))
+traj <- as.data.frame(
+  ode(y = y0, times = times, func = adherence_system, parms = parms)
+)
+
+# 2) Estimate period from peaks in A
+A_vec <- traj$A
+t_vec <- traj$time
+
+peak_idx <- which(diff(sign(diff(A_vec))) == -2) + 1
+peak_times <- t_vec[peak_idx]
+
+# Safer: discard early peaks to reduce transient bias
+if (length(peak_times) >= 4) {
+  peak_times_ss <- tail(peak_times, min(6, length(peak_times)))
+  T_est <- mean(diff(peak_times_ss))
+} else {
+  T_est <- mean(diff(peak_times))
+}
 
 T_est
 
-# 2) Estimate Floquet multiplier by perturbing initial condition
+# 3) Base point on the apparent limit cycle
+last_A <- as.numeric(tail(traj$A, 1))
+last_D <- as.numeric(tail(traj$D, 1))
+
+last_state <- c(A = last_A, D = last_D)
+
+# Small perturbation in A
 eps <- 1e-4
-y0_plus <- c(A = traj$A[nrow(traj)] + eps,
-             D = traj$D[nrow(traj)])
+y0_plus <- c(A = last_A + eps, D = last_D)
 
+# Optional sanity checks
+stopifnot(is.numeric(last_state), is.numeric(y0_plus), is.numeric(parms))
+
+# 4) Integrate both trajectories over one estimated period
 times_short <- seq(0, T_est, by = 0.01)
-base_traj <- as.data.frame(ode(y = traj[nrow(traj), c("A","D")],
-                               times = times_short,
-                               func = adherence_system, parms = parms))
-pert_traj <- as.data.frame(ode(y = y0_plus,
-                               times = times_short,
-                               func = adherence_system, parms = parms))
 
-delta0 <- sqrt((pert_traj$A[^1] - base_traj$A[^1])^2 +
-               (pert_traj$D[^1] - base_traj$D[^1])^2)
-deltaT <- sqrt((pert_traj$A[nrow(pert_traj)] - base_traj$A[nrow(base_traj)])^2 +
-               (pert_traj$D[nrow(pert_traj)] - base_traj$D[nrow(base_traj)])^2)
+base_traj <- as.data.frame(
+  ode(y = last_state, times = times_short,
+      func = adherence_system, parms = parms)
+)
+
+pert_traj <- as.data.frame(
+  ode(y = y0_plus, times = times_short,
+      func = adherence_system, parms = parms)
+)
+
+# 5) Floquet-type distance ratio
+delta0 <- sqrt((pert_traj$A[1] - base_traj$A[1])^2 +
+               (pert_traj$D[1] - base_traj$D[1])^2)
+
+deltaT <- sqrt((tail(pert_traj$A, 1) - tail(base_traj$A, 1))^2 +
+               (tail(pert_traj$D, 1) - tail(base_traj$D, 1))^2)
 
 floquet_multiplier <- deltaT / delta0
 floquet_multiplier
+
+# 6) Distance evolution over the period
+delta_t <- sqrt((pert_traj$A - base_traj$A)^2 +
+                (pert_traj$D - base_traj$D)^2)
+
+# -----------------------------
+# Visualization 1: time series
+# -----------------------------
+op <- par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+plot(traj$time, traj$A,
+     type = "l", lwd = 2, col = "#1b9e77",
+     xlab = "Time", ylab = "A",
+     main = "Adherence variable over time")
+if (length(peak_idx) > 0) {
+  points(traj$time[peak_idx], traj$A[peak_idx],
+         pch = 16, cex = 0.5, col = "#d95f02")
+}
+
+# -----------------------------
+# Visualization 2: phase plane
+# -----------------------------
+steady_idx <- traj$time > 100
+plot(traj$A[steady_idx], traj$D[steady_idx],
+     type = "l", lwd = 2, col = "#7570b3",
+     xlab = "A", ylab = "D",
+     main = "Phase portrait (post-transient)")
+points(last_state["A"], last_state["D"],
+       pch = 19, col = "#e7298a", cex = 0.9)
+
+par(op)
+
+# Optional third diagnostic plot
+plot(times_short, delta_t / delta0,
+     type = "l", lwd = 2, col = "#a6761d",
+     xlab = "Time within one period",
+     ylab = "Relative perturbation size",
+     main = paste("Perturbation growth, multiplier =", round(floquet_multiplier, 4)))
+abline(h = 1, lty = 2, col = "gray50")
 ```
 
 If `floquet_multiplier < 1`, small deviations from the treatment rhythm shrink each cycle: attending therapy late one week doesn’t derail the long‑term routine. If it is > 1, the same routine is unstable and may require redesign.[^5][^9]
@@ -227,7 +283,6 @@ In mental health, a person can shift from a relatively **steady baseline** (e.g.
 
 In a 2D system, a common mechanism for such transitions is the **Hopf bifurcation**. A stable fixed point loses stability when a pair of complex conjugate eigenvalues crosses the imaginary axis, leading to the birth of a limit cycle.[^7][^11]
 
-### Example: stress‑sensitivity parameter
 
 Take again the symptom system
 
@@ -241,9 +296,8 @@ $$
 
 and interpret parameter $u$ as “chronic stress load” or “cognitive bias towards negative interpretation” (i.e., environmental or cognitive vulnerability). For low $u$, the equilibrium could be stable (no episodes). As $u$ increases, the equilibrium may undergo a Hopf bifurcation and produce persistent episodes.
 
-### R code: sweep parameter and measure amplitude
 
-```r
+```{r}
 library(deSolve)
 library(ggplot2)
 
@@ -314,9 +368,7 @@ $$
 
 with small $\epsilon$. For most of the time, the system drifts slowly along a quasi‑steady manifold in $(E,B)$, then suddenly jumps when a fold is reached—capturing gradual overload and sudden crash.
 
-### R code: slow–fast burnout oscillator
-
-```r
+```{r}
 library(deSolve)
 library(ggplot2)
 
@@ -364,8 +416,6 @@ In a 2D model, changing parameters can:
 - Alter limit cycles (e.g., from stable circadian rhythm to pathological mood cycles).
 
 
-### Example: two equilibria, healthy and depressed
-
 Consider a mood–rumination model:
 
 $$
@@ -380,9 +430,7 @@ where $R$ is rumination. The cubic in $M$ allows for multiple equilibria: one wi
 
 Parameter $I$ (social support, treatment input) can tilt the system so that the healthy equilibrium is unique and stable, or so that both a healthy and a depressed equilibrium coexist (bistability). Small shocks can then push the system from one basin to another.
 
-### R code: two basins (healthy vs depressed)
-
-```r
+```{r}
 library(deSolve)
 library(ggplot2)
 
@@ -428,8 +476,6 @@ Even if 2D continuous systems cannot exhibit sustained chaos, they can have **re
 
 Near a saddle point, trajectories diverge exponentially along the unstable direction. The largest Lyapunov exponent $\lambda$ near such a point can be approximated from the Jacobian eigenvalues.
 
-### Simple tipping‑point system
-
 Take again the mood–rumination system:
 
 $$
@@ -442,9 +488,7 @@ $$
 
 For certain $I$, the system has a saddle equilibrium separating healthy and depressed basins. Close initial conditions on opposite sides of the saddle’s stable manifold eventually diverge to very different outcomes.
 
-### R code: divergence of nearby states
-
-```r
+```{r}
 library(deSolve)
 library(ggplot2)
 
