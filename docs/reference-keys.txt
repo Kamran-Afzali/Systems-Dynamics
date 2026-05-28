@@ -158,3 +158,4 @@ sensitive-dependence-and-tipping-points-in-mental-health
 simple-tippingpoint-system
 r-code-divergence-of-nearby-states
 the-edge-of-chaos-and-complexity-in-mental-health-trajectories
+spirals-and-stable-emotional-cycles

@@ -1,4 +1,4 @@
-# The Poincaré–Bendixson Theorem and Stable Emotional Cycles
+# Spirals and Stable Emotional Cycles
 
 Mental health often involves **recurrent emotional patterns**: recurrent depressive episodes, cycles of anxiety and relief, cycles of social withdrawal and engagement. A natural question is: can these patterns become arbitrarily complex in a “simple” model with only two interacting psychological variables (say, mood and stress), or are there built‑in constraints?
 
@@ -73,7 +73,7 @@ ggplot(traj_df, aes(x = time, y = M, color = id)) +
 
 Depending on parameters, you can see trajectories converging to a point (stable mood) or to an orbit (recurrent mood cycles). In either case, the theorem guarantees that you do **not** get sustained chaos in such a 2D continuous model.
 
-***
+
 
 ## Limit Cycles as Self‑Maintaining Symptom Rhythms
 
@@ -136,7 +136,7 @@ ggplot(out, aes(x = time, y = X)) +
 
 This toy system can represent a person whose symptoms repeatedly flare (large $X$) and then subside as regulatory resources slowly catch up, only to cycle again—an endogenous rhythm rather than a purely stimulus‑driven response.[^8][^3]
 
-***
+
 
 ## Floquet Theory and Stability of Treatment Routines
 
@@ -219,7 +219,7 @@ floquet_multiplier
 
 If `floquet_multiplier < 1`, small deviations from the treatment rhythm shrink each cycle: attending therapy late one week doesn’t derail the long‑term routine. If it is > 1, the same routine is unstable and may require redesign.[^5][^9]
 
-***
+
 
 ## Hopf Bifurcations and Onset of Recurrent Symptoms
 
@@ -283,7 +283,7 @@ ggplot(bif_df, aes(x = u, y = amplitude)) +
 
 The plot shows a regime where amplitude is near zero (stable baseline) and a regime where amplitude is positive (recurrent episodes). A smooth onset of oscillation as $u$ crosses a threshold is analogous to a supercritical Hopf bifurcation: a “soft” transition from remission to recurrent episodes.[^11][^7]
 
-***
+
 
 ## Multiple Time Scales and Relaxation Oscillations in Burnout
 
@@ -351,7 +351,7 @@ ggplot(out, aes(x = E, y = B)) +
 
 You should see slow drifts and sharp transitions—an abstract analogue of slow buildup to burnout, followed by a rapid crash and then slow recovery.[^8]
 
-***
+
 
 ## Disease States as Dynamical Regime Shifts in Mental Health
 
@@ -420,7 +420,7 @@ ggplot(traj_df, aes(x = M, y = R, group = id)) +
 
 You will typically see trajectories ending in different regions: a high‑mood attractor and a low‑mood attractor, depending on initial conditions—consistent with the idea of vulnerability to transitions into, and out of, depressive episodes.[^12][^3]
 
-***
+
 
 ## Sensitive Dependence and “Tipping Points” in Mental Health
 
@@ -479,7 +479,7 @@ ggplot(sep_df, aes(x = time, y = log(sep))) +
 
 Initially small differences in mood around 0 can lead to trajectories diverging toward very different long‑term states (recovery vs chronic depression), capturing the notion that early, small interventions near a tipping point can have disproportionate impact.[^4][^3]
 
-***
+
 
 ## The Edge of Chaos and Complexity in Mental Health Trajectories
 
@@ -489,12 +489,6 @@ In higher dimensions (adding, e.g., separate cognitive, emotional, and social va
 
 A simple 2D system cannot fully capture this, but it can approximate the idea of “edge of stability” where dynamics are slow, sensitive, and structurally rich near bifurcations.
 
-***
-
-If you’d like to go deeper, what would you prefer next: more realistic (e.g., reinforcement‑learning–based) dynamical models for depression and anxiety, or a more formal bifurcation/continuation analysis of one of these toy mental‑health systems?
-<span style="display:none">[^13][^14][^15][^16][^17]</span>
-
-<div align="center">⁂</div>
 
 [^1]: https://en.wikipedia.org/wiki/Poincaré–Bendixson_theorem
 
