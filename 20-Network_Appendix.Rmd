@@ -26,57 +26,7 @@ This picture is deterministic, but it generalizes naturally to stochastic system
 The following R code illustrates Wuensche's framework for a small network of $N=6$ binary nodes with a threshold activation rule. The code constructs the full transition graph and identifies attractors by following the deterministic map forward from every initial condition.
 
 ```{r}
-# ============================================================
-# Section 2: Discrete transition graph and basins
-# ============================================================
-library(igraph)
 
-set.seed(42)
-N <- 6
-
-# Adjacency matrix (signed weights for threshold dynamics)
-W <- matrix(runif(N * N, -1, 1), N, N)
-diag(W) <- 0
-
-# Threshold activation: node i fires if sum of inputs > 0
-threshold_update <- function(state, W) {
-  as.integer(W %*% state > 0)
-}
-
-# Enumerate all 2^N states
-all_states <- as.matrix(expand.grid(rep(list(0:1), N)))
-n_states   <- nrow(all_states)
-
-# Build full transition map
-trans <- integer(n_states)
-for (i in seq_len(n_states)) {
-  s_next   <- threshold_update(all_states[i, ], W)
-  # Find index of successor state
-  trans[i] <- which(apply(all_states, 1, function(r) all(r == s_next)))
-}
-
-# Identify attractors by following chains until a cycle
-find_attractor <- function(start, trans) {
-  visited <- integer(0)
-  current <- start
-  while (!(current %in% visited)) {
-    visited <- c(visited, current)
-    current <- trans[current]
-  }
-  return(current)  # first state revisited = attractor entry
-}
-
-attractor_of <- sapply(seq_len(n_states), find_attractor, trans = trans)
-
-# Count basin sizes
-basin_sizes <- table(attractor_of)
-cat("Attractors (state indices) and basin sizes:\n")
-print(basin_sizes)
-
-# Decode attractors back to binary configurations
-attr_states <- as.integer(names(basin_sizes))
-cat("\nAttractor configurations (each row = one attractor state):\n")
-print(all_states[attr_states, ])
 ```
 
 Running this on a random weight matrix will typically reveal a small number of fixed-point or short-cycle attractors, each pulling a substantial fraction of the $2^6 = 64$ possible states into its basin.  The key observation is that the weight matrix $W$ — which encodes the network structure — entirely determines this basin partition. Changing the density of $W$ (the fraction of nonzero entries) or the magnitude of edge weights directly reshapes how many attractors exist and how large each basin is.[^1][^2][^3]
@@ -108,73 +58,7 @@ where $\sigma(z) = 1/(1+e^{-z})$ is the logistic function, $D_{t-1} = \frac{1}{N
 ### 3.3 R Code: Simulating the Autoregressive Network Model
 
 ```{r}
-# ============================================================
-# Section 3: Dynamic network simulation (AR + density + transitivity)
-# ============================================================
-library(ggplot2)
-library(reshape2)
 
-set.seed(123)
-N <- 10      # nodes
-T <- 300     # time steps
-
-# Model parameters (three scenarios)
-scenarios <- list(
-  # Scenario A: only persistence (deep basins, low transition rate)
-  list(a0 = -2.0, a1 = 0.0, b1 = 3.0, c = 0.0, label = "Persistence only"),
-  # Scenario B: positive density feedback (bistability)
-  list(a0 = -1.5, a1 = 4.0, b1 = 1.5, c = 0.0, label = "Density feedback"),
-  # Scenario C: transitivity (clustered metastable basins)
-  list(a0 = -2.0, a1 = 0.0, b1 = 1.5, c = 0.3, label = "Transitivity")
-)
-
-sigmoid <- function(z) 1 / (1 + exp(-z))
-
-simulate_dynnet <- function(params, N, T) {
-  a0 <- params$a0; a1 <- params$a1
-  b1 <- params$b1; c  <- params$c
-
-  X      <- matrix(0, N, N)
-  X[upper.tri(X)] <- rbinom(N*(N-1)/2, 1, 0.3)
-  X <- X + t(X)  # symmetric undirected network
-
-  density_ts    <- numeric(T)
-  clustering_ts <- numeric(T)
-  records       <- list()
-
-  for (t in seq_len(T)) {
-    D  <- sum(X) / (N * (N - 1))          # global density
-    U  <- X %*% X                          # common-neighbor matrix
-
-    # Compute transition probabilities for upper triangle
-    eta <- a0 + a1 * D + b1 * X + c * U
-    p   <- sigmoid(eta)
-    p[lower.tri(p, diag = TRUE)] <- 0      # work on upper tri only
-
-    X_new <- X
-    for (i in 1:(N-1)) for (j in (i+1):N) {
-      X_new[i, j] <- rbinom(1, 1, p[i, j])
-      X_new[j, i] <- X_new[i, j]
-    }
-    X <- X_new
-
-    density_ts[t]    <- sum(X) / (N * (N - 1))
-    clustering_ts[t] <- transitivity(graph_from_adjacency_matrix(X, mode = "undirected"))
-  }
-
-  data.frame(time = 1:T, density = density_ts,
-             clustering = clustering_ts, scenario = params$label)
-}
-
-# Run all scenarios
-results <- do.call(rbind, lapply(scenarios, simulate_dynnet, N = N, T = T))
-
-# Plot density time series
-ggplot(results, aes(x = time, y = density, colour = scenario)) +
-  geom_line(alpha = 0.9) +
-  labs(title = "Network Density Under Different Structural Regimes",
-       x = "Time", y = "Density", colour = "Scenario") +
-  theme_bw(base_size = 13)
 ```
 
 Examining the time series produced by this code reveals the basin intuition directly.  Under persistence alone, the network settles quickly into either a sparse or dense region and rarely leaves. Under positive density feedback ($a_1 > 0$), the network exhibits bistability: it fluctuates between a sparse and a dense attractor, occasionally crossing from one basin to the other. Under transitivity, density is moderate but clustering becomes self-reinforcing, stabilizing tightly connected subgraphs as metastable community structures.[^1][^4]
@@ -196,40 +80,7 @@ a one-dimensional map. When $(a_1 + b_1)$ is large, this map can have three fixe
 ### 4.2 R Code: Bifurcation Diagram for Density Dynamics
 
 ```{r}
-# ============================================================
-# Section 4: Mean-field bifurcation diagram for network density
-# ============================================================
-library(ggplot2)
 
-sigmoid <- function(z) 1 / (1 + exp(-z))
-
-# Fixed point map: D_{t+1} = sigma(a0 + (a1 + b1)*D_t)
-iterate_map <- function(D0, a0, slope, n_iter = 200) {
-  D <- D0
-  for (i in seq_len(n_iter)) D <- sigmoid(a0 + slope * D)
-  D
-}
-
-# Sweep coupling strength (a1 + b1) and find attractors
-slopes  <- seq(-6, 8, length.out = 300)
-D0_vals <- seq(0.01, 0.99, length.out = 30)
-a0_val  <- -1.5
-
-bifurc <- do.call(rbind, lapply(slopes, function(sl) {
-  attractors <- unique(round(sapply(D0_vals, iterate_map,
-                                    a0 = a0_val, slope = sl), 3))
-  data.frame(slope = sl, D_attractor = attractors)
-}))
-
-ggplot(bifurc, aes(x = slope, y = D_attractor)) +
-  geom_point(size = 0.5, alpha = 0.5, colour = "steelblue") +
-  labs(title = "Bifurcation Diagram: Network Density Attractors vs. Coupling Strength",
-       x = expression(a[1] + b[1] ~ "(total coupling)"),
-       y = "Attractor density D*") +
-  geom_vline(xintercept = 4, linetype = "dashed", colour = "tomato") +
-  annotate("text", x = 4.2, y = 0.85, label = "Bistability onset",
-           colour = "tomato", hjust = 0, size = 3.5) +
-  theme_bw(base_size = 13)
 ```
 
 The resulting diagram shows clearly how coupling strength controls the number of attractors.  For low coupling, a single intermediate density is the global attractor. As coupling exceeds a critical threshold (the vertical dashed line), the diagram forks into two branches, signifying the emergence of bistability and the appearance of two distinct basins.  This bifurcation is the mathematical signature of a network becoming capable of multistable behavior.[^6][^5]
@@ -247,75 +98,7 @@ To formalize this, consider the Lyapunov function interpretation. For a discrete
 ### 5.2 R Code: Persistence, Basin Depth, and Return Times
 
 ```{r}
-# ============================================================
-# Section 5: Effect of persistence on basin depth (return time)
-# ============================================================
-library(ggplot2)
 
-set.seed(42)
-N       <- 8
-T       <- 500
-n_perturb <- 30   # number of perturbation experiments per b1 value
-b1_vals <- c(0.5, 1.5, 2.5, 3.5)
-
-sigmoid <- function(z) 1 / (1 + exp(-z))
-
-sim_return_time <- function(b1, N, T, n_perturb) {
-  a0 <- -1.0; a1 <- 0.0; c_trans <- 0.0
-
-  # Burn-in: reach stationary state
-  X <- matrix(0, N, N)
-  X[upper.tri(X)] <- rbinom(N*(N-1)/2, 1, 0.4)
-  X <- X + t(X)
-  for (t in 1:200) {
-    D   <- sum(X) / (N*(N-1))
-    p   <- sigmoid(a0 + b1 * X)
-    X_new <- X
-    for (i in 1:(N-1)) for (j in (i+1):N) {
-      X_new[i,j] <- X_new[j,i] <- rbinom(1, 1, p[i,j])
-    }
-    X <- X_new
-  }
-
-  D_stationary <- sum(X) / (N*(N-1))
-
-  # Perturb and measure return time
-  return_times <- numeric(n_perturb)
-  for (k in seq_len(n_perturb)) {
-    X_pert <- X
-    # Flip 30% of edges (perturbation)
-    flip_ij <- which(upper.tri(X_pert), arr.ind = TRUE)
-    flip_idx <- sample(nrow(flip_ij), ceiling(0.3 * nrow(flip_ij)))
-    for (idx in flip_idx) {
-      i <- flip_ij[idx, 1]; j <- flip_ij[idx, 2]
-      X_pert[i,j] <- X_pert[j,i] <- 1 - X_pert[i,j]
-    }
-    # Measure steps to return within 10% of stationary density
-    X_cur <- X_pert
-    for (t in 1:T) {
-      D_cur <- sum(X_cur) / (N*(N-1))
-      if (abs(D_cur - D_stationary) < 0.10) { return_times[k] <- t; break }
-      p_cur <- sigmoid(a0 + b1 * X_cur)
-      X_new <- X_cur
-      for (i in 1:(N-1)) for (j in (i+1):N) {
-        X_new[i,j] <- X_new[j,i] <- rbinom(1, 1, p_cur[i,j])
-      }
-      X_cur <- X_new
-      if (t == T) return_times[k] <- T
-    }
-  }
-  data.frame(b1 = b1, return_time = return_times)
-}
-
-rt_data <- do.call(rbind, lapply(b1_vals, sim_return_time,
-                                  N = N, T = T, n_perturb = n_perturb))
-
-ggplot(rt_data, aes(x = factor(b1), y = return_time)) +
-  geom_boxplot(fill = "steelblue", alpha = 0.7) +
-  labs(title = "Basin Depth: Return Times After Perturbation vs. Persistence (b1)",
-       x = "Autoregressive coefficient b1",
-       y = "Steps to return to attractor") +
-  theme_bw(base_size = 13)
 ```
 
 The expected pattern is that higher $b_1$ produces shorter return times, confirming deeper basins.  Each box at a given $b_1$ value summarizes the distribution of return times over repeated perturbation experiments, and the systematic compression of that distribution as $b_1$ increases is precisely the dynamical fingerprint of basin deepening through autoregressive memory.[^2][^3]
@@ -721,4 +504,6 @@ The practical consequence for research and modeling is that one can read basin s
 [^33]: https://www.math.uwaterloo.ca/~sacampbe/preprints/siam_shayer.pdf
 
 [^34]: http://webhome.phy.duke.edu/~nb170/teaching/physics567/111-Hopfield.pdf
+
+
 
