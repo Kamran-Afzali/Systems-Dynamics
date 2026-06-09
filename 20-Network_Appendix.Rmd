@@ -116,56 +116,7 @@ The result is a landscape with multiple metastable regions corresponding to diff
 ### 6.2 R Code: Transitivity and Community Formation as Metastable Attractors
 
 ```{r}
-# ============================================================
-# Section 6: Transitivity-driven metastable community attractors
-# ============================================================
-library(igraph)
-library(ggplot2)
 
-set.seed(7)
-N         <- 12
-T         <- 250
-n_rep     <- 6    # different random initializations
-c_param   <- 0.5  # transitivity strength
-a0        <- -2.5
-b1        <- 1.0
-
-sigmoid <- function(z) 1 / (1 + exp(-z))
-
-simulate_one <- function(rep_id) {
-  X <- matrix(0, N, N)
-  X[upper.tri(X)] <- rbinom(N*(N-1)/2, 1, 0.15)
-  X <- X + t(X)
-
-  modularity_ts <- numeric(T)
-  density_ts    <- numeric(T)
-
-  for (t in seq_len(T)) {
-    U   <- X %*% X
-    p   <- sigmoid(a0 + b1 * X + c_param * U)
-    X_new <- X
-    for (i in 1:(N-1)) for (j in (i+1):N) {
-      X_new[i,j] <- X_new[j,i] <- rbinom(1, 1, p[i,j])
-    }
-    X <- X_new
-
-    g <- graph_from_adjacency_matrix(X, mode = "undirected")
-    cm <- cluster_fast_greedy(g)
-    modularity_ts[t] <- modularity(cm)
-    density_ts[t]    <- edge_density(g)
-  }
-
-  data.frame(time = 1:T, modularity = modularity_ts,
-             density = density_ts, rep = paste0("Run ", rep_id))
-}
-
-all_runs <- do.call(rbind, lapply(1:n_rep, simulate_one))
-
-ggplot(all_runs, aes(x = time, y = modularity, colour = rep)) +
-  geom_line(alpha = 0.8) +
-  labs(title = "Transitivity Creates Metastable Community Attractors\n(Different runs converge to different modularity levels)",
-       x = "Time", y = "Network modularity Q", colour = "Initialization") +
-  theme_bw(base_size = 13)
 ```
 
 Different initializations will converge to different levels of modularity, illustrating path dependence: the initial configuration determines which community basin the system enters.  This is the discrete network equivalent of a system with multiple equilibria separated by unstable saddle points, and it is entirely produced by the transitivity coefficient $c$.[^5][^2][^1]
@@ -189,72 +140,7 @@ where $\mathbf{s} \in \{-1,1\}^N$ is the state vector and $\boldsymbol{\theta}$ 
 ### 7.2 R Code: Spectral Geometry and Attractor Landscape
 
 ```{r}
-# ============================================================
-# Section 7: Spectral structure and attractor geometry
-# ============================================================
-library(ggplot2)
-library(reshape2)
 
-set.seed(99)
-N <- 9  # same size as Kendler / Hoekstra Ising model
-
-# Build three weight matrices: sparse, dense, clustered
-make_W <- function(type) {
-  W <- matrix(0, N, N)
-  if (type == "sparse") {
-    W[upper.tri(W)] <- runif(N*(N-1)/2, 0, 0.3) * rbinom(N*(N-1)/2, 1, 0.3)
-  } else if (type == "dense") {
-    W[upper.tri(W)] <- runif(N*(N-1)/2, 0.3, 1.0)
-  } else if (type == "clustered") {
-    # Two groups of 4 and 5 with strong within, weak between
-    groups <- list(1:4, 5:9)
-    for (g in groups)
-      for (i in g) for (j in g)
-        if (i < j) W[i,j] <- runif(1, 0.5, 1.0)
-    for (i in 1:4) for (j in 5:9)
-      if (i < j) W[i,j] <- runif(1, 0, 0.1)
-  }
-  W <- W + t(W); diag(W) <- 0; W
-}
-
-# Hopfield energy over all 2^N states (only feasible for small N)
-hopfield_energy <- function(s, W, theta) {
-  -0.5 * t(s) %*% W %*% s + sum(theta * s)
-}
-
-states      <- as.matrix(expand.grid(rep(list(c(-1, 1)), N)))
-theta_vec   <- rep(0, N)
-
-plot_data <- do.call(rbind, lapply(c("sparse","dense","clustered"), function(tp) {
-  W <- make_W(tp)
-  eigs <- sort(eigen(W, symmetric = TRUE, only.values = TRUE)$values, decreasing = TRUE)
-  energies <- apply(states, 1, hopfield_energy, W = W, theta = theta_vec)
-  n_local_min <- sum(sapply(seq_len(nrow(states)), function(i) {
-    s <- states[i, ]
-    all_nbrs <- sapply(1:N, function(k) {
-      s_nbr <- s; s_nbr[k] <- -s_nbr[k]; hopfield_energy(s_nbr, W, theta_vec)
-    })
-    energies[i] < min(all_nbrs)
-  }))
-  data.frame(type = tp, max_eig = eigs[1], n_attractors = n_local_min,
-             spectral_gap = eigs[1] - eigs[2])
-}))
-
-print(plot_data)
-
-# Eigenvalue spectra visualization
-eig_data <- do.call(rbind, lapply(c("sparse","dense","clustered"), function(tp) {
-  W <- make_W(tp)
-  eigs <- sort(eigen(W, symmetric = TRUE, only.values = TRUE)$values, decreasing = TRUE)
-  data.frame(type = tp, index = seq_along(eigs), eigenvalue = eigs)
-}))
-
-ggplot(eig_data, aes(x = index, y = eigenvalue, colour = type, group = type)) +
-  geom_line() + geom_point() +
-  labs(title = "Eigenvalue Spectra of Sparse, Dense, and Clustered Networks",
-       x = "Eigenvalue index (sorted descending)",
-       y = expression(lambda[i](W)), colour = "Network type") +
-  theme_bw(base_size = 13)
 ```
 
 The output table from this code reveals the spectral theory prediction: the number of local energy minima (attractors) tends to grow with the number of large positive eigenvalues.  A clustered network, which has a block structure in $\mathbf{W}$, often exhibits a "spectral gap" — a jump between the first few large eigenvalues and the rest — that corresponds to the number of communities and tends to predict multiple attractors.[^10][^12]
