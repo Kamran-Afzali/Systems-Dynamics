@@ -26,7 +26,78 @@ This picture is deterministic, but it generalizes naturally to stochastic system
 The following R code illustrates Wuensche's framework for a small network of $N=6$ binary nodes with a threshold activation rule. The code constructs the full transition graph and identifies attractors by following the deterministic map forward from every initial condition.
 
 ```{r}
+library(igraph)
 
+set.seed(42)
+N <- 6
+
+# ------------------------------------------------------------
+# 1) Random signed network
+# ------------------------------------------------------------
+W <- matrix(sample(c(-1, 1), N * N, replace = TRUE), N, N)
+diag(W) <- 0
+
+# ------------------------------------------------------------
+# 2) State space: all 2^N configurations in {-1, +1}
+# ------------------------------------------------------------
+all_states <- as.matrix(expand.grid(rep(list(c(-1L, 1L)), N)))
+n_states <- nrow(all_states)
+
+# Fast encoding for state lookup
+encode_state <- function(state) {
+idx <- ifelse(state == 1L, 1, 0)
+sum(idx * 2^((seq_along(idx) - 1)))
+}
+
+state_keys <- apply(all_states, 1, encode_state)
+state_lookup <- setNames(seq_len(n_states), state_keys)
+
+# ------------------------------------------------------------
+# 3) Threshold update rule
+# ------------------------------------------------------------
+threshold_update <- function(state, W) {
+out <- as.integer((W %*% state) > 0)
+2L * out - 1L
+}
+
+# ------------------------------------------------------------
+# 4) Build transition map
+# ------------------------------------------------------------
+trans <- integer(n_states)
+for (i in seq_len(n_states)) {
+s_next <- threshold_update(all_states[i, ], W)
+trans[i] <- state_lookup[as.character(encode_state(s_next))]
+}
+
+# ------------------------------------------------------------
+# 5) Find canonical attractor for a start state
+# ------------------------------------------------------------
+find_attractor <- function(start, trans) {
+visited <- integer(0)
+current <- start
+
+while (!(current %in% visited)) {
+visited <- c(visited, current)
+current <- trans[current]
+}
+
+cycle_start <- which(visited == current)[1]
+cycle <- visited[cycle_start:length(visited)]
+min(cycle)
+}
+
+attractor_of <- sapply(seq_len(n_states), find_attractor, trans = trans)
+
+# ------------------------------------------------------------
+# 6) Basin sizes and attractor states
+# ------------------------------------------------------------
+basin_sizes <- table(attractor_of)
+cat("Attractors (canonical state indices) and basin sizes:\n")
+print(basin_sizes)
+
+attr_states <- as.integer(names(basin_sizes))
+cat("\nAttractor configurations (each row = one attractor state):\n")
+print(all_states[attr_states, , drop = FALSE])
 ```
 
 Running this on a random weight matrix will typically reveal a small number of fixed-point or short-cycle attractors, each pulling a substantial fraction of the $2^6 = 64$ possible states into its basin.  The key observation is that the weight matrix $W$ — which encodes the network structure — entirely determines this basin partition. Changing the density of $W$ (the fraction of nonzero entries) or the magnitude of edge weights directly reshapes how many attractors exist and how large each basin is.[^1][^2][^3]
@@ -58,7 +129,237 @@ where $\sigma(z) = 1/(1+e^{-z})$ is the logistic function, $D_{t-1} = \frac{1}{N
 ### 3.3 R Code: Simulating the Autoregressive Network Model
 
 ```{r}
+# ============================================================
+# Section 3: Dynamic network simulation
+# with empirical basin-fraction estimation
+# ============================================================
 
+library(ggplot2)
+library(igraph)
+
+set.seed(123)
+
+N <- 10
+T <- 300
+
+# ------------------------------------------------------------
+# Scenarios
+# ------------------------------------------------------------
+scenarios <- list(
+  list(a0 = -2.0, a1 = 0.0, b1 = 3.0, c = 0.0, label = "Persistence only"),
+  list(a0 = -1.5, a1 = 4.0, b1 = 1.5, c = 0.0, label = "Density feedback"),
+  list(a0 = -2.0, a1 = 0.0, b1 = 1.5, c = 0.3, label = "Transitivity")
+)
+
+sigmoid <- function(z) 1 / (1 + exp(-z))
+
+# ------------------------------------------------------------
+# Initialize random undirected network
+# ------------------------------------------------------------
+init_network <- function(N, p_edge = 0.3) {
+  X <- matrix(0, N, N)
+  X[upper.tri(X)] <- rbinom(N * (N - 1) / 2, 1, p_edge)
+  X <- X + t(X)
+  X
+}
+
+# ------------------------------------------------------------
+# One-step network update
+# ------------------------------------------------------------
+update_network <- function(X, params) {
+  a0 <- params$a0
+  a1 <- params$a1
+  b1 <- params$b1
+  c  <- params$c
+  
+  N <- nrow(X)
+  
+  D <- sum(X) / (N * (N - 1))
+  U <- X %*% X
+  
+  eta <- a0 + a1 * D + b1 * X + c * U
+  p <- sigmoid(eta)
+  p[lower.tri(p, diag = TRUE)] <- 0
+  
+  X_new <- X
+  for (i in 1:(N - 1)) {
+    for (j in (i + 1):N) {
+      X_new[i, j] <- rbinom(1, 1, p[i, j])
+      X_new[j, i] <- X_new[i, j]
+    }
+  }
+  
+  X_new
+}
+
+# ------------------------------------------------------------
+# Simulate one trajectory and record summaries
+# ------------------------------------------------------------
+simulate_dynnet <- function(params, N, T, init_p = 0.3) {
+  X <- init_network(N, p_edge = init_p)
+  
+  density_ts <- numeric(T)
+  clustering_ts <- numeric(T)
+  
+  for (t in seq_len(T)) {
+    X <- update_network(X, params)
+    
+    density_ts[t] <- sum(X) / (N * (N - 1))
+    clustering_ts[t] <- transitivity(
+      graph_from_adjacency_matrix(X, mode = "undirected"),
+      type = "global"
+    )
+    
+    if (is.nan(clustering_ts[t])) clustering_ts[t] <- 0
+  }
+  
+  data.frame(
+    time = 1:T,
+    density = density_ts,
+    clustering = clustering_ts,
+    scenario = params$label
+  )
+}
+
+# ------------------------------------------------------------
+# Classify long-run regime
+# ------------------------------------------------------------
+classify_regime <- function(density_ts, clustering_ts,
+                            density_low = 0.25,
+                            density_high = 0.60,
+                            clustering_high = 0.35,
+                            tail_window = 50) {
+  tail_idx <- seq.int(max(1, length(density_ts) - tail_window + 1), length(density_ts))
+  
+  d_bar <- mean(density_ts[tail_idx], na.rm = TRUE)
+  c_bar <- mean(clustering_ts[tail_idx], na.rm = TRUE)
+  
+  if (d_bar >= density_high) {
+    return("high-density")
+  } else if (d_bar <= density_low) {
+    return("low-density")
+  } else if (c_bar >= clustering_high) {
+    return("clustered")
+  } else {
+    return("intermediate")
+  }
+}
+
+# ------------------------------------------------------------
+# Estimate empirical basin fractions
+# ------------------------------------------------------------
+estimate_basin_fractions <- function(params, N, T,
+                                     n_init = 200,
+                                     init_ps = seq(0.05, 0.95, by = 0.05),
+                                     density_low = 0.25,
+                                     density_high = 0.60,
+                                     clustering_high = 0.35,
+                                     tail_window = 50) {
+  regimes <- character(n_init)
+  init_density_used <- numeric(n_init)
+  
+  for (r in seq_len(n_init)) {
+    init_p <- sample(init_ps, 1)
+    init_density_used[r] <- init_p
+    
+    sim <- simulate_dynnet(params, N, T, init_p = init_p)
+    
+    regimes[r] <- classify_regime(
+      density_ts = sim$density,
+      clustering_ts = sim$clustering,
+      density_low = density_low,
+      density_high = density_high,
+      clustering_high = clustering_high,
+      tail_window = tail_window
+    )
+  }
+  
+  basin_tab <- prop.table(table(regimes))
+  
+  basin_df <- data.frame(
+    scenario = params$label,
+    regime = names(basin_tab),
+    fraction = as.numeric(basin_tab)
+  )
+  
+  attr(basin_df, "raw_regimes") <- data.frame(
+    replicate = seq_len(n_init),
+    init_p = init_density_used,
+    regime = regimes,
+    scenario = params$label
+  )
+  
+  basin_df
+}
+
+# ------------------------------------------------------------
+# Run one representative trajectory per scenario
+# ------------------------------------------------------------
+results_ts <- do.call(
+  rbind,
+  lapply(scenarios, simulate_dynnet, N = N, T = T, init_p = 0.3)
+)
+
+# ------------------------------------------------------------
+# Estimate basin fractions for all scenarios
+# ------------------------------------------------------------
+basin_list <- lapply(
+  scenarios,
+  estimate_basin_fractions,
+  N = N,
+  T = T,
+  n_init = 300,
+  init_ps = seq(0.05, 0.95, by = 0.05),
+  density_low = 0.25,
+  density_high = 0.60,
+  clustering_high = 0.35,
+  tail_window = 50
+)
+
+basin_results <- do.call(rbind, basin_list)
+
+# Optional: collect raw replicate-level classifications
+raw_basin_runs <- do.call(
+  rbind,
+  lapply(basin_list, function(x) attr(x, "raw_regimes"))
+)
+
+# ------------------------------------------------------------
+# Print basin estimates
+# ------------------------------------------------------------
+cat("Estimated empirical basin fractions:\n")
+print(basin_results)
+
+# ------------------------------------------------------------
+# Plot density trajectories
+# ------------------------------------------------------------
+p1 <- ggplot(results_ts, aes(x = time, y = density, colour = scenario)) +
+  geom_line(alpha = 0.9) +
+  labs(
+    title = "Network Density Under Different Structural Regimes",
+    x = "Time",
+    y = "Density",
+    colour = "Scenario"
+  ) +
+  theme_bw(base_size = 13)
+
+print(p1)
+
+# ------------------------------------------------------------
+# Plot empirical basin fractions
+# ------------------------------------------------------------
+p2 <- ggplot(basin_results, aes(x = regime, y = fraction, fill = regime)) +
+  geom_col(width = 0.7) +
+  facet_wrap(~ scenario) +
+  labs(
+    title = "Estimated Empirical Basin Fractions",
+    x = "Regime",
+    y = "Fraction of initial conditions"
+  ) +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")
+
+print(p2)
 ```
 
 Examining the time series produced by this code reveals the basin intuition directly.  Under persistence alone, the network settles quickly into either a sparse or dense region and rarely leaves. Under positive density feedback ($a_1 > 0$), the network exhibits bistability: it fluctuates between a sparse and a dense attractor, occasionally crossing from one basin to the other. Under transitivity, density is moderate but clustering becomes self-reinforcing, stabilizing tightly connected subgraphs as metastable community structures.[^1][^4]
@@ -80,7 +381,40 @@ a one-dimensional map. When $(a_1 + b_1)$ is large, this map can have three fixe
 ### 4.2 R Code: Bifurcation Diagram for Density Dynamics
 
 ```{r}
+# ============================================================
+# Section 4: Mean-field bifurcation diagram for network density
+# ============================================================
+library(ggplot2)
 
+sigmoid <- function(z) 1 / (1 + exp(-z))
+
+# Fixed point map: D_{t+1} = sigma(a0 + (a1 + b1)*D_t)
+iterate_map <- function(D0, a0, slope, n_iter = 200) {
+  D <- D0
+  for (i in seq_len(n_iter)) D <- sigmoid(a0 + slope * D)
+  D
+}
+
+# Sweep coupling strength (a1 + b1) and find attractors
+slopes  <- seq(-6, 8, length.out = 300)
+D0_vals <- seq(0.01, 0.99, length.out = 30)
+a0_val  <- -1.5
+
+bifurc <- do.call(rbind, lapply(slopes, function(sl) {
+  attractors <- unique(round(sapply(D0_vals, iterate_map,
+                                    a0 = a0_val, slope = sl), 3))
+  data.frame(slope = sl, D_attractor = attractors)
+}))
+
+ggplot(bifurc, aes(x = slope, y = D_attractor)) +
+  geom_point(size = 0.5, alpha = 0.5, colour = "steelblue") +
+  labs(title = "Bifurcation Diagram: Network Density Attractors vs. Coupling Strength",
+       x = expression(a[1] + b[1] ~ "(total coupling)"),
+       y = "Attractor density D*") +
+  geom_vline(xintercept = 4, linetype = "dashed", colour = "tomato") +
+  annotate("text", x = 4.2, y = 0.85, label = "Bistability onset",
+           colour = "tomato", hjust = 0, size = 3.5) +
+  theme_bw(base_size = 13)
 ```
 
 The resulting diagram shows clearly how coupling strength controls the number of attractors.  For low coupling, a single intermediate density is the global attractor. As coupling exceeds a critical threshold (the vertical dashed line), the diagram forks into two branches, signifying the emergence of bistability and the appearance of two distinct basins.  This bifurcation is the mathematical signature of a network becoming capable of multistable behavior.[^6][^5]
