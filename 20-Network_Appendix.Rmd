@@ -500,55 +500,283 @@ The network features modulate the Jacobian directly. Higher density increases th
 ```{r}
 # ============================================================
 # Section 8: Continuous-time network-coupled ODE simulation
+# Fixed points, Jacobian stability, and trajectory diagnostics
 # ============================================================
+
 library(deSolve)
 library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(patchwork)
+library(nleqslv)
 
-# Wilson-Cowan / Hopfield-type continuous system:
-# dx_i/dt = -x_i + tanh(sum_j W_ij x_j + theta_i)
+set.seed(2026)
 
-N <- 6
-set.seed(2024)
+# ------------------------------------------------------------
+# Model definition: 12-node network in 3 communities
+# ------------------------------------------------------------
+N <- 12
+group_id <- rep(1:3, each = 4)
+node_names <- paste0("x", 1:N)
 
-# Coupling matrix: two antagonistic communities (positive within, negative between)
 W <- matrix(0, N, N)
-W[1:3, 1:3] <- matrix(c(0, 0.8, 0.6, 0.8, 0, 0.7, 0.6, 0.7, 0), 3, 3)
-W[4:6, 4:6] <- matrix(c(0, 0.9, 0.5, 0.9, 0, 0.8, 0.5, 0.8, 0), 3, 3)
-W[1:3, 4:6] <- -0.3  # weak inhibitory coupling between groups
-W[4:6, 1:3] <- -0.3
-theta <- rep(0.1, N)
 
-network_ode <- function(t, state, parms) {
-  x   <- state
-  W   <- parms$W
-  th  <- parms$theta
+# Within-community excitation
+W[1:4, 1:4]     <- 0.85
+W[5:8, 5:8]     <- 0.90
+W[9:12, 9:12]   <- 0.80
+diag(W) <- 0
+
+# Between-community inhibition
+W[1:4, 5:12]     <- -0.22
+W[5:8, c(1:4, 9:12)] <- -0.22
+W[9:12, 1:8]     <- -0.22
+
+# Small heterogeneity in node biases
+theta <- seq(-0.05, 0.15, length.out = N)
+
+network_rhs <- function(t, state, parms) {
+  x <- state
+  W <- parms$W
+  th <- parms$theta
   dxdt <- -x + tanh(W %*% x + th)
-  list(dxdt)
+  list(as.vector(dxdt))
 }
 
-# Simulate from multiple initial conditions to reveal basins
-n_init <- 20
-times  <- seq(0, 15, by = 0.05)
+network_vec <- function(x, W, theta) {
+  as.vector(-x + tanh(W %*% x + theta))
+}
 
-traj_data <- do.call(rbind, lapply(seq_len(n_init), function(k) {
-  x0  <- runif(N, -1.5, 1.5)
-  out <- ode(y = x0, times = times, func = network_ode,
-             parms = list(W = W, theta = theta), method = "lsoda")
-  end_state <- out[nrow(out), 2:(N+1)]
-  cluster   <- ifelse(mean(end_state[1:3]) > mean(end_state[4:6]), "Attractor A", "Attractor B")
-  data.frame(time = times,
-             x1   = out[, 2],
-             x4   = out[, 5],
-             init = k, attractor = cluster)
+network_jac <- function(x, W, theta) {
+  u <- W %*% x + theta
+  d <- as.vector(1 - tanh(u)^2)
+  -diag(N) + diag(d) %*% W
+}
+
+# ------------------------------------------------------------
+# Trajectory simulation from multiple initial conditions
+# ------------------------------------------------------------
+n_init <- 40
+times <- seq(0, 20, by = 0.05)
+
+traj_list <- vector("list", n_init)
+term_list <- vector("list", n_init)
+
+for (k in seq_len(n_init)) {
+  x0 <- runif(N, -1.5, 1.5)
+  out <- ode(
+    y = x0,
+    times = times,
+    func = network_rhs,
+    parms = list(W = W, theta = theta),
+    method = "lsoda"
+  )
+  
+  out <- as.data.frame(out)
+  colnames(out) <- c("time", node_names)
+  out$init <- k
+  traj_list[[k]] <- out
+  
+  xf <- as.numeric(out[nrow(out), node_names])
+  term_list[[k]] <- data.frame(
+    init = k,
+    group1_mean = mean(xf[1:4]),
+    group2_mean = mean(xf[5:8]),
+    group3_mean = mean(xf[9:12]),
+    terminal_energy = -0.5 * as.numeric(t(xf) %*% W %*% xf) - sum(theta * xf)
+  )
+}
+
+traj_df <- bind_rows(traj_list)
+term_df <- bind_rows(term_list)
+
+traj_long <- traj_df %>%
+  pivot_longer(cols = all_of(node_names),
+               names_to = "node",
+               values_to = "value") %>%
+  mutate(
+    node = factor(node, levels = node_names),
+    group = factor(group_id[match(node, node_names)])
+  )
+
+# ------------------------------------------------------------
+# Numerical fixed-point search
+# ------------------------------------------------------------
+starts <- 120
+fp_list <- vector("list", starts)
+
+for (k in seq_len(starts)) {
+  x0 <- runif(N, -2, 2)
+  sol <- nleqslv(
+    x = x0,
+    fn = function(x) network_vec(x, W, theta),
+    jac = function(x) network_jac(x, W, theta),
+    method = "Newton"
+  )
+  
+  if (sol$termcd %in% c(1, 2)) {
+    xstar <- sol$x
+    resid <- max(abs(network_vec(xstar, W, theta)))
+    if (is.finite(resid) && resid < 1e-7) {
+      fp_list[[k]] <- xstar
+    }
+  }
+}
+
+fp_list <- Filter(Negate(is.null), fp_list)
+
+# Deduplicate solutions
+fixed_points <- list()
+for (x in fp_list) {
+  keep <- TRUE
+  if (length(fixed_points) > 0) {
+    for (y in fixed_points) {
+      if (sqrt(sum((x - y)^2)) < 1e-3) {
+        keep <- FALSE
+        break
+      }
+    }
+  }
+  if (keep) fixed_points[[length(fixed_points) + 1]] <- x
+}
+
+# ------------------------------------------------------------
+# Jacobian stability analysis
+# ------------------------------------------------------------
+fp_df <- bind_rows(lapply(seq_along(fixed_points), function(i) {
+  xstar <- fixed_points[[i]]
+  J <- network_jac(xstar, W, theta)
+  eig <- eigen(J, only.values = TRUE)$values
+  
+  data.frame(
+    fixed_point = paste0("FP ", i),
+    stable = all(Re(eig) < 0),
+    max_real_eig = max(Re(eig)),
+    group1_mean = mean(xstar[1:4]),
+    group2_mean = mean(xstar[5:8]),
+    group3_mean = mean(xstar[9:12]),
+    terminal_energy = -0.5 * as.numeric(t(xstar) %*% W %*% xstar) - sum(theta * xstar)
+  )
 }))
 
-ggplot(traj_data, aes(x = x1, y = x4, group = init, colour = attractor)) +
-  geom_path(alpha = 0.7, arrow = arrow(length = unit(0.15,"cm"), ends = "last", type = "closed")) +
-  labs(title = "Phase Portrait: Two Community Attractors in Network-Coupled ODE",
-       x = expression(x[1] ~ "(Group 1 node 1)"),
-       y = expression(x[4] ~ "(Group 2 node 1)"),
-       colour = "Final attractor") +
-  theme_bw(base_size = 13)
+fp_long <- bind_rows(lapply(seq_along(fixed_points), function(i) {
+  xstar <- fixed_points[[i]]
+  data.frame(
+    fixed_point = paste0("FP ", i),
+    node = factor(node_names, levels = node_names),
+    value = xstar,
+    stable = all(Re(eigen(network_jac(xstar, W, theta), only.values = TRUE)$values) < 0)
+  )
+}))
+
+# ------------------------------------------------------------
+# Plots
+# ------------------------------------------------------------
+
+# 1) Trajectory plot: sample nodes only, to avoid clutter
+sample_nodes <- c("x1", "x2", "x3", "x5", "x6", "x7", "x9", "x10", "x11")
+
+p_traj <- traj_long %>%
+  filter(node %in% sample_nodes) %>%
+  ggplot(aes(x = time, y = value, group = interaction(init, node), color = factor(group))) +
+  geom_line(alpha = 0.18, linewidth = 0.45) +
+  facet_wrap(~ node, ncol = 3, scales = "free_y") +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "top",
+    strip.background = element_rect(fill = "grey95", color = "grey70"),
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    title = "Network-coupled ODE trajectories",
+    subtitle = "Sample of nodes from 40 random initial conditions",
+    x = "Time",
+    y = "State",
+    color = "Community"
+  )
+
+# 2) Fixed points projected onto community means
+p_fp <- fp_df %>%
+  mutate(stability = ifelse(stable, "Stable", "Unstable")) %>%
+  ggplot(aes(x = group1_mean, y = group2_mean, color = stability, size = abs(max_real_eig))) +
+  geom_point(alpha = 0.9) +
+  geom_text(aes(label = fixed_point), nudge_y = 0.03, size = 3, show.legend = FALSE) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "top",
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    title = "Numerically found fixed points",
+    subtitle = "Projection onto the first two community means; size indicates |largest real eigenvalue|",
+    x = "Group 1 mean",
+    y = "Group 2 mean",
+    color = "Local stability",
+    size = "Eigenvalue"
+  )
+
+# 3) Coupling matrix heatmap
+W_df <- as.data.frame(as.table(W))
+colnames(W_df) <- c("from", "to", "weight")
+
+p_W <- ggplot(W_df, aes(x = to, y = from, fill = weight)) +
+  geom_tile(color = "white", linewidth = 0.2) +
+  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B", midpoint = 0) +
+  coord_equal() +
+  theme_bw(base_size = 12) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid = element_blank()
+  ) +
+  labs(
+    title = "Coupling matrix W",
+    subtitle = "Three antagonistic communities with positive within-group and negative between-group coupling",
+    x = "To node",
+    y = "From node",
+    fill = "Weight"
+  )
+
+# 4) Terminal summary by attractor-like class
+term_df$dominant_group <- factor(
+  apply(term_df[, c("group1_mean", "group2_mean", "group3_mean")], 1, which.max),
+  levels = 1:3,
+  labels = c("Attractor A", "Attractor B", "Attractor C")
+)
+
+p_term <- term_df %>%
+  pivot_longer(cols = c(group1_mean, group2_mean, group3_mean),
+               names_to = "metric",
+               values_to = "value") %>%
+  ggplot(aes(x = dominant_group, y = value, fill = metric)) +
+  geom_col(position = "dodge") +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "top",
+    panel.grid.minor = element_blank()
+  ) +
+  labs(
+    title = "Terminal-state summary",
+    subtitle = "Group means at the end of simulation",
+    x = "Terminal class",
+    y = "Mean final value",
+    fill = "Metric"
+  )
+
+# Combine
+(p_W | p_fp) / (p_traj | p_term)
+
+# ------------------------------------------------------------
+# Compact interpretation
+# ------------------------------------------------------------
+fp_summary <- fp_df %>%
+  summarise(
+    n_fixed_points = n(),
+    n_stable = sum(stable),
+    n_unstable = sum(!stable)
+  )
+
+print(fp_summary)
+print(fp_df %>% arrange(desc(stable), max_real_eig))
 ```
 
 The phase portrait produced here will typically show trajectories from different initial conditions flowing toward one of two attractors, corresponding to the two strongly coupled communities dominating the others.  The boundary between the two flows is the stable manifold of the saddle point, which geometrically separates the two basins.[^13][^11]
@@ -575,66 +803,253 @@ The VAR script takes the continuous analogue: the stationary distribution of a s
 # ============================================================
 # Section 9: Unified potential landscape — Ising and VAR side by side
 # ============================================================
-library(ggplot2)
 
-# ---- Part A: VAR potential landscape ----
-N       <- 9
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(patchwork)
+
 set.seed(123)
 
-# VAR coefficient matrix (mirroring 240916_VARpotentials.R logic)
-Beta       <- matrix(sample(0:1, N^2, TRUE), N, N) * matrix(runif(N^2, 0.1, 0.2), N, N)
+sigmoid <- function(z) 1 / (1 + exp(-z))
+
+# ------------------------------------------------------------
+# Part A: VAR potential landscape
+# ------------------------------------------------------------
+N <- 9
+
+Beta <- matrix(sample(c(0, 1), N^2, replace = TRUE), N, N) *
+  matrix(runif(N^2, 0.08, 0.22), N, N)
 diag(Beta) <- runif(N, 0.2, 0.4)
-Sigma_eps  <- diag(N)   # identity innovation covariance for simplicity
 
-# Implied stationary covariance via discrete Lyapunov equation
-# vec(Sigma) = (I - B⊗B)^{-1} vec(Sigma_eps)
-vec_Sigma <- solve(diag(N^2) - kronecker(Beta, Beta), c(Sigma_eps))
-Sigma_inf <- matrix(vec_Sigma, N, N)
+Sigma_eps <- diag(N)
 
-var_potentials <- do.call(rbind, lapply(c(0.7, 1.0, 1.3), function(mult) {
-  B_m     <- Beta * mult
-  mu_sum  <- sum(rep(3, N))                              # mean sum score
-  vec_S   <- solve(diag(N^2) - kronecker(B_m, B_m), c(Sigma_eps))
-  Sig_m   <- matrix(vec_S, N, N)
-  sd_sum  <- sqrt(sum(Sig_m))                            # sd of sum score
+# Ensure stationarity before using the discrete Lyapunov solution
+spectral_radius <- function(A) max(Mod(eigen(A, only.values = TRUE)$values))
 
-  x_vals  <- seq(-5, 35, length.out = 500)
-  U_vals  <- -dnorm(x_vals, mean = mu_sum, sd = sd_sum, log = TRUE)
-  data.frame(x = x_vals, U = U_vals, mult = paste0("mult = ", mult),
-             model = "VAR")
+if (spectral_radius(Beta) >= 0.98) {
+  Beta <- Beta / (1.02 * spectral_radius(Beta))
+}
+
+lyap_solve <- function(B, S) {
+  solve(diag(nrow(B)^2) - kronecker(B, B), as.vector(S))
+}
+
+Sigma_inf <- matrix(lyap_solve(Beta, Sigma_eps), N, N)
+
+# Summary diagnostics for the baseline VAR
+var_diag <- data.frame(
+  spectral_radius = spectral_radius(Beta),
+  trace_sigma = sum(diag(Sigma_inf)),
+  det_sigma = det(Sigma_inf),
+  min_eig_sigma = min(eigen(Sigma_inf, only.values = TRUE)$values),
+  max_eig_sigma = max(eigen(Sigma_inf, only.values = TRUE)$values)
+)
+
+# Potential curves across coupling multipliers
+mult_vals <- c(0.7, 1.0, 1.3)
+
+var_potentials <- bind_rows(lapply(mult_vals, function(mult) {
+  Bm <- Beta * mult
+  rho <- spectral_radius(Bm)
+  if (rho >= 0.98) {
+    Bm <- Bm / (1.02 * rho)
+  }
+  
+  Sig_m <- matrix(lyap_solve(Bm, Sigma_eps), N, N)
+  mu_sum <- sum(rep(3, N))
+  sd_sum <- sqrt(sum(Sig_m))
+  x_vals <- seq(-5, 35, length.out = 500)
+  U_vals <- -dnorm(x_vals, mean = mu_sum, sd = sd_sum, log = TRUE)
+  
+  data.frame(
+    x = x_vals,
+    U = U_vals,
+    scenario = paste0("mult = ", mult),
+    model = "VAR",
+    x_min = mu_sum
+  )
 }))
 
-# ---- Part B: Ising-type potential (approximated via mean-field) ----
-# For 9 nodes: U(k) = -log P(k active) from binomial mean-field
-ising_potentials <- do.call(rbind, lapply(c(-1.0, 0.0, 1.0), function(h) {
+var_summary <- var_potentials %>%
+  group_by(scenario) %>%
+  summarise(
+    U_min = min(U),
+    U_max = max(U),
+    x_at_min = x[which.min(U)],
+    .groups = "drop"
+  )
+
+
+# ------------------------------------------------------------
+# Part B: Ising-type potential via mean-field approximation
+# ------------------------------------------------------------
+threshold_vals <- c(-1.0, 0.0, 1.0)
+coupling_vals <- c(1.0, 2.0)
+
+ising_grid <- expand.grid(
+  threshold = threshold_vals,
+  coupling = coupling_vals,
+  stringsAsFactors = FALSE
+)
+
+ising_list <- vector("list", nrow(ising_grid))
+
+for (i in seq_len(nrow(ising_grid))) {
+  h <- ising_grid$threshold[i]
+  w <- ising_grid$coupling[i]
+  
   k_vals <- 0:9
-  # Mean-field: p(k active) ~ Binomial(9, sigmoid(h + w*k/9))
-  # Use self-consistent field approximation
-  w <- 2.0
-  psi <- sapply(k_vals, function(k) {
+  raw <- sapply(k_vals, function(k) {
     p <- sigmoid(-h + w * k / 9)
-    dbinom(k, 9, p) + 1e-10
+    dbinom(k, 9, p) + 1e-12
   })
-  psi <- psi / sum(psi)
-  data.frame(x = k_vals, U = -log(psi), mult = paste0("threshold = ", h),
-             model = "Ising")
-}))
+  
+  prob <- raw / sum(raw)
+  
+  ising_list[[i]] <- data.frame(
+    x = k_vals,
+    U = -log(prob),
+    scenario = paste0("h = ", h, ", w = ", w),
+    threshold = h,
+    coupling = w,
+    model = "Ising"
+  )
+}
 
-# ---- Combined plot ----
-all_potentials <- rbind(var_potentials, ising_potentials)
+ising_potentials <- bind_rows(ising_list)
 
-ggplot(var_potentials, aes(x = x, y = U, colour = mult)) +
-  geom_line(size = 1) +
-  coord_cartesian(ylim = c(0, 10)) +
-  labs(title = "VAR Potential Landscape: Effect of Coupling Multiplier",
-       x = "Sum score S", y = "Energy U(S) = -log π(S)", colour = "Multiplier") +
-  theme_bw(base_size = 13)
+ising_summary <- ising_potentials %>%
+  group_by(scenario, threshold, coupling) %>%
+  summarise(
+    U_min = min(U),
+    U_max = max(U),
+    k_at_min = x[which.min(U)],
+    entropy_like = -sum(exp(-U) * log(exp(-U))),
+    .groups = "drop"
+  )
+# ------------------------------------------------------------
+# Additional summary stats
+# ------------------------------------------------------------
+var_potential_stats <- var_potentials %>%
+  group_by(scenario) %>%
+  summarise(
+    mean_U = mean(U),
+    sd_U = sd(U),
+    area_U = sum(U),
+    .groups = "drop"
+  )
 
-ggplot(ising_potentials, aes(x = x, y = U, colour = mult)) +
-  geom_line(size = 1) + geom_point(size = 2) +
-  labs(title = "Ising Mean-Field Potential: Effect of Threshold",
-       x = "Number of active nodes k", y = "Energy U(k)", colour = "Threshold h") +
-  theme_bw(base_size = 13)
+ising_potential_stats <- ising_potentials %>%
+  group_by(scenario) %>%
+  summarise(
+    mean_U = mean(U),
+    sd_U = sd(U),
+    area_U = sum(U),
+    .groups = "drop"
+  )
+
+# ------------------------------------------------------------
+# Plots
+# ------------------------------------------------------------
+p_var <- ggplot(var_potentials, aes(x = x, y = U, colour = scenario)) +
+  geom_line(linewidth = 1) +
+  geom_vline(data = var_summary, aes(xintercept = x_at_min, colour = scenario),
+             linetype = 2, alpha = 0.6, show.legend = FALSE) +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "top", panel.grid.minor = element_blank()) +
+  labs(
+    title = "VAR potential landscape",
+    subtitle = "Lower curves indicate smaller negative log-density under the Gaussian sum-score approximation",
+    x = "Sum score S",
+    y = "U(S) = -log π(S)",
+    colour = "Multiplier"
+  )
+
+p_ising <- ggplot(ising_potentials, aes(x = x, y = U, colour = scenario)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 1.7) +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "top", panel.grid.minor = element_blank()) +
+  labs(
+    title = "Ising mean-field potential",
+    subtitle = "Threshold and coupling shift the discrete energy profile over active-node counts",
+    x = "Number of active nodes k",
+    y = "U(k)",
+    colour = "Setting"
+  )
+
+p_var_stats <- var_diag %>%
+  mutate(metric = "spectral_radius") %>%
+  ggplot(aes(x = metric, y = spectral_radius)) +
+  geom_col(fill = "steelblue", width = 0.6) +
+  geom_hline(yintercept = 1, linetype = 2, colour = "red4") +
+  theme_bw(base_size = 13) +
+  theme(panel.grid.minor = element_blank()) +
+  labs(
+    title = "VAR stability check",
+    subtitle = "Spectral radius below 1 implies a stationary VAR(1) approximation",
+    x = "",
+    y = "Spectral radius"
+  )
+
+p_ising_stats <- ising_summary %>%
+  ggplot(aes(x = scenario, y = k_at_min, fill = factor(coupling))) +
+  geom_col(width = 0.7) +
+  theme_bw(base_size = 13) +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1),
+        panel.grid.minor = element_blank()) +
+  labs(
+    title = "Ising modal active count",
+    subtitle = "Location of the minimum depends on threshold and coupling",
+    x = "Scenario",
+    y = "k at minimum",
+    fill = "Coupling"
+  )
+
+# Heatmap of VAR coefficients
+Beta_df <- as.data.frame(as.table(Beta))
+colnames(Beta_df) <- c("from", "to", "weight")
+
+p_heat <- ggplot(Beta_df, aes(x = to, y = from, fill = weight)) +
+  geom_tile(color = "white", linewidth = 0.2) +
+  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B", midpoint = 0) +
+  coord_equal() +
+  theme_bw(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.grid = element_blank()) +
+  labs(
+    title = "VAR coefficient matrix",
+    subtitle = "Sparse random connectivity with diagonal self-coupling",
+    x = "To node",
+    y = "From node",
+    fill = "Beta"
+  )
+
+# Combined figure
+combined_plot <-
+  (p_var | p_ising) /
+  (p_var_stats | p_ising_stats) /
+  p_heat +
+  plot_layout(heights = c(1, 0.8, 1))
+
+print(combined_plot)
+
+# ------------------------------------------------------------
+# Tables for reporting
+# ------------------------------------------------------------
+print(var_diag)
+print(var_summary)
+print(var_potential_stats)
+print(ising_summary)
+print(ising_potential_stats)
+
+# ------------------------------------------------------------
+# Optional exports
+# ------------------------------------------------------------
+# ggsave("unified_potential_landscape.png", combined_plot, width = 14, height = 16, dpi = 300)
+# write.csv(var_summary, "var_potential_summary.csv", row.names = FALSE)
+# write.csv(ising_summary, "ising_potential_summary.csv", row.names = FALSE)
 ```
 
 This code places the Ising and VAR potential landscapes on a common conceptual footing.  In both cases, the shape of the potential — its number of minima, their depth, and their location — is entirely determined by the network parameters: weights and thresholds in the Ising case, and the coefficient matrix and innovation variance in the VAR case.  The basin of each minimum is the region of state space that flows downhill toward it, and transitions between basins require perturbations large enough to cross the energy barrier (the local maximum between minima).[^6][^15][^5][^16]
