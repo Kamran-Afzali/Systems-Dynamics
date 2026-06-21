@@ -100,9 +100,14 @@ cat("\nAttractor configurations (each row = one attractor state):\n")
 print(all_states[attr_states, , drop = FALSE])
 ```
 
-Running this on a random weight matrix will typically reveal a small number of fixed-point or short-cycle attractors, each pulling a substantial fraction of the $2^6 = 64$ possible states into its basin.  The key observation is that the weight matrix $W$ — which encodes the network structure — entirely determines this basin partition. Changing the density of $W$ (the fraction of nonzero entries) or the magnitude of edge weights directly reshapes how many attractors exist and how large each basin is.[^1][^2][^3]
+Running this on a random weight matrix will typically reveal a small number of fixed-point or short-cycle attractors, each pulling a substantial fraction of the $2^6 = 64$ possible states into its basin.  The key observation is that the weight matrix $W$ — which encodes the network structure — entirely determines this basin partition. Changing the density of $W$ (the fraction of nonzero entries) or the magnitude of edge weights directly reshapes how many attractors exist and how large each basin is.
 
+This version still uses synchronous updating, so the attractor structure depends on that choice. If you later want asynchronous updates, the full transition graph is no longer a simple function from state to state, and the code needs a different construction. [santafe](https://www.santafe.edu/research/results/working-papers/basins-of-attraction-in-network-dynamics-a-concept)
+The code implements a discrete threshold dynamical system over a signed random network — a framework that maps remarkably well onto the network theory of psychopathology as developed by Borsboom and colleagues (Borsboom \& Cramer, 2013; Cramer et al., 2010). In this formulation, the $N = 6$ binary nodes can be interpreted as symptoms, each in either an active ($\sigma_i = +1$) or inactive ($\sigma_i = -1$) state, while the weight matrix $W \in \{-1, +1\}^{6 \times 6}$ with $W_{ii} = 0$ encodes directional inter-symptom relationships that are either excitatory (positive) or inhibitory (negative). The full state space of $2^N = 64$ configurations represents the combinatorial landscape of possible symptom profiles a patient might occupy — a computational operationalization of what Borsboom (2017) refers to as the attractor landscape of mental health. The synchronous threshold update rule, $\sigma_i(t+1) = \text{sgn}\!\left(\sum_j W_{ij}\sigma_j(t)\right)$, governs how the activation of one symptom propagates to others over discrete time steps, capturing the causal cascades that the network perspective posits as central to disorder onset and maintenance.
 
+The construction of the transition map — a deterministic function $f: \{1,\ldots,64\} \to \{1,\ldots,64\}$ — transforms the dynamical problem into a functional graph over state indices, from which attractor structure can be read directly. Because the system is finite and deterministic, every trajectory must eventually cycle, and the `find_attractor` function identifies these cycles by tracing each trajectory until a state recurs, then extracting the minimal canonical index as a label. This is conceptually aligned with the idea that psychopathological states are not arbitrary — they cluster into a relatively small number of stable configurations. Critically, the weight matrix here is not constrained to be symmetric, which distinguishes this model from classical Hopfield networks where symmetry guarantees convergence to fixed points under asynchronous updates (Hopfield, 1982). Asymmetric weights permit limit cycles of period two or greater, which may better capture the oscillatory or relapsing-remitting dynamics observed in disorders such as bipolar disorder or episodic depression, where the system does not settle into a single static attractor but cycles between a constrained set of symptom configurations.
+
+The basin size computation — `table(attractor_of)` — is arguably where the model becomes most clinically interpretable. The basin of attraction $\mathcal{B}(\mathcal{A}) = \{s : f^t(s) \in \mathcal{A} \text{ for some } t \geq 0\}$ quantifies how many of the 64 possible initial symptom profiles eventually converge to a given disorder state, with basin size functioning as a proxy for the disorder's *resilience* or *grip* on the system. A large basin suggests that a wide variety of symptom onsets — different stressors, different entry points — all funnel into the same pathological configuration, which is consistent with the empirical observation that many routes lead to broadly similar depressive or anxious phenotypes (Fried \& Cramer, 2017). Conversely, small basins may correspond to rarer, more idiosyncratic attractor states, potentially analogous to atypical presentations. The printed attractor configurations — the actual spin vectors $\boldsymbol{\sigma}^* \in \{-1,+1\}^6$ — reveal which specific combinations of symptom activations constitute stable endpoints, and comparing these across different weight matrices (i.e., different network topologies) offers a tractable computational path toward understanding how structural differences in inter-symptom connectivity shape the disorder landscape, a question that remains methodologically open in the empirical psychopathology literature.
 
 ## 3. From Network Features to Transition Probabilities: The Formal Model
 
@@ -362,9 +367,13 @@ p2 <- ggplot(basin_results, aes(x = regime, y = fraction, fill = regime)) +
 print(p2)
 ```
 
-Examining the time series produced by this code reveals the basin intuition directly.  Under persistence alone, the network settles quickly into either a sparse or dense region and rarely leaves. Under positive density feedback ($a_1 > 0$), the network exhibits bistability: it fluctuates between a sparse and a dense attractor, occasionally crossing from one basin to the other. Under transitivity, density is moderate but clustering becomes self-reinforcing, stabilizing tightly connected subgraphs as metastable community structures.[^1][^4]
+Examining the time series produced by this code reveals the basin intuition directly.  Under persistence alone, the network settles quickly into either a sparse or dense region and rarely leaves. Under positive density feedback ($a_1 > 0$), the network exhibits bistability: it fluctuates between a sparse and a dense attractor, occasionally crossing from one basin to the other. Under transitivity, density is moderate but clustering becomes self-reinforcing, stabilizing tightly connected subgraphs as metastable community structures.
 
+This code can be read as a small dynamical systems model of psychopathological symptom networks, where symptoms are binary nodes and their pairwise couplings determine whether the system remains in a low-symptom, intermediate, or high-symptom regime. The main conceptual move is that disorder is not treated as a latent cause but as an emergent attractor sustained by feedback among symptoms, which is consistent with the network theory of mental disorders and related dynamical accounts of psychopathology. In that sense, the code is not just simulating a graph; it is approximating how local symptom activation, global symptom burden, and triadic reinforcement may generate self-sustaining pathological states.[^1][^2][^3]
 
+The update rule formalizes this idea through a logistic edge model, $P(X_{ij}^{(t+1)}=1 \mid X^{(t)}) = \sigma(a_0 + a_1 D^{(t)} + b_1 X_{ij}^{(t)} + c U_{ij}^{(t)})$, where $D^{(t)}$ is network density and $U_{ij}^{(t)}$ is the number of shared neighbors. Psychologically, $b_1$ captures symptom persistence or inertia, $a_1$ captures density-dependent feedback that can resemble symptom contagion or generalized activation, and $c$ captures transitivity, which is analogous to the clinical tendency for symptoms to cluster in mutually reinforcing triads, such as insomnia, fatigue, and low concentration. The empirical basin-fraction procedure then estimates how often random initial symptom states end up in each long-run regime; mathematically, it is computing $\hat{\mu}(\mathcal{B}_k)=n^{-1}\sum_{r=1}^n \mathbf{1}[\phi(p_0^{(r)})=k]$, which is a direct operationalization of attraction basins in state space. That matters because the same symptom structure can be relatively benign or clinically unstable depending on how wide and deep the basin of a pathological attractor is.
+
+Applied to psychopathology, the three scenarios correspond to different mechanistic hypotheses about symptom dynamics. A “persistence only” regime suggests symptoms mainly perpetuate themselves once activated, which fits the idea of local feedback loops without strong system-wide coupling; a “density feedback” regime suggests that as more symptoms become active, the entire network becomes more likely to remain activated, a pattern often discussed in terms of connectivity and vulnerability. A “transitivity” regime suggests that symptom co-occurrence is reinforced by shared neighbors, which may be especially relevant for syndromic clustering and bridge symptoms linking domains such as anxiety and sleep disturbance. The classification step, which labels trajectories as low-density, clustered, high-density, or intermediate using tail averages, is essentially a coarse phenomenological summary of attractor type; in clinical terms, it distinguishes between resilient remission-like states and more entrenched symptom configurations with larger basins of attraction.
 
 ## 4. Density and the Geometry of Basins
 
@@ -432,12 +441,361 @@ To formalize this, consider the Lyapunov function interpretation. For a discrete
 ### 5.2 R Code: Persistence, Basin Depth, and Return Times
 
 ```{r}
+# ============================================================
+# Section 5: Effect of persistence on basin depth (return time)
+# Extended version with summary tables and network visualizations
+# ============================================================
 
+library(ggplot2)
+library(igraph)
+
+set.seed(42)
+
+N <- 8
+T <- 500
+n_perturb <- 30
+b1_vals <- c(0.5, 1.5, 2.5, 3.5)
+
+sigmoid <- function(z) 1 / (1 + exp(-z))
+
+# ------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------
+compute_density <- function(X) {
+  sum(X) / (nrow(X) * (nrow(X) - 1))
+}
+
+one_step_update <- function(X, a0, b1) {
+  p <- sigmoid(a0 + b1 * X)
+  X_new <- X
+  for (i in 1:(nrow(X) - 1)) {
+    for (j in (i + 1):nrow(X)) {
+      X_new[i, j] <- rbinom(1, 1, p[i, j])
+      X_new[j, i] <- X_new[i, j]
+    }
+  }
+  diag(X_new) <- 0
+  X_new
+}
+
+perturb_network <- function(X, prop_flip = 0.30) {
+  X_pert <- X
+  flip_ij <- which(upper.tri(X_pert), arr.ind = TRUE)
+  n_flip <- ceiling(prop_flip * nrow(flip_ij))
+  flip_idx <- sample(seq_len(nrow(flip_ij)), n_flip)
+
+  for (idx in flip_idx) {
+    i <- flip_ij[idx, 1]
+    j <- flip_ij[idx, 2]
+    X_pert[i, j] <- 1 - X_pert[i, j]
+    X_pert[j, i] <- X_pert[i, j]
+  }
+  X_pert
+}
+
+matrix_to_graph <- function(X) {
+  graph_from_adjacency_matrix(X, mode = "undirected", diag = FALSE)
+}
+
+# ------------------------------------------------------------
+# Main simulator for one b1
+# ------------------------------------------------------------
+sim_return_time <- function(b1, N, T, n_perturb,
+                            burn_in = 200,
+                            init_p = 0.4,
+                            prop_flip = 0.30,
+                            tol = 0.10) {
+  a0 <- -1.0
+
+  # Initial network
+  X <- matrix(0, N, N)
+  X[upper.tri(X)] <- rbinom(N * (N - 1) / 2, 1, init_p)
+  X <- X + t(X)
+  diag(X) <- 0
+
+  # Burn-in to approximate stationary regime
+  density_burn <- numeric(burn_in)
+  for (t in seq_len(burn_in)) {
+    X <- one_step_update(X, a0 = a0, b1 = b1)
+    density_burn[t] <- compute_density(X)
+  }
+
+  X_stationary <- X
+  D_stationary <- compute_density(X_stationary)
+
+  # Save one representative perturbed trajectory for plotting
+  rep_density_trace <- NULL
+  rep_clust_trace <- NULL
+  rep_return_time <- NA
+  rep_X_pert <- NULL
+
+  # Repeated perturbation experiments
+  return_times <- numeric(n_perturb)
+  returned <- logical(n_perturb)
+
+  for (k in seq_len(n_perturb)) {
+    X_pert <- perturb_network(X_stationary, prop_flip = prop_flip)
+    X_cur <- X_pert
+
+    density_trace <- numeric(T)
+    clust_trace <- numeric(T)
+
+    for (t in seq_len(T)) {
+      density_trace[t] <- compute_density(X_cur)
+      g_cur <- matrix_to_graph(X_cur)
+      clust_trace[t] <- transitivity(g_cur, type = "global")
+      if (is.nan(clust_trace[t])) clust_trace[t] <- 0
+
+      if (abs(density_trace[t] - D_stationary) < tol) {
+        return_times[k] <- t
+        returned[k] <- TRUE
+        break
+      }
+
+      X_cur <- one_step_update(X_cur, a0 = a0, b1 = b1)
+
+      if (t == T) {
+        return_times[k] <- T
+        returned[k] <- FALSE
+      }
+    }
+
+    # Store first perturbation run as representative example
+    if (k == 1) {
+      rep_density_trace <- data.frame(
+        time = seq_len(T),
+        density = density_trace,
+        b1 = factor(b1),
+        stationary_density = D_stationary
+      )
+      rep_clust_trace <- data.frame(
+        time = seq_len(T),
+        clustering = clust_trace,
+        b1 = factor(b1)
+      )
+      rep_return_time <- return_times[k]
+      rep_X_pert <- X_pert
+    }
+  }
+
+  summary_df <- data.frame(
+    b1 = b1,
+    stationary_density = D_stationary,
+    mean_return_time = mean(return_times),
+    median_return_time = median(return_times),
+    sd_return_time = sd(return_times),
+    min_return_time = min(return_times),
+    max_return_time = max(return_times),
+    prop_censored = mean(!returned)
+  )
+
+  raw_df <- data.frame(
+    b1 = b1,
+    replicate = seq_len(n_perturb),
+    return_time = return_times,
+    returned = returned
+  )
+
+  list(
+    summary = summary_df,
+    raw = raw_df,
+    burn_trace = data.frame(
+      time = seq_len(burn_in),
+      density = density_burn,
+      b1 = factor(b1)
+    ),
+    rep_density_trace = rep_density_trace,
+    rep_clust_trace = rep_clust_trace,
+    stationary_network = X_stationary,
+    perturbed_network = rep_X_pert,
+    rep_return_time = rep_return_time
+  )
+}
+
+# ------------------------------------------------------------
+# Run all scenarios over b1 values
+# ------------------------------------------------------------
+sim_list <- lapply(b1_vals, sim_return_time, N = N, T = T, n_perturb = n_perturb)
+
+summary_table <- do.call(rbind, lapply(sim_list, `[[`, "summary"))
+rt_data <- do.call(rbind, lapply(sim_list, `[[`, "raw"))
+burn_data <- do.call(rbind, lapply(sim_list, `[[`, "burn_trace"))
+rep_density_data <- do.call(rbind, lapply(sim_list, `[[`, "rep_density_trace"))
+rep_clust_data <- do.call(rbind, lapply(sim_list, `[[`, "rep_clust_trace"))
+
+cat("Summary table by persistence level:\n")
+print(summary_table)
+
+cat("\nRaw return times:\n")
+print(rt_data)
+
+# ------------------------------------------------------------
+# Plot 1: Return-time boxplot
+# ------------------------------------------------------------
+p1 <- ggplot(rt_data, aes(x = factor(b1), y = return_time)) +
+  geom_boxplot(fill = "steelblue", alpha = 0.75, width = 0.7) +
+  labs(
+    title = "Return Time After Perturbation by Persistence",
+    x = expression(b[1]),
+    y = "Return time"
+  ) +
+  theme_bw(base_size = 13)
+
+print(p1)
+
+# ------------------------------------------------------------
+# Plot 2: Mean return time with SD error bars
+# ------------------------------------------------------------
+p2 <- ggplot(summary_table, aes(x = factor(b1), y = mean_return_time, group = 1)) +
+  geom_line(colour = "tomato", linewidth = 0.8) +
+  geom_point(colour = "tomato", size = 2.5) +
+  geom_errorbar(
+    aes(
+      ymin = pmax(0, mean_return_time - sd_return_time),
+      ymax = mean_return_time + sd_return_time
+    ),
+    width = 0.15,
+    colour = "tomato"
+  ) +
+  labs(
+    title = "Mean Return Time Increases with Persistence",
+    x = expression(b[1]),
+    y = "Mean return time ± 1 SD"
+  ) +
+  theme_bw(base_size = 13)
+
+print(p2)
+
+# ------------------------------------------------------------
+# Plot 3: Burn-in density traces
+# ------------------------------------------------------------
+p3 <- ggplot(burn_data, aes(x = time, y = density, colour = b1)) +
+  geom_line(alpha = 0.85) +
+  labs(
+    title = "Burn-in Density Trajectories",
+    x = "Burn-in step",
+    y = "Density",
+    colour = expression(b[1])
+  ) +
+  theme_bw(base_size = 13)
+
+print(p3)
+
+# ------------------------------------------------------------
+# Plot 4: Representative post-perturbation density traces
+# ------------------------------------------------------------
+p4 <- ggplot(rep_density_data, aes(x = time, y = density, colour = b1)) +
+  geom_line(alpha = 0.9) +
+  geom_hline(
+    data = unique(rep_density_data[c("b1", "stationary_density")]),
+    aes(yintercept = stationary_density, colour = b1),
+    linetype = "dashed",
+    linewidth = 0.7,
+    show.legend = FALSE
+  ) +
+  labs(
+    title = "Representative Density Recovery After Perturbation",
+    x = "Time after perturbation",
+    y = "Density",
+    colour = expression(b[1])
+  ) +
+  theme_bw(base_size = 13)
+
+print(p4)
+
+# ------------------------------------------------------------
+# Plot 5: Representative clustering traces after perturbation
+# ------------------------------------------------------------
+p5 <- ggplot(rep_clust_data, aes(x = time, y = clustering, colour = b1)) +
+  geom_line(alpha = 0.9) +
+  labs(
+    title = "Representative Clustering After Perturbation",
+    x = "Time after perturbation",
+    y = "Global clustering",
+    colour = expression(b[1])
+  ) +
+  theme_bw(base_size = 13)
+
+print(p5)
+
+# ------------------------------------------------------------
+# Plot 6: Censoring proportion
+# ------------------------------------------------------------
+p6 <- ggplot(summary_table, aes(x = factor(b1), y = prop_censored)) +
+  geom_col(fill = "grey40", alpha = 0.8, width = 0.7) +
+  labs(
+    title = "Fraction of Runs Not Returned by Time T",
+    x = expression(b[1]),
+    y = "Proportion censored"
+  ) +
+  theme_bw(base_size = 13)
+
+print(p6)
+
+# ------------------------------------------------------------
+# Network visualizations
+# one stationary and one perturbed network per b1
+# ------------------------------------------------------------
+old_par <- par(no.readonly = TRUE)
+par(mfrow = c(length(b1_vals), 2), mar = c(1, 1, 3, 1))
+
+for (i in seq_along(b1_vals)) {
+  b1 <- b1_vals[i]
+  X_stat <- sim_list[[i]]$stationary_network
+  X_pert <- sim_list[[i]]$perturbed_network
+
+  g_stat <- matrix_to_graph(X_stat)
+  g_pert <- matrix_to_graph(X_pert)
+
+  # Fixed layout from stationary graph for visual comparability
+  lay <- layout_with_fr(g_stat)
+
+  plot(
+    g_stat,
+    layout = lay,
+    main = paste0("Stationary network, b1 = ", b1),
+    vertex.size = 20,
+    vertex.color = "grey90",
+    vertex.label.color = "black",
+    edge.color = "steelblue",
+    edge.width = 2
+  )
+
+  plot(
+    g_pert,
+    layout = lay,
+    main = paste0("Perturbed network, b1 = ", b1),
+    vertex.size = 20,
+    vertex.color = "grey90",
+    vertex.label.color = "black",
+    edge.color = "tomato",
+    edge.width = 2
+  )
+}
+
+par(old_par)
+
+# ------------------------------------------------------------
+# Additional compact summary tables
+# ------------------------------------------------------------
+stationary_table <- summary_table[, c("b1", "stationary_density", "prop_censored")]
+return_table <- summary_table[, c("b1", "mean_return_time", "median_return_time",
+                                  "sd_return_time", "min_return_time", "max_return_time")]
+
+cat("\nStationary density and censoring:\n")
+print(stationary_table)
+
+cat("\nReturn time summary statistics:\n")
+print(return_table)
 ```
 
 The expected pattern is that higher $b_1$ produces shorter return times, confirming deeper basins.  Each box at a given $b_1$ value summarizes the distribution of return times over repeated perturbation experiments, and the systematic compression of that distribution as $b_1$ increases is precisely the dynamical fingerprint of basin deepening through autoregressive memory.[^2][^3]
 
+The code can be read as a stylized dynamical model of psychopathological symptom networks in which symptoms are nodes and conditional activation relations are edges. This fits the network approach to psychopathology, where disorders are not treated as latent causes alone but as systems of mutually reinforcing symptoms, such as insomnia increasing fatigue, which in turn aggravates concentration problems. In the code, the update rule $P(X_{ij}^{(t+1)}=1 \mid X^{(t)})=\sigma(a_0+b_1X_{ij}^{(t)})$ encodes a simple persistence mechanism: once a symptom-to-symptom connection is active, it becomes more likely to remain active when $b_1$ is large. Interpreted clinically, higher persistence may correspond to symptom coupling that is harder to disrupt, which is consistent with the idea that tightly interconnected symptom systems can sustain disorder states even after an external perturbation. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC3617177/)
 
+The burn-in stage in the code approximates a quasi-stationary symptom configuration, and the perturbation step can be interpreted as an intervention, stressor, or spontaneous remission of some symptom links. The return-time statistic then measures how quickly the network re-enters a neighborhood of its baseline density $D_{\text{stat}}$, i.e. $\tau=\min\{t: |\hat D_t-D_{\text{stat}}|<\text{tol}\}$. In psychopathology terms, this is analogous to resilience or recovery time after a disturbance, though the analogy is only partial because the code tracks network density rather than symptom severity directly. Still, the broader logic aligns with work showing that symptom networks may vary in their recoverability and that tightly connected systems may exhibit slower return to equilibrium after perturbation [cambridge](https://www.cambridge.org/core/journals/psychological-medicine/article/how-predictable-are-symptoms-in-psychopathological-networks-a-reanalysis-of-18-published-datasets/84F1D7F73DB03586ABA48783419FE62A). The use of global transitivity as a clustering measure also matters conceptually, because it captures triadic reinforcement among symptoms, which may reflect local feedback loops such as anxiety, avoidance, and functional impairment reinforcing one another [igraph](https://igraph.org/r/html/1.3.5/transitivity.html).
+
+At the same time, the code should be interpreted cautiously as a toy model rather than a full inferential model of psychopathology. Network psychometrics has repeatedly shown that edge estimates, centrality indices, and conditional dependence structures can be unstable under realistic measurement error and sampling variation, so any strong clinical claim from a model of this form would be premature. Formally, the model defines a Markovian evolution on adjacency matrices $X^{(t)}$, but real symptom networks are likely influenced by latent variables, time-varying covariates, and heterogeneous individual trajectories that this simulator does not include. So the main value of the code is conceptual: it gives a controlled demonstration of how stronger edge persistence ($b_1\uparrow$) can deepen an apparent “basin” of maladaptive symptom organization, potentially yielding longer recovery times after perturbation, while also reminding us that empirical psychopathological networks need stronger validation before they are treated as mechanistic explanations. [pubmed.ncbi.nlm.nih](https://pubmed.ncbi.nlm.nih.gov/29106281/)
 
 ## 6. Transitivity, Local Feedback, and Metastability
 
