@@ -65,7 +65,7 @@ euler_maruyama <- function(f, g, x0, t0, tmax, dt, ...) {
   n <- floor((tmax - t0) / dt)
   t <- t0 + (0:n) * dt
   x <- numeric(n + 1)
-  x[^1] <- x0
+  x[1] <- x0
   for (i in 1:n) {
     dW <- rnorm(1, mean = 0, sd = sqrt(dt))
     x[i + 1] <- x[i] + f(x[i], t[i], ...) * dt + g(x[i], t[i], ...) * dW
