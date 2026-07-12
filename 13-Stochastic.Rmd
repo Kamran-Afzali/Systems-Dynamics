@@ -160,38 +160,37 @@ The four panels build on one another. The **geometric Brownian motion** paths sh
 
 ## Where This Leaves the Clinical Picture
 
-Framing symptom dynamics as an SDE forces two things that the pure bifurcation story could gloss over: the noise term is a parameter in its own right, not just an inconvenience layered on top of drift, and the intensity of stochastic forcing can shift the effective risk of a transition independently of the mean. This matters for measurement — REDCap-style ecological momentary assessment protocols that sample mood several times a day are, in effect, trying to estimate $g(X,t)$ and its consequences for escape time, not just tracking the mean trajectory. It also suggests, tentatively, that variability itself (rather than symptom severity) may be a legitimate treatment target, an idea consistent with but distinct from claims made in the Petzschner computational psychiatry review on stochastic dynamic models. The next post will likely extend this by coupling multiple stochastic state variables together, moving from single-variable SDEs toward stochastic network models of interacting symptoms.[^5]
-<span style="display:none">[^10][^11][^12][^13][^14][^15][^6][^7][^8][^9]</span>
+Framing symptom dynamics as an SDE forces two things that the pure bifurcation story could gloss over: the noise term is a parameter in its own right, not just an inconvenience layered on top of drift, and the intensity of stochastic forcing can shift the effective risk of a transition independently of the mean. This matters for measurement — REDCap-style ecological momentary assessment protocols that sample mood several times a day are, in effect, trying to estimate $g(X,t)$ and its consequences for escape time, not just tracking the mean trajectory. It also suggests, tentatively, that variability itself (rather than symptom severity) may be a legitimate treatment target, an idea consistent with but distinct from claims made in the Petzschner computational psychiatry review on stochastic dynamic models. The next post will likely extend this by coupling multiple stochastic state variables together, moving from single-variable SDEs toward stochastic network models of interacting symptoms.
 
-<div align="center">⁂</div>
+## References
 
-[^1]: https://www.pnas.org/doi/pdf/10.1073/pnas.1312114110
+ - https://www.pnas.org/doi/pdf/10.1073/pnas.1312114110
 
-[^2]: https://pmc.ncbi.nlm.nih.gov/articles/PMC4388113/
+- https://pmc.ncbi.nlm.nih.gov/articles/PMC4388113/
 
-[^3]: http://arxiv.org/abs/2005.14597
+- http://arxiv.org/abs/2005.14597
 
-[^4]: http://math.univ-lyon1.fr/~bernard/teach/edoneuro/longtin_chap6_nonlinearDynamicsInPhysiologyAndMedicine.pdf
+- http://math.univ-lyon1.fr/~bernard/teach/edoneuro/longtin_chap6_nonlinearDynamicsInPhysiologyAndMedicine.pdf
 
-[^5]: https://www.tnu.ethz.ch/fileadmin/user_upload/documents/Publications/2017/2017_Petzschner_Stochatic_Dynamic.pdf
+- https://www.tnu.ethz.ch/fileadmin/user_upload/documents/Publications/2017/2017_Petzschner_Stochatic_Dynamic.pdf
 
-[^6]: https://ifisc.uib-csic.es/raul/publications/C/C29_t11.pdf
+- https://ifisc.uib-csic.es/raul/publications/C/C29_t11.pdf
 
-[^7]: https://arxiv.org/pdf/cond-mat/0302264.pdf
+- https://arxiv.org/pdf/cond-mat/0302264.pdf
 
-[^8]: https://wisepress.com/noise-induced-transitions/
+- https://wisepress.com/noise-induced-transitions/
 
-[^9]: https://arxiv.org/abs/1108.2407
+- https://arxiv.org/abs/1108.2407
 
-[^10]: https://pmc.ncbi.nlm.nih.gov/articles/PMC3991906/
+- https://pmc.ncbi.nlm.nih.gov/articles/PMC3991906/
 
-[^11]: https://www.emergentmind.com/topics/noise-induced-phase-transitions
+- https://www.emergentmind.com/topics/noise-induced-phase-transitions
 
-[^12]: https://www.gbv.de/dms/ilmenau/toc/024294179.PDF
+- https://www.gbv.de/dms/ilmenau/toc/024294179.PDF
 
-[^13]: http://arxiv.org/pdf/2112.12958.pdf
+- http://arxiv.org/pdf/2112.12958.pdf
 
-[^14]: https://lirias.kuleuven.be/server/api/core/bitstreams/5ff3f7a9-3cea-47eb-acab-e962ecaa51a1/content
+- https://lirias.kuleuven.be/server/api/core/bitstreams/5ff3f7a9-3cea-47eb-acab-e962ecaa51a1/content
 
-[^15]: https://www.mcgill.ca/mathematical-physiology-lab/files/mathematical-physiology-lab/1995oct_mcm_nechaeva_soln_moment_stability_stochastic_diff_delay_eqn.pdf
+- https://www.mcgill.ca/mathematical-physiology-lab/files/mathematical-physiology-lab/1995oct_mcm_nechaeva_soln_moment_stability_stochastic_diff_delay_eqn.pdf
 
