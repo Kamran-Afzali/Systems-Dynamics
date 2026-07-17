@@ -99,7 +99,7 @@ The scalar $R(t)$ lies between 0 and 1. Values near 0 indicate dispersed phases;
 
 The first code block builds three small networks with the same number of nodes but different topology: a ring, a random graph, and a modular graph. The point is not that any one resembles a real brain or social network. It is to make topology concrete before dynamics are placed on top of it.
 
-``` r
+``` {r}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -134,7 +134,7 @@ network_summary <- function(g, name) {
     edges = ecount(g),
     mean_degree = mean(degree(g)),
     clustering = transitivity(g, type = "average"),
-    mean_distance = mean_distance(g, disconnected = TRUE)
+    mean_distance = mean_distance(g)
   )
 }
 
@@ -187,7 +187,7 @@ $$
 
 Without coupling, $x_i=-1$ and $x_i=1$ are stable equilibria, while $x_i=0$ is unstable. One can read the two stable states abstractly: low and high activity, inactive and active, or two alternative regimes. Coupling makes neighbouring states matter, so a local perturbation can either decay, remain confined, or recruit a larger part of the network.
 
-``` r
+``` {r}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -317,7 +317,7 @@ The interpretation is subtle but important: two populations with the same averag
 
 The following simulation implements a stochastic discrete-time SIS process on a modular contact network. An infected node recovers with probability determined by $\mu$; a susceptible node becomes infected with a probability that increases with the number of infected neighbours. The simulation is intentionally simple, but it makes the distinction between individual transitions and network-level prevalence visible.
 
-``` r
+``` {r}
 library(igraph)
 library(ggplot2)
 library(dplyr)
@@ -450,7 +450,7 @@ Still, the network perspective adds something the single-variable model cannot. 
 
 The final example returns to synchronization. It compares a weakly and strongly coupled set of oscillators on the same network, then plots both individual phases and the order parameter $R(t)$. It is useful to read this as a formal illustration of coherence, not as a literal model of any particular neural rhythm.
 
-``` r
+``` {r}
 library(igraph)
 library(ggplot2)
 library(dplyr)
