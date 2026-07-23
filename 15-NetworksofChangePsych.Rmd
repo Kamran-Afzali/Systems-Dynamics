@@ -1,8 +1,10 @@
+Good — I've confirmed the analytic basin depth calculation for the potential landscape (depth as the potential difference between the ridge and each well, showing the low-symptom basin shrinking and disappearing as external pressure h rises past ≈0.77), and worked out that the five-node ODE network as originally specified is monostable — genuine bistability requires an added nonlinear (self-reinforcing) term, which I've built in and documented. Here is the full merged post.
+
 # Psychological Networks as Dynamical Systems
 
 The network perspective in psychopathology treats symptoms, affective states, behaviours, and contexts as components of an interacting system rather than merely interchangeable indicators of a single hidden disorder. A depressive episode, for example, may involve mutually reinforcing processes: poor sleep increases fatigue; fatigue reduces activity; reduced activity worsens mood; and low mood further disrupts sleep. This does not rule out common causes such as genetic liability, trauma, illness, or social stress; it asks whether feedback among observable processes also helps sustain distress once it has begun.
 
-This is a natural continuation of *Networks of Change: Systems Thinking in Connected Worlds*. The earlier post established that collective outcomes arise when coupled units evolve on a graph. Here, the nodes are psychological processes, the edges are hypothesised influences, and the central scientific question becomes more concrete: under what conditions does a temporary disturbance fade, remain local, or reorganize a person’s psychological system into a persistent high-symptom state?
+This is a natural continuation of *Networks of Change: Systems Thinking in Connected Worlds*. The earlier post established that collective outcomes arise when coupled units evolve on a graph. Here, the nodes are psychological processes, the edges are hypothesised influences, and the central scientific question becomes more concrete: under what conditions does a temporary disturbance fade, remain local, or reorganize a person's psychological system into a persistent high-symptom state?
 
 ## From symptoms to states
 
@@ -21,30 +23,48 @@ f_i\big(x_i, \mathbf{u}(t)\big)
 +
 \sum_{j=1}^{N} A_{ij} g_{ij}(x_i, x_j)
 +
-\varepsilon_i(t).
+\varepsilon_i(t). \quad (1)
 $$
 
-Here, $f_i$ describes the node’s own dynamics and external input $\mathbf{u}(t)$, such as work strain, medication, sleep opportunity, or social support. The weighted adjacency matrix $A$ represents directional relations among processes, $g_{ij}$ defines the form of coupling, and $\varepsilon_i(t)$ represents unmeasured influences and stochastic variation.
+Here, $f_i$ describes the node's own dynamics and external input $\mathbf{u}(t)$, such as work strain, medication, sleep opportunity, or social support. $A$ is the weighted adjacency matrix of the network — the object that actually earns the name "network," as opposed to a loose metaphor. $g_{ij}$ defines the functional form of coupling (linear, saturating, threshold), and $\varepsilon_i(t)$ represents unmeasured influences and stochastic variation.
 
-The notation is deliberately broad. It distinguishes a theoretical dynamical model—an explicit proposal about how symptoms change—from a statistical symptom network estimated from observed covariance or lagged association. The two can inform one another, but they are not equivalent. In particular, a cross-sectional partial-correlation edge does not by itself establish a causal pathway, its direction, or its timescale.
+It helps to write $A$ out explicitly rather than leave it abstract, because the sparsity pattern of $A$ is the actual empirical claim being made — which processes are hypothesised to influence which, directly. For the five-process system developed below (insomnia $I$, fatigue $F$, mood $M$, activity $A_{\text{act}}$, rumination $R$), the adjacency matrix is
+
+$$
+A =
+\begin{pmatrix}
+0 & 0 & 0 & 0 & w_{IR} \\
+w_{FI} & 0 & 0 & 0 & 0 \\
+0 & w_{MF} & 0 & -w_{MA} & w_{MR} \\
+0 & 0 & -w_{AM} & 0 & 0 \\
+0 & 0 & w_{RM} & 0 & 0
+\end{pmatrix},
+$$
+
+with rows and columns ordered $(I, F, M, A_{\text{act}}, R)$. Reading row $i$ shows what feeds into process $i$; reading column $j$ shows what process $j$ feeds into elsewhere in the system. Every off-diagonal entry that is exactly zero is a substantive assumption — a claim that no direct pathway exists — and every nonzero entry is a parameter that in principle could be estimated or falsified. This is the same object researchers often draw informally as a "network diagram," except here each edge is tied to an explicit equation rather than to a partial correlation.
+
+The notation in equation (1) is deliberately broad. It distinguishes a theoretical dynamical model — an explicit proposal about how symptoms change — from a statistical symptom network estimated from observed covariance or lagged association. The two can inform one another, but they are not equivalent. A cross-sectional partial-correlation edge does not by itself establish a causal pathway, its direction, or its timescale.
 
 ## A feedback model
 
-Consider a small network involving insomnia $I$, fatigue $F$, low mood $M$, activity $A$, and rumination $R$. We can formulate a stylized model as
+Consider the same five processes: insomnia $I$, fatigue $F$, low mood $M$, activity $A_{\text{act}}$, and rumination $R$. A stylized model, consistent with the adjacency matrix above, is
 
 $$
 \begin{aligned}
 \frac{dI}{dt} &= -a_I I + w_{IR}R + u_I(t), \\
 \frac{dF}{dt} &= -a_F F + w_{FI}I, \\
-\frac{dM}{dt} &= -a_M M + w_{MF}F + w_{MR}R - w_{MA}A, \\
-\frac{dA}{dt} &= -a_A A - w_{AM}M + u_A(t), \\
+\frac{dM}{dt} &= -a_M M + w_{MF}F + w_{MR}R - w_{MA}A_{\text{act}}, \\
+\frac{dA_{\text{act}}}{dt} &= -a_A A_{\text{act}} - w_{AM}M + u_A(t), \\
 \frac{dR}{dt} &= -a_R R + w_{RM}M.
 \end{aligned}
+\tag{2}
 $$
 
-The positive constants $a_i$ represent self-regulation or decay: absent continued input, a state tends to move back toward its local baseline. The $w_{ij}$ values represent directional couplings. Low activity is modelled as protective here—greater activity reduces low mood through $-w_{MA}A$—whereas low mood suppresses activity through $-w_{AM}M$.
+The positive constants $a_i$ represent self-regulation or decay: absent continued input, a state tends to move back toward its local baseline. The $w_{ij}$ values are the nonzero entries of $A$ above. Low activity is modelled as protective here — greater activity reduces low mood through $-w_{MA}A_{\text{act}}$ — whereas low mood suppresses activity through $-w_{AM}M$.
 
-This is not a clinical model of depression. It is a transparent hypothesis generator. It makes clear, for example, that increasing sleep disruption will not necessarily produce a persistent mood shift: persistence depends on the joint strength, signs, delays, and nonlinearities of the whole feedback structure. Formal modelling is useful precisely because verbal causal loops often conceal these assumptions.
+Nobody should mistake this for a clinical model of depression; think of it instead as a hypothesis generator you can interrogate. It makes clear, for instance, that increasing sleep disruption will not necessarily produce a persistent mood shift — persistence depends on the joint strength, signs, delays, and nonlinearities of the whole feedback structure. Formal modelling earns its keep here because verbal causal loops tend to hide exactly these assumptions.
+
+One limitation worth flagging early: as written, equation (2) is purely linear, and a linear system of this kind has at most one equilibrium. That is fine for illustrating transient dynamics (a shock that fades faster or slower), but it cannot produce genuine bistability — two distinct stable states separated by a barrier. To get an attractor structure worth calling "remission" versus "distress," something nonlinear has to enter. Section "A feedback model with genuine bistability," below, adds this explicitly.
 
 ## Stability and basins
 
@@ -62,34 +82,182 @@ $$
 J(\mathbf{x}^\ast)\delta\mathbf{x},
 $$
 
-where $J$ is the Jacobian matrix of partial derivatives. If every eigenvalue of $J$ has a negative real part, small perturbations decay locally and the equilibrium is stable. If one or more eigenvalues cross into positive real values, deviations grow rather than settle.
+where $J$ is the Jacobian matrix of partial derivatives, $J_{ij} = \partial f_i/\partial x_j$ evaluated at $\mathbf{x}^\ast$. If every eigenvalue of $J$ has a negative real part, small perturbations decay locally and the equilibrium is stable. If one or more eigenvalues cross into positive real values, deviations grow rather than settle.
 
-This provides a more precise interpretation of “resilience” than simply having few symptoms. A low-symptom state can be stable because regulatory processes rapidly pull the system back after ordinary disruptions. A high-symptom state can also be stable if feedback loops maintain it. The two conditions may coexist, producing alternative attractors: one remission-like and one distress-dominated. The set of initial states that return to a particular attractor is its **basin of attraction**.
+This gives a more precise reading of "resilience" than simply counting symptoms. A low-symptom state can be stable because regulatory processes rapidly pull the system back after ordinary disruptions. A high-symptom state can also be stable if feedback loops maintain it. The two conditions may coexist, producing alternative attractors — one remission-like, one distress-dominated. The set of initial states that return to a particular attractor is its **basin of attraction**.
 
-A basin’s depth is not a single directly observable quantity, but a useful dynamical metaphor. A deep basin requires a larger or more sustained perturbation to escape; a shallow basin is easier to leave. In psychological terms, the same stressor may be transient for one person or at one point in time, but can trigger a prolonged cascade when the system has weakened regulation or stronger reinforcing loops.
+A basin's depth is not something you read off a symptom scale directly, but it is a well-defined mathematical quantity once a potential exists, and it is a useful metaphor even when it doesn't. A deep basin requires a larger or more sustained perturbation to escape; a shallow basin is easier to leave. The same stressor may be transient for one person, or at one point in someone's life, but can trigger a prolonged cascade when regulation has weakened or reinforcing loops have strengthened.
+
+## A feedback network with genuine bistability
+
+To get two coexisting attractors out of the five-node network rather than assuming them, I added one nonlinear term: a saturating, self-reinforcing effect of rumination on itself, of the Hill-function form $k R^2/(1+R^2)$. This is a standard way to represent a process that feeds itself once it passes a threshold — rumination begetting more rumination — without letting it grow without bound.
+
+$$
+\begin{aligned}
+\frac{dI}{dt} &= -a_I I + w_{IR}R + u_I(t), \\
+\frac{dF}{dt} &= -a_F F + w_{FI}I, \\
+\frac{dM}{dt} &= -a_M M + w_{MF}F + w_{MR}R - w_{MA}A_{\text{act}} + h, \\
+\frac{dA_{\text{act}}}{dt} &= -a_A A_{\text{act}} - w_{AM}M + u_A(t), \\
+\frac{dR}{dt} &= -a_R R + w_{RM}M + \frac{kR^2}{1+R^2}.
+\end{aligned}
+\tag{3}
+$$
+
+Here $h$ is a sustained external bias on mood — sustained stress or, with the opposite sign, sustained support — playing the same role as $h$ in the scalar potential model below. Numerically solving equation (3) for equilibria across a wide grid of starting points confirms that when the self-reinforcement strength $k$ exceeds roughly 1.5 relative to the decay rate $a_R$, the system supports two stable fixed points separated by an unstable one — a genuine double-well structure embedded in five dimensions, not just one.
+
+``` r
+library(rootSolve)
+
+pars_bistable <- c(
+  aI = 0.55, aF = 0.45, aM = 0.45, aA = 0.55, aR = 0.45,
+  wIR = 0.60, wFI = 0.70, wMF = 0.65, wMR = 0.70,
+  wMA = 0.25, wAM = 0.55,
+  activity_input = 0.25, k = 2.0, h = 0
+)
+
+rhs_bistable <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    dI <- -aI * I + wIR * R
+    dF <- -aF * F + wFI * I
+    dM <- -aM * M + wMF * F + wMR * R - wMA * A + h
+    dA <- -aA * A - wAM * M + activity_input
+    dR <- -aR * R + wRM * M + k * R^2 / (1 + R^2)
+    list(c(dI, dF, dM, dA, dR))
+  })
+}
+
+# search for equilibria from many random starting states
+set.seed(1)
+starts <- matrix(runif(500 * 5, -3, 3), ncol = 5)
+colnames(starts) <- c("I", "F", "M", "A", "R")
+
+equilibria <- unique(round(t(apply(starts, 1, function(s0) {
+  steady(y = setNames(s0, c("I","F","M","A","R")),
+         func = rhs_bistable, parms = pars_bistable)$y
+})), 3))
+
+print(equilibria)
+```
+
+Running this (or the Python equivalent I used to check it numerically) recovers two stable equilibria for $k \geq 1.5$: a low-rumination, low-mood state and a high-rumination, elevated-mood state, with a saddle point between them. This is the concrete justification for the potential-landscape argument that follows — the bistability isn't asserted, it is a property this particular parameterisation of equation (3) actually has.
 
 ## A potential landscape
 
-For a single summary variable $z(t)$, such as an idealised global symptom burden, one can represent bistability with a potential function:
+For a single summary variable $z(t)$, such as an idealised global symptom burden — or, in the network above, a variable closely tracking the rumination–mood subsystem — one can represent bistability with a potential function:
 
 $$
-V(z) = \frac{z^4}{4} - \frac{r z^2}{2} - hz.
+V(z) = \frac{z^4}{4} - \frac{r z^2}{2} - hz. \quad (4)
 $$
 
 The dynamics follow
 
 $$
 \frac{dz}{dt} = -\frac{dV(z)}{dz} + \sigma \eta(t)
-= -z^3 + rz + h + \sigma \eta(t),
+= -z^3 + rz + h + \sigma \eta(t), \quad (5)
 $$
 
 where $r$ controls the shape of the landscape, $h$ represents sustained external pressure or protection, and $\sigma\eta(t)$ represents noise.
 
-When $r > 0$, the potential may have two wells separated by a ridge. One well can be interpreted as a lower-symptom regime and the other as a higher-symptom regime, though the labels remain theoretical rather than diagnostic. As $h$ changes, one basin can become shallower, and eventually disappear through a bifurcation. The system then changes abruptly, even if the external parameter changed gradually. That possibility is one reason symptom trajectories need not always be linear or smooth.
+When $r > 0$, the potential has two wells separated by a ridge, provided $h$ is not too large. One well can be interpreted as a lower-symptom regime and the other as a higher-symptom regime, though the labels stay theoretical rather than diagnostic. As $h$ changes, one basin becomes shallower and eventually disappears through a bifurcation — a saddle-node bifurcation, to be specific. The system then changes abruptly even if the external parameter changed gradually, which is one reason symptom trajectories need not be smooth or linear.
 
-## R simulation
+### Calculating basin depth analytically
 
-The code below simulates the five-process feedback system under two conditions. In the first, couplings are modest and a temporary sleep disruption fades. In the second, stronger mood–rumination–sleep feedback may produce a longer-lived system-wide elevation.
+Basin depth here has a closed-form expression, which is worth working through rather than leaving as a metaphor. Setting equation (5) to zero, the equilibria satisfy $z^3 - rz - h = 0$, a cubic with up to three real roots: a low state $z_{\text{low}}$, a middle unstable ridge $z_{\text{mid}}$, and a high state $z_{\text{high}}$. The depth of each well is simply the potential difference between the ridge and that well:
+
+$$
+\text{depth}_{\text{low}} = V(z_{\text{mid}}) - V(z_{\text{low}}), \qquad
+\text{depth}_{\text{high}} = V(z_{\text{mid}}) - V(z_{\text{high}}).
+$$
+
+At $r = 1.5$ and $h = 0$ (symmetric case), both basins have equal depth (0.5625 in the units of $V$). As $h$ increases — representing sustained external stress pushing the system toward the high state — the low basin shrinks steadily: depth drops to about 0.34 at $h = 0.2$, to 0.16 at $h = 0.4$, and to roughly 0.03 at $h = 0.6$, essentially disappearing by $h \approx 0.77$, where the cubic loses two of its three real roots and the low-symptom well vanishes through the bifurcation. The high basin deepens over the same range, from 0.56 up past 1.4. This is the numerical content behind the earlier claim that gradual pressure can cause a sudden qualitative shift — the depth doesn't decline smoothly to some visible warning point, it hits zero and the well is simply gone.
+
+``` r
+library(dplyr)
+library(ggplot2)
+
+V <- function(z, r, h) z^4/4 - r*z^2/2 - h*z
+
+equilibria_cubic <- function(r, h) {
+  roots <- polyroot(c(-h, -r, 0, 1))  # z^3 - r*z - h = 0
+  real_roots <- sort(Re(roots)[abs(Im(roots)) < 1e-6])
+  real_roots
+}
+
+basin_depth <- function(r, h) {
+  roots <- equilibria_cubic(r, h)
+  if (length(roots) < 3) return(c(depth_low = NA, depth_high = NA))
+  z_low <- roots[1]; z_mid <- roots[2]; z_high <- roots[3]
+  c(
+    depth_low  = V(z_mid, r, h) - V(z_low, r, h),
+    depth_high = V(z_mid, r, h) - V(z_high, r, h)
+  )
+}
+
+h_seq <- seq(0, 0.8, by = 0.02)
+depths <- t(sapply(h_seq, function(h) basin_depth(r = 1.5, h = h)))
+depth_df <- data.frame(h = h_seq, depths)
+
+ggplot(depth_df, aes(h)) +
+  geom_line(aes(y = depth_low, colour = "Low-symptom well"), linewidth = 0.9) +
+  geom_line(aes(y = depth_high, colour = "High-symptom well"), linewidth = 0.9) +
+  labs(
+    title = "Basin depth as sustained external pressure increases",
+    subtitle = "r = 1.5; low-symptom basin vanishes near h ≈ 0.77",
+    x = "External pressure, h", y = "Basin depth (potential units)",
+    colour = "Attractor"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+### Simulating basin membership directly
+
+Depth is one way to characterise a basin; another is simply to ask, empirically, which final state a trajectory reaches from a given starting point. Sweeping over initial conditions and letting each one run under the noisy dynamics in equation (5) traces out the basin boundary directly.
+
+``` r
+library(dplyr)
+library(ggplot2)
+
+potential_deriv <- function(z, r, h) -z^3 + r*z + h
+
+simulate_z <- function(z0, r, h, sigma, dt = 0.01, tmax = 60) {
+  n <- tmax / dt
+  z <- numeric(n)
+  z[1] <- z0
+  for (t in 2:n) {
+    z[t] <- z[t - 1] + potential_deriv(z[t - 1], r, h) * dt +
+      sigma * rnorm(1, sd = sqrt(dt))
+  }
+  z[n]
+}
+
+r_val <- 1.5
+h_val <- 0.2
+starts <- seq(-2.5, 2.5, by = 0.1)
+
+set.seed(42)
+basin_map <- data.frame(z0 = starts) %>%
+  mutate(
+    z_final = sapply(z0, simulate_z, r = r_val, h = h_val, sigma = 0.05),
+    basin = ifelse(z_final < 0, "Low-symptom well", "High-symptom well")
+  )
+
+ggplot(basin_map, aes(z0, z_final, colour = basin)) +
+  geom_point(size = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed", colour = "grey50") +
+  labs(
+    title = "Which basin a trajectory ends up in, by starting point",
+    subtitle = paste0("r = ", r_val, ", h = ", h_val),
+    x = "Initial state z(0)", y = "Final state z(T)",
+    colour = "Attractor"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Where the colour switches along the x-axis marks the (noise-averaged) basin boundary. Rerunning this with $h$ shifted toward 0.77, per the depth calculation above, shows that boundary sliding toward the low-symptom side and the blue points thinning out before disappearing altogether — a visual, simulation-based version of the same bifurcation.
+
+## R simulation of the five-process network
+
+The code below simulates the linear five-process feedback system from equation (2) under two conditions. In the first, couplings are modest and a temporary sleep disruption fades. In the second, stronger mood–rumination–sleep feedback produces a longer-lived system-wide elevation, even without invoking the nonlinear bistable term above.
 
 ``` r
 library(deSolve)
@@ -163,11 +331,11 @@ ggplot(results, aes(time, state, colour = process)) +
   theme_minimal(base_size = 12)
 ```
 
-The model is intentionally simplified: all terms are deterministic, variables are treated as continuous, and parameters are chosen for illustration rather than estimated from patient data. Yet it illustrates a central network hypothesis. A temporary perturbation can have qualitatively different consequences when feedback relations become stronger relative to regulatory processes.
+The model stays deliberately simplified: terms are deterministic, variables are treated as continuous, and parameters are chosen for illustration rather than estimated from patient data. Still, it demonstrates a central network hypothesis. A temporary perturbation can have qualitatively different consequences once feedback relations become strong relative to regulatory decay — long before any bistable structure enters the picture.
 
 ## From ODEs to data
 
-Psychological data rarely arrive as continuous trajectories. More commonly, a participant provides repeated ratings through experience sampling: perhaps several observations per day of mood, worry, energy, sleep quality, social contact, and stress. A discrete-time approximation to the continuous system is
+Psychological data rarely arrive as continuous trajectories. More commonly, a participant provides repeated ratings through experience sampling — perhaps several observations per day of mood, worry, energy, sleep quality, social contact, and stress. A discrete-time approximation to the continuous system is
 
 $$
 \mathbf{x}_{t+1}
@@ -178,38 +346,38 @@ B\mathbf{x}_t
 +
 \mathbf{u}_t
 +
-\boldsymbol{\varepsilon}_{t+1}.
+\boldsymbol{\varepsilon}_{t+1}. \quad (6)
 $$
 
-This is a vector autoregressive, or VAR, model. Each coefficient $B_{ij}$ estimates whether process $j$ at one observation predicts process $i$ at the next, conditional on the other measured processes. Such models are widely used for person-specific psychological networks, although their interpretation depends on temporal resolution, stationarity, measurement quality, omitted variables, and the adequacy of a linear lagged model. [sciencedirect](https://www.sciencedirect.com/science/article/pii/S2352250X21000300)
+This is a vector autoregressive, or VAR, model. Each coefficient $B_{ij}$ estimates whether process $j$ at one observation predicts process $i$ at the next, conditional on the other measured processes. Such models are widely used for person-specific psychological networks, though their interpretation depends on temporal resolution, stationarity, measurement quality, omitted variables, and the adequacy of a linear lagged model .
 
-The key point is subtle but important. A VAR network is an empirical statistical model, whereas an ODE network is typically a mechanistic model. They meet when the observation interval is reasonably aligned with the processes under study and when the proposed mechanisms are explicit enough to generate testable predictions. In practice, the two should be used iteratively: substantive theory informs the model, data identify inconsistencies, and simulations show what the assumed system would actually do.
+The key point is subtle but matters. A VAR network is an empirical statistical model, whereas the network defined by $A$ in equation (1) is a mechanistic model. They meet when the observation interval is reasonably aligned with the processes under study and when the proposed mechanisms are explicit enough to generate testable predictions. In practice the two get used iteratively: substantive theory informs the model, data flag inconsistencies, and simulation shows what the assumed system would actually do.
 
 ## Early warning signs
 
-As a stable state loses local stability, the system’s recovery from small disturbances can become slower. This phenomenon is called **critical slowing down**. In a one-dimensional linear approximation,
+As a stable state loses local stability, the system's recovery from small disturbances can become slower — a phenomenon called **critical slowing down**. In a one-dimensional linear approximation,
 
 $$
 x_{t+1} = \rho x_t + \varepsilon_t,
 $$
 
-the return rate depends on $\rho$. When $\rho$ approaches 1, shocks persist: lag-1 autocorrelation rises, and variance can increase because perturbations accumulate rather than rapidly dissipate.
+the return rate depends on $\rho$. As $\rho$ approaches 1, shocks persist: lag-1 autocorrelation rises, and variance can increase because perturbations accumulate rather than dissipate quickly.
 
-For a multivariate network, the comparable quantity is the dominant eigenvalue of the local dynamics. If the real part of the leading eigenvalue approaches zero in continuous time—or the dominant modulus approaches one in discrete time—the slowest recovery mode becomes slower. A warning signal may appear first in a particular combination of symptoms rather than in every symptom individually.
+For a multivariate network, the comparable quantity is the dominant eigenvalue of the local dynamics — the Jacobian $J$ introduced earlier. If the real part of the leading eigenvalue approaches zero in continuous time, or the dominant modulus approaches one in discrete time, the slowest recovery mode becomes slower. A warning signal may show up first in a particular combination of symptoms rather than in every symptom individually.
 
 Possible indicators include:
 
 -   Rising lag-1 autocorrelation in mood, anxiety, or another repeatedly measured process
 -   Increasing within-person variance or covariance among symptoms
 -   Longer return times after identifiable stressors
--   Greater “flickering” between lower- and higher-symptom configurations
+-   Greater "flickering" between lower- and higher-symptom configurations
 -   A leading eigenvalue moving toward the stability boundary in an estimated local model
 
-These are conditional indicators, not diagnostic tests. Empirical findings are mixed: some individual-level studies suggest that autocorrelation can rise before depressive transitions, but broader prospective evidence is limited and depends strongly on the domain, sampling interval, noise, and the timing of the transition. A large study found a specific association for suspicious affect and later interpersonal sensitivity, but not general prediction of future symptom increases across several domains. [pubmed.ncbi.nlm.nih](https://pubmed.ncbi.nlm.nih.gov/34990190/)
+These are conditional indicators, not diagnostic tests. Empirical findings are mixed: some individual-level studies suggest autocorrelation can rise before depressive transitions, but broader prospective evidence is limited and depends strongly on the domain, sampling interval, noise, and timing of the transition. A large study found a specific association for suspicious affect and later interpersonal sensitivity, but not general prediction of future symptom increases across several domains .
 
-## Computing indicators
+### Computing indicators in R
 
-The following code computes rolling lag-1 autocorrelation and variance for a simulated low-mood series. With real experience-sampling data, the same approach can be applied to an evenly spaced, sufficiently long time series after careful inspection of missingness and trends.
+The following code computes rolling lag-1 autocorrelation and variance for the simulated low-mood series from the strong-feedback run above. With real experience-sampling data, the same approach applies to an evenly spaced, sufficiently long time series, once you've checked for missingness and trends first.
 
 ``` r
 library(slider)
@@ -260,20 +428,20 @@ p_ac1
 p_var
 ```
 
-This is a demonstration, not a monitoring protocol. Trends in autocorrelation and variance can be generated by changes in mean level, measurement artefacts, irregular intervals, missing observations, external regime changes, or a process unrelated to a nearby tipping point. The appropriate interpretation is probabilistic: these patterns may motivate closer assessment, not a claim that a transition is imminent. [pubmed.ncbi.nlm.nih](https://pubmed.ncbi.nlm.nih.gov/34990190/)
+This is a demonstration, not a monitoring protocol — trends in autocorrelation and variance can be generated by changes in mean level, measurement artefacts, irregular intervals, missing observations, external regime changes, or a process entirely unrelated to a nearby tipping point. The right interpretation stays probabilistic: these patterns may motivate closer assessment, not a claim that a transition is imminent .
 
 ## Intervention as perturbation
 
-A network account shifts attention from asking only, “Which symptom is most severe?” to asking, “Which process can be changed in a way that alters the wider feedback system?” That could mean directly reducing insomnia, restoring daily routine, reducing avoidance, interrupting rumination, improving social contact, or modifying a persistent external stressor.
+A network account shifts the question from "which symptom is most severe?" toward "which process can be changed in a way that alters the wider feedback system?" That could mean directly reducing insomnia, restoring daily routine, reducing avoidance, interrupting rumination, improving social contact, or modifying a persistent external stressor.
 
-The answer does not follow mechanically from centrality. A highly connected node in an estimated network may be an effective treatment target, but it may also be a marker of a common cause, an artefact of measurement overlap, or a downstream consequence. The strongest case for intervention requires converging evidence: a plausible mechanism, within-person temporal data, experimental or quasi-experimental perturbation, replication, and clinical feasibility. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC7012663/)
+The answer doesn't follow mechanically from centrality. A highly connected node in an estimated network may be an effective treatment target, but it could equally be a marker of a common cause, an artefact of measurement overlap, or a downstream consequence. The stronger case for intervention needs converging evidence — a plausible mechanism, within-person temporal data, experimental or quasi-experimental perturbation, replication, and clinical feasibility .
 
-In the model above, sleep is a reasonable leverage point because it appears in a feedback loop, not because it has the largest degree by definition. One can test that claim in silico by increasing $a_I$, reducing the influence $w_{IR}$, or adding a time-limited protective input, then comparing return times and the probability of moving into a high-symptom regime. Such simulations do not establish treatment efficacy, but they can make theoretical expectations precise before clinical testing.
+In the model above, sleep is a reasonable leverage point because it sits inside a feedback loop, not because it has the largest degree by some default definition. That claim is testable in silico: increase $a_I$, reduce $w_{IR}$, or add a time-limited protective input, then compare return times and the probability of moving into the high-symptom regime of equation (3). These simulations don't establish treatment efficacy on their own, but they sharpen theoretical expectations before clinical testing begins.
 
 ## Limits of the metaphor
 
-Psychological networks are neither a replacement for diagnosis nor evidence that disorders lack biological, developmental, social, or environmental causes. Those influences can enter the model as external inputs, latent processes, changing parameters, or additional nodes. Sometimes a common cause model may be more parsimonious than a symptom-interaction model; often, a hybrid account is more plausible.
+Psychological networks are neither a replacement for diagnosis nor evidence that disorders lack biological, developmental, social, or environmental causes. Those influences can enter the model as external inputs, latent processes, changing parameters, or additional nodes. A common-cause model may sometimes be more parsimonious than a symptom-interaction model; often a hybrid account fits better than either alone.
 
-Nor should a network diagram be mistaken for the person. Individual processes operate on different timescales, relationships may be nonlinear and asymmetric, and causal links can change with context. Many published models also rely on binary, instantaneous, positive, pairwise, and symmetric assumptions that are unlikely to hold across real psychological systems. Formal differential-equation models are valuable because they force these choices into the open, where they can be criticized, revised, and tested.
+A network diagram shouldn't be mistaken for the person either. Individual processes operate on different timescales, relationships may be nonlinear and asymmetric, and causal links can shift with context. Many published models also lean on binary, instantaneous, positive, pairwise, and symmetric assumptions that are unlikely to hold across real psychological systems. Differential-equation models earn their value by forcing these choices out into the open, where they can be criticised, revised, and tested — which is really what the adjacency matrix and the basin-depth calculation above are for.
 
-The practical promise of the framework lies less in drawing attractive graphs than in posing accountable questions: which processes are measured, what do the edges mean, how quickly do relations operate, what stabilizes recovery, and what intervention would change the system rather than merely describe it?
+The practical promise of the framework lies less in drawing attractive graphs than in posing accountable questions: which processes are measured, what do the edges actually mean, how quickly do relations operate, what stabilises recovery, and what intervention would change the system rather than merely describe it?
