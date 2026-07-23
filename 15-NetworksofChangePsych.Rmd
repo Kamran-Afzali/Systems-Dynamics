@@ -1,20 +1,20 @@
 # Psychological Networks as Dynamical Systems
 
-The network perspective in psychopathology treats symptoms, affective states, behaviours, and contexts as components of an interacting system rather than merely interchangeable indicators of a single hidden disorder. A depressive episode, for example, may involve mutually reinforcing processes: poor sleep increases fatigue; fatigue reduces activity; reduced activity worsens mood; and low mood further disrupts sleep. This does not rule out common causes such as genetic liability, trauma, illness, or social stress; it asks whether feedback among observable processes also helps sustain distress once it has begun. 
+The network perspective in psychopathology treats symptoms, affective states, behaviours, and contexts as components of an interacting system rather than merely interchangeable indicators of a single hidden disorder. A depressive episode, for example, may involve mutually reinforcing processes: poor sleep increases fatigue; fatigue reduces activity; reduced activity worsens mood; and low mood further disrupts sleep. This does not rule out common causes such as genetic liability, trauma, illness, or social stress; it asks whether feedback among observable processes also helps sustain distress once it has begun.
 
-This is a natural continuation of *Networks of Change: Systems Thinking in Connected Worlds*. The earlier post established that collective outcomes arise when coupled units evolve on a graph. Here, the nodes are psychological processes, the edges are hypothesised influences, and the central scientific question becomes more concrete: under what conditions does a temporary disturbance fade, remain local, or reorganize a person’s psychological system into a persistent high-symptom state? 
+This is a natural continuation of *Networks of Change: Systems Thinking in Connected Worlds*. The earlier post established that collective outcomes arise when coupled units evolve on a graph. Here, the nodes are psychological processes, the edges are hypothesised influences, and the central scientific question becomes more concrete: under what conditions does a temporary disturbance fade, remain local, or reorganize a person’s psychological system into a persistent high-symptom state?
 
 ## From symptoms to states
 
-Let \(x_i(t)\) denote the intensity of process \(i\) at time \(t\). Depending on the study, a node might represent momentary sadness, worry, insomnia, avoidance, fatigue, social contact, rumination, or perceived stress. The state of the whole system is the vector
+Let $x_i(t)$ denote the intensity of process $i$ at time $t$. Depending on the study, a node might represent momentary sadness, worry, insomnia, avoidance, fatigue, social contact, rumination, or perceived stress. The state of the whole system is the vector
 
-\[
+$$
 \mathbf{x}(t) = \big(x_1(t), x_2(t), \ldots, x_N(t)\big)^\top .
-\]
+$$
 
 A general continuous-time psychological network can be written as
 
-\[
+$$
 \frac{dx_i}{dt}
 =
 f_i\big(x_i, \mathbf{u}(t)\big)
@@ -22,17 +22,17 @@ f_i\big(x_i, \mathbf{u}(t)\big)
 \sum_{j=1}^{N} A_{ij} g_{ij}(x_i, x_j)
 +
 \varepsilon_i(t).
-\]
+$$
 
-Here, \(f_i\) describes the node’s own dynamics and external input \(\mathbf{u}(t)\), such as work strain, medication, sleep opportunity, or social support. The weighted adjacency matrix \(A\) represents directional relations among processes, \(g_{ij}\) defines the form of coupling, and \(\varepsilon_i(t)\) represents unmeasured influences and stochastic variation.
+Here, $f_i$ describes the node’s own dynamics and external input $\mathbf{u}(t)$, such as work strain, medication, sleep opportunity, or social support. The weighted adjacency matrix $A$ represents directional relations among processes, $g_{ij}$ defines the form of coupling, and $\varepsilon_i(t)$ represents unmeasured influences and stochastic variation.
 
-The notation is deliberately broad. It distinguishes a theoretical dynamical model—an explicit proposal about how symptoms change—from a statistical symptom network estimated from observed covariance or lagged association. The two can inform one another, but they are not equivalent. In particular, a cross-sectional partial-correlation edge does not by itself establish a causal pathway, its direction, or its timescale. 
+The notation is deliberately broad. It distinguishes a theoretical dynamical model—an explicit proposal about how symptoms change—from a statistical symptom network estimated from observed covariance or lagged association. The two can inform one another, but they are not equivalent. In particular, a cross-sectional partial-correlation edge does not by itself establish a causal pathway, its direction, or its timescale.
 
 ## A feedback model
 
-Consider a small network involving insomnia \(I\), fatigue \(F\), low mood \(M\), activity \(A\), and rumination \(R\). We can formulate a stylized model as
+Consider a small network involving insomnia $I$, fatigue $F$, low mood $M$, activity $A$, and rumination $R$. We can formulate a stylized model as
 
-\[
+$$
 \begin{aligned}
 \frac{dI}{dt} &= -a_I I + w_{IR}R + u_I(t), \\
 \frac{dF}{dt} &= -a_F F + w_{FI}I, \\
@@ -40,58 +40,58 @@ Consider a small network involving insomnia \(I\), fatigue \(F\), low mood \(M\)
 \frac{dA}{dt} &= -a_A A - w_{AM}M + u_A(t), \\
 \frac{dR}{dt} &= -a_R R + w_{RM}M.
 \end{aligned}
-\]
+$$
 
-The positive constants \(a_i\) represent self-regulation or decay: absent continued input, a state tends to move back toward its local baseline. The \(w_{ij}\) values represent directional couplings. Low activity is modelled as protective here—greater activity reduces low mood through \(-w_{MA}A\)—whereas low mood suppresses activity through \(-w_{AM}M\).
+The positive constants $a_i$ represent self-regulation or decay: absent continued input, a state tends to move back toward its local baseline. The $w_{ij}$ values represent directional couplings. Low activity is modelled as protective here—greater activity reduces low mood through $-w_{MA}A$—whereas low mood suppresses activity through $-w_{AM}M$.
 
-This is not a clinical model of depression. It is a transparent hypothesis generator. It makes clear, for example, that increasing sleep disruption will not necessarily produce a persistent mood shift: persistence depends on the joint strength, signs, delays, and nonlinearities of the whole feedback structure. Formal modelling is useful precisely because verbal causal loops often conceal these assumptions. 
+This is not a clinical model of depression. It is a transparent hypothesis generator. It makes clear, for example, that increasing sleep disruption will not necessarily produce a persistent mood shift: persistence depends on the joint strength, signs, delays, and nonlinearities of the whole feedback structure. Formal modelling is useful precisely because verbal causal loops often conceal these assumptions.
 
 ## Stability and basins
 
-An equilibrium \(\mathbf{x}^\ast\) is a state for which
+An equilibrium $\mathbf{x}^\ast$ is a state for which
 
-\[
+$$
 \frac{d\mathbf{x}}{dt} = \mathbf{0}.
-\]
+$$
 
 Near an equilibrium, the system can be approximated by a linearization:
 
-\[
+$$
 \frac{d\delta\mathbf{x}}{dt}
 =
 J(\mathbf{x}^\ast)\delta\mathbf{x},
-\]
+$$
 
-where \(J\) is the Jacobian matrix of partial derivatives. If every eigenvalue of \(J\) has a negative real part, small perturbations decay locally and the equilibrium is stable. If one or more eigenvalues cross into positive real values, deviations grow rather than settle.
+where $J$ is the Jacobian matrix of partial derivatives. If every eigenvalue of $J$ has a negative real part, small perturbations decay locally and the equilibrium is stable. If one or more eigenvalues cross into positive real values, deviations grow rather than settle.
 
-This provides a more precise interpretation of “resilience” than simply having few symptoms. A low-symptom state can be stable because regulatory processes rapidly pull the system back after ordinary disruptions. A high-symptom state can also be stable if feedback loops maintain it. The two conditions may coexist, producing alternative attractors: one remission-like and one distress-dominated. The set of initial states that return to a particular attractor is its **basin of attraction**. 
+This provides a more precise interpretation of “resilience” than simply having few symptoms. A low-symptom state can be stable because regulatory processes rapidly pull the system back after ordinary disruptions. A high-symptom state can also be stable if feedback loops maintain it. The two conditions may coexist, producing alternative attractors: one remission-like and one distress-dominated. The set of initial states that return to a particular attractor is its **basin of attraction**.
 
 A basin’s depth is not a single directly observable quantity, but a useful dynamical metaphor. A deep basin requires a larger or more sustained perturbation to escape; a shallow basin is easier to leave. In psychological terms, the same stressor may be transient for one person or at one point in time, but can trigger a prolonged cascade when the system has weakened regulation or stronger reinforcing loops.
 
 ## A potential landscape
 
-For a single summary variable \(z(t)\), such as an idealised global symptom burden, one can represent bistability with a potential function:
+For a single summary variable $z(t)$, such as an idealised global symptom burden, one can represent bistability with a potential function:
 
-\[
+$$
 V(z) = \frac{z^4}{4} - \frac{r z^2}{2} - hz.
-\]
+$$
 
 The dynamics follow
 
-\[
+$$
 \frac{dz}{dt} = -\frac{dV(z)}{dz} + \sigma \eta(t)
 = -z^3 + rz + h + \sigma \eta(t),
-\]
+$$
 
-where \(r\) controls the shape of the landscape, \(h\) represents sustained external pressure or protection, and \(\sigma\eta(t)\) represents noise.
+where $r$ controls the shape of the landscape, $h$ represents sustained external pressure or protection, and $\sigma\eta(t)$ represents noise.
 
-When \(r > 0\), the potential may have two wells separated by a ridge. One well can be interpreted as a lower-symptom regime and the other as a higher-symptom regime, though the labels remain theoretical rather than diagnostic. As \(h\) changes, one basin can become shallower, and eventually disappear through a bifurcation. The system then changes abruptly, even if the external parameter changed gradually. That possibility is one reason symptom trajectories need not always be linear or smooth. 
+When $r > 0$, the potential may have two wells separated by a ridge. One well can be interpreted as a lower-symptom regime and the other as a higher-symptom regime, though the labels remain theoretical rather than diagnostic. As $h$ changes, one basin can become shallower, and eventually disappear through a bifurcation. The system then changes abruptly, even if the external parameter changed gradually. That possibility is one reason symptom trajectories need not always be linear or smooth.
 
 ## R simulation
 
 The code below simulates the five-process feedback system under two conditions. In the first, couplings are modest and a temporary sleep disruption fades. In the second, stronger mood–rumination–sleep feedback may produce a longer-lived system-wide elevation.
 
-```r
+``` r
 library(deSolve)
 library(dplyr)
 library(tidyr)
@@ -163,13 +163,13 @@ ggplot(results, aes(time, state, colour = process)) +
   theme_minimal(base_size = 12)
 ```
 
-The model is intentionally simplified: all terms are deterministic, variables are treated as continuous, and parameters are chosen for illustration rather than estimated from patient data. Yet it illustrates a central network hypothesis. A temporary perturbation can have qualitatively different consequences when feedback relations become stronger relative to regulatory processes. 
+The model is intentionally simplified: all terms are deterministic, variables are treated as continuous, and parameters are chosen for illustration rather than estimated from patient data. Yet it illustrates a central network hypothesis. A temporary perturbation can have qualitatively different consequences when feedback relations become stronger relative to regulatory processes.
 
 ## From ODEs to data
 
 Psychological data rarely arrive as continuous trajectories. More commonly, a participant provides repeated ratings through experience sampling: perhaps several observations per day of mood, worry, energy, sleep quality, social contact, and stress. A discrete-time approximation to the continuous system is
 
-\[
+$$
 \mathbf{x}_{t+1}
 =
 \mathbf{c}
@@ -179,9 +179,9 @@ B\mathbf{x}_t
 \mathbf{u}_t
 +
 \boldsymbol{\varepsilon}_{t+1}.
-\]
+$$
 
-This is a vector autoregressive, or VAR, model. Each coefficient \(B_{ij}\) estimates whether process \(j\) at one observation predicts process \(i\) at the next, conditional on the other measured processes. Such models are widely used for person-specific psychological networks, although their interpretation depends on temporal resolution, stationarity, measurement quality, omitted variables, and the adequacy of a linear lagged model. [sciencedirect](https://www.sciencedirect.com/science/article/pii/S2352250X21000300)
+This is a vector autoregressive, or VAR, model. Each coefficient $B_{ij}$ estimates whether process $j$ at one observation predicts process $i$ at the next, conditional on the other measured processes. Such models are widely used for person-specific psychological networks, although their interpretation depends on temporal resolution, stationarity, measurement quality, omitted variables, and the adequacy of a linear lagged model. [sciencedirect](https://www.sciencedirect.com/science/article/pii/S2352250X21000300)
 
 The key point is subtle but important. A VAR network is an empirical statistical model, whereas an ODE network is typically a mechanistic model. They meet when the observation interval is reasonably aligned with the processes under study and when the proposed mechanisms are explicit enough to generate testable predictions. In practice, the two should be used iteratively: substantive theory informs the model, data identify inconsistencies, and simulations show what the assumed system would actually do.
 
@@ -189,21 +189,21 @@ The key point is subtle but important. A VAR network is an empirical statistical
 
 As a stable state loses local stability, the system’s recovery from small disturbances can become slower. This phenomenon is called **critical slowing down**. In a one-dimensional linear approximation,
 
-\[
+$$
 x_{t+1} = \rho x_t + \varepsilon_t,
-\]
+$$
 
-the return rate depends on \(\rho\). When \(\rho\) approaches 1, shocks persist: lag-1 autocorrelation rises, and variance can increase because perturbations accumulate rather than rapidly dissipate.
+the return rate depends on $\rho$. When $\rho$ approaches 1, shocks persist: lag-1 autocorrelation rises, and variance can increase because perturbations accumulate rather than rapidly dissipate.
 
-For a multivariate network, the comparable quantity is the dominant eigenvalue of the local dynamics. If the real part of the leading eigenvalue approaches zero in continuous time—or the dominant modulus approaches one in discrete time—the slowest recovery mode becomes slower. A warning signal may appear first in a particular combination of symptoms rather than in every symptom individually. 
+For a multivariate network, the comparable quantity is the dominant eigenvalue of the local dynamics. If the real part of the leading eigenvalue approaches zero in continuous time—or the dominant modulus approaches one in discrete time—the slowest recovery mode becomes slower. A warning signal may appear first in a particular combination of symptoms rather than in every symptom individually.
 
 Possible indicators include:
 
-- Rising lag-1 autocorrelation in mood, anxiety, or another repeatedly measured process
-- Increasing within-person variance or covariance among symptoms
-- Longer return times after identifiable stressors
-- Greater “flickering” between lower- and higher-symptom configurations
-- A leading eigenvalue moving toward the stability boundary in an estimated local model
+-   Rising lag-1 autocorrelation in mood, anxiety, or another repeatedly measured process
+-   Increasing within-person variance or covariance among symptoms
+-   Longer return times after identifiable stressors
+-   Greater “flickering” between lower- and higher-symptom configurations
+-   A leading eigenvalue moving toward the stability boundary in an estimated local model
 
 These are conditional indicators, not diagnostic tests. Empirical findings are mixed: some individual-level studies suggest that autocorrelation can rise before depressive transitions, but broader prospective evidence is limited and depends strongly on the domain, sampling interval, noise, and the timing of the transition. A large study found a specific association for suspicious affect and later interpersonal sensitivity, but not general prediction of future symptom increases across several domains. [pubmed.ncbi.nlm.nih](https://pubmed.ncbi.nlm.nih.gov/34990190/)
 
@@ -211,7 +211,7 @@ These are conditional indicators, not diagnostic tests. Empirical findings are m
 
 The following code computes rolling lag-1 autocorrelation and variance for a simulated low-mood series. With real experience-sampling data, the same approach can be applied to an evenly spaced, sufficiently long time series after careful inspection of missingness and trends.
 
-```r
+``` r
 library(slider)
 library(dplyr)
 library(ggplot2)
@@ -268,12 +268,12 @@ A network account shifts attention from asking only, “Which symptom is most se
 
 The answer does not follow mechanically from centrality. A highly connected node in an estimated network may be an effective treatment target, but it may also be a marker of a common cause, an artefact of measurement overlap, or a downstream consequence. The strongest case for intervention requires converging evidence: a plausible mechanism, within-person temporal data, experimental or quasi-experimental perturbation, replication, and clinical feasibility. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC7012663/)
 
-In the model above, sleep is a reasonable leverage point because it appears in a feedback loop, not because it has the largest degree by definition. One can test that claim in silico by increasing \(a_I\), reducing the influence \(w_{IR}\), or adding a time-limited protective input, then comparing return times and the probability of moving into a high-symptom regime. Such simulations do not establish treatment efficacy, but they can make theoretical expectations precise before clinical testing.
+In the model above, sleep is a reasonable leverage point because it appears in a feedback loop, not because it has the largest degree by definition. One can test that claim in silico by increasing $a_I$, reducing the influence $w_{IR}$, or adding a time-limited protective input, then comparing return times and the probability of moving into a high-symptom regime. Such simulations do not establish treatment efficacy, but they can make theoretical expectations precise before clinical testing.
 
 ## Limits of the metaphor
 
-Psychological networks are neither a replacement for diagnosis nor evidence that disorders lack biological, developmental, social, or environmental causes. Those influences can enter the model as external inputs, latent processes, changing parameters, or additional nodes. Sometimes a common cause model may be more parsimonious than a symptom-interaction model; often, a hybrid account is more plausible. 
+Psychological networks are neither a replacement for diagnosis nor evidence that disorders lack biological, developmental, social, or environmental causes. Those influences can enter the model as external inputs, latent processes, changing parameters, or additional nodes. Sometimes a common cause model may be more parsimonious than a symptom-interaction model; often, a hybrid account is more plausible.
 
-Nor should a network diagram be mistaken for the person. Individual processes operate on different timescales, relationships may be nonlinear and asymmetric, and causal links can change with context. Many published models also rely on binary, instantaneous, positive, pairwise, and symmetric assumptions that are unlikely to hold across real psychological systems. Formal differential-equation models are valuable because they force these choices into the open, where they can be criticized, revised, and tested. 
+Nor should a network diagram be mistaken for the person. Individual processes operate on different timescales, relationships may be nonlinear and asymmetric, and causal links can change with context. Many published models also rely on binary, instantaneous, positive, pairwise, and symmetric assumptions that are unlikely to hold across real psychological systems. Formal differential-equation models are valuable because they force these choices into the open, where they can be criticized, revised, and tested.
 
 The practical promise of the framework lies less in drawing attractive graphs than in posing accountable questions: which processes are measured, what do the edges mean, how quickly do relations operate, what stabilizes recovery, and what intervention would change the system rather than merely describe it?
