@@ -1,0 +1,897 @@
+# From Equations to Insights: Computational Methods and Simulation
+
+The preceding posts developed models for nonlinear change, stochastic perturbation, feedback, and networks. Those equations specify a system, but they do not usually solve themselves. Even when an analytic solution exists, it may only apply to a highly simplified case: linear dynamics, constant coefficients, one state variable, or a particular initial condition.
+
+Computation is the bridge between a formal model and its observable consequences. Numerical integration produces approximate trajectories; error analysis asks how much confidence to place in those approximations; parameter estimation connects equations to data; and sensitivity analysis asks whether a conclusion is stable or merely an artefact of one convenient parameter choice. These are not auxiliary technical details. They determine what a model actually says.
+
+## From Derivatives to Steps
+
+Consider an ordinary differential equation
+
+$$
+\frac{dy}{dt} = f(t,y), \qquad y(t_0) = y_0.
+\tag{1}
+$$
+
+The equation gives the instantaneous rate of change of $y$, not its value at every future time. A numerical method replaces continuous time by a sequence of points,
+
+$$
+t_n = t_0 + nh,
+$$
+
+where $h$ is the time step. It then estimates $y(t_n)$ with a computed value $y_n$.
+
+The simplest method is forward Euler integration:
+
+$$
+y_{n+1} = y_n + h f(t_n,y_n).
+\tag{2}
+$$
+
+Euler's method takes the current slope, assumes that it remains constant for one step, and moves accordingly. This is easy to implement and useful for intuition, but the approximation can be crude. A nonlinear trajectory may curve substantially within an interval, and Euler integration does not see that curvature until the next step.
+
+For a sufficiently smooth system, Euler's local truncation error is $O(h^2)$, while its global error over a fixed interval is $O(h)$. Halving the time step should therefore roughly halve the accumulated error. That scaling is not merely a theorem in the background; it is something one should check when numerical results support a scientific claim.
+
+## R Simulation: Euler Integration
+
+The exponential-decay equation is simple enough to solve exactly:
+
+$$
+\frac{dy}{dt} = -\lambda y,
+\qquad
+y(t) = y_0 e^{-\lambda t}.
+\tag{3}
+$$
+
+It is a useful benchmark because the numerical approximation can be compared with a known answer. The code below evaluates Euler solutions for several step sizes and shows how the approximation approaches the analytic trajectory.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+euler_solve <- function(rhs, y0, times, pars = NULL) {
+  n <- length(times)
+  y <- numeric(n)
+  y [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/237323/a38a4d37-b5ae-4105-9070-87171d85939b/14-NetworksofChange.Rmd?AWSAccessKeyId=ASIA2F3EMEYE5PI5ASET&Signature=P9EKZn1PFkSDk2QhwhlB2%2FE494Q%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIBSEx1MasoSCcqYy5tzalFKF5pngbwD9EqVh9jXCz6JAAiB8%2F4NDbnB5sP%2BkY8zFVSHVGtNLfYbG4pB3Rxm%2FtjAZoir8BAjI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDY5OTc1MzMwOTcwNSIMsD7uHfZHNe%2FRiAgqKtAEUoU%2FVF3U2x3y6D1dM3ZRDRMyzdErINX6G7JDnf325DWxtOOlXCWxciCMcsQbSjDCI29vqRikYda%2B5hUkvh2QhrPk9KLAT32keSO8Gu6s8nrLmUiD9uTL0WarG1spB4aJbhCyvuBt2sOQF0gJBkagkkYIL317zXps58%2BRfy%2BwjVfypFrpX6Z0D9ego%2BEREaDJpF58P0UswZq6tqI%2BL%2FHMNj1z5ifbu7HGZsNTfdcYZTax3Gi90RY8MOfgYRy6VVcNmZaYhwMH9xVrLtXzxd%2BZrXE%2Food8AKqJLAB8iQl3ZynR%2FV4UbVxDrBB0l9uRRKfIljGz4T4YUSWjDCn2Qsy9mnxeBah9BMRx3f%2BfhuKV2fEfuEMAVRjsg6wsG1GJfP8PpOA1JheknblM0f4yFzY%2B%2B2qvtRhwW62da0ma32JM1kKLZpobfgeDqA7kD9FnKNZ7BxVrGpvf%2FjySMYgCXg%2BLhx8ztXla69KvmdTVpPmOqRG8hSsAATdxbkXd7PChFL9%2B1OK2tJWfJ1vnkdpelIPZnW5WdvVbob0Q20OOc1y%2Ff89qFFARAA5quZ2oPhTeL1kMJsP8de2RQ3aUm8mtPtd5TiwiOknExbiwyJdr7kXJ%2BKk7plEGyNwl17Rz%2BFq7L1sNVSAK4avZENtR5yaslMUCL39FtsdDZTZTZoYybuFPKIfzQR3tGiofNPFb340cLMFILPJHPNGHTxxyS2%2B4kpTbLuz71GiqbeymwJoz%2FvMwRSuOCrue0SH0VJ3P2hvtiSqS9EMNFa80w0seMj5aQOl3uDD1k7jTBjqZAVaGRUiTkjYhyPrMjktDVta19Q9X5hkRvSCNqHh1uXDK%2Fd14MVV2k78xf9Pwdvspfahqt4K2u3XyJZhWPewLTXnJxHEIJRKFyoj0JGryuw%2B1XsfXIcJVWi39yzI5K3WbtkNFQ5r0P3DigpApXCU3QvXYhLuhysEnK3YlQe3bkT7VMVfVfBo7dVsFXYJWsdgHdGVhD4WOWyAvAw%3D%3D&Expires=1785599944) <- y0
+
+  for (i in 1:(n - 1)) {
+    h <- times[i + 1] - times[i]
+    y[i + 1] <- y[i] + h * rhs(times[i], y[i], pars)
+  }
+
+  tibble(time = times, y = y)
+}
+
+decay_rhs <- function(t, y, pars) {
+  -pars$lambda * y
+}
+
+lambda <- 0.7
+y0 <- 1
+t_end <- 8
+
+step_sizes <- c(0.8, 0.4, 0.2, 0.05)
+
+euler_results <- lapply(step_sizes, function(h) {
+  times <- seq(0, t_end, by = h)
+
+  euler_solve(
+    rhs = decay_rhs,
+    y0 = y0,
+    times = times,
+    pars = list(lambda = lambda)
+  ) |>
+    mutate(
+      step_size = factor(h),
+      exact = y0 * exp(-lambda * time),
+      absolute_error = abs(y - exact)
+    )
+}) |>
+  bind_rows()
+
+exact_curve <- tibble(
+  time = seq(0, t_end, length.out = 500),
+  exact = y0 * exp(-lambda * time)
+)
+
+p_trajectory <- ggplot(euler_results, aes(time, y, colour = step_size)) +
+  geom_line(linewidth = 0.8) +
+  geom_line(
+    data = exact_curve,
+    aes(time, exact),
+    inherit.aes = FALSE,
+    colour = "black",
+    linetype = "dashed",
+    linewidth = 0.9
+  ) +
+  labs(
+    title = "Forward Euler approximations to exponential decay",
+    subtitle = "The dashed curve is the exact solution",
+    x = "Time",
+    y = "State y(t)",
+    colour = "Step size h"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_error <- ggplot(euler_results, aes(time, absolute_error, colour = step_size)) +
+  geom_line(linewidth = 0.8) +
+  scale_y_log10() +
+  labs(
+    title = "Accumulated Euler error",
+    subtitle = "Smaller steps reduce error but require more evaluations",
+    x = "Time",
+    y = "Absolute error (log scale)",
+    colour = "Step size h"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_trajectory
+p_error
+```
+
+The numerical result is not wrong because it differs from the exact curve. It is an approximation with a known source of error. The practical question is whether the discrepancy is small relative to the scientific feature of interest. If one wants only the broad decay timescale, a moderate step may be adequate. If the question concerns a threshold crossing or a short-lived transient, the same approximation may be inadequate.
+
+## Runge-Kutta Integration
+
+A more accurate method can estimate the slope at several points within each interval. The classical fourth-order Runge-Kutta method, usually called RK4, evaluates four slopes:
+
+$$
+\begin{aligned}
+k_1 &= f(t_n,y_n), \\
+k_2 &= f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1\right), \\
+k_3 &= f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2\right), \\
+k_4 &= f(t_n+h,y_n+hk_3).
+\end{aligned}
+\tag{4}
+$$
+
+It combines them as
+
+$$
+y_{n+1}
+=
+y_n
++
+\frac{h}{6}
+\left(
+k_1 + 2k_2 + 2k_3 + k_4
+\right).
+\tag{5}
+$$
+
+The method effectively samples the beginning, middle, and end of a step. For sufficiently smooth problems, its local truncation error is $O(h^5)$, and its global error is $O(h^4)$. Halving $h$ should then reduce the global error by approximately a factor of $2^4=16$, provided round-off error and other numerical issues remain minor.
+
+This does not mean RK4 is universally preferable. Higher accuracy per step comes at the cost of more function evaluations, and some systems are stiff: they contain both fast and slow timescales, forcing explicit methods to take very small steps for numerical stability even when the scientifically relevant behaviour is slow. Numerical methods need to match the problem, not just carry an impressive order label.
+
+## R Simulation: RK4 and Error Scaling
+
+The following code implements RK4 directly, then compares its endpoint error with Euler integration across a sequence of decreasing step sizes. The slope of the log-log relationship offers an empirical check on the expected order of convergence.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+rk4_solve <- function(rhs, y0, times, pars = NULL) {
+  n <- length(times)
+  y <- numeric(n)
+  y [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/237323/a38a4d37-b5ae-4105-9070-87171d85939b/14-NetworksofChange.Rmd?AWSAccessKeyId=ASIA2F3EMEYE5PI5ASET&Signature=P9EKZn1PFkSDk2QhwhlB2%2FE494Q%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIBSEx1MasoSCcqYy5tzalFKF5pngbwD9EqVh9jXCz6JAAiB8%2F4NDbnB5sP%2BkY8zFVSHVGtNLfYbG4pB3Rxm%2FtjAZoir8BAjI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDY5OTc1MzMwOTcwNSIMsD7uHfZHNe%2FRiAgqKtAEUoU%2FVF3U2x3y6D1dM3ZRDRMyzdErINX6G7JDnf325DWxtOOlXCWxciCMcsQbSjDCI29vqRikYda%2B5hUkvh2QhrPk9KLAT32keSO8Gu6s8nrLmUiD9uTL0WarG1spB4aJbhCyvuBt2sOQF0gJBkagkkYIL317zXps58%2BRfy%2BwjVfypFrpX6Z0D9ego%2BEREaDJpF58P0UswZq6tqI%2BL%2FHMNj1z5ifbu7HGZsNTfdcYZTax3Gi90RY8MOfgYRy6VVcNmZaYhwMH9xVrLtXzxd%2BZrXE%2Food8AKqJLAB8iQl3ZynR%2FV4UbVxDrBB0l9uRRKfIljGz4T4YUSWjDCn2Qsy9mnxeBah9BMRx3f%2BfhuKV2fEfuEMAVRjsg6wsG1GJfP8PpOA1JheknblM0f4yFzY%2B%2B2qvtRhwW62da0ma32JM1kKLZpobfgeDqA7kD9FnKNZ7BxVrGpvf%2FjySMYgCXg%2BLhx8ztXla69KvmdTVpPmOqRG8hSsAATdxbkXd7PChFL9%2B1OK2tJWfJ1vnkdpelIPZnW5WdvVbob0Q20OOc1y%2Ff89qFFARAA5quZ2oPhTeL1kMJsP8de2RQ3aUm8mtPtd5TiwiOknExbiwyJdr7kXJ%2BKk7plEGyNwl17Rz%2BFq7L1sNVSAK4avZENtR5yaslMUCL39FtsdDZTZTZoYybuFPKIfzQR3tGiofNPFb340cLMFILPJHPNGHTxxyS2%2B4kpTbLuz71GiqbeymwJoz%2FvMwRSuOCrue0SH0VJ3P2hvtiSqS9EMNFa80w0seMj5aQOl3uDD1k7jTBjqZAVaGRUiTkjYhyPrMjktDVta19Q9X5hkRvSCNqHh1uXDK%2Fd14MVV2k78xf9Pwdvspfahqt4K2u3XyJZhWPewLTXnJxHEIJRKFyoj0JGryuw%2B1XsfXIcJVWi39yzI5K3WbtkNFQ5r0P3DigpApXCU3QvXYhLuhysEnK3YlQe3bkT7VMVfVfBo7dVsFXYJWsdgHdGVhD4WOWyAvAw%3D%3D&Expires=1785599944) <- y0
+
+  for (i in 1:(n - 1)) {
+    t <- times[i]
+    h <- times[i + 1] - times[i]
+    current <- y[i]
+
+    k1 <- rhs(t, current, pars)
+    k2 <- rhs(t + h / 2, current + h * k1 / 2, pars)
+    k3 <- rhs(t + h / 2, current + h * k2 / 2, pars)
+    k4 <- rhs(t + h, current + h * k3, pars)
+
+    y[i + 1] <- current + h * (k1 + 2 * k2 + 2 * k3 + k4) / 6
+  }
+
+  tibble(time = times, y = y)
+}
+
+decay_rhs <- function(t, y, pars) {
+  -pars$lambda * y
+}
+
+lambda <- 0.7
+y0 <- 1
+t_end <- 8
+
+step_sizes <- 0.8 / 2^(0:6)
+
+convergence_df <- lapply(step_sizes, function(h) {
+  times <- seq(0, t_end, by = h)
+  exact_end <- y0 * exp(-lambda * t_end)
+
+  euler_end <- euler_solve(
+    rhs = decay_rhs,
+    y0 = y0,
+    times = times,
+    pars = list(lambda = lambda)
+  ) |>
+    slice_tail(n = 1) |>
+    pull(y)
+
+  rk4_end <- rk4_solve(
+    rhs = decay_rhs,
+    y0 = y0,
+    times = times,
+    pars = list(lambda = lambda)
+  ) |>
+    slice_tail(n = 1) |>
+    pull(y)
+
+  tibble(
+    h = h,
+    method = c("Euler", "RK4"),
+    endpoint_error = c(
+      abs(euler_end - exact_end),
+      abs(rk4_end - exact_end)
+    )
+  )
+}) |>
+  bind_rows()
+
+estimated_orders <- convergence_df |>
+  group_by(method) |>
+  arrange(h, .by_group = TRUE) |>
+  summarise(
+    estimated_order = -coef(lm(log(endpoint_error) ~ log(h))) [ppl-ai-file-upload.s3.amazonaws](https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/237323/a6baa454-f4c9-49bc-9b17-9e18448b52d9/15-NetworksofChangePsych-2.Rmd?AWSAccessKeyId=ASIA2F3EMEYE5PI5ASET&Signature=1f8WaCYUwNXv1FGgZyZAMBUqdMs%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIBSEx1MasoSCcqYy5tzalFKF5pngbwD9EqVh9jXCz6JAAiB8%2F4NDbnB5sP%2BkY8zFVSHVGtNLfYbG4pB3Rxm%2FtjAZoir8BAjI%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDY5OTc1MzMwOTcwNSIMsD7uHfZHNe%2FRiAgqKtAEUoU%2FVF3U2x3y6D1dM3ZRDRMyzdErINX6G7JDnf325DWxtOOlXCWxciCMcsQbSjDCI29vqRikYda%2B5hUkvh2QhrPk9KLAT32keSO8Gu6s8nrLmUiD9uTL0WarG1spB4aJbhCyvuBt2sOQF0gJBkagkkYIL317zXps58%2BRfy%2BwjVfypFrpX6Z0D9ego%2BEREaDJpF58P0UswZq6tqI%2BL%2FHMNj1z5ifbu7HGZsNTfdcYZTax3Gi90RY8MOfgYRy6VVcNmZaYhwMH9xVrLtXzxd%2BZrXE%2Food8AKqJLAB8iQl3ZynR%2FV4UbVxDrBB0l9uRRKfIljGz4T4YUSWjDCn2Qsy9mnxeBah9BMRx3f%2BfhuKV2fEfuEMAVRjsg6wsG1GJfP8PpOA1JheknblM0f4yFzY%2B%2B2qvtRhwW62da0ma32JM1kKLZpobfgeDqA7kD9FnKNZ7BxVrGpvf%2FjySMYgCXg%2BLhx8ztXla69KvmdTVpPmOqRG8hSsAATdxbkXd7PChFL9%2B1OK2tJWfJ1vnkdpelIPZnW5WdvVbob0Q20OOc1y%2Ff89qFFARAA5quZ2oPhTeL1kMJsP8de2RQ3aUm8mtPtd5TiwiOknExbiwyJdr7kXJ%2BKk7plEGyNwl17Rz%2BFq7L1sNVSAK4avZENtR5yaslMUCL39FtsdDZTZTZoYybuFPKIfzQR3tGiofNPFb340cLMFILPJHPNGHTxxyS2%2B4kpTbLuz71GiqbeymwJoz%2FvMwRSuOCrue0SH0VJ3P2hvtiSqS9EMNFa80w0seMj5aQOl3uDD1k7jTBjqZAVaGRUiTkjYhyPrMjktDVta19Q9X5hkRvSCNqHh1uXDK%2Fd14MVV2k78xf9Pwdvspfahqt4K2u3XyJZhWPewLTXnJxHEIJRKFyoj0JGryuw%2B1XsfXIcJVWi39yzI5K3WbtkNFQ5r0P3DigpApXCU3QvXYhLuhysEnK3YlQe3bkT7VMVfVfBo7dVsFXYJWsdgHdGVhD4WOWyAvAw%3D%3D&Expires=1785599944),
+    .groups = "drop"
+  )
+
+print(estimated_orders)
+
+ggplot(convergence_df, aes(h, endpoint_error, colour = method)) +
+  geom_point(size = 2.5) +
+  geom_line(linewidth = 0.8) +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(
+    title = "Empirical convergence of Euler and RK4",
+    subtitle = "The slope on this log-log scale estimates numerical order",
+    x = "Step size h",
+    y = "Absolute endpoint error",
+    colour = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+The estimated order will not necessarily equal one or four exactly. Finite step ranges, machine precision, and the particular equation all matter. Still, the broad pattern should be clear: RK4 reaches a given tolerance with substantially fewer time points than Euler for this smooth, non-stiff problem.
+
+A convergence check can also expose false confidence. If reducing the step size changes a model's qualitative conclusion — whether oscillations occur, whether a trajectory crosses a threshold, or which attractor it reaches — then the original numerical result was not yet a stable property of the model.
+
+## Adaptive Time and Stiffness
+
+Fixed-step integration is conceptually clean, but real systems often change at uneven rates. A population may drift slowly for years and then respond sharply after a perturbation. A neural or biochemical system may combine millisecond-scale transients with slow adaptation. Using a tiny fixed step everywhere can be wasteful; using a large step everywhere can miss the event that matters.
+
+Adaptive solvers estimate error while integrating and adjust their step size. They take larger steps where the solution is smooth and smaller steps where curvature increases. In R, `deSolve::ode()` supplies several methods, including adaptive Runge-Kutta solvers. Its default solver, LSODA, can also switch between non-stiff and stiff strategies when it detects that the system's numerical character has changed.
+
+A stiff system is not necessarily biologically or psychologically unstable. Stiffness is a numerical property: some components decay or change much faster than others. Explicit Euler integration can become unstable in such systems even when the true solution is perfectly stable.
+
+For the scalar equation
+
+$$
+\frac{dy}{dt} = -\lambda y,
+\tag{6}
+$$
+
+Euler produces
+
+$$
+y_{n+1} = (1-h\lambda)y_n.
+\tag{7}
+$$
+
+Numerical stability requires
+
+$$
+|1-h\lambda| < 1,
+$$
+
+which implies $0<h\lambda<2$. If $\lambda$ is large, a seemingly reasonable time step can generate oscillation or explosive growth that belongs to the algorithm rather than the model.
+
+## R Simulation: A Stiff Decay Problem
+
+This example compares Euler integration with an adaptive solver for a fast-decaying process. The analytic solution is still simple, which makes the numerical failure visible rather than hypothetical.
+
+```{r}
+library(deSolve)
+library(ggplot2)
+library(dplyr)
+
+fast_decay_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    list(c(dy = -lambda * y))
+  })
+}
+
+lambda <- 30
+y0 <- 1
+times_euler <- seq(0, 1, by = 0.1)
+times_adaptive <- seq(0, 1, length.out = 300)
+
+euler_stiff <- euler_solve(
+  rhs = function(t, y, pars) -pars$lambda * y,
+  y0 = y0,
+  times = times_euler,
+  pars = list(lambda = lambda)
+) |>
+  mutate(method = "Euler, h = 0.1")
+
+adaptive_stiff <- as.data.frame(
+  ode(
+    y = c(y = y0),
+    times = times_adaptive,
+    func = fast_decay_rhs,
+    parms = list(lambda = lambda),
+    method = "lsoda"
+  )
+) |>
+  transmute(time, y, method = "Adaptive LSODA")
+
+exact_stiff <- tibble(
+  time = times_adaptive,
+  y = y0 * exp(-lambda * time),
+  method = "Exact solution"
+)
+
+plot_df <- bind_rows(euler_stiff, adaptive_stiff, exact_stiff)
+
+ggplot(plot_df, aes(time, y, colour = method)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(
+    data = filter(plot_df, method == "Euler, h = 0.1"),
+    size = 2
+  ) +
+  labs(
+    title = "Numerical instability in a fast-decaying system",
+    subtitle = "The true solution decays monotonically; Euler violates its stability condition",
+    x = "Time",
+    y = "State y(t)",
+    colour = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+The point is not that adaptive solvers are infallible. They have tolerances, assumptions, and failure modes of their own. But they make a sensible default for many ordinary differential-equation models because they target a specified approximation error rather than treating every part of a trajectory as equally demanding.
+
+## The Lorenz System
+
+Numerical methods become more revealing when an equation has no convenient closed-form solution. The Lorenz system is a canonical three-variable nonlinear model:
+
+$$
+\begin{aligned}
+\frac{dx}{dt} &= \sigma(y-x), \\
+\frac{dy}{dt} &= x(\rho-z)-y, \\
+\frac{dz}{dt} &= xy-\beta z.
+\end{aligned}
+\tag{8}
+$$
+
+The state vector $(x,y,z)$ was originally motivated by a simplified model of convection. Its continuing value is methodological. The system is deterministic, yet for familiar parameter values it shows sensitive dependence on initial conditions: nearby starting states can produce trajectories that diverge substantially over time.
+
+That sensitivity should not be confused with randomness. Given identical initial conditions, parameters, numerical method, and arithmetic, the calculation is reproducible. The difficulty is that finite precision and incomplete knowledge of initial conditions limit long-range prediction. This distinction matters whenever a complicated output tempts one to call a system stochastic when it may instead be deterministic but difficult to forecast.
+
+## R Simulation: Solving the Lorenz Equations
+
+The code below uses an adaptive solver to simulate the Lorenz system, then visualizes both time series and its three-dimensional state-space trajectory.
+
+```{r}
+library(deSolve)
+library(ggplot2)
+library(dplyr)
+library(plotly)
+
+lorenz_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    dx <- sigma * (y - x)
+    dy <- x * (rho - z) - y
+    dz <- x * y - beta * z
+
+    list(c(dx, dy, dz))
+  })
+}
+
+lorenz_pars <- c(
+  sigma = 10,
+  rho = 28,
+  beta = 8 / 3
+)
+
+lorenz_initial <- c(
+  x = 1,
+  y = 1,
+  z = 1
+)
+
+lorenz_times <- seq(0, 40, by = 0.01)
+
+lorenz_df <- as.data.frame(
+  ode(
+    y = lorenz_initial,
+    times = lorenz_times,
+    func = lorenz_rhs,
+    parms = lorenz_pars,
+    method = "lsoda"
+  )
+)
+
+lorenz_long <- lorenz_df |>
+  pivot_longer(
+    cols = c(x, y, z),
+    names_to = "state",
+    values_to = "value"
+  )
+
+p_lorenz_time <- ggplot(lorenz_long, aes(time, value, colour = state)) +
+  geom_line(linewidth = 0.6) +
+  labs(
+    title = "Lorenz-system time series",
+    subtitle = "Deterministic trajectories can remain irregular and non-repeating",
+    x = "Time",
+    y = "State value",
+    colour = NULL
+  ) +
+  theme_minimal(base_size = 12)
+
+p_lorenz_time
+
+plot_ly(
+  lorenz_df,
+  x = ~x,
+  y = ~y,
+  z = ~z,
+  type = "scatter3d",
+  mode = "lines",
+  line = list(width = 2, color = "#2C7FB8")
+) |>
+  layout(
+    title = "Lorenz attractor",
+    scene = list(
+      xaxis = list(title = "x"),
+      yaxis = list(title = "y"),
+      zaxis = list(title = "z")
+    )
+  )
+```
+
+The two lobes of the Lorenz attractor are often presented as a visual emblem of chaos. That image can be misleading if treated as a generic signature of all complex systems. What matters scientifically is more specific: the model's nonlinear rules constrain its trajectories to a structured region of state space, yet do not permit reliable point prediction arbitrarily far into the future.
+
+## Sensitive Dependence Is Measurable
+
+A direct way to demonstrate sensitivity is to integrate the same model from two initial states that differ only slightly:
+
+$$
+\mathbf{x}_0 = (1,1,1),
+\qquad
+\tilde{\mathbf{x}}_0 = (1+10^{-6},1,1).
+\tag{9}
+$$
+
+Let the Euclidean separation between trajectories be
+
+$$
+d(t)
+=
+\left\|
+\mathbf{x}(t)-\tilde{\mathbf{x}}(t)
+\right\|_2.
+\tag{10}
+$$
+
+Over an interval where separation grows approximately exponentially,
+
+$$
+d(t) \approx d(0)e^{\lambda_{\max}t},
+\tag{11}
+$$
+
+the quantity $\lambda_{\max}$ is the largest Lyapunov exponent. A positive value indicates local exponential divergence. Estimating Lyapunov exponents reliably is not trivial, especially from finite and noisy data, but trajectory separation remains a useful practical diagnostic.
+
+## R Simulation: Lorenz Sensitivity
+
+```{r}
+library(deSolve)
+library(ggplot2)
+library(dplyr)
+
+lorenz_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    list(c(
+      sigma * (y - x),
+      x * (rho - z) - y,
+      x * y - beta * z
+    ))
+  })
+}
+
+lorenz_pars <- c(
+  sigma = 10,
+  rho = 28,
+  beta = 8 / 3
+)
+
+times <- seq(0, 30, by = 0.01)
+
+trajectory_a <- as.data.frame(
+  ode(
+    y = c(x = 1, y = 1, z = 1),
+    times = times,
+    func = lorenz_rhs,
+    parms = lorenz_pars,
+    method = "lsoda"
+  )
+)
+
+trajectory_b <- as.data.frame(
+  ode(
+    y = c(x = 1 + 1e-6, y = 1, z = 1),
+    times = times,
+    func = lorenz_rhs,
+    parms = lorenz_pars,
+    method = "lsoda"
+  )
+)
+
+separation_df <- trajectory_a |>
+  transmute(
+    time,
+    distance = sqrt(
+      (x - trajectory_b$x)^2 +
+      (y - trajectory_b$y)^2 +
+      (z - trajectory_b$z)^2
+    )
+  ) |>
+  mutate(distance = pmax(distance, .Machine$double.eps))
+
+p_state_difference <- bind_rows(
+  trajectory_a |> transmute(time, x, trajectory = "Initial x = 1"),
+  trajectory_b |> transmute(time, x, trajectory = "Initial x = 1 + 10^-6")
+) |>
+  ggplot(aes(time, x, colour = trajectory)) +
+  geom_line(linewidth = 0.7) +
+  labs(
+    title = "Two nearly identical Lorenz trajectories",
+    subtitle = "The initial difference is one millionth in x",
+    x = "Time",
+    y = "x(t)",
+    colour = NULL
+  ) +
+  theme_minimal(base_size = 12)
+
+p_distance <- ggplot(separation_df, aes(time, distance)) +
+  geom_line(colour = "firebrick", linewidth = 0.75) +
+  scale_y_log10() +
+  labs(
+    title = "Separation between nearby trajectories",
+    subtitle = "Early near-exponential growth appears as an approximately linear segment",
+    x = "Time",
+    y = "Euclidean distance (log scale)"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_state_difference
+p_distance
+```
+
+After enough time, the trajectories may occupy similar broad regions of the attractor while losing correspondence point by point. A model can still support useful claims about its long-run geometry, typical ranges, transition patterns, or response to parameter changes even when precise long-horizon trajectory prediction has failed.
+
+## Parameters Are Model Commitments
+
+An equation is only partly specified by its functional form. The parameters determine time scales, coupling strengths, thresholds, and noise levels. In the simple decay model, $\lambda$ controls the recovery rate. In a psychological network, decay coefficients and feedback weights determine whether a perturbation dissipates rapidly or persists. In the Lorenz system, changing $\rho$ alters the qualitative regime of the dynamics.
+
+Parameter estimation asks which values make the model's predicted observations resemble observed data. Suppose measurements $z_i$ occur at times $t_i$, and the model prediction under parameter vector $\boldsymbol{\theta}$ is $y(t_i;\boldsymbol{\theta})$. Under independent Gaussian measurement error, a common objective is least squares:
+
+$$
+\hat{\boldsymbol{\theta}}
+=
+\arg\min_{\boldsymbol{\theta}}
+\sum_{i=1}^{n}
+\left[
+z_i-y(t_i;\boldsymbol{\theta})
+\right]^2.
+\tag{12}
+$$
+
+The notation is compact, but the procedure is computationally demanding. For each candidate parameter value, one must solve the differential equation, align its output with the observed time points, calculate discrepancy, and then search the parameter space. The resulting estimate depends on the assumed model, the observation process, the optimizer, and the available data.
+
+A good fit is not evidence that the mechanism is correct. Different parameter combinations, or even different models, can reproduce similar trajectories. This problem is known as identifiability. It is often more honest to report that the data constrain a parameter range or a combination of parameters than to treat one fitted value as a discovered constant.
+
+## R Simulation: Fitting a Decay Rate
+
+The next example creates noisy observations from exponential decay, then estimates the decay rate by minimizing the residual sum of squares. The data are simulated only so that the true value is known; the fitting procedure is the same in spirit for real measurements.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+set.seed(42)
+
+true_lambda <- 0.45
+true_y0 <- 2.2
+observation_times <- seq(0, 10, by = 0.5)
+measurement_sd <- 0.12
+
+observed_df <- tibble(
+  time = observation_times,
+  observed = true_y0 * exp(-true_lambda * time) +
+    rnorm(length(time), sd = measurement_sd)
+)
+
+rss_decay <- function(lambda, data, y0) {
+  predicted <- y0 * exp(-lambda * data$time)
+  sum((data$observed - predicted)^2)
+}
+
+fit_lambda <- optimize(
+  f = rss_decay,
+  interval = c(0.001, 2),
+  data = observed_df,
+  y0 = true_y0
+)
+
+lambda_hat <- fit_lambda$minimum
+
+prediction_df <- tibble(
+  time = seq(0, max(observed_df$time), length.out = 300),
+  fitted = true_y0 * exp(-lambda_hat * time),
+  true = true_y0 * exp(-true_lambda * time)
+)
+
+print(
+  tibble(
+    true_lambda = true_lambda,
+    estimated_lambda = lambda_hat,
+    residual_sum_of_squares = fit_lambda$objective
+  )
+)
+
+ggplot(observed_df, aes(time, observed)) +
+  geom_point(size = 2, colour = "grey25") +
+  geom_line(
+    data = prediction_df,
+    aes(time, fitted),
+    inherit.aes = FALSE,
+    colour = "firebrick",
+    linewidth = 0.9
+  ) +
+  geom_line(
+    data = prediction_df,
+    aes(time, true),
+    inherit.aes = FALSE,
+    colour = "steelblue",
+    linetype = "dashed",
+    linewidth = 0.8
+  ) +
+  labs(
+    title = "Fitting an exponential-decay model to noisy observations",
+    subtitle = paste0(
+      "Estimated lambda = ", round(lambda_hat, 3),
+      "; dashed line shows the data-generating trajectory"
+    ),
+    x = "Time",
+    y = "Observed state"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+Here the initial value was treated as known. That is convenient but often unrealistic. Estimating both $y_0$ and $\lambda$ introduces a trade-off: a larger starting value with faster decay can resemble a smaller starting value with slower decay over a limited observation window. The structure of the data determines whether those possibilities can be distinguished.
+
+## Parameter Profiles and Uncertainty
+
+Point estimates conceal the shape of the objective function. A sharply defined minimum suggests the data constrain a parameter relatively well under the model. A flat minimum suggests weak information: many values fit nearly equally well. In nonlinear models, the objective function can also contain multiple local minima, which makes optimizer settings and initial guesses consequential.
+
+One simple diagnostic is a profile of the residual sum of squares over plausible parameter values:
+
+$$
+\operatorname{RSS}(\lambda)
+=
+\sum_{i=1}^{n}
+\left[
+z_i-y_0e^{-\lambda t_i}
+\right]^2.
+\tag{13}
+$$
+
+This is not a complete uncertainty analysis. It does not account for uncertainty in model form, observation error assumptions, or other parameters held fixed. But it makes an important feature visible: whether the fitted number is tightly anchored by the observed data or selected from a broad plateau.
+
+## R Simulation: Profiling the Objective Function
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+lambda_grid <- seq(0.05, 1.1, length.out = 400)
+
+profile_df <- tibble(
+  lambda = lambda_grid,
+  rss = sapply(
+    lambda_grid,
+    rss_decay,
+    data = observed_df,
+    y0 = true_y0
+  )
+) |>
+  mutate(delta_rss = rss - min(rss))
+
+best_row <- profile_df |>
+  slice_min(rss, n = 1)
+
+ggplot(profile_df, aes(lambda, delta_rss)) +
+  geom_line(colour = "steelblue", linewidth = 0.9) +
+  geom_vline(
+    xintercept = lambda_hat,
+    linetype = "dashed",
+    colour = "firebrick"
+  ) +
+  geom_point(
+    data = best_row,
+    aes(lambda, delta_rss),
+    colour = "firebrick",
+    size = 2.5
+  ) +
+  labs(
+    title = "Parameter profile for the decay rate",
+    subtitle = "A flat profile means that nearby parameter values fit similarly well",
+    x = "Decay rate lambda",
+    y = "RSS minus minimum RSS"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+In more realistic applications, one may estimate multiple parameters jointly, use likelihood-based methods, apply Bayesian inference, or fit state-space models that separate process noise from observation noise. The principle remains the same: estimation is not a final decoration added after modelling. It is where assumptions about mechanism, measurement, and uncertainty meet.
+
+## Sensitivity Is Not Importance
+
+Sensitivity analysis asks how outputs change when parameters or initial conditions change. It is tempting to call a parameter “important” merely because perturbing it changes a simulation. That wording should be used carefully. A parameter may be sensitive because of the scale on which it is perturbed, because the system is near a bifurcation, or because other parameters were held fixed in an unrealistic way.
+
+For a scalar model output $Q(\theta)$, local sensitivity can be defined as
+
+$$
+S_\theta
+=
+\frac{\partial Q}{\partial \theta}.
+\tag{14}
+$$
+
+A scale-free version is often more interpretable:
+
+$$
+S_\theta^{\mathrm{rel}}
+=
+\frac{\theta}{Q}
+\frac{\partial Q}{\partial \theta}.
+\tag{15}
+$$
+
+In practice, derivatives are often approximated by finite differences:
+
+$$
+\frac{\partial Q}{\partial \theta}
+\approx
+\frac{Q(\theta+\delta)-Q(\theta-\delta)}{2\delta}.
+\tag{16}
+$$
+
+This approximation has its own numerical choices. If $\delta$ is too large, the result reflects nonlinearity rather than local sensitivity. If it is too small, floating-point precision can dominate. As with time-step selection, a sensitivity calculation should be checked rather than accepted automatically.
+
+## R Simulation: Lorenz Parameter Sensitivity
+
+This example varies the Lorenz parameter $\rho$ and summarizes each trajectory after a transient period. The summary is deliberately modest: the range of $x(t)$ over the latter part of the simulation. It does not capture every feature of the attractor, but it gives a visible indication that small parameter changes can alter the system's long-run behaviour.
+
+```{r}
+library(deSolve)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+lorenz_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    list(c(
+      sigma * (y - x),
+      x * (rho - z) - y,
+      x * y - beta * z
+    ))
+  })
+}
+
+simulate_lorenz <- function(rho_value,
+                            initial = c(x = 1, y = 1, z = 1),
+                            times = seq(0, 60, by = 0.01)) {
+  as.data.frame(
+    ode(
+      y = initial,
+      times = times,
+      func = lorenz_rhs,
+      parms = c(sigma = 10, rho = rho_value, beta = 8 / 3),
+      method = "lsoda"
+    )
+  )
+}
+
+rho_values <- seq(15, 35, by = 0.5)
+
+sensitivity_df <- lapply(rho_values, function(rho_value) {
+  sim <- simulate_lorenz(rho_value)
+
+  sim |>
+    filter(time >= 30) |>
+    summarise(
+      rho = rho_value,
+      mean_x = mean(x),
+      sd_x = sd(x),
+      min_x = min(x),
+      max_x = max(x),
+      range_x = max(x) - min(x)
+    )
+}) |>
+  bind_rows()
+
+p_range <- ggplot(sensitivity_df, aes(rho, range_x)) +
+  geom_line(colour = "firebrick", linewidth = 0.9) +
+  geom_point(size = 1.5, colour = "firebrick") +
+  labs(
+    title = "Sensitivity of Lorenz dynamics to rho",
+    subtitle = "Range of x(t) after discarding the early transient",
+    x = "rho",
+    y = "Late-time range of x"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_variability <- ggplot(sensitivity_df, aes(rho, sd_x)) +
+  geom_line(colour = "steelblue", linewidth = 0.9) +
+  geom_point(size = 1.5, colour = "steelblue") +
+  labs(
+    title = "Late-time variability across parameter values",
+    subtitle = "Standard deviation of x(t) after time 30",
+    x = "rho",
+    y = "Standard deviation of x"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_range
+p_variability
+```
+
+The resulting curves should not be read as universal properties of $\rho$ alone. They depend on the initial state, simulation horizon, numerical tolerances, and chosen summary. Still, the exercise is useful because it replaces a generic statement such as “the model is sensitive” with a reproducible question: sensitive in which output, across which parameter range, under which conditions?
+
+## From Simulations to Claims
+
+A numerical simulation is not an experiment on the world. It is an experiment on a specified model. It can reveal consequences that are difficult to derive by hand, test whether a proposed mechanism is capable of generating an observed pattern, and identify parameter regimes where a qualitative transition may occur. It cannot, by itself, validate the assumptions coded into the equations.
+
+Several checks are worth treating as routine:
+
+-   Reduce the time step or tighten solver tolerances and determine whether the result remains materially unchanged.
+-   Compare at least one result against an analytic solution, limiting case, conservation law, or independently implemented method where possible.
+-   Inspect the model output beyond a single summary statistic; transient behaviour, state-space geometry, and failed simulations can contain the important information.
+-   Vary parameters over defensible ranges rather than presenting one hand-tuned trajectory as though it were inevitable.
+-   Separate numerical uncertainty, parameter uncertainty, and model uncertainty; they are different problems and can point in different directions.
+
+A particularly common mistake is to fit a model, reproduce a measured trajectory, and interpret the fitted mechanism as established. Good agreement is necessary for many models, but it is rarely sufficient. A model earns credibility when it also survives checks of numerical reliability, parameter identifiability, out-of-sample prediction, alternative model structures, and confrontation with measurements not used during fitting.
+
+## Where This Leaves the Model
+
+Differential equations describe how a system is assumed to change. Numerical integration turns that description into trajectories. Error analysis asks whether those trajectories are trustworthy approximations. Parameter estimation asks whether the model can be aligned with data without forcing implausible values. Sensitivity analysis asks whether its apparent insights persist once uncertainty is acknowledged.
+
+The central computational workflow can be written schematically as
+
+$$
+\text{equations}
+\longrightarrow
+\text{numerical solver}
+\longrightarrow
+\text{simulated observables}
+\longrightarrow
+\text{comparison with data}
+\longrightarrow
+\text{uncertainty and sensitivity checks}.
+\tag{17}
+$$
+
+None of these arrows is automatic. A solver can be unstable, a fitted parameter can be unidentifiable, and a visually convincing simulation can rest on an arbitrary choice that was never tested. Yet computation also makes models more accountable. It forces verbal explanations into quantities, trajectories, errors, and predictions that can be inspected, challenged, and revised.

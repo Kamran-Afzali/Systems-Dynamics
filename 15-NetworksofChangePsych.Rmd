@@ -1,10 +1,8 @@
-Good — I've confirmed the analytic basin depth calculation for the potential landscape (depth as the potential difference between the ridge and each well, showing the low-symptom basin shrinking and disappearing as external pressure h rises past ≈0.77), and worked out that the five-node ODE network as originally specified is monostable — genuine bistability requires an added nonlinear (self-reinforcing) term, which I've built in and documented. Here is the full merged post.
-
 # Psychological Networks as Dynamical Systems
 
 The network perspective in psychopathology treats symptoms, affective states, behaviours, and contexts as components of an interacting system rather than merely interchangeable indicators of a single hidden disorder. A depressive episode, for example, may involve mutually reinforcing processes: poor sleep increases fatigue; fatigue reduces activity; reduced activity worsens mood; and low mood further disrupts sleep. This does not rule out common causes such as genetic liability, trauma, illness, or social stress; it asks whether feedback among observable processes also helps sustain distress once it has begun.
 
-This is a natural continuation of *Networks of Change: Systems Thinking in Connected Worlds*. The earlier post established that collective outcomes arise when coupled units evolve on a graph. Here, the nodes are psychological processes, the edges are hypothesised influences, and the central scientific question becomes more concrete: under what conditions does a temporary disturbance fade, remain local, or reorganize a person's psychological system into a persistent high-symptom state?
+This is a natural continuation of the previous chapter, that established collective outcomes arise when coupled units evolve on a graph. Here, the nodes are psychological processes, the edges are hypothesised influences, and the central scientific question becomes more concrete: under what conditions does a temporary disturbance fade, remain local, or reorganize a person's psychological system into a persistent high-symptom state?
 
 ## From symptoms to states
 
@@ -62,7 +60,7 @@ $$
 
 The positive constants $a_i$ represent self-regulation or decay: absent continued input, a state tends to move back toward its local baseline. The $w_{ij}$ values are the nonzero entries of $A$ above. Low activity is modelled as protective here — greater activity reduces low mood through $-w_{MA}A_{\text{act}}$ — whereas low mood suppresses activity through $-w_{AM}M$.
 
-Nobody should mistake this for a clinical model of depression; think of it instead as a hypothesis generator you can interrogate. It makes clear, for instance, that increasing sleep disruption will not necessarily produce a persistent mood shift — persistence depends on the joint strength, signs, delays, and nonlinearities of the whole feedback structure. Formal modelling earns its keep here because verbal causal loops tend to hide exactly these assumptions.
+We can not take this for a clinical model of depression but as a hypothesis generator you can interrogate. It makes clear, for instance, that increasing sleep disruption will not necessarily produce a persistent mood shift — persistence depends on the joint strength, signs, delays, and nonlinearities of the whole feedback structure. Formal modelling earns its keep here because verbal causal loops tend to hide exactly these assumptions.
 
 One limitation worth flagging early: as written, equation (2) is purely linear, and a linear system of this kind has at most one equilibrium. That is fine for illustrating transient dynamics (a shock that fades faster or slower), but it cannot produce genuine bistability — two distinct stable states separated by a barrier. To get an attractor structure worth calling "remission" versus "distress," something nonlinear has to enter. Section "A feedback model with genuine bistability," below, adds this explicitly.
 
@@ -105,13 +103,13 @@ $$
 
 Here $h$ is a sustained external bias on mood — sustained stress or, with the opposite sign, sustained support — playing the same role as $h$ in the scalar potential model below. Numerically solving equation (3) for equilibria across a wide grid of starting points confirms that when the self-reinforcement strength $k$ exceeds roughly 1.5 relative to the decay rate $a_R$, the system supports two stable fixed points separated by an unstable one — a genuine double-well structure embedded in five dimensions, not just one.
 
-``` r
+``` {r}
 library(rootSolve)
 
 pars_bistable <- c(
   aI = 0.55, aF = 0.45, aM = 0.45, aA = 0.55, aR = 0.45,
   wIR = 0.60, wFI = 0.70, wMF = 0.65, wMR = 0.70,
-  wMA = 0.25, wAM = 0.55,
+  wMA = 0.25, wAM = 0.55, wRM = 0.50,   # <-- added missing parameter
   activity_input = 0.25, k = 2.0, h = 0
 )
 
@@ -126,7 +124,6 @@ rhs_bistable <- function(t, state, pars) {
   })
 }
 
-# search for equilibria from many random starting states
 set.seed(1)
 starts <- matrix(runif(500 * 5, -3, 3), ncol = 5)
 colnames(starts) <- c("I", "F", "M", "A", "R")
@@ -143,7 +140,7 @@ Running this (or the Python equivalent I used to check it numerically) recovers 
 
 ## A potential landscape
 
-For a single summary variable $z(t)$, such as an idealised global symptom burden — or, in the network above, a variable closely tracking the rumination–mood subsystem — one can represent bistability with a potential function:
+For a single summary variable $z(t)$, such as an approximate global symptom burden or, in the network above, a variable closely tracking the rumination–mood subsystem — one can represent bistability with a potential function:
 
 $$
 V(z) = \frac{z^4}{4} - \frac{r z^2}{2} - hz. \quad (4)
@@ -171,7 +168,7 @@ $$
 
 At $r = 1.5$ and $h = 0$ (symmetric case), both basins have equal depth (0.5625 in the units of $V$). As $h$ increases — representing sustained external stress pushing the system toward the high state — the low basin shrinks steadily: depth drops to about 0.34 at $h = 0.2$, to 0.16 at $h = 0.4$, and to roughly 0.03 at $h = 0.6$, essentially disappearing by $h \approx 0.77$, where the cubic loses two of its three real roots and the low-symptom well vanishes through the bifurcation. The high basin deepens over the same range, from 0.56 up past 1.4. This is the numerical content behind the earlier claim that gradual pressure can cause a sudden qualitative shift — the depth doesn't decline smoothly to some visible warning point, it hits zero and the well is simply gone.
 
-``` r
+``` {r}
 library(dplyr)
 library(ggplot2)
 
@@ -213,7 +210,7 @@ ggplot(depth_df, aes(h)) +
 
 Depth is one way to characterise a basin; another is simply to ask, empirically, which final state a trajectory reaches from a given starting point. Sweeping over initial conditions and letting each one run under the noisy dynamics in equation (5) traces out the basin boundary directly.
 
-``` r
+``` {r}
 library(dplyr)
 library(ggplot2)
 
@@ -259,7 +256,7 @@ Where the colour switches along the x-axis marks the (noise-averaged) basin boun
 
 The code below simulates the linear five-process feedback system from equation (2) under two conditions. In the first, couplings are modest and a temporary sleep disruption fades. In the second, stronger mood–rumination–sleep feedback produces a longer-lived system-wide elevation, even without invoking the nonlinear bistable term above.
 
-``` r
+``` {r}
 library(deSolve)
 library(dplyr)
 library(tidyr)
@@ -286,14 +283,14 @@ times <- seq(0, 150, by = 0.1)
 weak_feedback <- c(
   aI = 0.70, aF = 0.55, aM = 0.65, aA = 0.60, aR = 0.70,
   wIR = 0.20, wFI = 0.55, wMF = 0.45, wMR = 0.25,
-  wMA = 0.35, wAM = 0.25,
+  wMA = 0.35, wAM = 0.25, wRM = 0.30,
   activity_input = 0.25, shock = 0.90
 )
 
 strong_feedback <- c(
   aI = 0.55, aF = 0.45, aM = 0.45, aA = 0.55, aR = 0.45,
   wIR = 0.60, wFI = 0.70, wMF = 0.65, wMR = 0.70,
-  wMA = 0.25, wAM = 0.55,
+  wMA = 0.25, wAM = 0.55, wRM = 0.60,
   activity_input = 0.25, shock = 0.90
 )
 
@@ -379,7 +376,7 @@ These are conditional indicators, not diagnostic tests. Empirical findings are m
 
 The following code computes rolling lag-1 autocorrelation and variance for the simulated low-mood series from the strong-feedback run above. With real experience-sampling data, the same approach applies to an evenly spaced, sufficiently long time series, once you've checked for missingness and trends first.
 
-``` r
+``` {r}
 library(slider)
 library(dplyr)
 library(ggplot2)
