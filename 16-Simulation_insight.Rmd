@@ -173,10 +173,25 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
+euler_solve <- function(rhs, y0, times, pars = NULL) {
+  n <- length(times)
+  y <- numeric(n)
+  y[1] <- y0
+
+  for (i in 1:(n - 1)) {
+    t <- times[i]
+    h <- times[i + 1] - times[i]
+
+    y[i + 1] <- y[i] + h * rhs(t, y[i], pars)
+  }
+
+  tibble(time = times, y = y)
+}
+
 rk4_solve <- function(rhs, y0, times, pars = NULL) {
   n <- length(times)
   y <- numeric(n)
-  y  <- y0
+  y[1] <- y0
 
   for (i in 1:(n - 1)) {
     t <- times[i]
@@ -237,17 +252,22 @@ convergence_df <- lapply(step_sizes, function(h) {
 }) |>
   bind_rows()
 
-estimated_orders <- convergence_df |>
+# Remove zero errors before applying log(), since log(0) = -Inf.
+positive_error_df <- convergence_df |>
+  filter(endpoint_error > 0)
+
+estimated_orders <- positive_error_df |>
   group_by(method) |>
-  arrange(h, .by_group = TRUE) |>
   summarise(
-    estimated_order = -coef(lm(log(endpoint_error) ~ log(h))) ,
+    estimated_order = coef(
+      lm(log(endpoint_error) ~ log(h))
+    )[["log(h)"]],
     .groups = "drop"
   )
 
 print(estimated_orders)
 
-ggplot(convergence_df, aes(h, endpoint_error, colour = method)) +
+ggplot(positive_error_df, aes(h, endpoint_error, colour = method)) +
   geom_point(size = 2.5) +
   geom_line(linewidth = 0.8) +
   scale_x_log10() +
