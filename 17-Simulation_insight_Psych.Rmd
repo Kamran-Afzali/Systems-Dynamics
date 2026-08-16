@@ -1,0 +1,996 @@
+# From Simulations to Symptoms: Computational Methods in Mental Health
+
+The preceding discussion treated numerical methods as a bridge between equations and observable consequences. In mental health research, that bridge is especially important because the relevant systems are dynamic, heterogeneous, partially observed, and shaped by both internal processes and changing environments. Symptoms fluctuate over hours and days; treatment effects may emerge slowly, abruptly, or only for some individuals; and the same observed trajectory can arise from different underlying mechanisms.
+
+Computational psychiatry does not replace clinical judgment with equations. Its purpose is narrower and more demanding: to state hypotheses about cognition, affect, learning, behavior, physiology, and social context precisely enough that they can generate predictions. Numerical simulation then makes those predictions inspectable. It allows researchers to ask whether a proposed mechanism can produce episodic worsening, persistent symptoms, recovery after intervention, relapse following stress, or the individual variability seen in real data.
+
+A useful workflow remains
+
+$$
+\text{mechanistic hypothesis}
+\longrightarrow
+\text{formal model}
+\longrightarrow
+\text{numerical simulation}
+\longrightarrow
+\text{observed measurements}
+\longrightarrow
+\text{uncertainty and clinical evaluation}.
+\tag{1}
+$$
+
+The final step is indispensable. A simulation can establish what follows from an assumed model; it cannot, by itself, establish that the model describes a person or disorder correctly.
+
+## Symptoms as Dynamic States
+
+A simple entry point is to represent symptom burden as a continuous latent state. Let $s(t)$ denote the intensity of a symptom dimension at time $t$, such as depressed mood, anxiety, arousal, craving, or psychotic-like salience. A basic recovery model might be written as
+
+$$
+\frac{ds}{dt}
+=
+-\lambda \bigl[s(t)-b\bigr] + u(t),
+\tag{2}
+$$
+
+where $b$ is a baseline level, $\lambda>0$ is a recovery rate, and $u(t)$ represents time-varying inputs such as stressors, sleep disruption, interpersonal conflict, medication effects, or supportive events.
+
+The equation says that, in the absence of new inputs, symptoms tend to return toward baseline. The rate $\lambda$ governs how quickly that return occurs. A high value implies rapid recovery after a perturbation; a low value implies persistence. This does not mean that a diagnosis can be reduced to one recovery coefficient. It means that persistence is a testable dynamical property, rather than only a descriptive label.
+
+Suppose a person experiences a temporary stressor from time $t_a$ to $t_b$. One simple input function is
+
+$$
+u(t)
+=
+\begin{cases}
+A, & t_a \le t < t_b, \\
+0, & \text{otherwise},
+\end{cases}
+\tag{3}
+$$
+
+where $A$ is the magnitude of the stress-related input. Even this elementary model can distinguish several clinically meaningful possibilities: a brief increase that resolves quickly, a prolonged elevation caused by slow recovery, or repeated symptom peaks caused by repeated inputs rather than a single persistent disturbance.
+
+## R Simulation: Recovery After Stress
+
+The code below simulates equation (2) with a temporary stress input. It uses `deSolve::ode()` and LSODA rather than a hand-written fixed-step method, because adaptive solvers are generally a more reliable default once a model is more complicated than a classroom benchmark.
+
+``` r
+library(deSolve)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+symptom_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    stress_input <- ifelse(
+      t >= stress_start & t < stress_end,
+      stress_amplitude,
+      0
+    )
+
+    ds <- -recovery_rate * (symptom - baseline) + stress_input
+
+    list(c(symptom = ds))
+  })
+}
+
+simulate_symptom <- function(recovery_rate,
+                             baseline = 2,
+                             stress_amplitude = 4,
+                             stress_start = 10,
+                             stress_end = 18,
+                             initial_symptom = baseline,
+                             times = seq(0, 50, by = 0.05)) {
+  as.data.frame(
+    ode(
+      y = c(symptom = initial_symptom),
+      times = times,
+      func = symptom_rhs,
+      parms = c(
+        recovery_rate = recovery_rate,
+        baseline = baseline,
+        stress_amplitude = stress_amplitude,
+        stress_start = stress_start,
+        stress_end = stress_end
+      ),
+      method = "lsoda"
+    )
+  ) |>
+    mutate(recovery_rate = recovery_rate)
+}
+
+recovery_values <- c(
+  Rapid = 0.55,
+  Moderate = 0.22,
+  Slow = 0.08
+)
+
+symptom_df <- lapply(names(recovery_values), function(label) {
+  simulate_symptom(
+    recovery_rate = recovery_values[[label]]
+  ) |>
+    mutate(profile = label)
+}) |>
+  bind_rows()
+
+stress_period <- tibble(
+  start = 10,
+  end = 18,
+  ymin = -Inf,
+  ymax = Inf
+)
+
+ggplot(symptom_df, aes(time, symptom, colour = profile)) +
+  geom_rect(
+    data = stress_period,
+    aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax),
+    inherit.aes = FALSE,
+    fill = "grey70",
+    alpha = 0.25
+  ) +
+  geom_line(linewidth = 0.9) +
+  labs(
+    title = "Symptom recovery following a temporary stressor",
+    subtitle = "The shaded interval represents an external stress input",
+    x = "Time",
+    y = "Latent symptom burden",
+    colour = "Recovery profile"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+The simulated trajectories should not be interpreted as diagnostic categories. They are demonstrations of model behavior. A person with a slow observed return to baseline could have a genuinely lower recovery rate, but they could also face repeated stress exposure, measurement noise, an inaccurately specified baseline, nonlinear feedback, or a change in treatment or context. The model makes those alternative explanations visible because each can be encoded and compared.
+
+## Feedback and Symptom Persistence
+
+Many clinical phenomena are not well represented by linear recovery alone. A symptom may alter behavior or cognition in ways that then reinforce the symptom itself. Insomnia may increase fatigue and negative affect; avoidance may reduce short-term anxiety while preserving threat beliefs; rumination may intensify low mood; hypervigilance may increase perceived threat and physiological arousal.
+
+One way to formalize such reinforcement is to add a nonlinear feedback term:
+
+$$
+\frac{ds}{dt}
+=
+-\lambda(s-b)
++
+\alpha \frac{s^p}{K^p+s^p}
++
+u(t).
+\tag{4}
+$$
+
+The first term still represents recovery toward a baseline $b$. The second is a saturating positive-feedback function. Its strength is controlled by $\alpha$, its threshold scale by $K$, and its steepness by $p$. When symptoms are low, the feedback effect may be weak. As symptoms rise, the reinforcing process becomes more active, although it cannot increase without bound because the Hill-type function saturates.
+
+The point of including a nonlinear term is not to claim that all mental-health symptoms obey this equation. It is to represent a plausible qualitative hypothesis: below some range, perturbations may fade; beyond that range, feedback may make recovery more difficult. Such a system can show threshold-like behavior without requiring a literal switch in the underlying biology or psychology.
+
+Equilibria occur where
+
+$$
+0
+=
+-\lambda(s-b)
++
+\alpha \frac{s^p}{K^p+s^p}
++
+u.
+\tag{5}
+$$
+
+Depending on parameter values, the model may have one stable equilibrium or multiple equilibria. In the latter case, a temporary stressor can move the state from a lower-symptom region into a higher-symptom region from which it does not immediately return after the stressor ends. This is one mathematical way to describe hysteresis: the same current external input can be associated with different symptom states depending on the history of the system.
+
+## R Simulation: A Nonlinear Feedback Model
+
+``` r
+library(deSolve)
+library(dplyr)
+library(ggplot2)
+
+feedback_symptom_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    stress_input <- ifelse(
+      t >= stress_start & t < stress_end,
+      stress_amplitude,
+      0
+    )
+
+    feedback <- feedback_strength *
+      symptom^hill_power /
+      (feedback_threshold^hill_power + symptom^hill_power)
+
+    ds <- -recovery_rate * (symptom - baseline) +
+      feedback +
+      stress_input
+
+    list(c(symptom = ds))
+  })
+}
+
+simulate_feedback_model <- function(stress_amplitude,
+                                    times = seq(0, 100, by = 0.05)) {
+  as.data.frame(
+    ode(
+      y = c(symptom = 1.5),
+      times = times,
+      func = feedback_symptom_rhs,
+      parms = c(
+        baseline = 1,
+        recovery_rate = 0.32,
+        feedback_strength = 1.7,
+        feedback_threshold = 4.5,
+        hill_power = 4,
+        stress_amplitude = stress_amplitude,
+        stress_start = 15,
+        stress_end = 25
+      ),
+      method = "lsoda"
+    )
+  ) |>
+    mutate(stress_amplitude = stress_amplitude)
+}
+
+stress_levels <- c(
+  Mild = 0.7,
+  Moderate = 1.5,
+  Strong = 2.5
+)
+
+feedback_df <- lapply(names(stress_levels), function(label) {
+  simulate_feedback_model(
+    stress_amplitude = stress_levels[[label]]
+  ) |>
+    mutate(stressor = label)
+}) |>
+  bind_rows()
+
+ggplot(feedback_df, aes(time, symptom, colour = stressor)) +
+  geom_vline(
+    xintercept = c(15, 25),
+    linetype = "dashed",
+    colour = "grey40"
+  ) +
+  geom_line(linewidth = 0.9) +
+  labs(
+    title = "Nonlinear feedback can create persistent symptom elevation",
+    subtitle = "Dashed lines mark the beginning and end of a temporary stressor",
+    x = "Time",
+    y = "Latent symptom burden",
+    colour = "Stress magnitude"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+A model like this can generate an apparent clinical “tipping point”: two stressors of similar duration may have very different long-term consequences because one pushes the system across a feedback-sensitive region and the other does not. That possibility is scientifically interesting, but it is not a conclusion that follows from observing a symptom increase alone. It must be evaluated against repeated longitudinal data, competing explanations, and knowledge of the processes the feedback term is supposed to represent.
+
+## Observations Are Not States
+
+A central challenge in computational psychiatry is that the quantities of interest are usually latent. Mood ratings, passive-sensing measures, reaction times, speech features, sleep records, clinical interviews, and functional outcomes are observations. They are not the underlying state itself.
+
+A state-space model separates the latent process from the observation process. Let $x_t$ be an unobserved symptom-related state in discrete time. A simple formulation is
+
+$$
+x_{t+1}
+=
+a x_t + b u_t + w_t,
+\qquad
+w_t \sim \mathcal{N}(0,q),
+\tag{6}
+$$
+
+and let a measured symptom rating $z_t$ satisfy
+
+$$
+z_t
+=
+x_t + v_t,
+\qquad
+v_t \sim \mathcal{N}(0,r).
+\tag{7}
+$$
+
+The parameter $a$ describes persistence. Values near one imply that deviations in the latent state tend to carry forward from one measurement occasion to the next. The input coefficient $b$ measures the modeled effect of a known covariate $u_t$, such as a daily stress rating or sleep-loss measure. The innovations $w_t$ represent unmodeled process variation, while $v_t$ represents measurement error.
+
+This distinction is not cosmetic. If all changes in self-reported symptoms are treated as true changes in an underlying clinical state, measurement noise can be mistaken for instability. Conversely, if a model smooths observations too aggressively, meaningful rapid changes may be erased. The inference problem is therefore to estimate both the latent trajectory and the uncertainty surrounding it.
+
+## R Simulation: A Latent Symptom State
+
+The following code simulates a daily latent state and noisy observations. It then uses a Kalman filter through the `KFAS` package to estimate the unobserved trajectory. This is a demonstration using simulated data; fitting such models to clinical data requires careful attention to missingness, sampling schedules, scale properties, and whether the Gaussian assumptions are defensible.
+
+``` r
+library(KFAS)
+library(dplyr)
+library(ggplot2)
+library(tibble)
+
+set.seed(2026)
+
+n_days <- 180
+days <- seq_len(n_days)
+
+stress <- scale(
+  0.8 * sin(2 * pi * days / 28) +
+    rnorm(n_days, mean = 0, sd = 0.8)
+)[, 1]
+
+persistence <- 0.88
+stress_effect <- 0.28
+process_sd <- 0.22
+measurement_sd <- 0.55
+
+latent_state <- numeric(n_days)
+latent_state[1] <- 2
+
+for (t in 2:n_days) {
+  latent_state[t] <- persistence * latent_state[t - 1] +
+    stress_effect * stress[t - 1] +
+    rnorm(1, sd = process_sd)
+}
+
+observed_rating <- latent_state +
+  rnorm(n_days, sd = measurement_sd)
+
+mental_health_df <- tibble(
+  day = days,
+  stress = stress,
+  latent_state = latent_state,
+  observed_rating = observed_rating
+)
+
+model <- SSModel(
+  observed_rating ~ SSMregression(~ stress, Q = matrix(NA_real_)) +
+    SSMcustom(
+      Z = matrix(1),
+      T = matrix(NA_real_),
+      R = matrix(1),
+      Q = matrix(NA_real_)
+    ),
+  H = matrix(NA_real_)
+)
+
+fit <- fitSSM(
+  model,
+  inits = c(
+    qlogis(0.7),
+    log(0.2),
+    log(0.5)
+  ),
+  method = "BFGS"
+)
+
+fitted_model <- fit$model
+
+kfs <- KFS(
+  fitted_model,
+  smoothing = c("state", "mean")
+)
+
+state_estimate <- as.numeric(kfs$alphahat[, 2])
+
+plot_df <- mental_health_df |>
+  mutate(
+    filtered_state = state_estimate
+  ) |>
+  select(day, latent_state, observed_rating, filtered_state) |>
+  tidyr::pivot_longer(
+    cols = c(latent_state, observed_rating, filtered_state),
+    names_to = "series",
+    values_to = "value"
+  )
+
+ggplot(plot_df, aes(day, value, colour = series)) +
+  geom_line(linewidth = 0.7) +
+  scale_colour_manual(
+    values = c(
+      latent_state = "black",
+      observed_rating = "grey65",
+      filtered_state = "firebrick"
+    ),
+    labels = c(
+      latent_state = "Simulated latent state",
+      observed_rating = "Observed daily rating",
+      filtered_state = "Kalman-smoothed estimate"
+    )
+  ) +
+  labs(
+    title = "Latent-state estimation from noisy symptom ratings",
+    subtitle = "The black trajectory is known only because these data were simulated",
+    x = "Day",
+    y = "Symptom scale",
+    colour = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+In real applications, the latent state is unknown, so the black trajectory in this illustration would not exist. The model-based estimate is not a recovered ground truth; it is a conditional estimate under the assumed state dynamics and measurement model. This is why diagnostics, posterior or likelihood uncertainty, alternative model forms, and external validation matter.
+
+## Reinforcement Learning and Clinical Behavior
+
+Not all computational-psychiatry models are symptom-dynamics models. Many focus on decision-making, learning, and action selection. Reinforcement learning is particularly useful when a person repeatedly chooses among actions and experiences outcomes, because it formalizes how expectations may be updated from prediction errors.
+
+Let $Q_t(a)$ denote the expected value of action $a$ at trial $t$. After taking action $a_t$ and observing outcome $r_t$, a simple Rescorla-Wagner or temporal-difference update is
+
+$$
+\delta_t
+=
+r_t-Q_t(a_t),
+\tag{8}
+$$
+
+$$
+Q_{t+1}(a_t)
+=
+Q_t(a_t)+\alpha \delta_t,
+\tag{9}
+$$
+
+where $\delta_t$ is the reward prediction error and $0 \leq \alpha \leq 1$ is the learning rate. A larger $\alpha$ gives more weight to recent outcomes; a smaller value produces slower updating.
+
+To connect values to observable choices, a common choice rule is the softmax function:
+
+$$
+P(a_t=a)
+=
+\frac{\exp\{\beta Q_t(a)\}}
+{\sum_{a'} \exp\{\beta Q_t(a')\}},
+\tag{10}
+$$
+
+where $\beta$ is an inverse-temperature parameter. Larger values produce more deterministic selection of the option with the largest estimated value; smaller values produce more exploratory or noisy choices.
+
+These parameters should not be casually relabeled as stable clinical traits. A low estimated inverse temperature, for example, can reflect stochastic choice, poorly identified values, an inappropriate task model, inattentive responding, or changes in strategy. The contribution of the model is to make those possibilities explicit and testable.
+
+## R Simulation: Learning Under Changing Rewards
+
+``` r
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(tibble)
+
+softmax_probability <- function(values, inverse_temperature) {
+  shifted_values <- values - max(values)
+  weights <- exp(inverse_temperature * shifted_values)
+
+  weights / sum(weights)
+}
+
+simulate_bandit <- function(learning_rate,
+                            inverse_temperature,
+                            n_trials = 240,
+                            reversal_trial = 121,
+                            seed = NULL) {
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+
+  values <- c(option_a = 0, option_b = 0)
+
+  results <- vector("list", n_trials)
+
+  for (trial in seq_len(n_trials)) {
+    reward_probabilities <- if (trial < reversal_trial) {
+      c(option_a = 0.75, option_b = 0.25)
+    } else {
+      c(option_a = 0.25, option_b = 0.75)
+    }
+
+    choice_probabilities <- softmax_probability(
+      values = values,
+      inverse_temperature = inverse_temperature
+    )
+
+    choice <- sample(
+      x = names(values),
+      size = 1,
+      prob = choice_probabilities
+    )
+
+    reward <- rbinom(
+      n = 1,
+      size = 1,
+      prob = reward_probabilities[[choice]]
+    )
+
+    prediction_error <- reward - values[[choice]]
+
+    values[[choice]] <- values[[choice]] +
+      learning_rate * prediction_error
+
+    results[[trial]] <- tibble(
+      trial = trial,
+      choice = choice,
+      reward = reward,
+      prediction_error = prediction_error,
+      q_option_a = values[["option_a"]],
+      q_option_b = values[["option_b"]],
+      chose_currently_better_option =
+        choice == names(which.max(reward_probabilities))
+    )
+  }
+
+  bind_rows(results)
+}
+
+learning_profiles <- list(
+  Slow_updating = list(alpha = 0.08, beta = 4),
+  Intermediate = list(alpha = 0.25, beta = 4),
+  Fast_updating = list(alpha = 0.60, beta = 4)
+)
+
+bandit_df <- lapply(names(learning_profiles), function(profile_name) {
+  profile <- learning_profiles[[profile_name]]
+
+  simulate_bandit(
+    learning_rate = profile$alpha,
+    inverse_temperature = profile$beta,
+    seed = 100 + match(profile_name, names(learning_profiles))
+  ) |>
+    mutate(profile = profile_name)
+}) |>
+  bind_rows()
+
+performance_df <- bandit_df |>
+  group_by(profile) |>
+  mutate(
+    rolling_accuracy = stats::filter(
+      as.numeric(chose_currently_better_option),
+      rep(1 / 15, 15),
+      sides = 1
+    )
+  ) |>
+  ungroup()
+
+ggplot(performance_df, aes(trial, rolling_accuracy, colour = profile)) +
+  geom_vline(
+    xintercept = 121,
+    linetype = "dashed",
+    colour = "grey35"
+  ) +
+  geom_line(linewidth = 0.85, na.rm = TRUE) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(
+    title = "Reinforcement learning after a reward reversal",
+    subtitle = "The dashed line marks the point at which the more rewarding option changes",
+    x = "Trial",
+    y = "Proportion choosing the currently better option",
+    colour = "Learning profile"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+A fast learning rate can support quick adaptation after a genuine environmental change, but it can also lead to overreaction when outcomes are noisy. A slow learning rate can stabilize behavior in an uncertain environment, but it may delay adaptation when contingencies reverse. The clinically relevant question is therefore not whether one parameter value is inherently healthy or unhealthy. It is whether a model of adaptation explains behavior better in a particular context, and whether its parameters predict outcomes beyond the task used to estimate them.
+
+## Fitting Individual Differences
+
+Simulation asks what a model can produce. Estimation asks which parameter values best explain a particular observed sequence. For a reinforcement-learning model, suppose that the observed action on trial $t$ is $a_t$, while the model assigns that action probability $P_\theta(a_t)$ under parameter vector $\theta$. The log-likelihood is
+
+$$
+\log L(\theta)
+=
+\sum_{t=1}^{T}
+\log P_\theta(a_t).
+\tag{11}
+$$
+
+Maximum-likelihood estimation chooses
+
+$$
+\hat{\theta}
+=
+\arg\max_{\theta}
+\log L(\theta).
+\tag{12}
+$$
+
+For the simple two-parameter model above, $\theta=(\alpha,\beta)$. The optimization is not merely a technical step. A learning rate and inverse temperature can trade off: a model with rapid updating but noisy choice may resemble one with slower updating and more consistent choice over a limited trial sequence. This is a form of parameter non-identifiability.
+
+The following example estimates the learning rate and inverse temperature used to generate a simulated choice sequence. It performs multiple optimization runs because nonlinear likelihood surfaces can contain local optima and because a result should not depend on one arbitrary initial guess.
+
+## R Simulation: Estimating Learning Parameters
+
+``` r
+library(dplyr)
+library(ggplot2)
+library(tibble)
+
+negative_log_likelihood <- function(pars, data) {
+  learning_rate <- plogis(pars[1])
+  inverse_temperature <- exp(pars[2])
+
+  values <- c(option_a = 0, option_b = 0)
+  log_likelihood <- 0
+
+  for (i in seq_len(nrow(data))) {
+    probabilities <- softmax_probability(
+      values = values,
+      inverse_temperature = inverse_temperature
+    )
+
+    chosen_option <- data$choice[i]
+
+    log_likelihood <- log_likelihood +
+      log(pmax(probabilities[[chosen_option]], .Machine$double.eps))
+
+    prediction_error <- data$reward[i] - values[[chosen_option]]
+
+    values[[chosen_option]] <- values[[chosen_option]] +
+      learning_rate * prediction_error
+  }
+
+  -log_likelihood
+}
+
+true_alpha <- 0.30
+true_beta <- 3.5
+
+estimation_data <- simulate_bandit(
+  learning_rate = true_alpha,
+  inverse_temperature = true_beta,
+  n_trials = 300,
+  reversal_trial = 151,
+  seed = 42
+)
+
+starting_points <- expand.grid(
+  alpha_start = c(0.08, 0.25, 0.60, 0.90),
+  beta_start = c(0.8, 2, 5, 10)
+)
+
+fit_results <- lapply(seq_len(nrow(starting_points)), function(i) {
+  start <- starting_points[i, ]
+
+  fit <- optim(
+    par = c(qlogis(start$alpha_start), log(start$beta_start)),
+    fn = negative_log_likelihood,
+    data = estimation_data,
+    method = "BFGS"
+  )
+
+  tibble(
+    convergence = fit$convergence,
+    negative_log_likelihood = fit$value,
+    estimated_alpha = plogis(fit$par[1]),
+    estimated_beta = exp(fit$par[2])
+  )
+}) |>
+  bind_rows()
+
+best_fit <- fit_results |>
+  filter(convergence == 0) |>
+  slice_min(negative_log_likelihood, n = 1)
+
+print(
+  tibble(
+    parameter = c("Learning rate alpha", "Inverse temperature beta"),
+    true_value = c(true_alpha, true_beta),
+    estimated_value = c(
+      best_fit$estimated_alpha,
+      best_fit$estimated_beta
+    )
+  )
+)
+
+likelihood_grid <- expand.grid(
+  alpha = seq(0.02, 0.98, length.out = 80),
+  beta = seq(0.2, 10, length.out = 80)
+) |>
+  rowwise() |>
+  mutate(
+    negative_log_likelihood = negative_log_likelihood(
+      pars = c(qlogis(alpha), log(beta)),
+      data = estimation_data
+    )
+  ) |>
+  ungroup() |>
+  mutate(
+    relative_fit = negative_log_likelihood -
+      min(negative_log_likelihood)
+  )
+
+ggplot(likelihood_grid, aes(alpha, beta, fill = relative_fit)) +
+  geom_raster(interpolate = TRUE) +
+  geom_contour(
+    aes(z = relative_fit),
+    colour = "white",
+    alpha = 0.65
+  ) +
+  geom_point(
+    data = best_fit,
+    aes(
+      x = estimated_alpha,
+      y = estimated_beta
+    ),
+    inherit.aes = FALSE,
+    colour = "firebrick",
+    size = 2.8
+  ) +
+  scale_fill_viridis_c(
+    option = "magma",
+    name = "Relative\nnegative log-likelihood"
+  ) +
+  labs(
+    title = "Likelihood surface for a reinforcement-learning model",
+    subtitle = "The red point is the best solution found across multiple initial values",
+    x = "Learning rate alpha",
+    y = "Inverse temperature beta"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+A narrow, isolated low-likelihood region provides more confidence that the data distinguish the parameters under the model. A broad valley or multiple similar minima means that many parameter combinations explain the data similarly well. In that circumstance, interpreting a single fitted parameter as a precise individual characteristic is not justified.
+
+## Simulating Interventions
+
+Computational models can also clarify what an intervention is assumed to change. This is useful because clinical interventions can affect multiple parts of a system at once: baseline symptom level, recovery rate, reactivity to stress, feedback strength, social exposure, learning from reward or threat, adherence, and measurement itself.
+
+For the nonlinear symptom model, an intervention might be represented in several mathematically distinct ways:
+
+$$
+\lambda \uparrow
+\qquad \text{faster recovery,}
+\tag{13}
+$$
+
+$$
+\alpha \downarrow
+\qquad \text{weaker self-reinforcing feedback,}
+\tag{14}
+$$
+
+$$
+A \downarrow
+\qquad \text{reduced effect of a stressor,}
+\tag{15}
+$$
+
+or
+
+$$
+b \downarrow
+\qquad \text{a lower long-run baseline.}
+\tag{16}
+$$
+
+These are not interchangeable. An intervention that increases recovery may shorten episodes without preventing their onset. An intervention that reduces environmental stress exposure may prevent large perturbations while leaving internal feedback unchanged. A treatment that changes the observation process—for example, by changing how someone reports distress—could alter measured outcomes even if the latent process changes less than apparent.
+
+The simulation below compares two stylized interventions: one increases recovery toward baseline, while the other weakens symptom reinforcement. It is a conceptual experiment, not a representation of any specific therapy, medication, or treatment protocol.
+
+## R Simulation: Mechanisms of Change
+
+``` r
+library(deSolve)
+library(dplyr)
+library(ggplot2)
+
+intervention_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    stress_input <- ifelse(
+      t >= stress_start & t < stress_end,
+      stress_amplitude,
+      0
+    )
+
+    feedback <- feedback_strength *
+      symptom^hill_power /
+      (feedback_threshold^hill_power + symptom^hill_power)
+
+    ds <- -recovery_rate * (symptom - baseline) +
+      feedback +
+      stress_input
+
+    list(c(symptom = ds))
+  })
+}
+
+simulate_intervention <- function(name,
+                                  recovery_rate,
+                                  feedback_strength,
+                                  times = seq(0, 100, by = 0.05)) {
+  as.data.frame(
+    ode(
+      y = c(symptom = 1.5),
+      times = times,
+      func = intervention_rhs,
+      parms = c(
+        baseline = 1,
+        recovery_rate = recovery_rate,
+        feedback_strength = feedback_strength,
+        feedback_threshold = 4.5,
+        hill_power = 4,
+        stress_amplitude = 2.2,
+        stress_start = 15,
+        stress_end = 25
+      ),
+      method = "lsoda"
+    )
+  ) |>
+    mutate(condition = name)
+}
+
+intervention_df <- bind_rows(
+  simulate_intervention(
+    name = "Reference model",
+    recovery_rate = 0.28,
+    feedback_strength = 1.65
+  ),
+  simulate_intervention(
+    name = "Higher recovery rate",
+    recovery_rate = 0.50,
+    feedback_strength = 1.65
+  ),
+  simulate_intervention(
+    name = "Weaker positive feedback",
+    recovery_rate = 0.28,
+    feedback_strength = 0.85
+  )
+)
+
+ggplot(intervention_df, aes(time, symptom, colour = condition)) +
+  geom_vline(
+    xintercept = c(15, 25),
+    linetype = "dashed",
+    colour = "grey40"
+  ) +
+  geom_line(linewidth = 0.9) +
+  labs(
+    title = "Different modeled mechanisms can produce different recovery patterns",
+    subtitle = "Dashed lines mark a shared temporary stressor",
+    x = "Time",
+    y = "Latent symptom burden",
+    colour = NULL
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+The model can support an important design question: if two interventions yield similar average symptom reductions, do they do so through the same predicted mechanism? If they differ, they may have different consequences for relapse vulnerability, resilience to future stress, early warning signals, or the timing of improvement. Those predictions can then be tested rather than assumed.
+
+## Heterogeneity and Partial Pooling
+
+A major limitation of fitting separate models to each person is that individual time series are often short and noisy. A major limitation of fitting only one population-level model is that it can conceal meaningful differences among individuals. Hierarchical models address this trade-off through partial pooling.
+
+Let $\lambda_i$ denote the recovery rate for person $i$. One hierarchical formulation is
+
+$$
+\log \lambda_i
+\sim
+\mathcal{N}(\mu_\lambda,\sigma_\lambda^2),
+\tag{17}
+$$
+
+where $\mu_\lambda$ is the population-average log recovery rate and $\sigma_\lambda$ describes between-person variation. Each individual estimate is informed by that person’s observations but also regularized toward the broader population distribution when individual information is weak.
+
+Partial pooling is not a claim that individuals are interchangeable. It is an explicit response to uncertainty. If a person has abundant, informative longitudinal data, their estimated parameters can differ substantially from the group mean. If their data are sparse or noisy, the model avoids treating unstable person-specific estimates as highly precise.
+
+The following code simulates repeated symptom data from several individuals with different recovery rates. It then shows the data-generating heterogeneity. In an applied analysis, a Bayesian or mixed-effects state-space model would estimate the distribution of such individual parameters rather than treating the true values as known.
+
+## R Simulation: Individual Variation in Recovery
+
+``` r
+library(deSolve)
+library(dplyr)
+library(ggplot2)
+library(tibble)
+
+set.seed(123)
+
+n_people <- 24
+person_parameters <- tibble(
+  person = factor(seq_len(n_people)),
+  recovery_rate = exp(
+    rnorm(
+      n_people,
+      mean = log(0.24),
+      sd = 0.45
+    )
+  ),
+  baseline = rnorm(
+    n_people,
+    mean = 2,
+    sd = 0.35
+  )
+)
+
+simulate_person <- function(person_id,
+                            recovery_rate,
+                            baseline,
+                            times = seq(0, 45, by = 0.25)) {
+  person_rhs <- function(t, state, pars) {
+    with(as.list(c(state, pars)), {
+      stress_input <- ifelse(
+        t >= 10 & t < 18,
+        stress_amplitude,
+        0
+      )
+
+      ds <- -recovery_rate * (symptom - baseline) +
+        stress_input
+
+      list(c(symptom = ds))
+    })
+  }
+
+  latent <- as.data.frame(
+    ode(
+      y = c(symptom = baseline),
+      times = times,
+      func = person_rhs,
+      parms = c(
+        recovery_rate = recovery_rate,
+        baseline = baseline,
+        stress_amplitude = 3.5
+      ),
+      method = "lsoda"
+    )
+  )
+
+  observation_times <- seq(0, 45, by = 2)
+
+  latent |>
+    filter(time %in% observation_times) |>
+    mutate(
+      observed_symptom = symptom + rnorm(
+        n(),
+        sd = 0.45
+      ),
+      person = person_id
+    )
+}
+
+person_data <- person_parameters |>
+  rowwise() |>
+  do(
+    simulate_person(
+      person_id = .$person,
+      recovery_rate = .$recovery_rate,
+      baseline = .$baseline
+    )
+  ) |>
+  ungroup()
+
+ggplot(
+  person_data,
+  aes(time, observed_symptom, group = person, colour = recovery_rate)
+) +
+  geom_line(alpha = 0.5, linewidth = 0.55) +
+  geom_point(size = 1.1, alpha = 0.7) +
+  scale_colour_viridis_c(
+    option = "plasma",
+    name = "Simulated\nrecovery rate"
+  ) +
+  facet_wrap(~ person, ncol = 6) +
+  labs(
+    title = "Simulated between-person heterogeneity in symptom recovery",
+    subtitle = "Each panel contains noisy periodic observations from one simulated individual",
+    x = "Time",
+    y = "Observed symptom rating"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(size = 8)
+  )
+```
+
+An individualized model is useful only to the extent that its parameters can be estimated reliably and improve a meaningful decision. Complexity alone does not create personalization. A model that produces an elegant person-specific trajectory but does not predict future observations, treatment response, or clinically relevant outcomes better than a simpler baseline has not yet demonstrated practical value.
+
+## From Models to Clinical Claims
+
+The methods considered here—ordinary differential equations, adaptive numerical solvers, state-space models, reinforcement learning, parameter estimation, and sensitivity analysis—provide ways to make mental-health hypotheses more explicit. They are valuable precisely because they expose weak assumptions. A proposed mechanism must specify what changes, at what rate, in response to which input, with what observable consequences.
+
+Several checks should be routine when these models are used in mental-health research:
+
+-   Verify that numerical results remain stable when solver tolerances are tightened or time steps are reduced.
+-   Use simulation-based parameter recovery to test whether a modeling pipeline can recover known parameters from data resembling the intended study.
+-   Examine identifiability rather than interpreting a fitted parameter solely because an optimizer returned a value.
+-   Compare mechanistically distinct models that make similar predictions for the observed data.
+-   Test out-of-sample prediction, including across time, tasks, contexts, or individuals where possible.
+-   Distinguish latent-state uncertainty, measurement uncertainty, parameter uncertainty, and uncertainty about model structure.
+-   Avoid treating a model-derived quantity as a diagnosis, causal explanation, or treatment recommendation without external validation.
+
+The last point deserves emphasis. A computational model can estimate a parameter called “learning rate,” “volatility,” “recovery,” or “feedback strength.” The name is not the evidence. The parameter acquires scientific meaning only when the model fits adequately, competing explanations have been considered, the estimate is sufficiently identifiable, and it relates reproducibly to independent measures or outcomes.
+
+## Where This Leaves Computational Psychiatry
+
+Mental health is not a single dynamical system with one correct equation. It involves interacting processes across neural, cognitive, behavioral, social, developmental, and environmental scales. Computational methods do not dissolve that complexity. They provide a disciplined way to represent selected parts of it, generate consequences, and discover where a proposed explanation is too vague, too flexible, numerically unreliable, or poorly connected to data.
+
+The central question is therefore not whether a model is realistic in every detail. No model is. The question is whether it is precise enough to fail in informative ways: whether it predicts a pattern that can be checked, distinguishes its mechanism from plausible alternatives, quantifies uncertainty, and improves understanding or decision-making beyond a simpler description.
+
+In that sense, computation is not an ornamental layer added after theory and measurement. It is the place where assumptions about symptoms, behavior, learning, context, and intervention become trajectories that can be inspected, challenged, and revised.
