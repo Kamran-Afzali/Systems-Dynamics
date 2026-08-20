@@ -285,91 +285,173 @@ v_t \sim \mathcal{N}(0,r).
 \tag{7}
 $$
 
-The parameter $a$ describes persistence. Values near one imply that deviations in the latent state tend to carry forward from one measurement occasion to the next. The input coefficient $b$ measures the modeled effect of a known covariate $u_t$, such as a daily stress rating or sleep-loss measure. The innovations $w_t$ represent unmodeled process variation, while $v_t$ represents measurement error.
-
-This distinction is not cosmetic. If all changes in self-reported symptoms are treated as true changes in an underlying clinical state, measurement noise can be mistaken for instability. Conversely, if a model smooths observations too aggressively, meaningful rapid changes may be erased. The inference problem is therefore to estimate both the latent trajectory and the uncertainty surrounding it.
+The parameter $a$ describes persistence. Values near one imply that deviations in the latent state tend to carry forward from one measurement occasion to the next. The input coefficient $b$ measures the modeled effect of a known covariate $u_t$, such as a daily stress rating or sleep-loss measure. The innovations $w_t$ represent unmodeled process variation, while $v_t$ represents measurement error. If all changes in self-reported symptoms are treated as true changes in an underlying clinical state, measurement noise can be mistaken for instability. Conversely, if a model smooths observations too aggressively, meaningful rapid changes may be erased. The inference problem is therefore to estimate both the latent trajectory and the uncertainty surrounding it.
 
 ## R Simulation: A Latent Symptom State
 
 The following code simulates a daily latent state and noisy observations. It then uses a Kalman filter through the `KFAS` package to estimate the unobserved trajectory. This is a demonstration using simulated data; fitting such models to clinical data requires careful attention to missingness, sampling schedules, scale properties, and whether the Gaussian assumptions are defensible.
 
-``` r
-library(KFAS)
+``` {r}
 library(dplyr)
 library(ggplot2)
 library(tibble)
+library(tidyr)
 
 set.seed(2026)
+
+## ---- 1. Simulate the latent process and noisy observations -----------
 
 n_days <- 180
 days <- seq_len(n_days)
 
-stress <- scale(
+u <- scale(
   0.8 * sin(2 * pi * days / 28) +
     rnorm(n_days, mean = 0, sd = 0.8)
 )[, 1]
 
-persistence <- 0.88
-stress_effect <- 0.28
-process_sd <- 0.22
-measurement_sd <- 0.55
+a_true <- 0.88     # persistence
+b_true <- 0.28     # effect of the covariate on the latent state
+q_true <- 0.22^2   # process (innovation) variance
+r_true <- 0.55^2   # measurement variance
 
-latent_state <- numeric(n_days)
-latent_state[1] <- 2
+x <- numeric(n_days)
+x[1] <- 2
 
 for (t in 2:n_days) {
-  latent_state[t] <- persistence * latent_state[t - 1] +
-    stress_effect * stress[t - 1] +
-    rnorm(1, sd = process_sd)
+  x[t] <- a_true * x[t - 1] + b_true * u[t - 1] + rnorm(1, sd = sqrt(q_true))
 }
 
-observed_rating <- latent_state +
-  rnorm(n_days, sd = measurement_sd)
+z <- x + rnorm(n_days, sd = sqrt(r_true))
 
-mental_health_df <- tibble(
+sim_df <- tibble(
   day = days,
-  stress = stress,
-  latent_state = latent_state,
-  observed_rating = observed_rating
+  u = u,
+  latent_state = x,
+  observed_rating = z
 )
 
-model <- SSModel(
-  observed_rating ~ SSMregression(~ stress, Q = matrix(NA_real_)) +
-    SSMcustom(
-      Z = matrix(1),
-      T = matrix(NA_real_),
-      R = matrix(1),
-      Q = matrix(NA_real_)
-    ),
-  H = matrix(NA_real_)
+## ---- 2. Kalman filter, written explicitly, scalar arithmetic only ----
+## No matrices, no packages: a, b, q, r are plain numbers. This is the
+## textbook predict/update recursion for a scalar linear-Gaussian
+## state-space model (Durbin & Koopman; Harvey 1989).
+
+kalman_filter <- function(z, u, a, b, q, r, x0 = 0, P0 = 1e4) {
+  n <- length(z)
+  x_pred  <- numeric(n)   # predicted state mean,  x[t|t-1]
+  P_pred  <- numeric(n)   # predicted state var,   P[t|t-1]
+  x_filt  <- numeric(n)   # filtered state mean,   x[t|t]
+  P_filt  <- numeric(n)   # filtered state var,    P[t|t]
+  innov   <- numeric(n)   # one-step forecast error
+  innov_var <- numeric(n) # variance of that error
+  loglik  <- 0
+
+  x_prev <- x0
+  P_prev <- P0
+
+  for (t in seq_len(n)) {
+    ## --- predict step (state equation, eq. 6) ---
+    if (t == 1) {
+      x_pred[t] <- x_prev
+      P_pred[t] <- P_prev
+    } else {
+      x_pred[t] <- a * x_filt[t - 1] + b * u[t - 1]
+      P_pred[t] <- a^2 * P_filt[t - 1] + q
+    }
+
+    ## --- update step (observation equation, eq. 7) ---
+    innov[t] <- z[t] - x_pred[t]
+    innov_var[t] <- P_pred[t] + r
+    K <- P_pred[t] / innov_var[t]                # Kalman gain
+
+    x_filt[t] <- x_pred[t] + K * innov[t]
+    P_filt[t] <- (1 - K) * P_pred[t]
+
+    ## --- accumulate the Gaussian log-likelihood contribution ---
+    loglik <- loglik - 0.5 * (log(2 * pi) + log(innov_var[t]) +
+                                 innov[t]^2 / innov_var[t])
+  }
+
+  list(
+    x_pred = x_pred, P_pred = P_pred,
+    x_filt = x_filt, P_filt = P_filt,
+    innov = innov, innov_var = innov_var,
+    loglik = loglik
+  )
+}
+
+## ---- 3. Rauch-Tung-Striebel smoother, also written explicitly --------
+
+kalman_smoother <- function(kf, a) {
+  n <- length(kf$x_filt)
+  x_smooth <- numeric(n)
+  P_smooth <- numeric(n)
+
+  x_smooth[n] <- kf$x_filt[n]
+  P_smooth[n] <- kf$P_filt[n]
+
+  for (t in (n - 1):1) {
+    J <- kf$P_filt[t] * a / kf$P_pred[t + 1]
+    x_smooth[t] <- kf$x_filt[t] + J * (x_smooth[t + 1] - kf$x_pred[t + 1])
+    P_smooth[t] <- kf$P_filt[t] + J^2 * (P_smooth[t + 1] - kf$P_pred[t + 1])
+  }
+
+  list(x_smooth = x_smooth, P_smooth = P_smooth)
+}
+
+## ---- 4. Maximum likelihood via optim() --------------------------------
+## Unconstrained parameters are transformed so the optimizer can range
+## over all of R^4 while a, q, r automatically stay in valid ranges.
+
+negloglik <- function(par, z, u) {
+  a <- plogis(par[1])     # keeps persistence in (0, 1)
+  b <- par[2]             # unconstrained, any real effect size
+  q <- exp(par[3])        # keeps process variance positive
+  r <- exp(par[4])        # keeps measurement variance positive
+
+  kf <- kalman_filter(z, u, a, b, q, r)
+  -kf$loglik
+}
+
+start <- c(qlogis(0.7), 0, log(0.2^2), log(0.5^2))
+
+fit <- optim(
+  par = start,
+  fn = negloglik,
+  z = sim_df$observed_rating,
+  u = sim_df$u,
+  method = "BFGS",
+  hessian = TRUE
 )
 
-fit <- fitSSM(
-  model,
-  inits = c(
-    qlogis(0.7),
-    log(0.2),
-    log(0.5)
-  ),
-  method = "BFGS"
+a_hat <- plogis(fit$par[1])
+b_hat <- fit$par[2]
+q_hat <- exp(fit$par[3])
+r_hat <- exp(fit$par[4])
+
+recovered <- tibble(
+  parameter = c("persistence (a)", "input effect (b)", "process var (q)", "measurement var (r)"),
+  true_value = c(a_true, b_true, q_true, r_true),
+  estimate = c(a_hat, b_hat, q_hat, r_hat)
 )
+print(recovered)
 
-fitted_model <- fit$model
+## ---- 5. Filtered and smoothed trajectories using the fitted params ---
 
-kfs <- KFS(
-  fitted_model,
-  smoothing = c("state", "mean")
-)
+kf_final <- kalman_filter(sim_df$observed_rating, sim_df$u, a_hat, b_hat, q_hat, r_hat)
+ks_final <- kalman_smoother(kf_final, a_hat)
 
-state_estimate <- as.numeric(kfs$alphahat[, 2])
-
-plot_df <- mental_health_df |>
+sim_df <- sim_df |>
   mutate(
-    filtered_state = state_estimate
-  ) |>
-  select(day, latent_state, observed_rating, filtered_state) |>
-  tidyr::pivot_longer(
-    cols = c(latent_state, observed_rating, filtered_state),
+    filtered_state = kf_final$x_filt,
+    smoothed_state = ks_final$x_smooth
+  )
+
+## ---- 6. Plot ------------------------------------------------------------
+
+plot_df <- sim_df |>
+  select(day, latent_state, observed_rating, filtered_state, smoothed_state) |>
+  pivot_longer(
+    cols = c(latent_state, observed_rating, filtered_state, smoothed_state),
     names_to = "series",
     values_to = "value"
   )
@@ -380,17 +462,19 @@ ggplot(plot_df, aes(day, value, colour = series)) +
     values = c(
       latent_state = "black",
       observed_rating = "grey65",
-      filtered_state = "firebrick"
+      filtered_state = "steelblue",
+      smoothed_state = "firebrick"
     ),
     labels = c(
       latent_state = "Simulated latent state",
       observed_rating = "Observed daily rating",
-      filtered_state = "Kalman-smoothed estimate"
+      filtered_state = "Kalman-filtered estimate",
+      smoothed_state = "RTS-smoothed estimate"
     )
   ) +
   labs(
-    title = "Latent-state estimation from noisy symptom ratings",
-    subtitle = "The black trajectory is known only because these data were simulated",
+    title = "Latent symptom state recovered with a hand-coded Kalman filter",
+    subtitle = "No KFAS: scalar predict/update recursion, ML via optim()",
     x = "Day",
     y = "Symptom scale",
     colour = NULL
