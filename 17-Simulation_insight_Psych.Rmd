@@ -1,6 +1,6 @@
 # From Simulations to Symptoms: Computational Methods in Mental Health
 
-The preceding discussion treated numerical methods as a bridge between equations and observable consequences. In mental health research, that bridge is especially important because the relevant systems are dynamic, heterogeneous, partially observed, and shaped by both internal processes and changing environments. Symptoms fluctuate over hours and days; treatment effects may emerge slowly, abruptly, or only for some individuals; and the same observed trajectory can arise from different underlying mechanisms.
+In the last chapter we presented numerical methods as a bridge between equations and observable consequences. In mental health research, that bridge is especially important because the relevant systems are dynamic, heterogeneous, partially observed, and shaped by both internal processes and changing environments. Symptoms fluctuate over hours and days; treatment effects may emerge slowly, abruptly, or only for some individuals; and the same observed trajectory can arise from different underlying mechanisms.
 
 Computational psychiatry does not replace clinical judgment with equations. Its purpose is narrower and more demanding: to state hypotheses about cognition, affect, learning, behavior, physiology, and social context precisely enough that they can generate predictions. Numerical simulation then makes those predictions inspectable. It allows researchers to ask whether a proposed mechanism can produce episodic worsening, persistent symptoms, recovery after intervention, relapse following stress, or the individual variability seen in real data.
 
@@ -16,7 +16,6 @@ $$
 \text{observed measurements}
 \longrightarrow
 \text{uncertainty and clinical evaluation}.
-\tag{1}
 $$
 
 The final step is indispensable. A simulation can establish what follows from an assumed model; it cannot, by itself, establish that the model describes a person or disorder correctly.
@@ -54,7 +53,7 @@ where $A$ is the magnitude of the stress-related input. Even this elementary mod
 
 The code below simulates equation (2) with a temporary stress input. It uses `deSolve::ode()` and LSODA rather than a hand-written fixed-step method, because adaptive solvers are generally a more reliable default once a model is more complicated than a classroom benchmark.
 
-``` r
+``` {r}
 library(deSolve)
 library(dplyr)
 library(ggplot2)
@@ -179,7 +178,7 @@ Depending on parameter values, the model may have one stable equilibrium or mult
 
 ## R Simulation: A Nonlinear Feedback Model
 
-``` r
+``` {r}
 library(deSolve)
 library(dplyr)
 library(ggplot2)
