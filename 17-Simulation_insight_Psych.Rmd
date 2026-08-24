@@ -838,7 +838,7 @@ The simulation below compares two stylized interventions: one increases recovery
 
 ## R Simulation: Mechanisms of Change
 
-``` r
+``` {r}
 library(deSolve)
 library(dplyr)
 library(ggplot2)
@@ -946,7 +946,7 @@ The following code simulates repeated symptom data from several individuals with
 
 ## R Simulation: Individual Variation in Recovery
 
-``` r
+``` {r}
 library(deSolve)
 library(dplyr)
 library(ggplot2)
@@ -955,6 +955,7 @@ library(tibble)
 set.seed(123)
 
 n_people <- 24
+
 person_parameters <- tibble(
   person = factor(seq_len(n_people)),
   recovery_rate = exp(
@@ -975,8 +976,10 @@ simulate_person <- function(person_id,
                             recovery_rate,
                             baseline,
                             times = seq(0, 45, by = 0.25)) {
+
   person_rhs <- function(t, state, pars) {
     with(as.list(c(state, pars)), {
+
       stress_input <- ifelse(
         t >= 10 & t < 18,
         stress_amplitude,
@@ -1011,26 +1014,34 @@ simulate_person <- function(person_id,
     mutate(
       observed_symptom = symptom + rnorm(
         n(),
+        mean = 0,
         sd = 0.45
       ),
-      person = person_id
+      person = person_id,
+      recovery_rate = recovery_rate,
+      baseline = baseline
     )
 }
 
 person_data <- person_parameters |>
-  rowwise() |>
-  do(
+  rowwise(person) |>
+  reframe(
     simulate_person(
-      person_id = .$person,
-      recovery_rate = .$recovery_rate,
-      baseline = .$baseline
+      person_id = person,
+      recovery_rate = recovery_rate,
+      baseline = baseline
     )
   ) |>
   ungroup()
 
 ggplot(
   person_data,
-  aes(time, observed_symptom, group = person, colour = recovery_rate)
+  aes(
+    x = time,
+    y = observed_symptom,
+    group = person,
+    colour = recovery_rate
+  )
 ) +
   geom_line(alpha = 0.5, linewidth = 0.55) +
   geom_point(size = 1.1, alpha = 0.7) +
