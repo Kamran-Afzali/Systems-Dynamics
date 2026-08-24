@@ -522,7 +522,7 @@ These parameters should not be casually relabeled as stable clinical traits. A l
 
 ## R Simulation: Learning Under Changing Rewards
 
-``` r
+``` {r}
 library(dplyr)
 library(ggplot2)
 library(tidyr)
@@ -669,7 +669,7 @@ The following example estimates the learning rate and inverse temperature used t
 
 ## R Simulation: Estimating Learning Parameters
 
-``` r
+``` {r}
 library(dplyr)
 library(ggplot2)
 library(tibble)
