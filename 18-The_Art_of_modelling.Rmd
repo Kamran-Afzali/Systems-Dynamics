@@ -1,0 +1,291 @@
+# The Art of Mathematical Modeling in Mental Health: From Reality to Equations
+
+Every post in this series so far has started from an equation and asked what it implies: how delay produces oscillation, how a parameter crossing a threshold produces an abrupt transition, how noise reshapes a bifurcation, how coupling on a graph produces synchrony or contagion, how a numerical integrator approximates a trajectory it cannot solve in closed form. That order of operations was deliberate, because each of those posts needed the machinery in hand before it was worth talking about what the machinery is for. This post reverses the order. It starts from a clinical phenomenon and asks how one gets, honestly and defensibly, from that phenomenon to an equation, and then how one decides whether the equation deserves to be believed. Model building is not a preamble to the mathematics developed earlier; it is the discipline that decides whether any of that mathematics is doing scientific work or merely producing elegant pictures.
+
+## What a Model Is For
+
+A mathematical model in mental health research is a deliberately simplified representation of a psychological or physiological process, built to make a hypothesis precise enough to generate a prediction that could, in principle, fail. This definition is narrower than it looks. It excludes descriptions that only redescribe data (a regression line summarizing a trend is a description, not a model of mechanism, unless the coefficients are given a causal or dynamical interpretation that could be independently checked). It also excludes purely verbal theories that are compatible with almost any outcome, which is the more common failure mode in psychiatric theorizing. The stress-diathesis account of depression, for instance, is not yet a model until diathesis and stress are each given a mathematical role, because as a sentence it can accommodate any observed trajectory after the fact.
+
+Every model in this series has occupied a point on a spectrum between two idealized poles. At one pole sits the purely phenomenological model, which reproduces an observed pattern of behavior without committing to a specific biological or psychological mechanism; the logistic growth curve, or the Ornstein-Uhlenbeck process used earlier to describe mood fluctuation around a set point, are of this kind. At the other pole sits the purely mechanistic model, in which every term corresponds to an identified physiological or cognitive process with an independently measurable parameter; a full model of HPA-axis feedback with corticotropin-releasing hormone, adrenocorticotropic hormone, and cortisol concentrations as explicit state variables aims at this pole, even if it rarely reaches it cleanly. Almost every model actually used in practice sits somewhere between, borrowing the tractability of a phenomenological form for some terms while insisting on mechanistic interpretability for others. There is no principled reason to prefer one pole over the other in general; the correct position on the spectrum is set by the scientific question, not by an aesthetic preference for realism or for simplicity.
+
+## From Verbal Hypothesis to Formal Structure
+
+The translation from a clinical hypothesis to a differential equation proceeds through a small number of decisions that are easy to state and consequential to get wrong. The first decision is what to treat as a state variable, meaning a quantity whose current value, together with the current values of the other state variables, is sufficient to determine its own future rate of change. Symptom severity, sleep quality, and rumination intensity are natural candidates for state variables in a depression model; a diagnosis is not, because a diagnosis is a threshold-based summary of a state trajectory rather than a quantity that itself evolves continuously in time. Choosing too few state variables produces a model that cannot represent a hypothesis the researcher actually holds; choosing too many produces a model with more free behavior than any dataset can constrain. This second failure, in particular, invites what is sometimes called the identifiability problem: several very different parameter combinations can produce indistinguishable trajectories, so that fitting the model to data does not pin down what the researcher wanted to learn.
+
+The second decision is the functional form of each term, meaning the specific mathematical expression that translates a verbal mechanism such as "reduced activity worsens mood" into an operator acting on the state variables. A linear term $-a x$ encodes proportional decay or restoring force and is almost always the right default in the absence of evidence for something more structured, because it has the fewest free parameters and the clearest interpretation: $a$ is a rate. A saturating term such as the Hill function $k x^p / (K^p + x^p)$, used in an earlier post to generate genuine bistability in a rumination-mood model, encodes a process that accelerates with the state up to a point and then levels off, which is appropriate whenever a biological or cognitive resource is finite. The decision to introduce a nonlinearity should be driven by a specific empirical or theoretical claim that the linear form cannot represent, such as an author's belief that a symptom feeds back on itself only past a threshold. Introducing a nonlinear term merely because it makes a model fit better is a version of the overfitting problem discussed formally below, expressed at the level of model structure rather than parameter values.
+
+The third decision is what to leave out. Every mechanistic model omits pathways that are known to exist, because a model that tried to represent every plausible influence on mood would have as many free parameters as a dataset has degrees of freedom, and would not be more informative than the raw data it was built to explain. Box's often-quoted remark that all models are wrong but some are useful is not a concession about model quality; it is closer to a theorem about what a model is. A model is useful in proportion to how well its necessary omissions match the scientific question being asked, not in proportion to how much biological detail it contains.
+
+## Parsimony as a Formal Constraint, Not a Preference
+
+Occam's razor is frequently invoked in psychiatric modeling as an aesthetic preference for simple explanations, but it has a precise statistical content that is worth separating from the aesthetics. Consider two nested candidate models fit to the same longitudinal symptom time series: a linear recovery model with two free parameters (a baseline and a recovery rate), and a damped oscillator model with four free parameters (a baseline, a decay rate, an oscillation frequency, and an amplitude). The oscillator model contains the linear model as a special case, obtained by setting the frequency to zero, so it can never fit the training data worse and will typically fit it better, purely as an algebraic consequence of having more adjustable parameters. Preferring the oscillator model on fit alone would be preferring complexity that may exist only in the noise realization of that particular dataset, and would generalize poorly to a new time series from the same underlying process.
+
+The Akaike Information Criterion formalizes the correction for this effect. For a model with $k$ free parameters and maximized log-likelihood $\ln(L)$ given the data,
+
+\[
+\text{AIC} = 2k - 2\ln(L).
+\]
+
+The first term penalizes the number of free parameters directly; the second rewards fit to the data. Lower AIC indicates a better model in the specific sense of minimizing an estimate of the Kullback-Leibler divergence between the fitted model and the unknown true data-generating process, which is to say AIC is trying to estimate predictive accuracy on new data using only the training fit, not trying to identify the literally correct model. This distinction matters clinically: AIC does not converge on the "true" model as more data accumulate if the true model is not among the candidates being compared, but it does converge, under fairly general conditions, on whichever candidate minimizes expected prediction error. That is usually the quantity a clinician actually cares about.
+
+The Bayesian Information Criterion imposes a heavier penalty that grows with sample size $n$,
+
+\[
+\text{BIC} = k\ln(n) - 2\ln(L).
+\]
+
+Because $\ln(n)$ exceeds $2$ once $n$ exceeds about eight observations, BIC favors simpler models more aggressively than AIC as a dataset grows, and it has the further property of being asymptotically consistent: if the true model actually is among the candidates under comparison, the probability that BIC selects it approaches one as $n \to \infty$. AIC does not have this consistency property, but it has an efficiency property that BIC lacks, asymptotically minimizing mean squared prediction error even when no candidate model is exactly correct. Neither criterion is uniformly better; the choice between them is itself a modeling decision that should track whether the researcher believes the candidate set plausibly contains something close to the data-generating mechanism, or is comparing several admittedly approximate descriptions and wants the one that predicts best.
+
+For a Gaussian error model, in which residuals around the fitted trajectory are assumed to be normally distributed with variance $\sigma^2$, the log-likelihood has a closed form in terms of the residual sum of squares $\text{RSS}$,
+
+\[
+\ln(L) = -\frac{n}{2}\ln(2\pi\hat{\sigma}^2) - \frac{\text{RSS}}{2\hat{\sigma}^2}, \qquad \hat{\sigma}^2 = \frac{\text{RSS}}{n},
+\]
+
+which reduces AIC and BIC to functions of the fit residuals and the parameter count alone, without requiring a full likelihood evaluation for every candidate model. This is the version actually used in the simulation below, and it is worth noting explicitly that this Gaussian reduction is itself a modeling assumption: if the residuals are better described by a heavier-tailed distribution, as symptom rating data with occasional large excursions often are, the Gaussian AIC or BIC can favor the wrong model, and a robust or heavy-tailed likelihood should be substituted.
+
+## Cross-Validation and the Limits of In-Sample Fit
+
+Information criteria estimate predictive performance analytically, from the shape of the likelihood surface at its maximum. Cross-validation estimates the same quantity empirically, by directly withholding data and checking whether the fitted model predicts what was withheld. The two approaches often agree, but cross-validation makes fewer distributional assumptions and is the more defensible default whenever the error structure is uncertain, which in mental health time series is close to always.
+
+The simplest version, k-fold cross-validation, partitions the available observations into $k$ roughly equal subsets, fits the model on $k-1$ of them, and evaluates prediction error on the subset that was withheld; this is repeated until every subset has served once as the held-out set, and the $k$ error estimates are averaged. Leave-one-out cross-validation is the limiting case $k=n$, withholding a single observation at a time, and is common in psychiatric machine learning applications where sample sizes are small enough that a five-fold or ten-fold split would leave uncomfortably little data in either partition. A recurring and consequential mistake in applied work is to perform some data-dependent step, such as choosing which symptom features to include or which threshold to apply, using the full dataset before cross-validating, which leaks information from the nominally held-out fold back into the fitting process and inflates the apparent accuracy of the model. The correct procedure nests any such feature or model selection step inside each fold, so that every decision the analysis pipeline makes is blind to the data it will be tested against.
+
+For a mechanistic dynamical model, of the kind developed in the earlier posts in this series, cross-validation takes on a slightly different and arguably more informative form: rather than withholding random observations, one withholds a contiguous block of time, fits the model's parameters using data before and after the gap, and evaluates whether the fitted trajectory predicts the withheld interval. This respects the temporal dependency structure that a random split would break, and it directly tests the property a dynamical model claims to have, namely that its state at time $t$ together with its equations determines its state at $t + \Delta t$, rather than merely testing whether the model can interpolate smoothly through nearby points.
+
+## An Applied Example: Choosing Between Competing Models of Symptom Recovery
+
+The recovery model introduced in an earlier post, $\dot{s} = -\lambda(s - b) + u(t)$, and the nonlinear feedback extension, $\dot{s} = -\lambda(s-b) + \alpha s^{p}/(K^{p}+s^{p}) + u(t)$, are nested in the same sense as the linear and oscillator examples above: the feedback model reduces to the linear model when $\alpha = 0$. Given an observed symptom trajectory following a temporary stressor, whether the added feedback term is scientifically warranted, rather than merely fitting noise, is exactly the question AIC, BIC, and cross-validation are built to answer. The simulation below generates synthetic data from a known feedback process, contaminates it with realistic observation noise, and then asks whether each criterion correctly recovers the generating model when both the linear and the nonlinear model are fit to the same noisy data. This is a useful exercise independent of the specific numbers it returns, because it is only by simulating from a known ground truth that one can check whether a model-selection procedure does what it claims to do, rather than trusting the procedure's own output on real data where the ground truth is unknown.
+
+```{r}
+library(deSolve)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(purrr)
+
+set.seed(11)
+
+# Ground-truth generative model: nonlinear feedback recovery process
+feedback_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    stress_input <- ifelse(t >= stress_start & t < stress_end, stress_amplitude, 0)
+    feedback <- alpha * symptom^p / (K^p + symptom^p)
+    ds <- -lambda * (symptom - baseline) + feedback + stress_input
+    list(c(symptom = ds))
+  })
+}
+
+true_pars <- c(
+  lambda = 0.30, baseline = 2, alpha = 1.6, K = 4.5, p = 4,
+  stress_amplitude = 2.2, stress_start = 10, stress_end = 20
+)
+
+times <- seq(0, 60, by = 0.5)
+
+true_traj <- ode(
+  y = c(symptom = 2), times = times, func = feedback_rhs, parms = true_pars,
+  method = "lsoda"
+) |> as.data.frame()
+
+observation_noise_sd <- 0.35
+observed <- true_traj |>
+  mutate(observed_symptom = symptom + rnorm(n(), 0, observation_noise_sd))
+
+ggplot(observed, aes(time, observed_symptom)) +
+  geom_point(alpha = 0.45, size = 1.3, colour = "grey40") +
+  geom_line(aes(y = symptom), colour = "firebrick", linewidth = 0.9) +
+  labs(
+    title = "Synthetic symptom trajectory from a known nonlinear feedback process",
+    subtitle = "Points are noisy observations; the red curve is the true latent state",
+    x = "Time", y = "Symptom burden"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+The candidate models are fit by nonlinear least squares, which under the assumption of Gaussian, homoscedastic, independent observation noise is equivalent to maximum likelihood. The linear model has two free parameters, baseline and recovery rate, holding the stress timing fixed at its known values for simplicity; the nonlinear model adds the three feedback parameters $\alpha$, $K$, and $p$, for five in total. Both models are fit to the same noisy observations, and both AIC and BIC are computed from the resulting residual sums of squares.
+
+```{r}
+linear_rhs <- function(t, state, pars) {
+  with(as.list(c(state, pars)), {
+    stress_input <- ifelse(t >= stress_start & t < stress_end, stress_amplitude, 0)
+    ds <- -lambda * (symptom - baseline) + stress_input
+    list(c(symptom = ds))
+  })
+}
+
+simulate_linear <- function(lambda, baseline, stress_amplitude) {
+  pars <- c(lambda = lambda, baseline = baseline, stress_amplitude = stress_amplitude,
+            stress_start = 10, stress_end = 20)
+  ode(y = c(symptom = baseline), times = times, func = linear_rhs, parms = pars,
+      method = "lsoda")[, "symptom"]
+}
+
+simulate_feedback <- function(lambda, baseline, alpha, K, p, stress_amplitude) {
+  pars <- c(lambda = lambda, baseline = baseline, alpha = alpha, K = K, p = p,
+            stress_amplitude = stress_amplitude, stress_start = 10, stress_end = 20)
+  ode(y = c(symptom = baseline), times = times, func = feedback_rhs, parms = pars,
+      method = "lsoda")[, "symptom"]
+}
+
+sse_linear <- function(par) {
+  pred <- simulate_linear(par[1], par[2], par[3])
+  sum((observed$observed_symptom - pred)^2)
+}
+
+sse_feedback <- function(par) {
+  pred <- simulate_feedback(par[1], par[2], par[3], par[4], par[5], par[6])
+  sum((observed$observed_symptom - pred)^2)
+}
+
+fit_linear <- optim(
+  par = c(lambda = 0.3, baseline = 2, stress_amplitude = 2),
+  fn = sse_linear, method = "L-BFGS-B",
+  lower = c(0.01, 0, 0), upper = c(3, 6, 6)
+)
+
+fit_feedback <- optim(
+  par = c(lambda = 0.3, baseline = 2, alpha = 1.5, K = 4, p = 3, stress_amplitude = 2),
+  fn = sse_feedback, method = "L-BFGS-B",
+  lower = c(0.01, 0, 0, 0.5, 1, 0), upper = c(3, 6, 6, 15, 8, 6)
+)
+
+n_obs <- nrow(observed)
+
+info_criteria <- function(rss, n, k) {
+  sigma2_hat <- rss / n
+  log_lik <- -n / 2 * log(2 * pi * sigma2_hat) - rss / (2 * sigma2_hat)
+  c(AIC = 2 * k - 2 * log_lik, BIC = k * log(n) - 2 * log_lik, logLik = log_lik)
+}
+
+criteria_table <- tibble(
+  model = c("Linear recovery", "Nonlinear feedback"),
+  k = c(3, 6),
+  rss = c(fit_linear$value, fit_feedback$value)
+) |>
+  mutate(map_dfr(seq_along(model), function(i) info_criteria(rss[i], n_obs, k[i]))) |>
+  mutate(delta_AIC = AIC - min(AIC), delta_BIC = BIC - min(BIC))
+
+print(criteria_table)
+```
+
+The fitted parameter count for the linear model is listed as three rather than two above, because the residual variance $\hat{\sigma}^2$ is itself an implicitly estimated parameter in the Gaussian likelihood and should be counted for both candidates on an equal footing; omitting it would not change which model wins, since it adds the same constant to both, but including it keeps the absolute AIC and BIC values interpretable rather than merely comparable. The comparison recovers the correct qualitative conclusion by construction, since the data were simulated from the feedback model, but the specific magnitude of $\Delta\text{AIC}$ and $\Delta\text{BIC}$ is informative in its own right: a difference of less than about two is conventionally treated as weak evidence for the better-fitting model, a difference of four to seven as considerable evidence, and a difference beyond ten as decisive, though these thresholds are heuristics rather than a formal hypothesis test and should not be treated as a significance threshold in the way a p-value sometimes is.
+
+## Cross-Validating the Same Comparison
+
+Block cross-validation on the same two candidate models tests a related but distinct question: not which model better explains the data already collected, but which model would have predicted a segment of the trajectory it was not shown. This is closer to the standard a clinical forecasting tool would actually be held to.
+
+```{r}
+run_block_cv <- function(holdout_start, holdout_end) {
+  train_idx <- observed$time < holdout_start | observed$time > holdout_end
+  train_data <- observed[train_idx, ]
+  test_data <- observed[!train_idx, ]
+
+  sse_linear_train <- function(par) {
+    pred <- simulate_linear(par[1], par[2], par[3])
+    sum((train_data$observed_symptom - pred[train_idx])^2)
+  }
+  sse_feedback_train <- function(par) {
+    pred <- simulate_feedback(par[1], par[2], par[3], par[4], par[5], par[6])
+    sum((train_data$observed_symptom - pred[train_idx])^2)
+  }
+
+  fl <- optim(c(0.3, 2, 2), sse_linear_train, method = "L-BFGS-B",
+              lower = c(0.01, 0, 0), upper = c(3, 6, 6))
+  ff <- optim(c(0.3, 2, 1.5, 4, 3, 2), sse_feedback_train, method = "L-BFGS-B",
+              lower = c(0.01, 0, 0, 0.5, 1, 0), upper = c(3, 6, 6, 15, 8, 6))
+
+  pred_linear_full <- simulate_linear(fl$par[1], fl$par[2], fl$par[3])
+  pred_feedback_full <- simulate_feedback(ff$par[1], ff$par[2], ff$par[3], ff$par[4], ff$par[5], ff$par[6])
+
+  tibble(
+    model = c("Linear recovery", "Nonlinear feedback"),
+    holdout_rmse = c(
+      sqrt(mean((test_data$observed_symptom - pred_linear_full[!train_idx])^2)),
+      sqrt(mean((test_data$observed_symptom - pred_feedback_full[!train_idx])^2))
+    )
+  )
+}
+
+holdout_blocks <- list(c(8, 22), c(25, 35), c(40, 50))
+
+cv_results <- map_dfr(holdout_blocks, function(block) {
+  run_block_cv(block[1], block[2]) |> mutate(block = paste0(block[1], "-", block[2]))
+})
+
+cv_summary <- cv_results |>
+  group_by(model) |>
+  summarise(mean_holdout_rmse = mean(holdout_rmse), .groups = "drop")
+
+print(cv_results)
+print(cv_summary)
+
+ggplot(cv_results, aes(block, holdout_rmse, fill = model)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6) +
+  labs(
+    title = "Block cross-validated prediction error by held-out interval",
+    subtitle = "Lower RMSE indicates better out-of-sample prediction",
+    x = "Held-out time block", y = "Root mean squared error", fill = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
+```
+
+The block that spans the stress onset, from time 8 to 22, is the most diagnostic of the three, because it is precisely the interval during which the feedback and linear models make the most divergent predictions; a block drawn entirely from the post-recovery plateau would show little difference between the models regardless of which one generated the data, since both reduce to the same baseline-seeking behavior once the feedback term has saturated or decayed. This is a general point about cross-validation for dynamical models that is easy to overlook: the informativeness of a held-out block depends on where in the system's dynamical repertoire that block falls, not only on its length, and a cross-validation scheme that only ever withholds quiescent periods will underestimate how much the candidate models actually disagree.
+
+## Interdisciplinary Borrowing and Its Hazards
+
+Much of the formal apparatus used throughout this series, bifurcation theory, stochastic differential equations, network dynamics, was developed first in physics, engineering, or ecology, and carries import along with it. This is a genuine asset: a result proved once about saddle-node bifurcations does not need to be reproven for every biological system that happens to exhibit one, and the qualitative predictions, such as critical slowing down before a transition, transfer with the mathematics. But importing a formalism also imports its implicit assumptions, and psychiatric applications have sometimes adopted the equations without adopting, or checking, the assumptions that justified them in the source discipline.
+
+The clearest example in this series is the frequent assumption of stationarity, meaning that a model's parameters are treated as constant over the observation window. A predator-population model in ecology can often justify this assumption over a season; a model of mood dynamics that ignores medication changes, seasonal affective variation, or life events occurring during the observation window is making a much less defensible version of the same assumption, and the researcher should be able to state explicitly why the window chosen is short enough, or the confound controlled for, to make stationarity reasonable. A second example is the routine assumption of ergodicity, meaning that a single individual's fluctuations over time have the same statistical structure as fluctuations across a population of individuals at one time. Group-level findings, such as an average recovery rate estimated by fitting the recovery model to many patients cross-sectionally, do not automatically license claims about any one patient's trajectory over time, and the conflation of the two has a name, Molenaar's ergodic theorem problem, that is worth knowing even outside the network-modeling literature where it is most often invoked. Borrowing a formalism responsibly means borrowing its domain of validity along with its equations, and stating plainly when that domain of validity is uncertain in the new application.
+
+## Parsimony, Identifiability, and the Honest Limits of a Model
+
+A model can be simultaneously well-fitting, well-validated by cross-validation, and still scientifically unhelpful if its parameters are not identifiable, meaning distinct parameter combinations produce statistically indistinguishable predictions. This is a structural property of a model and its data, not merely a matter of having too little data in an absolute sense; a model can be non-identifiable even with an arbitrarily long time series if two parameters only ever appear multiplied together in every equation, so that the data constrain their product but not their individual values. Practical identifiability, a related but weaker notion, asks whether the data at hand, given realistic noise, constrain the parameters tightly enough to be scientifically useful even if the model is formally identifiable in the infinite-data limit. Checking practical identifiability is usually done by examining the profile likelihood or, as below, by refitting the same model to many independent noisy realizations of the same underlying process and asking how much the recovered parameter estimates scatter.
+
+```{r}
+simulate_and_refit <- function(seed) {
+  set.seed(seed)
+  noisy_obs <- true_traj$symptom + rnorm(n_obs, 0, observation_noise_sd)
+
+  sse_refit <- function(par) {
+    pred <- simulate_feedback(par[1], par[2], par[3], par[4], par[5], par[6])
+    sum((noisy_obs - pred)^2)
+  }
+
+  fit <- optim(
+    par = c(lambda = 0.3, baseline = 2, alpha = 1.5, K = 4, p = 3, stress_amplitude = 2),
+    fn = sse_refit, method = "L-BFGS-B",
+    lower = c(0.01, 0, 0, 0.5, 1, 0), upper = c(3, 6, 6, 15, 8, 6)
+  )
+  setNames(fit$par, c("lambda", "baseline", "alpha", "K", "p", "stress_amplitude"))
+}
+
+refit_results <- map_dfr(1:60, function(s) as_tibble(t(simulate_and_refit(s))))
+
+refit_long <- refit_results |>
+  pivot_longer(everything(), names_to = "parameter", values_to = "estimate")
+
+true_values <- tibble(
+  parameter = c("lambda", "baseline", "alpha", "K", "p", "stress_amplitude"),
+  true_value = c(true_pars["lambda"], true_pars["baseline"], true_pars["alpha"],
+                 true_pars["K"], true_pars["p"], true_pars["stress_amplitude"])
+)
+
+ggplot(refit_long, aes(estimate)) +
+  geom_histogram(bins = 20, fill = "steelblue", alpha = 0.75) +
+  geom_vline(data = true_values, aes(xintercept = true_value), colour = "firebrick",
+             linetype = "dashed", linewidth = 0.8) +
+  facet_wrap(~parameter, scales = "free", ncol = 3) +
+  labs(
+    title = "Practical identifiability of the nonlinear feedback model",
+    subtitle = "Distribution of refitted parameters across 60 independent noisy realizations; dashed line is the true value",
+    x = "Estimated value", y = "Count"
+  ) +
+  theme_minimal(base_size = 11)
+```
+
+A tight, unbiased cluster of estimates around the true dashed line indicates a well-identified parameter given this noise level and sampling design; a wide, skewed, or multimodal distribution indicates that the parameter is only weakly constrained by data of this kind, even though the model as a whole may fit and cross-validate well. The Hill exponent $p$, in particular, is a common offender in feedback models of this form, because its effect on the fitted trajectory is strongly correlated with the effect of the threshold parameter $K$, and disentangling the two often requires either denser sampling through the transition region or independent information about one of the two parameters from outside the time series itself.
+
+## Model Building as an Iterative, Not a One-Shot, Procedure
+
+Nothing in the preceding sections should be read as prescribing a single correct model for any given clinical phenomenon, arrived at once and then reported. The realistic workflow is iterative: a candidate model is specified from a verbal hypothesis, fit to available data, checked for identifiability, compared against simpler and more complex alternatives using AIC, BIC, and cross-validation, and then revised in light of where it fails, whether that failure is a poor fit to a particular clinical feature, an implausible parameter estimate, or a prediction that does not survive a held-out block of data. Each revision produces a new candidate, and the cycle repeats until further revision no longer improves out-of-sample prediction relative to the complexity it costs. This is not a failure of the modeling enterprise to converge on a final answer. A model that has survived several iterations of this cycle against real, held-out clinical data has earned a kind of provisional trust that no single goodness-of-fit statistic, however sophisticated, can confer on its own, and it is that provisional, continually re-tested trust, rather than any claim to have found the true equation of the mind, that is the actual deliverable of mathematical modeling in mental health.
