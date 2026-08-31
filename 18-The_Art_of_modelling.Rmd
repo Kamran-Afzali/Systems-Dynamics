@@ -105,43 +105,85 @@ ggplot(observed, aes(time, observed_symptom)) +
 The candidate models are fit by nonlinear least squares, which under the assumption of Gaussian, homoscedastic, independent observation noise is equivalent to maximum likelihood. The linear model has two free parameters, baseline and recovery rate, holding the stress timing fixed at its known values for simplicity; the nonlinear model adds the three feedback parameters $\alpha$, $K$, and $p$, for five in total. Both models are fit to the same noisy observations, and both AIC and BIC are computed from the resulting residual sums of squares.
 
 ```{r}
+library(deSolve)
+library(dplyr)
+library(tibble)
+
 linear_rhs <- function(t, state, pars) {
   with(as.list(c(state, pars)), {
-    stress_input <- ifelse(t >= stress_start & t < stress_end, stress_amplitude, 0)
+    stress_input <- if (t >= stress_start && t < stress_end) {
+      stress_amplitude
+    } else {
+      0
+    }
+
     ds <- -lambda * (symptom - baseline) + stress_input
+
     list(c(symptom = ds))
   })
 }
 
-simulate_linear <- function(lambda, baseline, stress_amplitude) {
-  pars <- c(lambda = lambda, baseline = baseline, stress_amplitude = stress_amplitude,
-            stress_start = 10, stress_end = 20)
-  ode(y = c(symptom = baseline), times = times, func = linear_rhs, parms = pars,
-      method = "lsoda")[, "symptom"]
-}
+simulate_linear <- function(pars, times) {
+  pars <- c(
+    lambda = unname(pars["lambda"]),
+    baseline = unname(pars["baseline"]),
+    stress_amplitude = unname(pars["stress_amplitude"]),
+    stress_start = 10,
+    stress_end = 20
+  )
 
-simulate_feedback <- function(lambda, baseline, alpha, K, p, stress_amplitude) {
-  pars <- c(lambda = lambda, baseline = baseline, alpha = alpha, K = K, p = p,
-            stress_amplitude = stress_amplitude, stress_start = 10, stress_end = 20)
-  ode(y = c(symptom = baseline), times = times, func = feedback_rhs, parms = pars,
-      method = "lsoda")[, "symptom"]
+  ode(
+    y = c(symptom = unname(pars["baseline"])),
+    times = times,
+    func = linear_rhs,
+    parms = pars,
+    method = "lsoda"
+  )[, "symptom"]
 }
 
 sse_linear <- function(par) {
-  pred <- simulate_linear(par[1], par[2], par[3])
-  sum((observed$observed_symptom - pred)^2)
-}
-
-sse_feedback <- function(par) {
-  pred <- simulate_feedback(par[1], par[2], par[3], par[4], par[5], par[6])
+  names(par) <- c("lambda", "baseline", "stress_amplitude")
+  pred <- simulate_linear(par, times = observed$time)
   sum((observed$observed_symptom - pred)^2)
 }
 
 fit_linear <- optim(
   par = c(lambda = 0.3, baseline = 2, stress_amplitude = 2),
-  fn = sse_linear, method = "L-BFGS-B",
-  lower = c(0.01, 0, 0), upper = c(3, 6, 6)
+  fn = sse_linear,
+  method = "L-BFGS-B",
+  lower = c(lambda = 0.01, baseline = 0, stress_amplitude = 0),
+  upper = c(lambda = 3, baseline = 6, stress_amplitude = 6)
 )
+
+```
+
+``` {r}
+simulate_feedback <- function(pars, times) {
+  pars <- c(
+    lambda = unname(pars["lambda"]),
+    baseline = unname(pars["baseline"]),
+    alpha = unname(pars["alpha"]),
+    K = unname(pars["K"]),
+    p = unname(pars["p"]),
+    stress_amplitude = unname(pars["stress_amplitude"]),
+    stress_start = 10,
+    stress_end = 20
+  )
+
+  ode(
+    y = c(symptom = unname(pars["baseline"])),
+    times = times,
+    func = feedback_rhs,
+    parms = pars,
+    method = "lsoda"
+  )[, "symptom"]
+}
+
+sse_feedback <- function(par) {
+  names(par) <- c("lambda", "baseline", "alpha", "K", "p", "stress_amplitude")
+  pred <- simulate_feedback(par, times = observed$time)
+  sum((observed$observed_symptom - pred)^2)
+}
 
 fit_feedback <- optim(
   par = c(lambda = 0.3, baseline = 2, alpha = 1.5, K = 4, p = 3, stress_amplitude = 2),
@@ -181,11 +223,13 @@ run_block_cv <- function(holdout_start, holdout_end) {
   test_data <- observed[!train_idx, ]
 
   sse_linear_train <- function(par) {
-    pred <- simulate_linear(par[1], par[2], par[3])
+    names(par) <- c("lambda", "baseline", "stress_amplitude")
+    pred <- simulate_linear(par, times = observed$time)
     sum((train_data$observed_symptom - pred[train_idx])^2)
   }
   sse_feedback_train <- function(par) {
-    pred <- simulate_feedback(par[1], par[2], par[3], par[4], par[5], par[6])
+    names(par) <- c("lambda", "baseline", "alpha", "K", "p", "stress_amplitude")
+    pred <- simulate_feedback(par, times = observed$time)
     sum((train_data$observed_symptom - pred[train_idx])^2)
   }
 
@@ -194,8 +238,11 @@ run_block_cv <- function(holdout_start, holdout_end) {
   ff <- optim(c(0.3, 2, 1.5, 4, 3, 2), sse_feedback_train, method = "L-BFGS-B",
               lower = c(0.01, 0, 0, 0.5, 1, 0), upper = c(3, 6, 6, 15, 8, 6))
 
-  pred_linear_full <- simulate_linear(fl$par[1], fl$par[2], fl$par[3])
-  pred_feedback_full <- simulate_feedback(ff$par[1], ff$par[2], ff$par[3], ff$par[4], ff$par[5], ff$par[6])
+  fl_named <- setNames(fl$par, c("lambda", "baseline", "stress_amplitude"))
+  ff_named <- setNames(ff$par, c("lambda", "baseline", "alpha", "K", "p", "stress_amplitude"))
+
+  pred_linear_full <- simulate_linear(fl_named, times = observed$time)
+  pred_feedback_full <- simulate_feedback(ff_named, times = observed$time)
 
   tibble(
     model = c("Linear recovery", "Nonlinear feedback"),
@@ -205,7 +252,6 @@ run_block_cv <- function(holdout_start, holdout_end) {
     )
   )
 }
-
 holdout_blocks <- list(c(8, 22), c(25, 35), c(40, 50))
 
 cv_results <- map_dfr(holdout_blocks, function(block) {
@@ -248,7 +294,8 @@ simulate_and_refit <- function(seed) {
   noisy_obs <- true_traj$symptom + rnorm(n_obs, 0, observation_noise_sd)
 
   sse_refit <- function(par) {
-    pred <- simulate_feedback(par[1], par[2], par[3], par[4], par[5], par[6])
+    names(par) <- c("lambda", "baseline", "alpha", "K", "p", "stress_amplitude")
+    pred <- simulate_feedback(par, times = observed$time)
     sum((noisy_obs - pred)^2)
   }
 
