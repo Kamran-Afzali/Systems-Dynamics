@@ -22,25 +22,25 @@ Occam's razor is frequently invoked in psychiatric modeling as an aesthetic pref
 
 The Akaike Information Criterion formalizes the correction for this effect. For a model with $k$ free parameters and maximized log-likelihood $\ln(L)$ given the data,
 
-\[
+$$
 \text{AIC} = 2k - 2\ln(L).
-\]
+$$
 
 The first term penalizes the number of free parameters directly; the second rewards fit to the data. Lower AIC indicates a better model in the specific sense of minimizing an estimate of the Kullback-Leibler divergence between the fitted model and the unknown true data-generating process, which is to say AIC is trying to estimate predictive accuracy on new data using only the training fit, not trying to identify the literally correct model. This distinction matters clinically: AIC does not converge on the "true" model as more data accumulate if the true model is not among the candidates being compared, but it does converge, under fairly general conditions, on whichever candidate minimizes expected prediction error. That is usually the quantity a clinician actually cares about.
 
 The Bayesian Information Criterion imposes a heavier penalty that grows with sample size $n$,
 
-\[
+$$
 \text{BIC} = k\ln(n) - 2\ln(L).
-\]
+$$
 
 Because $\ln(n)$ exceeds $2$ once $n$ exceeds about eight observations, BIC favors simpler models more aggressively than AIC as a dataset grows, and it has the further property of being asymptotically consistent: if the true model actually is among the candidates under comparison, the probability that BIC selects it approaches one as $n \to \infty$. AIC does not have this consistency property, but it has an efficiency property that BIC lacks, asymptotically minimizing mean squared prediction error even when no candidate model is exactly correct. Neither criterion is uniformly better; the choice between them is itself a modeling decision that should track whether the researcher believes the candidate set plausibly contains something close to the data-generating mechanism, or is comparing several admittedly approximate descriptions and wants the one that predicts best.
 
 For a Gaussian error model, in which residuals around the fitted trajectory are assumed to be normally distributed with variance $\sigma^2$, the log-likelihood has a closed form in terms of the residual sum of squares $\text{RSS}$,
 
-\[
+$$
 \ln(L) = -\frac{n}{2}\ln(2\pi\hat{\sigma}^2) - \frac{\text{RSS}}{2\hat{\sigma}^2}, \qquad \hat{\sigma}^2 = \frac{\text{RSS}}{n},
-\]
+$$
 
 which reduces AIC and BIC to functions of the fit residuals and the parameter count alone, without requiring a full likelihood evaluation for every candidate model. This is the version actually used in the simulation below, and it is worth noting explicitly that this Gaussian reduction is itself a modeling assumption: if the residuals are better described by a heavier-tailed distribution, as symptom rating data with occasional large excursions often are, the Gaussian AIC or BIC can favor the wrong model, and a robust or heavy-tailed likelihood should be substituted.
 
