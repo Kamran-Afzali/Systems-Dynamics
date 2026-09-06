@@ -1,4 +1,3 @@
-
 # Why the World Changes: An Introduction to Differential Equations
 
 Watch a cup of coffee cool down on your desk. The temperature doesn't drop all at once—it changes gradually, and the rate of cooling depends on how hot the coffee is at any given moment. Hotter coffee cools faster; lukewarm coffee barely changes temperature at all. This simple observation captures something fundamental about how the world works: most interesting phenomena don't jump from one state to another instantly. They evolve continuously, and the speed of that evolution depends on where they currently are.
@@ -7,7 +6,7 @@ This is the world of differential equations, and once you start seeing it, you'l
 
 ## The Language of Change
 
-When we say #Differential_Equations  we're really talking about a relationship between a quantity and how fast it's changing. Consider population growth in a small town. The population $P(t)$ at time $t$ might grow at a rate proportional to how many people already live there—more people means more babies, after all. We can write this as:
+When we say #Differential_Equations we're really talking about a relationship between a quantity and how fast it's changing. Consider population growth in a small town. The population $P(t)$ at time $t$ might grow at a rate proportional to how many people already live there—more people means more babies, after all. We can write this as:
 
 $$\frac{dP}{dt} = rP$$
 
@@ -100,7 +99,7 @@ This exponential behavior appears troubling for real populations, which can't gr
 
 ## When Theory Meets Reality
 
-While our simple exponential model works well for early stages of growth, real populations often behave differently. Bacterial cultures growing in petri dishes initially follow exponential growth, but as nutrients become scarce and waste products accumulate, growth slows and eventually stops. 
+While our simple exponential model works well for early stages of growth, real populations often behave differently. Bacterial cultures growing in petri dishes initially follow exponential growth, but as nutrients become scarce and waste products accumulate, growth slows and eventually stops.
 
 This observation led to the logistic equation, which modifies our simple model:
 
