@@ -34,8 +34,8 @@ $$rN\left(1 - \frac{N}{K}\right) = 0$$
 
 This gives two fixed points:
 
-- $N^* = 0$ (extinction)
-- $N^* = K$ (carrying capacity)
+-   $N^* = 0$ (extinction)
+-   $N^* = K$ (carrying capacity)
 
 But knowing where equilibria exist isn't enough. We need to understand their **stability**. If we slightly perturb the system from equilibrium, does it return or drift away?
 
@@ -45,7 +45,7 @@ Let's check our logistic fixed points. With $f(N) = rN(1 - N/K)$:
 
 $$f'(N) = r\left(1 - \frac{2N}{K}\right)$$
 
-At $N^* = 0$: $f'(0) = r > 0$ (unstable—a small population will grow)  
+At $N^* = 0$: $f'(0) = r > 0$ (unstable—a small population will grow)\
 At $N^* = K$: $f'(K) = -r < 0$ (stable—populations near carrying capacity return to it)
 
 ## The Logistic Portrait
@@ -142,15 +142,15 @@ where $A$ is the Allee threshold—populations below this level decline toward e
 
 Setting the right side to zero gives three fixed points:
 
-- $N^* = 0$ (extinction)
-- $N^* = A$ (Allee threshold)
-- $N^* = K$ (carrying capacity)
+-   $N^* = 0$ (extinction)
+-   $N^* = A$ (Allee threshold)
+-   $N^* = K$ (carrying capacity)
 
 For stability, we determine the sign of $\frac{dN}{dt}$ between fixed points:
 
-- For $0 < N < A$: $\frac{dN}{dt} < 0$ (population declines)
-- For $A < N < K$: $\frac{dN}{dt} > 0$ (population grows)
-- For $N > K$: $\frac{dN}{dt} < 0$ (population declines)
+-   For $0 < N < A$: $\frac{dN}{dt} < 0$ (population declines)
+-   For $A < N < K$: $\frac{dN}{dt} > 0$ (population grows)
+-   For $N > K$: $\frac{dN}{dt} < 0$ (population declines)
 
 This creates a **bistable system**: populations either go extinct (if they start below $A$) or survive at carrying capacity (if they start above $A$). The Allee threshold is an **unstable equilibrium**—a knife-edge balance where the slightest push determines fate.
 
@@ -366,7 +366,7 @@ Key insights:
 
 **Multiple Equilibria**: Complex systems often have more than one stable state. Which emerges depends on history and initial conditions
 
-**Thresholds Matter**: Many systems exhibit critical values—cross them and behavior changes qualitatively
+**Thresholds Matter**: Many systems exhibit critical values, when crossed the behavior changes qualitatively
 
 **Stability is Local**: A system might be stable to small perturbations but unstable to large ones
 
@@ -381,5 +381,3 @@ But the real world is rarely one-dimensional. Predators interact with prey, dise
 We'll discover that two-dimensional systems can exhibit behaviors impossible in one dimension: closed orbital trajectories, limit cycles, and strange attractors. We'll explore the famous Lotka-Volterra predator-prey model and see how competition between species creates complex dynamics.
 
 The mathematical techniques you've learned today—finding fixed points, analyzing stability, reading phase portraits—form the foundation for understanding these multi-dimensional systems. Every complex system, no matter how many variables it contains, can be understood by building up from these basic concepts.
-
-The world is nonlinear, and now you have the tools to read its hidden patterns.
