@@ -2,25 +2,21 @@
 
 Our previous exploration revealed how phase lines and bifurcations govern dynamics in one-dimensional systems, using emergency department flow as our primary lens. Today we turn that same mathematical machinery toward mental health—a domain where the geometry of stability, tipping points, and hysteresis may be even more consequential. A person cycling between depression and remission, a trauma survivor locked in hypervigilance, a population splitting into treatment-adherent and treatment-avoidant subgroups—all of these are phenomena where bifurcation theory offers precise, testable formalisms rather than qualitative metaphors. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9945965/)
 
-
-
 ## Why Mental Health Is a Dynamical System
 
-The clinical literature increasingly treats psychiatric disorders not as static trait categories but as dynamic processes—systems that evolve over time, respond nonlinearly to interventions, and can exhibit sudden transitions between qualitatively different states.  The empirical signatures are unmistakable: patients don't slide imperceptibly from wellness into depression—they often tip; antidepressant dose-response curves are non-monotonic; stress below a threshold produces resilience while stress above it produces collapse. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9519533/)
+The clinical literature increasingly treats psychiatric disorders not as static trait categories but as dynamic processes—systems that evolve over time, respond nonlinearly to interventions, and can exhibit sudden transitions between qualitatively different states. The empirical signatures are unmistakable: patients don't slide imperceptibly from wellness into depression—they often tip; antidepressant dose-response curves are non-monotonic; stress below a threshold produces resilience while stress above it produces collapse. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9519533/)
 
-These patterns are exactly what one-dimensional bifurcation theory predicts. By mapping clinical constructs—mood, stress load, treatment intensity, symptom burden—onto the state variable \(x\) and its governing dynamics \(\dot{x} = f(x, \mu)\), we gain a framework that is both mathematically rigorous and clinically interpretable.
-
-
+These patterns are exactly what one-dimensional bifurcation theory predicts. By mapping clinical constructs—mood, stress load, treatment intensity, symptom burden—onto the state variable $x$ and its governing dynamics $\dot{x} = f(x, \mu)$, we gain a framework that is both mathematically rigorous and clinically interpretable.
 
 ## Model 1 — Saddle-Node: Depression Onset as a Tipping Point
 
 One of the most well-documented phenomena in affective neuroscience is the **tipping point** structure of depressive episodes. Below a critical stress/vulnerability threshold, small perturbations resolve; above it, the system collapses to a depressive attractor. This is the saddle-node bifurcation in action.
 
-We model mood state \(x\) (where positive values indicate depressive symptom load above baseline) under cumulative stress parameter \(\mu\):
+We model mood state $x$ (where positive values indicate depressive symptom load above baseline) under cumulative stress parameter $\mu$:
 
 $$\dot{x} = \mu - x^2$$
 
-When stress is low (\(\mu < 0\)), no equilibrium exists and all trajectories flow toward \(-\infty\)—the system naturally recovers. At the critical stress threshold (\(\mu = 0\)), a single semi-stable state appears. Once stress exceeds the threshold (\(\mu > 0\)), two equilibria emerge: a **stable wellness attractor** at \(x = -\sqrt{\mu}\) and an **unstable tipping threshold** at \(x = +\sqrt{\mu}\). Patients who breach the unstable threshold are captured by the depressive basin of attraction. [frontiersin](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.01762/full)
+When stress is low ($\mu < 0$), no equilibrium exists and all trajectories flow toward $-\infty$—the system naturally recovers. At the critical stress threshold ($\mu = 0$), a single semi-stable state appears. Once stress exceeds the threshold ($\mu > 0$), two equilibria emerge: a **stable wellness attractor** at $x = -\sqrt{\mu}$ and an **unstable tipping threshold** at $x = +\sqrt{\mu}$. Patients who breach the unstable threshold are captured by the depressive basin of attraction. [frontiersin](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.01762/full)
 
 ```{r}
 library(ggplot2)
@@ -81,7 +77,7 @@ do.call(grid.arrange, c(sn_plots, ncol = 3,
   top = "Saddle-Node Bifurcation — Depression Onset Model"))
 ```
 
-The phase portrait sequence makes the clinical picture precise: there is no continuous descent into depression, only a discrete transition once stress exceeds \(\mu = 0\). Interventions that reduce \(\mu\) (e.g., reducing stressor load, strengthening social support) lower the tipping threshold, widening the basin of attraction around the wellness equilibrium.
+The phase portrait sequence makes the clinical picture precise: there is no continuous descent into depression, only a discrete transition once stress exceeds $\mu = 0$. Interventions that reduce $\mu$ (e.g., reducing stressor load, strengthening social support) lower the tipping threshold, widening the basin of attraction around the wellness equilibrium.
 
 ### Bifurcation Diagram: Tracking the Wellness Attractor
 
@@ -115,9 +111,7 @@ ggplot(bif_sn, aes(mu, x, colour = stability, group = interaction(stability, x >
   theme_minimal()
 ```
 
-The characteristic parabolic shape encodes everything a clinician needs: below \(\mu = 0\), no stable depression is possible; above it, two states coexist—and the system can only escape the depressive attractor by reducing stress below the bifurcation point.
-
-
+The characteristic parabolic shape encodes everything a clinician needs: below $\mu = 0$, no stable depression is possible; above it, two states coexist—and the system can only escape the depressive attractor by reducing stress below the bifurcation point.
 
 ## Model 2 — Pitchfork: Bipolar Mood Splitting
 
@@ -125,9 +119,9 @@ The pitchfork bifurcation models a different psychiatric phenomenon—the **symm
 
 $$\dot{x} = \mu x - x^3$$
 
-where \(x\) is mood deviation from euthymia (\(x = 0\)) and \(\mu\) indexes circadian or pharmacological destabilization.
+where $x$ is mood deviation from euthymia ($x = 0$) and $\mu$ indexes circadian or pharmacological destabilization.
 
-For \(\mu < 0\), euthymia at \(x = 0\) is the unique stable state. For \(\mu > 0\), the euthymic state becomes unstable and two stable poles emerge at \(x = \pm\sqrt{\mu}\)—one depressive, one manic. The system **must choose** a pole; it cannot remain at euthymia. This is exactly the clinical pattern observed when antidepressants precipitate manic switches in vulnerable patients, as predicted by Goldbeter's mood oscillation model. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9519533/)
+For $\mu < 0$, euthymia at $x = 0$ is the unique stable state. For $\mu > 0$, the euthymic state becomes unstable and two stable poles emerge at $x = \pm\sqrt{\mu}$—one depressive, one manic. The system **must choose** a pole; it cannot remain at euthymia. This is exactly the clinical pattern observed when antidepressants precipitate manic switches in vulnerable patients, as predicted by Goldbeter's mood oscillation model. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9519533/)
 
 ```{r}
 # ── Pitchfork bifurcation: Bipolar mood splitting ────────────────────────────
@@ -207,17 +201,15 @@ ggplot(bif_pf, aes(mu, x, colour = stability,
   theme_minimal()
 ```
 
-The pitchfork diagram encodes a critical clinical insight: once \(\mu\) crosses zero, there is no longer a stable middle ground. Therapeutic effort must either reduce \(\mu\) back below the bifurcation point (restoring euthymic stability) or work within the bistable landscape to shift the patient toward the less severe pole.
-
-
+The pitchfork diagram encodes a critical clinical insight: once $\mu$ crosses zero, there is no longer a stable middle ground. Therapeutic effort must either reduce $\mu$ back below the bifurcation point (restoring euthymic stability) or work within the bistable landscape to shift the patient toward the less severe pole.
 
 ## Model 3 — Transcritical: Medication Efficacy Threshold
 
-The **transcritical bifurcation** models scenarios where two states coexist at all parameter values but *exchange stability* at a critical threshold. In psychopharmacology, this describes the transition between a stable treatment response and stable treatment resistance as medication efficacy \(\mu\) varies:
+The **transcritical bifurcation** models scenarios where two states coexist at all parameter values but *exchange stability* at a critical threshold. In psychopharmacology, this describes the transition between a stable treatment response and stable treatment resistance as medication efficacy $\mu$ varies:
 
 $$\dot{x} = \mu x - x^2 = x(\mu - x)$$
 
-where \(x\) represents residual symptom burden and \(\mu\) represents treatment effectiveness (negative = effective suppression, positive = insufficient). The system always has equilibria at \(x = 0\) (symptom remission) and \(x = \mu\). For \(\mu < 0\), remission is stable and the endemic symptomatic state is unstable. For \(\mu > 0\), remission loses stability—any small symptom perturbation grows—while the endemic burden \(x = \mu\) becomes the attractor. [frontiersin](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1099257/full)
+where $x$ represents residual symptom burden and $\mu$ represents treatment effectiveness (negative = effective suppression, positive = insufficient). The system always has equilibria at $x = 0$ (symptom remission) and $x = \mu$. For $\mu < 0$, remission is stable and the endemic symptomatic state is unstable. For $\mu > 0$, remission loses stability—any small symptom perturbation grows—while the endemic burden $x = \mu$ becomes the attractor. [frontiersin](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1099257/full)
 
 ```{r}
 # ── Transcritical bifurcation: Medication efficacy ───────────────────────────
@@ -299,9 +291,7 @@ ggplot(bif_tc, aes(mu, x,
   theme_minimal()
 ```
 
-The crossing structure at \(\mu = 0\) is the hallmark of a transcritical bifurcation. In dose-response terms: there is a critical minimum effective dose; above it, remission is guaranteed from any initial condition; below it, any residual symptom load will grow to the endemic burden \(x = \mu\).
-
-
+The crossing structure at $\mu = 0$ is the hallmark of a transcritical bifurcation. In dose-response terms: there is a critical minimum effective dose; above it, remission is guaranteed from any initial condition; below it, any residual symptom load will grow to the endemic burden $x = \mu$.
 
 ## Model 4 — Hysteresis: PTSD and Burnout Memory
 
@@ -385,15 +375,13 @@ ggplot(df_hyst, aes(mu, x, colour = dir, group = dir)) +
 
 The orange band is the **bistable zone**—the range of stressor values where both wellness and crisis states are simultaneously stable. Inside this zone, history determines outcome. A patient who entered the zone from below (onset path, red) remains in crisis even at stressor levels where a never-traumatized patient would be well (recovery path, green). This formalism precisely captures why crisis intervention alone is insufficient: the system must be pushed past the recovery tipping point, not merely returned to pre-crisis stressor levels.
 
-
-
 ## Model 5 — Imperfect Bifurcation: Differential Access to Care
 
-Real mental health systems are rarely symmetric. **Imperfect bifurcations** model the effect of structural asymmetries—socioeconomic disparities, differential care access, or systematic measurement bias—on the ideal pitchfork structure. A small perturbation \(\epsilon\) breaks the symmetry:
+Real mental health systems are rarely symmetric. **Imperfect bifurcations** model the effect of structural asymmetries—socioeconomic disparities, differential care access, or systematic measurement bias—on the ideal pitchfork structure. A small perturbation $\epsilon$ breaks the symmetry:
 
 $$\dot{x} = \mu x - x^3 + \epsilon$$
 
-Even tiny values of \(\epsilon\) eliminate the clean fork structure, replacing it with isolated saddle-node bifurcations. Clinically, this means the two mood poles are no longer symmetric—the preferred attractor is biased toward the side favored by \(\epsilon\), and intervention costs differ asymmetrically across the two poles. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9945965/)
+Even tiny values of $\epsilon$ eliminate the clean fork structure, replacing it with isolated saddle-node bifurcations. Clinically, this means the two mood poles are no longer symmetric—the preferred attractor is biased toward the side favored by $\epsilon$, and intervention costs differ asymmetrically across the two poles. [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC9945965/)
 
 ```{r}
 # ── Imperfect pitchfork: Differential care access ────────────────────────────
@@ -442,9 +430,7 @@ ggplot(imp_data, aes(mu, x, colour = stab)) +
   theme_minimal()
 ```
 
-The faceted diagram shows how increasing \(\epsilon\) progressively destroys the symmetric fork. At \(\epsilon = 0\), both poles are equally accessible. At \(\epsilon = 0.3\), the bifurcation structure has been entirely reorganized: the lower (depressive) saddle-node bifurcation has shifted to a higher \(\mu\), making it harder for patients with structural disadvantages to access the positive mood pole. This is a mathematical model of health inequity in mood disorders.
-
-
+The faceted diagram shows how increasing $\epsilon$ progressively destroys the symmetric fork. At $\epsilon = 0$, both poles are equally accessible. At $\epsilon = 0.3$, the bifurcation structure has been entirely reorganized: the lower (depressive) saddle-node bifurcation has shifted to a higher $\mu$, making it harder for patients with structural disadvantages to access the positive mood pole. This is a mathematical model of health inequity in mood disorders.
 
 ## Model 6 — Two-Parameter Cusp: Stress–Support Catastrophe Surface
 
@@ -452,7 +438,7 @@ When both vulnerability (chronic stress load) and protective factors (social sup
 
 $$\dot{x} = \mu + \nu x - x^3$$
 
-where \(\mu\) is net symptom pressure (stressors minus coping resources) and \(\nu\) is system sensitivity (high \(\nu\) = greater mood lability). The equilibrium surface satisfies \(\mu + \nu x = x^3\), and the cusp boundary in \((\mu, \nu)\) parameter space demarcates the region of bistability from the region of unique equilibrium. [nature](https://www.nature.com/articles/s41746-025-01984-6)
+where $\mu$ is net symptom pressure (stressors minus coping resources) and $\nu$ is system sensitivity (high $\nu$ = greater mood lability). The equilibrium surface satisfies $\mu + \nu x = x^3$, and the cusp boundary in $(\mu, \nu)$ parameter space demarcates the region of bistability from the region of unique equilibrium. [nature](https://www.nature.com/articles/s41746-025-01984-6)
 
 ```{r}
 # ── Cusp catastrophe: Stress–support parameter space ─────────────────────────
@@ -497,16 +483,13 @@ cusp_map <- ggplot(grid, aes(mu, nu, fill = region)) +
 print(cusp_map)
 ```
 
-The cusp map reveals a profound clinical implication: mood bistability—and with it, the risk of catastrophic transitions—**requires** sufficient mood lability (\(\nu\) above the cusp). Reducing lability (through mood stabilizers, sleep hygiene, or affect regulation training) can move a patient out of the bistable zone entirely, making catastrophic transitions geometrically impossible regardless of stress level.
-
-
+The cusp map reveals a profound clinical implication: mood bistability—and with it, the risk of catastrophic transitions—**requires** sufficient mood lability ($\nu$ above the cusp). Reducing lability (through mood stabilizers, sleep hygiene, or affect regulation training) can move a patient out of the bistable zone entirely, making catastrophic transitions geometrically impossible regardless of stress level.
 
 ## Phase Line Stability Analysis: A Diagnostic Tool
 
-Bringing the tools together, we can construct a **complete phase line diagnostic** for any individual mental health trajectory. Given estimated values of \(\mu\) and the system type, the stability derivative \(f'(x^*)\) at each equilibrium determines recovery rates from perturbations:
+Bringing the tools together, we can construct a **complete phase line diagnostic** for any individual mental health trajectory. Given estimated values of $\mu$ and the system type, the stability derivative $f'(x^*)$ at each equilibrium determines recovery rates from perturbations:
 
-$$f'(x^*) < 0 \Rightarrow \text{stable (rate of recovery} = |f'(x^*)|\text{)}$$
-$$f'(x^*) > 0 \Rightarrow \text{unstable (rate of divergence} = f'(x^*)\text{)}$$
+$$f'(x^*) < 0 \Rightarrow \text{stable (rate of recovery} = |f'(x^*)|\text{)}$$ $$f'(x^*) > 0 \Rightarrow \text{unstable (rate of divergence} = f'(x^*)\text{)}$$
 
 ```{r}
 # ── Composite phase line portrait: Clinical state space ──────────────────────
@@ -561,13 +544,10 @@ ggplot(df_comp, aes(x, fx)) +
   theme_minimal()
 ```
 
-The shaded regions encode intervention logic directly. Green regions (\(\dot{x} > 0\)) indicate distress is rising—intervention must counteract upward flow. Red regions (\(\dot{x} < 0\)) indicate the system is already returning—intervention may be supportive rather than intensive. The basin boundary (the unstable equilibrium) marks the critical threshold: interventions must move the patient across this threshold to achieve a qualitative, not merely quantitative, improvement.
-
-
+The shaded regions encode intervention logic directly. Green regions ($\dot{x} > 0$) indicate distress is rising—intervention must counteract upward flow. Red regions ($\dot{x} < 0$) indicate the system is already returning—intervention may be supportive rather than intensive. The basin boundary (the unstable equilibrium) marks the critical threshold: interventions must move the patient across this threshold to achieve a qualitative, not merely quantitative, improvement.
 
 ## Toward Two Dimensions
 
 The mental health applications of one-dimensional dynamics are already rich, but they share a fundamental limitation: **no oscillations are possible in a one-dimensional autonomous system**. Yet cyclic mood patterns—the recurring episodes of bipolar disorder, the oscillatory dynamics of anxiety-avoidance spirals, the seasonal rhythms of affective illness—are among the most clinically significant phenomena in psychiatry.
 
-In the next post, we extend to two-dimensional systems where **limit cycles** become possible, exploring how \(\dot{x} = f(x, y)\), \(\dot{y} = g(x, y)\) can model the SIR-like dynamics of relapse-remission cycles, anxiety-depression comorbidity as coupled oscillators, and the Hopf bifurcation that transforms a stable mood equilibrium into a persistent oscillation. The phase line becomes a **phase plane**, and the landscape of mental health becomes richer—and more precisely tractable—still. [acplab](https://acplab.org/wp-content/uploads/publications/Malamud23.pdf)
-
+In the next post, we extend to two-dimensional systems where **limit cycles** become possible, exploring how $\dot{x} = f(x, y)$, $\dot{y} = g(x, y)$ can model the SIR-like dynamics of relapse-remission cycles, anxiety-depression comorbidity as coupled oscillators, and the Hopf bifurcation that transforms a stable mood equilibrium into a persistent oscillation. The phase line becomes a **phase plane**, and the landscape of mental health becomes richer—and more precisely tractable—still. [acplab](https://acplab.org/wp-content/uploads/publications/Malamud23.pdf)
