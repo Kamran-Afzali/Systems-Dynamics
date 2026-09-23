@@ -375,7 +375,7 @@ ggplot(df_hyst, aes(mu, x, colour = dir, group = dir)) +
 
 The orange band is the **bistable zone**—the range of stressor values where both wellness and crisis states are simultaneously stable. Inside this zone, history determines outcome. A patient who entered the zone from below (onset path, red) remains in crisis even at stressor levels where a never-traumatized patient would be well (recovery path, green). This formalism precisely captures why crisis intervention alone is insufficient: the system must be pushed past the recovery tipping point, not merely returned to pre-crisis stressor levels.
 
-## Model 5 — Imperfect Bifurcation: Differential Access to Care
+## Model 5 Imperfect Bifurcation: Differential Access to Care
 
 Real mental health systems are rarely symmetric. **Imperfect bifurcations** model the effect of structural asymmetries—socioeconomic disparities, differential care access, or systematic measurement bias—on the ideal pitchfork structure. A small perturbation $\epsilon$ breaks the symmetry:
 
