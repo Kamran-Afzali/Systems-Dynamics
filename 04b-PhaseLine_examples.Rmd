@@ -496,51 +496,90 @@ $$f'(x^*) < 0 \Rightarrow \text{stable (rate of recovery} = |f'(x^*)|\text{)}$$ 
 # Illustrates a patient in the bistable regime of the PTSD hysteresis model
 # with three equilibria: two stable (low/high distress) and one unstable threshold
 
-f_composite <- function(x) 0.3 + x - x^3   # mu = 0.3 places system in bistable zone
+library(ggplot2)
+library(grid)
 
-x_range <- seq(-1.8, 1.8, by = 0.04)
-df_comp  <- data.frame(x = x_range, fx = f_composite(x_range))
+mu <- 0.3
+nu <- 1
+f <- function(x) mu + nu * x - x^3
 
-# Find equilibria numerically
-eq_x <- c()
-for (k in 1:(nrow(df_comp) - 1)) {
-  if (df_comp$fx[k] * df_comp$fx[k+1] < 0) {
-    r <- uniroot(f_composite, c(df_comp$x[k], df_comp$x[k+1]))$root
-    eq_x <- c(eq_x, r)
-  }
-}
-fp_deriv   <- 1 - 3 * eq_x^2
-eq_df      <- data.frame(x     = eq_x,
-                          y     = 0,
-                          stab  = ifelse(fp_deriv < 0, "stable", "unstable"),
-                          label = paste0("x* = ", round(eq_x, 2),
-                                         "\nf'= ", round(fp_deriv, 2)))
+x_range <- seq(-1.8, 1.8, by = 0.01)
+df_comp <- data.frame(x = x_range, fx = f(x_range))
 
-ggplot(df_comp, aes(x, fx)) +
-  geom_ribbon(aes(ymin = pmin(fx, 0), ymax = 0), fill = "#d62728", alpha = 0.15) +
-  geom_ribbon(aes(ymin = 0, ymax = pmax(fx, 0)), fill = "#2ca02c", alpha = 0.15) +
-  geom_line(colour = "#2c3e50", linewidth = 1.5) +
-  geom_hline(yintercept = 0, linewidth = 0.8) +
-  geom_point(data = eq_df, aes(x, y, colour = stab), size = 4) +
-  geom_text(data = eq_df, aes(x, y + 0.18, label = label, colour = stab),
-            size = 3, fontface = "bold") +
-  # Flow arrows
-  geom_segment(aes(x = -1.6, xend = -1.4, y = 0, yend = 0),
-               arrow = arrow(length = unit(0.25,"cm")), colour = "#2ca02c", linewidth = 1) +
-  geom_segment(aes(x =  0.3, xend =  0.1, y = 0, yend = 0),
-               arrow = arrow(length = unit(0.25,"cm")), colour = "#2ca02c", linewidth = 1) +
-  geom_segment(aes(x =  0.8, xend =  1.0, y = 0, yend = 0),
-               arrow = arrow(length = unit(0.25,"cm")), colour = "#2ca02c", linewidth = 1) +
-  scale_colour_manual(values = c("stable" = "#2ca02c", "unstable" = "#d62728")) +
-  labs(title = "Phase Line Portrait: Bistable Distress Model (μ = 0.3)",
-       subtitle = "Two stable basins (low & high distress) separated by unstable tipping threshold",
-       x = "Distress Level (x)",
-       y = expression(dot(x) == 0.3 + x - x^3),
-       colour = "Stability") +
-  annotate("text", x = -1.1, y = -0.6, label = "Basin of\nwellness attractor",
-           colour = "#2ca02c", size = 3.2) +
-  annotate("text", x =  1.3, y = -0.6, label = "Basin of\ncrisis attractor",
-           colour = "#d62728", size = 3.2) +
+# Locate roots using sign changes on the sampled grid
+idx <- which(head(df_comp$fx, -1) * tail(df_comp$fx, -1) < 0)
+eq_x <- vapply(
+  idx,
+  function(i) uniroot(f, df_comp$x[c(i, i + 1)])$root,
+  numeric(1)
+)
+
+eq_df <- data.frame(
+  x = eq_x,
+  y = 0,
+  derivative = nu - 3 * eq_x^2
+)
+eq_df$stab <- ifelse(eq_df$derivative < 0, "stable", "unstable")
+eq_df$label <- sprintf(
+  "x* = %.2f\nf' = %.2f", eq_df$x, eq_df$derivative
+)
+
+# Each arrow follows the sign of f(x) in its interval
+arrows_df <- data.frame(
+  x    = c(-1.50, -0.60, -0.10, 1.50),
+  xend = c(-1.30, -0.72,  0.10, 1.30),
+  y = 0,
+  yend = 0
+)
+
+ggplot(df_comp, aes(x = x, y = fx)) +
+  geom_ribbon(
+    aes(ymin = pmin(fx, 0), ymax = pmax(fx, 0),
+        fill = ifelse(fx >= 0, "Increasing distress",
+                     "Decreasing distress")),
+    alpha = 0.15
+  ) +
+  geom_line(colour = "#2c3e50", linewidth = 1.2) +
+  geom_hline(yintercept = 0, linewidth = 0.6) +
+  geom_segment(
+    data = arrows_df,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    arrow = arrow(length = unit(0.18, "cm")),
+    colour = "#555555",
+    linewidth = 0.8
+  ) +
+  geom_point(
+    data = eq_df,
+    aes(x = x, y = y, colour = stab),
+    inherit.aes = FALSE,
+    size = 3.5
+  ) +
+  geom_text(
+    data = eq_df,
+    aes(x = x, y = y, label = label, colour = stab),
+    inherit.aes = FALSE,
+    nudge_y = 0.35,
+    size = 3,
+    show.legend = FALSE
+  ) +
+  scale_colour_manual(
+    values = c(stable = "#2ca02c", unstable = "#d62728")
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Increasing distress" = "#2ca02c",
+      "Decreasing distress" = "#d62728"
+    )
+  ) +
+  labs(
+    title = "Phase portrait: bistable distress model",
+    subtitle = "The unstable equilibrium separates the two basins of attraction",
+    x = "Distress state (x)",
+    y = expression(dot(x) == 0.3 + x - x^3),
+    colour = "Equilibrium",
+    fill = "Direction of change"
+  ) +
   theme_minimal()
 ```
 
