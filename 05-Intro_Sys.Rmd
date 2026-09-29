@@ -1,6 +1,6 @@
-# Introducion to Systems
+# Introduction to Systems
 
-The morning sun illuminates a meadow where rabbits graze peacefully among wildflowers. Hidden in the forest edge, foxes wait with predatory patience. This ancient dance—predator stalking prey, prey population rising and falling, predator numbers following in complex synchrony—represents one of nature's most fundamental patterns. Yet beneath this pastoral scene lies mathematics of stunning beauty and complexity.
+The dynamics of the predator stalking prey, prey population rising and falling, predator numbers following in complex synchrony, represents one of nature's most fundamental patterns. Yet beneath this pastoral scene lies mathematics of stunning beauty and complexity.
 
 Where our previous exploration revealed the rich geometric structure of one-dimensional flows, we now enter a realm of vastly expanded possibility. With two coupled variables, systems can exhibit behaviors impossible in single dimensions: **closed orbital trajectories** where populations cycle endlessly, **spiral attractors** where disturbances decay in oscillatory fashion, and **saddle points** where trajectories approach along some directions while fleeing along others.
 
@@ -230,10 +230,10 @@ Here, $r$ represents intrinsic prey growth rate, $K$ denotes prey carrying capac
 
 This system exhibits qualitatively different behavior from the classical model. Depending on parameter values, it can display:
 
-- **Stable coexistence** with a single attracting fixed point
-- **Limit cycle oscillations** with sustained periodic behavior
-- **Multiple attractors** with different basins of attraction
-- **Bifurcations** where small parameter changes trigger qualitative behavioral transitions
+-   **Stable coexistence** with a single attracting fixed point
+-   **Limit cycle oscillations** with sustained periodic behavior
+-   **Multiple attractors** with different basins of attraction
+-   **Bifurcations** where small parameter changes trigger qualitative behavioral transitions
 
 ```{r}
 # Modified predator-prey system with carrying capacity
@@ -318,10 +318,10 @@ Here, $r_i$ represents the intrinsic growth rate of species $i$, $K_i$ denotes i
 
 This system can exhibit four qualitatively different outcomes depending on the competition coefficients:
 
-1. **Species 1 always wins**: $(K_1, 0)$ is the only stable fixed point
-2. **Species 2 always wins**: $(0, K_2)$ is the only stable fixed point
-3. **Coexistence**: $(x^_, y^_)$ with both species at positive densities is stable
-4. **Bistability**: Both single-species states are stable; outcome depends on initial conditions
+1.  **Species 1 always wins**: $(K_1, 0)$ is the only stable fixed point
+2.  **Species 2 always wins**: $(0, K_2)$ is the only stable fixed point
+3.  **Coexistence**: $(x^_, y^_)$ with both species at positive densities is stable
+4.  **Bistability**: Both single-species states are stable; outcome depends on initial conditions
 
 ```{r}
 # Competition system analysis
@@ -442,7 +442,7 @@ Fixed points occur at nullcline intersections, and the nullcline geometry reveal
 
 For the competition system, the nullclines are:
 
-**$x$-nullcline**: $x = 0$ or $y = \frac{K_1 - x}{\alpha_{12}}$ **$y$-nullcline**: $y = 0$ or $x = \frac{K_2 - y}{\alpha_{21}}$
+$x$-nullcline: $x = 0$ or $y = \frac{K_1 - x}{\alpha_{12}}$ $y$-nullcline: $y = 0$ or $x = \frac{K_2 - y}{\alpha_{21}}$
 
 The intersection of the non-trivial nullclines determines the coexistence fixed point, while their slopes relative to each other predict stability outcomes.
 
@@ -452,15 +452,15 @@ Two-dimensional systems exhibit a rich taxonomy of fixed point types, each with 
 
 For a $2 \times 2$ matrix with eigenvalues $\lambda_1$ and $\lambda_2$:
 
-- **Trace**: $\tau = \lambda_1 + \lambda_2 = \text{tr}(\mathbf{J})$
-- **Determinant**: $\Delta = \lambda_1 \lambda_2 = \det(\mathbf{J})$
+-   **Trace**: $\tau = \lambda_1 + \lambda_2 = \text{tr}(\mathbf{J})$
+-   **Determinant**: $\Delta = \lambda_1 \lambda_2 = \det(\mathbf{J})$
 
 The eigenvalue structure determines stability:
 
-- $\Delta < 0$: **Saddle** (unstable)
-- $\Delta > 0, \tau < 0$: **Stable node** ($\tau^2 > 4\Delta$) or **stable spiral** ($\tau^2 < 4\Delta$)
-- $\Delta > 0, \tau > 0$: **Unstable node** ($\tau^2 > 4\Delta$) or **unstable spiral** ($\tau^2 < 4\Delta$)
-- $\Delta > 0, \tau = 0$: **Center** (neutrally stable)
+-   $\Delta < 0$: **Saddle** (unstable)
+-   $\Delta > 0, \tau < 0$: **Stable node** ($\tau^2 > 4\Delta$) or **stable spiral** ($\tau^2 < 4\Delta$)
+-   $\Delta > 0, \tau > 0$: **Unstable node** ($\tau^2 > 4\Delta$) or **unstable spiral** ($\tau^2 < 4\Delta$)
+-   $\Delta > 0, \tau = 0$: **Center** (neutrally stable)
 
 ```{r}
 library(ggplot2)
@@ -532,7 +532,7 @@ This classification reveals how small changes in system parameters can trigger q
 
 While phase portraits reveal geometric structure, **time series** show how variables evolve temporally. Two-dimensional systems can generate periodic oscillations, quasi-periodic motion, or complex irregular behavior impossible in one-dimensional systems.
 
-```r
+``` r
 # Generate time series for different systems
 time_series_lv <- integrate_trajectory_mod(2, 1, t_max = 20, 
                                           system_func = lotka_volterra, 
@@ -656,7 +656,7 @@ The **Poincaré-Bendixson theorem** provides fundamental insight: in two-dimensi
 
 **Van der Pol oscillators** exemplify systems with stable limit cycles:
 
-$\frac{dx}{dt} = y$  
+$\frac{dx}{dt} = y$\
 $\frac{dy}{dt} = -x + \mu(1-x^2)y$
 
 For $\mu > 0$, this system has an unstable fixed point at the origin surrounded by a stable limit cycle. The parameter $\mu$ controls the nonlinearity strength and determines oscillation characteristics.
