@@ -1,8 +1,6 @@
 # Introduction to Systems
 
-The dynamics of the predator stalking prey, prey population rising and falling, predator numbers following in complex synchrony, represents one of nature's most fundamental patterns. Yet beneath this pastoral scene lies mathematics of stunning beauty and complexity.
-
-Where our previous exploration revealed the rich geometric structure of one-dimensional flows, we now enter a realm of vastly expanded possibility. With two coupled variables, systems can exhibit behaviors impossible in single dimensions: **closed orbital trajectories** where populations cycle endlessly, **spiral attractors** where disturbances decay in oscillatory fashion, and **saddle points** where trajectories approach along some directions while fleeing along others.
+The dynamics of the predator stalking prey, prey population rising and falling, predator numbers following in complex synchrony, represents one of nature's most fundamental patterns. Where our previous exploration revealed the rich geometric structure of one-dimensional flows, we now enter a realm of vastly expanded possibility. With two coupled variables, systems can exhibit behaviors impossible in single dimensions: **closed orbital trajectories** where populations cycle endlessly, **spiral attractors** where disturbances decay in oscillatory fashion, and **saddle points** where trajectories approach along some directions while fleeing along others.
 
 The transition from one to two dimensions represents more than mere complexity increase—it constitutes a qualitative leap into the heart of modern dynamical systems theory. Here, we encounter the fundamental objects that govern everything from planetary motion to neural oscillations: **vector fields** that assign velocity vectors to every point in space, **phase portraits** that reveal the global organization of system behavior, and **limit cycles** that create sustained oscillations without external driving.
 
