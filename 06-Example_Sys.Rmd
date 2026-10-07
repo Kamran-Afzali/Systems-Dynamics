@@ -208,7 +208,7 @@ Subsequent oscillations, though diminishing in amplitude, explain the relapsing 
 
 The phase portrait's global structure determines which episode outcomes are accessible from different initial states. The basin of attraction for chronic distress encompasses most of the clinically relevant phase space, but the system's spiral approach creates temporal windows where therapeutic intervention proves most effective.
 
-``` r
+``` {r}
 # Install once if needed:
 # install.packages(c("deSolve", "ggplot2"))
 
