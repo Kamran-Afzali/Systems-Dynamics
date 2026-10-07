@@ -209,70 +209,401 @@ Subsequent oscillations, though diminishing in amplitude, explain the relapsing 
 The phase portrait's global structure determines which episode outcomes are accessible from different initial states. The basin of attraction for chronic distress encompasses most of the clinically relevant phase space, but the system's spiral approach creates temporal windows where therapeutic intervention proves most effective.
 
 ``` r
-# Analyze treatment intervention timing
-treatment_effect <- function(t, state, parameters, treat_start, treat_end, efficacy) {
-  with(as.list(c(state, parameters)), {
-    # Treatment reduces symptom escalation rate
-    effective_r <- if (t >= treat_start && t <= treat_end) {
-      r * (1 - efficacy)
-    } else {
-      r
+# Install once if needed:
+# install.packages(c("deSolve", "ggplot2"))
+
+library(deSolve)
+library(ggplot2)
+
+# ------------------------------------------------------------
+# 1. Model parameters
+# ------------------------------------------------------------
+
+# Illustrative values only.
+# Replace these with your original or calibrated parameters.
+params <- c(
+  r = 0.50,
+  K = 1000,
+  a = 0.005,
+  b = 0.0005,
+  d = 0.10
+)
+
+# ------------------------------------------------------------
+# 2. Input validation
+# ------------------------------------------------------------
+
+check_scalar <- function(x, name, lower = -Inf, upper = Inf) {
+  if (!is.numeric(x) ||
+      length(x) != 1L ||
+      !is.finite(x) ||
+      x < lower ||
+      x > upper) {
+    stop(
+      sprintf(
+        "%s must be a finite numeric scalar in [%s, %s].",
+        name, lower, upper
+      ),
+      call. = FALSE
+    )
+  }
+}
+
+validate_params <- function(parameters) {
+  required <- c("r", "K", "a", "b", "d")
+
+  if (!is.numeric(parameters) ||
+      is.null(names(parameters)) ||
+      anyDuplicated(names(parameters)) ||
+      !all(required %in% names(parameters))) {
+    stop(
+      "parameters must be a named numeric vector containing r, K, a, b, d.",
+      call. = FALSE
+    )
+  }
+
+  p <- parameters[required]
+
+  if (any(!is.finite(p)) ||
+      any(p[c("r", "a", "b", "d")] < 0) ||
+      p[["K"]] <= 0) {
+    stop(
+      "r, a, b, and d must be nonnegative; K must be positive.",
+      call. = FALSE
+    )
+  }
+
+  p
+}
+
+# ------------------------------------------------------------
+# 3. ODE system
+# ------------------------------------------------------------
+
+# effective_r is constant within each integration segment.
+treatment_effect <- function(t, state, parameters) {
+  S <- state[["S"]]
+  C <- state[["C"]]
+
+  dS <- parameters[["effective_r"]] * S *
+    (1 - S / parameters[["K"]]) -
+    parameters[["a"]] * S * C
+
+  dC <- parameters[["b"]] * S * C -
+    parameters[["d"]] * C
+
+  list(c(S = dS, C = dC))
+}
+
+# ------------------------------------------------------------
+# 4. Simulation with explicit treatment boundaries
+# ------------------------------------------------------------
+
+simulate_treatment <- function(
+    S0,
+    C0,
+    treat_day,
+    duration = 10,
+    efficacy = 0.7,
+    t_max = 40,
+    dt = 0.01,
+    parameters = params,
+    rtol = 1e-8,
+    atol = 1e-10) {
+
+  p <- validate_params(parameters)
+
+  check_scalar(S0, "S0", lower = 0)
+  check_scalar(C0, "C0", lower = 0)
+  check_scalar(treat_day, "treat_day", lower = 0)
+  check_scalar(duration, "duration", lower = 0)
+  check_scalar(efficacy, "efficacy", lower = 0, upper = 1)
+  check_scalar(t_max, "t_max", lower = 0)
+  check_scalar(dt, "dt", lower = 0)
+  check_scalar(rtol, "rtol", lower = 0)
+  check_scalar(atol, "atol", lower = 0)
+
+  if (t_max == 0 || dt == 0 || rtol == 0 || atol == 0) {
+    stop("t_max, dt, rtol, and atol must be positive.",
+         call. = FALSE)
+  }
+
+  treat_end <- treat_day + duration
+
+  if (!is.finite(treat_end)) {
+    stop("treat_day + duration must be finite.", call. = FALSE)
+  }
+
+  # Split only at boundaries inside the simulation interval.
+  switches <- c(treat_day, treat_end)
+  switches <- switches[switches > 0 & switches < t_max]
+
+  boundaries <- sort(unique(c(0, switches, t_max)))
+
+  # Include switching times and the final time exactly.
+  times <- sort(unique(c(
+    seq(0, t_max, by = dt),
+    boundaries
+  )))
+
+  state <- c(S = S0, C = C0)
+  pieces <- vector("list", length(boundaries) - 1L)
+
+  for (i in seq_len(length(boundaries) - 1L)) {
+    left <- boundaries[i]
+    right <- boundaries[i + 1L]
+
+    # Treatment status is constant over this segment.
+    midpoint <- left + (right - left) / 2
+
+    treatment_on <- (
+      duration > 0 &&
+      midpoint >= treat_day &&
+      midpoint < treat_end
+    )
+
+    segment_params <- c(
+      p,
+      effective_r = p[["r"]] *
+        if (treatment_on) (1 - efficacy) else 1
+    )
+
+    segment_times <- sort(unique(c(
+      left,
+      times[times > left & times < right],
+      right
+    )))
+
+    segment <- as.data.frame(
+      deSolve::ode(
+        y = state,
+        times = segment_times,
+        func = treatment_effect,
+        parms = segment_params,
+        method = "lsoda",
+        tcrit = right,
+        rtol = rtol,
+        atol = atol
+      )
+    )
+
+    # Carry the terminal state into the next segment.
+    state <- c(
+      S = tail(segment$S, 1),
+      C = tail(segment$C, 1)
+    )
+
+    # Avoid duplicate rows at shared boundaries.
+    if (i > 1L) {
+      segment <- segment[-1L, , drop = FALSE]
     }
 
-    dS <- effective_r*S*(1 - S/K) - a*S*C
-    dC <- b*S*C - d*C
-    list(c(dS, dC))
-  })
+    pieces[[i]] <- segment
+  }
+
+  solution <- do.call(rbind, pieces)
+  rownames(solution) <- NULL
+
+  solution
 }
 
-# Simulate early vs late treatment
-simulate_treatment <- function(S0, C0, treat_day, duration = 10, efficacy = 0.7) {
-  times <- seq(0, 40, by = 0.01)
-  initial <- c(S = S0, C = C0)
+# ------------------------------------------------------------
+# 5. Untreated baseline
+# ------------------------------------------------------------
 
-  params_treat <- c(params, list(treat_start = treat_day,
-                                 treat_end   = treat_day + duration,
-                                 efficacy    = efficacy))
+simulate_episode <- function(
+    S0,
+    C0,
+    t_max = 40,
+    dt = 0.01,
+    parameters = params) {
 
-  solution <- ode(y = initial, times = times,
-                  func = treatment_effect, parms = params_treat)
-  return(as.data.frame(solution))
+  simulate_treatment(
+    S0 = S0,
+    C0 = C0,
+    treat_day = 0,
+    duration = 0,
+    efficacy = 0,
+    t_max = t_max,
+    dt = dt,
+    parameters = parameters
+  )
 }
 
-# Compare treatment timing
-no_treatment    <- simulate_episode(100, 50, t_max = 40)
+# ------------------------------------------------------------
+# 6. Compare identical initial conditions
+# ------------------------------------------------------------
+
+no_treatment <- simulate_episode(100, 50, t_max = 40)
 no_treatment$condition <- "No Treatment"
 
-early_treatment <- simulate_treatment(100, 50, treat_day = 2)
+early_treatment <- simulate_treatment(
+  S0 = 100,
+  C0 = 50,
+  treat_day = 2,
+  duration = 10,
+  efficacy = 0.7
+)
 early_treatment$condition <- "Early (Day 2)"
 
-late_treatment  <- simulate_treatment(100, 50, treat_day = 10)
+late_treatment <- simulate_treatment(
+  S0 = 100,
+  C0 = 50,
+  treat_day = 10,
+  duration = 10,
+  efficacy = 0.7
+)
 late_treatment$condition <- "Late (Day 10)"
 
-treatment_comparison <- rbind(no_treatment, early_treatment, late_treatment)
+condition_order <- c(
+  "No Treatment",
+  "Early (Day 2)",
+  "Late (Day 10)"
+)
 
-# Visualize treatment outcomes
-treatment_plot <- ggplot(treatment_comparison,
-                         aes(x = time, y = S, color = condition)) +
+treatment_comparison <- rbind(
+  no_treatment,
+  early_treatment,
+  late_treatment
+)
+
+treatment_comparison$condition <- factor(
+  treatment_comparison$condition,
+  levels = condition_order
+)
+
+# ------------------------------------------------------------
+# 7. Outcome measures
+# ------------------------------------------------------------
+
+trapezoid_auc <- function(time, values) {
+  n <- length(time)
+
+  sum(
+    diff(time) *
+      (values[-n] + values[-1L]) / 2
+  )
+}
+
+summarize_solution <- function(solution) {
+  peak_index <- which.max(solution$S)
+
+  data.frame(
+    condition = as.character(solution$condition[1]),
+    peak_S = solution$S[peak_index],
+    time_of_peak = solution$time[peak_index],
+    AUC_S = trapezoid_auc(solution$time, solution$S),
+    final_S = tail(solution$S, 1),
+    final_C = tail(solution$C, 1)
+  )
+}
+
+outcomes <- do.call(
+  rbind,
+  lapply(
+    split(
+      treatment_comparison,
+      treatment_comparison$condition,
+      drop = TRUE
+    ),
+    summarize_solution
+  )
+)
+
+rownames(outcomes) <- NULL
+
+outcomes <- outcomes[
+  match(condition_order, outcomes$condition),
+  ,
+  drop = FALSE
+]
+
+baseline_auc <- outcomes$AUC_S[
+  outcomes$condition == "No Treatment"
+]
+
+outcomes$AUC_reduction_percent <- if (baseline_auc > 0) {
+  100 * (baseline_auc - outcomes$AUC_S) / baseline_auc
+} else {
+  NA_real_
+}
+
+print(outcomes, row.names = FALSE)
+
+# ------------------------------------------------------------
+# 8. Symptom trajectories
+# ------------------------------------------------------------
+
+treatment_plot <- ggplot(
+  treatment_comparison,
+  aes(x = time, y = S, color = condition)
+) +
+  # Draw treatment windows behind the trajectories.
+  annotate(
+    "rect",
+    xmin = 2, xmax = 12,
+    ymin = -Inf, ymax = Inf,
+    alpha = 0.08, fill = "darkgreen"
+  ) +
+  annotate(
+    "rect",
+    xmin = 10, xmax = 20,
+    ymin = -Inf, ymax = Inf,
+    alpha = 0.08, fill = "orange"
+  ) +
+  geom_vline(
+    xintercept = c(2, 10),
+    linetype = "dashed",
+    alpha = 0.4
+  ) +
   geom_line(linewidth = 1) +
-  geom_vline(xintercept = c(2, 10), linetype = "dashed", alpha = 0.5) +
-  annotate("rect", xmin = 2,  xmax = 12, ymin = 0, ymax = 1200,
-           alpha = 0.1, fill = "green") +
-  annotate("rect", xmin = 10, xmax = 20, ymin = 0, ymax = 1200,
-           alpha = 0.1, fill = "orange") +
-  scale_color_manual(values = c("No Treatment"    = "red",
-                                "Early (Day 2)"   = "darkgreen",
-                                "Late (Day 10)"   = "orange")) +
+  scale_color_manual(
+    values = c(
+      "No Treatment" = "red",
+      "Early (Day 2)" = "darkgreen",
+      "Late (Day 10)" = "orange"
+    )
+  ) +
   labs(
-    title = "Treatment Timing Impact on Symptom Intensity",
+    title = "Treatment Timing and Symptom Intensity",
+    subtitle = "Equal duration and efficacy; identical initial states",
     x = "Days Post-Onset",
-    y = "Symptom Intensity",
-    color = "Intervention"
+    y = "Symptom Intensity, S",
+    color = "Intervention",
+    caption = paste(
+      "Shading: early treatment, days 2–12;",
+      "late treatment, days 10–20.",
+      "Parameters are illustrative."
+    )
   ) +
   theme_minimal() +
   theme(legend.position = "top")
 
 print(treatment_plot)
+
+# Optional: inspect the coupled response variable.
+response_plot <- ggplot(
+  treatment_comparison,
+  aes(x = time, y = C, color = condition)
+) +
+  geom_line(linewidth = 1) +
+  scale_color_manual(
+    values = c(
+      "No Treatment" = "red",
+      "Early (Day 2)" = "darkgreen",
+      "Late (Day 10)" = "orange"
+    )
+  ) +
+  labs(
+    title = "Response Dynamics Under Treatment",
+    x = "Days Post-Onset",
+    y = "Response Level, C",
+    color = "Intervention"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+print(response_plot)
 ```
 
 Early intervention during the acute escalation phase dramatically reduces peak symptom intensity and accelerates remission. Treatment initiated before the first symptom peak intercepts the spiral trajectory, pushing it toward regions of phase space where coping-mediated relief dominates. Late treatment, applied after several oscillatory cycles, proves less effective—the system has already settled near chronic equilibrium where perturbations decay slowly and symptom burden remains elevated.
