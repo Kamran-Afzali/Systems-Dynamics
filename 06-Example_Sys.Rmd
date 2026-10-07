@@ -155,13 +155,13 @@ print(phase_plot)
 
 The phase portrait reveals several critical features of distress dynamics. Trajectories spiral inward toward the chronic equilibrium, indicating damped oscillations where symptom surges are met with delayed coping responses, creating alternating periods of worsening and partial relief. The spiral pattern reflects the inherent time lag between symptom escalation and the mobilization of effective coping strategies—distress can compound quickly while cognitive reappraisal, social support activation, and behavioral engagement require time to fully organize.
 
-Different initial conditions—representing variations in initial stressor intensity and pre-existing coping reserves—follow distinct paths but converge toward the same chronic state. An individual exposed to sudden, high-intensity stress experiences more severe acute distress as the system swings through larger amplitude oscillations before settling. Conversely, low initial stress with robust pre-existing coping capacity (higher $C_0$) follows tighter spirals with less dramatic symptom fluctuation.
+Different initial conditions representing variations in initial stressor intensity and pre-existing coping reserves—follow distinct paths but converge toward the same chronic state. An individual exposed to sudden, high-intensity stress experiences more severe acute distress as the system swings through larger amplitude oscillations before settling. Conversely, low initial stress with robust pre-existing coping capacity (higher $C_0$) follows tighter spirals with less dramatic symptom fluctuation.
 
 The nullclines provide additional insight. The symptom nullcline where $dS/dt = 0$ satisfies $C = (r/a)(1 - S/K)$, a line with negative slope. Above this line, symptoms decline; below it, they grow. The coping nullcline where $dC/dt = 0$ occurs at $S = d/b$, a vertical line. To the right, coping resources strengthen; to the left, they wane. Their intersection marks the chronic equilibrium, and the flow patterns between nullclines partition the phase plane into regions of consistent directional movement.
 
 ## Temporal Dynamics: The Clinical Course of an Episode
 
-While phase portraits reveal geometric structure, clinicians observe illness progression through time. Plotting symptom intensity and coping resources against time transforms abstract phase space trajectories into familiar episode timecourses with acute, chronic, and resolution phases.
+While phase portraits reveal geometric structure, clinicians observe illness progression through time. Plotting symptom intensity and coping resources against time transforms abstract phase space trajectories into familiar episode time courses with acute, chronic, and resolution phases.
 
 ``` r
 # Extract time series for moderate episode
