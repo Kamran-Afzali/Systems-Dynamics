@@ -208,7 +208,7 @@ Subsequent oscillations, though diminishing in amplitude, explain the relapsing 
 
 The phase portrait's global structure determines which episode outcomes are accessible from different initial states. The basin of attraction for chronic distress encompasses most of the clinically relevant phase space, but the system's spiral approach creates temporal windows where therapeutic intervention proves most effective.
 
-``` {r}
+```{r}
 # Install once if needed:
 # install.packages(c("deSolve", "ggplot2"))
 
@@ -620,102 +620,66 @@ $$\frac{dC}{dt} = bSC - dC + \frac{M}{1 + e^{-\alpha(S - S_{\text{threshold}})}}
 
 Here $M$ represents the magnitude of resilience-memory-mediated coping boost, $\theta\sin(\omega t)$ captures periodic stressor reactivation from life circumstances (e.g., seasonal, occupational, or relational cycles), and $\mu$ represents baseline symptom attenuation. The sigmoid function models threshold-dependent resilience activation when symptom intensity exceeds $S_{\text{threshold}}$.
 
-``` r
+``` {r}
 library(ggplot2)
 library(deSolve)
-library(dplyr)
 
-# Simplified periodic relapse model
 relapse_model <- function(t, state, parameters) {
   with(as.list(c(state, parameters)), {
-    dS <- r*S*(1 - S/K) - a*S*C - mu*S + theta*sin(omega*t)
-    dC <- b*S*C - d*C + memory_boost/(1 + exp(-10*(S - S_threshold)))
+    S <- max(S, 0); C <- max(C, 0)                 # guard against numerical undershoot
+    forcing <- theta * (1 + sin(omega * t)) / 2    # non-negative stressor input
+    dS <- r*S*(1 - S/K) - a*S*C - mu*S + forcing
+    dC <- b*S*C - d*C + M / (1 + exp(-alpha * (S - S_threshold)))
     list(c(dS, dC))
   })
 }
 
-# Parameters for stable periodic behavior
 periodic_params <- list(
-  r           = 0.8,
-  K           = 1000,
-  a           = 0.005,
-  b           = 0.0008,
-  d           = 0.08,
-  mu          = 0.1,
-  theta       = 80,
-  omega       = 0.3,
-  memory_boost = 20,
-  S_threshold  = 300
+  r = 0.8, K = 1000, a = 0.005, b = 0.0008, d = 0.08, mu = 0.1,
+  theta = 80, omega = 0.3,
+  M = 20, alpha = 0.05, S_threshold = 150
 )
 
-# Simulate long-term dynamics
 times_long       <- seq(0, 150, by = 0.1)
 initial_periodic <- c(S = 400, C = 60)
 
-periodic_solution <- ode(
-  y    = initial_periodic,
-  times = times_long,
-  func  = relapse_model,
-  parms = periodic_params,
-  rtol  = 1e-6,
-  atol  = 1e-6
-)
+periodic_df <- as.data.frame(ode(
+  y = initial_periodic, times = times_long, func = relapse_model,
+  parms = periodic_params, method = "lsoda", rtol = 1e-6, atol = 1e-6
+))
 
-periodic_df <- as.data.frame(periodic_solution)
+stopifnot(all(is.finite(periodic_df$S)), all(is.finite(periodic_df$C)))
 
-cat("Total simulation points:", nrow(periodic_df), "\n")
-cat("Time range:", range(periodic_df$time), "\n")
-cat("S range:", range(periodic_df$S), "\n")
-cat("C range:", range(periodic_df$C), "\n\n")
+transient_cutoff <- 50
+plot_data  <- subset(periodic_df, time > transient_cutoff)
+point_data <- plot_data[round(seq(1, nrow(plot_data), length.out = 20)), ]
 
-# Use data after transient period
-max_time         <- max(periodic_df$time)
-transient_cutoff <- min(50, max_time * 0.3)
-plot_data        <- periodic_df[periodic_df$time > transient_cutoff, ]
-
-cat("Points after transient:", nrow(plot_data), "\n\n")
-
-# Select representative points for visualization
-point_indices <- seq(1, nrow(plot_data), length.out = min(20, nrow(plot_data)))
-point_data    <- plot_data[point_indices, ]
-
-# Visualize limit cycle behavior
-cycle_phase <- ggplot(plot_data, aes(x = S, y = C)) +
+cycle_phase <- ggplot(plot_data, aes(S, C)) +
   geom_path(color = "purple", linewidth = 1.2, alpha = 0.8) +
-  geom_point(data = point_data, aes(x = S, y = C),
-             color = "purple", size = 2, alpha = 0.5) +
-  labs(
-    title    = "Recurrent Episode Limit Cycle",
-    x        = "Symptom Intensity (S)",
-    y        = "Coping Resources (C)",
-    subtitle = "Stable periodic relapse–remission pattern"
-  ) +
-  theme_minimal() +
-  theme(plot.title = element_text(face = "bold"))
+  geom_point(data = point_data, color = "purple", size = 2, alpha = 0.5) +
+  labs(title = "Entrained periodic orbit (post-transient)",
+       x = "Symptom intensity (S)", y = "Coping resources (C)") +
+  theme_minimal() + theme(plot.title = element_text(face = "bold"))
 
 cycle_time <- ggplot(plot_data, aes(x = time)) +
-  geom_line(aes(y = S,     color = "Symptom Intensity"),    linewidth = 1) +
-  geom_line(aes(y = C * 8, color = "Coping Resources (×8)"), linewidth = 1) +
-  scale_color_manual(values = c("Symptom Intensity"       = "red",
-                                "Coping Resources (×8)"   = "blue")) +
-  labs(
-    title    = "Periodic Symptom Reactivation",
-    x        = "Days",
-    y        = "Level",
-    color    = ""
-  ) +
+  geom_line(aes(y = S, color = "Symptom intensity"), linewidth = 1) +
+  geom_line(aes(y = C, color = "Coping resources"),  linewidth = 1) +
+  scale_color_manual(values = c("Symptom intensity" = "red",
+                                "Coping resources"  = "blue")) +
+  labs(title = "Periodic symptom reactivation", x = "Days", y = "Level", color = "") +
   theme_minimal() +
-  theme(legend.position = "top",
-        plot.title = element_text(face = "bold"))
+  theme(legend.position = "top", plot.title = element_text(face = "bold"))
 
-print(cycle_phase)
-print(cycle_time)
+print(cycle_phase); print(cycle_time)
 
-cat("\nDynamics summary:\n")
-cat("Mean symptom intensity:", round(mean(plot_data$S), 1), "\n")
-cat("Mean coping resources:", round(mean(plot_data$C), 1), "\n")
-cat("Symptom range:", round(range(plot_data$S), 1), "\n")
-cat("Coping range:", round(range(plot_data$C), 1), "\n")
+cat("Mean S:", round(mean(plot_data$S), 1), " Mean C:", round(mean(plot_data$C), 1), "\n")
+cat("S range:", round(range(plot_data$S), 1), "\n")
+cat("C range:", round(range(plot_data$C), 1), "\n")
+
+# Period check: spacing of S maxima should be close to 2*pi/omega
+pk <- which(diff(sign(diff(plot_data$S))) == -2) + 1
+cat("Mean peak spacing:", round(mean(diff(plot_data$time[pk])), 2),
+    " vs 2*pi/omega =", round(2*pi/periodic_params$omega, 2), "\n")
 ```
 
 The limit cycle represents structurally stable oscillations—unlike the damped spirals approaching equilibrium, these persist indefinitely. A Hopf bifurcation occurs when the stable spiral loses stability as system parameters cross critical thresholds, giving birth to stable periodic orbits. Clinically, they manifest as periodic relapse–remission cycles where stressor-driven symptom escalation triggers renewed coping activation, followed by partial recovery, creating the characteristic cycling pattern of conditions such as bipolar disorder, seasonal affective disorder, or recurrent depressive episodes.
