@@ -38,7 +38,7 @@ $$\mathbf{J}\!\left(\frac{d}{b},\ \frac{r}{a}\!\left(1 - \frac{d}{bK}\right)\rig
 
 Computing the trace and determinant: $\tau = -rd/(bK) < 0$ and $\Delta = rd(1 - d/(bK)) > 0$ (when the fixed point exists). The negative trace with positive determinant indicates stability. Furthermore, examining $\tau^2 - 4\Delta$ determines whether trajectories spiral or approach monotonically. For typical parameter values in psychological distress, $\tau^2 < 4\Delta$, creating a stable spiral—the system exhibits damped oscillations as it approaches chronic equilibrium.
 
-``` r
+```{r}
 library(ggplot2)
 library(deSolve)
 library(dplyr)
@@ -83,7 +83,7 @@ This stability analysis reveals a concerning clinical reality: without intervent
 
 To visualize how episodes progress from initial onset, we construct the phase portrait showing symptom burden versus coping resources. The vector field reveals the instantaneous direction of system evolution at each point in this two-dimensional space, while integrated trajectories trace complete episode courses.
 
-``` r
+```{r}
 # Create vector field
 S_range <- seq(10, 1200, by = 50)
 C_range <- seq(5, 250, by = 10)
@@ -133,12 +133,12 @@ phase_plot <- ggplot() +
   geom_path(data = all_trajectories,
             aes(x = S, y = C, group = scenario, color = scenario),
             linewidth = 1, alpha = 0.8) +
-  geom_point(aes(x = fp_chronic [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC7604758/), y = fp_chronic [frontiersin](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2026.1719213/full)),
+  geom_point(aes(x = fp_chronic, y = fp_chronic),
              color = "darkred", size = 4, shape = 19) +
   geom_point(data = initial_conditions,
              aes(x = S0, y = C0, color = scenario),
              size = 3, shape = 1, stroke = 1.5) +
-  annotate("text", x = fp_chronic [pmc.ncbi.nlm.nih](https://pmc.ncbi.nlm.nih.gov/articles/PMC7604758/) + 100, y = fp_chronic [frontiersin](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2026.1719213/full) + 20,
+  annotate("text", x = fp_chronic + 100, y = fp_chronic + 20,
            label = "Chronic\nEquilibrium", color = "darkred", size = 3) +
   labs(
     title = "Mental Health Episode Phase Portrait",
@@ -163,7 +163,7 @@ The nullclines provide additional insight. The symptom nullcline where $dS/dt = 
 
 While phase portraits reveal geometric structure, clinicians observe illness progression through time. Plotting symptom intensity and coping resources against time transforms abstract phase space trajectories into familiar episode time courses with acute, chronic, and resolution phases.
 
-``` r
+```{r}
 # Extract time series for moderate episode
 moderate_episode <- all_trajectories %>%
   filter(scenario == "Moderate")
@@ -620,7 +620,7 @@ $$\frac{dC}{dt} = bSC - dC + \frac{M}{1 + e^{-\alpha(S - S_{\text{threshold}})}}
 
 Here $M$ represents the magnitude of resilience-memory-mediated coping boost, $\theta\sin(\omega t)$ captures periodic stressor reactivation from life circumstances (e.g., seasonal, occupational, or relational cycles), and $\mu$ represents baseline symptom attenuation. The sigmoid function models threshold-dependent resilience activation when symptom intensity exceeds $S_{\text{threshold}}$.
 
-``` {r}
+```{r}
 library(ggplot2)
 library(deSolve)
 
@@ -690,7 +690,7 @@ As psychological and biological parameters vary due to aging, trauma history, me
 
 Examining how the chronic equilibrium's stability changes with coping activation strength $b$ reveals this transition. For small $b$ (low coping capacity, as in severely depleted individuals), no stable chronic equilibrium exists—symptoms either overwhelm the person or resolve spontaneously. As $b$ increases past $b_c = d/K$, the chronic fixed point emerges and becomes stable through a transcritical bifurcation where the remission and chronic equilibria exchange stability. Further increases in $b$ can trigger a Hopf bifurcation where the spiral equilibrium destabilizes, spawning stable limit cycles representing periodic relapsing illness.
 
-``` r
+```{r}
 # Bifurcation analysis varying coping activation strength
 b_values       <- seq(0.00005, 0.0003, length.out = 50)
 bifurcation_data <- data.frame()
