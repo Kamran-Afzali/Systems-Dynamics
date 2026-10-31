@@ -1,12 +1,10 @@
 # Spirals, Cycles, and Chaos: Complex Behaviors in 2D Systems
 
-The electrocardiogram trace on the hospital monitor shows a rhythmic pattern—regular peaks and valleys marking each heartbeat with metronomic precision. Yet this apparent regularity masks profound complexity. The heart's electrical system represents a coupled dynamical system where pacemaker cells, conducting pathways, and muscle tissue interact through nonlinear feedback. When this delicate balance fails, the heart can transition from stable rhythm to dangerous oscillations, from coordinated contraction to chaotic fibrillation. Understanding these transitions—from stability to oscillation, from order to chaos—requires examining the deepest structures of two-dimensional dynamical systems.
-
-Our previous exploration revealed how coupled differential equations create phase portraits with fixed points, trajectories, and basins of attraction. Now we venture into the behaviors that make two-dimensional systems truly remarkable: self-sustained oscillations that emerge from instability, limit cycles that organize periodic behavior, and the boundary between order and chaos. While true chaos cannot exist in two-dimensional continuous systems, examining this boundary illuminates the mechanisms that generate complex dynamics in higher dimensions.
+Our previous chapter showed how coupled differential equations create phase portraits with fixed points, trajectories, and basins of attraction. Now we venture into the behaviors that make two-dimensional systems truly remarkable: self-sustained oscillations that emerge from instability, limit cycles that organize periodic behavior, and the boundary between order and chaos. While true chaos cannot exist in two-dimensional continuous systems, examining this boundary illuminates the mechanisms that generate complex dynamics in higher dimensions.
 
 ## The Poincaré-Bendixson Theorem and the Topology of Two Dimensions
 
-Consider a trajectory wandering through the two-dimensional phase plane, bounded within some finite region yet never settling to a fixed point. Where can it go? Intuition suggests many possibilities—perhaps intricate wandering patterns, aperiodic meanderings, or unpredictable jumps. The **Poincaré-Bendixson theorem** delivers a stunning constraint: any such trajectory must eventually approach a periodic orbit.
+Consider a trajectory wandering through the two-dimensional phase plane, bounded within some finite region yet never settling to a fixed point. Where can it go? Intuition suggests many possibilities—perhaps intricate wandering patterns, aperiodic meanderings, or unpredictable jumps. The **Poincaré-Bendixson theorem** highlghits a surprising constraint, that any such trajectory must eventually approach a periodic orbit.
 
 This theorem represents one of the most profound results in dynamical systems theory. For a two-dimensional continuous-time system, suppose a trajectory remains bounded and doesn't approach any fixed point. Then the trajectory must either be a closed orbit itself or approach a closed orbit as time goes to infinity. This eliminates an enormous space of potential behaviors—bounded trajectories in two dimensions cannot exhibit chaos, cannot wander aperiodically, cannot display sensitive dependence on initial conditions.
 
@@ -26,7 +24,7 @@ $$\frac{dV}{dt} = c\left(V - \frac{V^3}{3} + R\right)$$
 
 $$\frac{dR}{dt} = -\frac{1}{c}(V - a + bR)$$
 
-Here $V$ represents the membrane potential (analogous to voltage in ECG measurements), $R$ models recovery variables encompassing ion channel dynamics, and the parameters control excitability and oscillation characteristics. The cubic nonlinearity in the first equation creates the essential feedback: at moderate voltages, the system amplifies deviations (positive feedback), while at extreme voltages, it suppresses further increases (negative feedback).
+Here $V$ represents the membrane potential (voltage in ECG measurements), $R$ models recovery variables encompassing ion channel dynamics, and the parameters control excitability and oscillation characteristics. The cubic nonlinearity in the first equation creates the essential feedback: at moderate voltages, the system amplifies deviations (positive feedback), while at extreme voltages, it suppresses further increases (negative feedback).
 
 ```{r}
 # Load required libraries
