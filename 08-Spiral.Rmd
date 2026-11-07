@@ -242,7 +242,7 @@ Analyzing relaxation oscillations often employs **singular perturbation theory**
 
 The **slow manifold**—the curve in phase space where fast dynamics equilibrate—organizes relaxation oscillations. Trajectories rapidly approach this manifold (fast phase), then slowly evolve along it (slow phase), periodically jumping to different manifold branches when reaching fold points. Understanding this geometry illuminates how oscillation amplitude and frequency depend on system parameters.
 
-## Disease States as Dynamical Transitions
+## Example of disease States as Dynamical Transitions
 
 Cardiac pathologies often manifest as transitions between different dynamical regimes. **Atrial fibrillation**, the most common cardiac arrhythmia, represents a transition from organized periodic dynamics to high-frequency irregular activity. While the full complexity requires three-dimensional or higher models, two-dimensional systems reveal the underlying mechanisms.
 
@@ -255,83 +255,56 @@ $$\frac{dR}{dt} = -\frac{1}{c}(V - a + bR)$$
 The term $I_{block}$ models refractoriness, preventing immediate re-excitation. When refractory periods shorten (due to disease, drugs, or metabolic changes), the system can undergo bifurcations creating rapid oscillations or irregular dynamics.
 
 ```{r}
-# Required packages
 library(deSolve)
 library(ggplot2)
 
-# Baseline FitzHugh–Nagumo parameters
-fn_params <- list(
-  a = 0.7,
-  b = 0.8,
-  c = 3
-)
+# Rest state is near V = -1.2 with a = -0.7 (a = +0.7 gives a depolarized fixed point)
+fn_params <- list(a = -0.7, b = 0.8, c = 3,
+                  stim_amp = 0.8, stim_dur = 0.5, stim_period = 5)
 
-# Modified model with refractory dynamics -------------------------------------
+# k scales the recovery rate: larger k = faster recovery = shorter refractory period
 fitzhugh_refractory <- function(t, state, parameters) {
   with(as.list(c(state, parameters)), {
-    
-    # Refractory blocking current (example thresholding)
-    I_block <- ifelse(V > 0.5 & R < -0.3, block_strength * V, 0)
-    
-    # FitzHugh–Nagumo dynamics with blockage
-    dV <- c * (V - V^3/3 + R) - I_block
-    dR <- -(V - a + b*R) / c
-    
+    I_stim <- if ((t %% stim_period) < stim_dur) stim_amp else 0
+    dV <- c * (V - V^3/3 + R + I_stim)
+    dR <- -k * (V - a + b * R) / c
     list(c(dV, dR))
   })
 }
 
-# Parameters for normal and impaired refractory behavior -----------------------
-normal_params  <- modifyList(fn_params, list(block_strength = 0.30))
-disease_params <- modifyList(fn_params, list(block_strength = 0.05))
+normal_params  <- modifyList(fn_params, list(k = 1))   # normal refractoriness
+disease_params <- modifyList(fn_params, list(k = 3))   # shortened refractoriness
 
-# Simulation settings ----------------------------------------------------------
-times_compare <- seq(0, 40, by = 0.01)
-initial_state <- c(V = 0.5, R = 0)
+times <- seq(0, 120, by = 0.01)
+y0 <- c(V = -1.2, R = 0.62)
 
-# Solve ODEs -------------------------------------------------------------------
-traj_normal <- ode(
-  y = initial_state,
-  times = times_compare,
-  func = fitzhugh_refractory,
-  parms = normal_params
-)
+# Stimulus edges are discontinuities, so cap the step size
+solve_case <- function(p) {
+  as.data.frame(ode(y = y0, times = times, func = fitzhugh_refractory,
+                    parms = p, method = "lsoda", hmax = 0.05))
+}
+traj_normal  <- solve_case(normal_params)
+traj_disease <- solve_case(disease_params)
 
-traj_disease <- ode(
-  y = initial_state,
-  times = times_compare,
-  func = fitzhugh_refractory,
-  parms = disease_params
-)
+# Count upstrokes through V = 0.5 and compare with the number of stimuli
+count_beats <- function(df, thr = 0.5) sum(diff(df$V > thr) == 1)
+n_stim <- floor(max(times) / fn_params$stim_period)
+cat(sprintf("Normal : %d responses / %d stimuli\n", count_beats(traj_normal),  n_stim))
+cat(sprintf("Disease: %d responses / %d stimuli\n", count_beats(traj_disease), n_stim))
 
-traj_normal_df  <- as.data.frame(traj_normal)
-traj_disease_df <- as.data.frame(traj_disease)
+traj_normal$State  <- "Normal (k = 1)"
+traj_disease$State <- "Shortened refractoriness (k = 3)"
+all_traj <- rbind(traj_normal, traj_disease)
 
-# Plot comparison --------------------------------------------------------------
-compare_plot <- ggplot() +
-  geom_line(data = traj_normal_df,
-            aes(x = time, y = V, color = "Normal"),
-            size = 0.8, alpha = 0.7) +
-  
-  geom_line(data = traj_disease_df,
-            aes(x = time, y = V, color = "Disease"),
-            size = 0.8, alpha = 0.7) +
-  
-  scale_color_manual(values = c(
-    "Normal"  = "darkgreen",
-    "Disease" = "darkred"
-  )) +
-  
-  labs(
-    title = "Cardiac Dynamics: Normal vs. Disease State",
-    subtitle = "Shortened refractoriness leads to rapid irregular activity",
-    x = "Time",
-    y = "Voltage (V)",
-    color = "State"
-  ) +
-  
+compare_plot <- ggplot(all_traj, aes(time, V, color = State)) +
+  geom_line(linewidth = 0.7) +
+  facet_wrap(~State, ncol = 1) +
+  scale_color_manual(values = c("darkgreen", "darkred")) +
+  labs(title = "Paced FitzHugh-Nagumo: effect of refractory period",
+       subtitle = "Stimulus every 5 time units",
+       x = "Time", y = "Voltage (V)") +
   theme_minimal() +
-  theme(legend.position = "top")
+  theme(legend.position = "none")
 
 print(compare_plot)
 
@@ -443,7 +416,6 @@ The logarithmic plot of trajectory separation reveals exponential divergence nea
 
 This demonstrates a crucial distinction between local sensitivity and global chaos. Two-dimensional systems can exhibit transient sensitivity near saddle points or unstable cycles, but bounded trajectories ultimately converge to attractors where sensitivity vanishes. True chaos requires sustained sensitivity, impossible in two dimensions.
 
-## The Boundary Between Order and Chaos
 
 As we approach the limits of two-dimensional dynamics, we encounter phenomena hinting at higher-dimensional complexity. **Homoclinic orbits**—trajectories that leave and return to the same saddle point—create intricate phase space structures. When parameters vary, these orbits can undergo homoclinic bifurcations, spawning complex dynamics including saddle-node bifurcations of periodic orbits and the sudden appearance or disappearance of limit cycles.
 
@@ -451,15 +423,6 @@ Systems exhibiting homoclinic tangencies (where stable and unstable manifolds to
 
 These structures provide crucial preparation for understanding chaos in higher dimensions. The geometric concepts—stable and unstable manifolds, homoclinic connections, bifurcation cascades—extend directly to three-dimensional systems where they generate strange attractors and sustained chaotic dynamics.
 
-## Clinical Implications and Therapeutic Interventions
-
-Understanding cardiac dynamics as a two-dimensional system informs clinical practice in profound ways. **Heart rate variability analysis** examines the time series of inter-beat intervals, revealing signatures of underlying dynamical changes. Healthy hearts show complex variability reflecting autonomic nervous system modulation and adaptive responses. Reduced variability often precedes adverse events, suggesting the system has moved toward a less flexible dynamical regime.
-
-**Cardiac pacing** represents direct dynamical intervention. By delivering periodic electrical stimuli, pacemakers inject external forcing into the cardiac system. Analyzing the forced system requires understanding how external periodic inputs interact with intrinsic dynamics—potentially creating resonances, entrainment to forcing frequency, or complex quasi-periodic responses.
-
-Modern **defibrillation** strategies increasingly incorporate dynamical systems concepts. Rather than delivering massive shocks that reset all tissue simultaneously, newer approaches use low-energy perturbations timed to exploit system dynamics, pushing the system across basin boundaries toward normal rhythm with minimal energy.
-
-The field of **cardiac chaos control** develops from these insights. When cardiac tissue exhibits chaotic or near-chaotic dynamics, small well-timed perturbations can stabilize desired periodic orbits, restoring regular rhythm. This represents dynamical therapy—using understanding of system structure to guide minimal interventions maximizing therapeutic effect.
 
 ## Beyond Two Dimensions
 
