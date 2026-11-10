@@ -255,58 +255,85 @@ $$\frac{dR}{dt} = -\frac{1}{c}(V - a + bR)$$
 The term $I_{block}$ models refractoriness, preventing immediate re-excitation. When refractory periods shorten (due to disease, drugs, or metabolic changes), the system can undergo bifurcations creating rapid oscillations or irregular dynamics.
 
 ```{r}
+if (!require("deSolve")) install.packages("deSolve")
+if (!require("ggplot2")) install.packages("ggplot2")
 library(deSolve)
 library(ggplot2)
 
-# Rest state is near V = -1.2 with a = -0.7 (a = +0.7 gives a depolarized fixed point)
-fn_params <- list(a = -0.7, b = 0.8, c = 3,
-                  stim_amp = 0.8, stim_dur = 0.5, stim_period = 5)
+# Parameters: I = -0.4 makes the fixed point an unstable spiral (I = 0 gives a stable one)
+p <- list(a = 0.7, b = 0.8, tau = 3.0, I = -0.4)
 
-# k scales the recovery rate: larger k = faster recovery = shorter refractory period
-fitzhugh_refractory <- function(t, state, parameters) {
-  with(as.list(c(state, parameters)), {
-    I_stim <- if ((t %% stim_period) < stim_dur) stim_amp else 0
-    dV <- c * (V - V^3/3 + R + I_stim)
-    dR <- -k * (V - a + b * R) / c
+fhn <- function(t, y, parms) {
+  with(as.list(c(y, parms)), {
+    dV <- tau * (V - V^3 / 3 + R + I)
+    dR <- -(V - a + b * R) / tau
     list(c(dV, dR))
   })
 }
 
-normal_params  <- modifyList(fn_params, list(k = 1))   # normal refractoriness
-disease_params <- modifyList(fn_params, list(k = 3))   # shortened refractoriness
-
-times <- seq(0, 120, by = 0.01)
-y0 <- c(V = -1.2, R = 0.62)
-
-# Stimulus edges are discontinuities, so cap the step size
-solve_case <- function(p) {
-  as.data.frame(ode(y = y0, times = times, func = fitzhugh_refractory,
-                    parms = p, method = "lsoda", hmax = 0.05))
+# Fixed point: R = V^3/3 - V - I on the V-nullcline, V - a + b R = 0 on the R-nullcline
+find_fixed_point <- function(p) {
+  f <- function(V) V - p$a + p$b * (V^3 / 3 - V - p$I)
+  V_fp <- uniroot(f, c(-3, 3))$root
+  c(V = V_fp, R = V_fp^3 / 3 - V_fp - p$I)
 }
-traj_normal  <- solve_case(normal_params)
-traj_disease <- solve_case(disease_params)
+fp <- find_fixed_point(p)
 
-# Count upstrokes through V = 0.5 and compare with the number of stimuli
-count_beats <- function(df, thr = 0.5) sum(diff(df$V > thr) == 1)
-n_stim <- floor(max(times) / fn_params$stim_period)
-cat(sprintf("Normal : %d responses / %d stimuli\n", count_beats(traj_normal),  n_stim))
-cat(sprintf("Disease: %d responses / %d stimuli\n", count_beats(traj_disease), n_stim))
+jacobian_fn <- function(V, p) {
+  matrix(c(p$tau * (1 - V^2), p$tau,
+           -1 / p$tau,        -p$b / p$tau),
+         nrow = 2, byrow = TRUE)
+}
+J  <- jacobian_fn(fp["V"], p)
+ev <- eigen(J)$values
+lambda_local <- max(Re(ev))   # local growth rate at the fixed point
 
-traj_normal$State  <- "Normal (k = 1)"
-traj_disease$State <- "Shortened refractoriness (k = 3)"
-all_traj <- rbind(traj_normal, traj_disease)
+cat("Fixed point: V =", fp["V"], ", R =", fp["R"], "\n")
+cat("Eigenvalues:", format(ev), "\n")
+cat("Type:", if (all(Re(ev) < 0)) "stable" else "unstable",
+    if (any(Im(ev) != 0)) "focus" else "node/saddle", "\n")
 
-compare_plot <- ggplot(all_traj, aes(time, V, color = State)) +
-  geom_line(linewidth = 0.7) +
-  facet_wrap(~State, ncol = 1) +
-  scale_color_manual(values = c("darkgreen", "darkred")) +
-  labs(title = "Paced FitzHugh-Nagumo: effect of refractory period",
-       subtitle = "Stimulus every 5 time units",
-       x = "Time", y = "Voltage (V)") +
-  theme_minimal() +
-  theme(legend.position = "none")
+# Two nearby initial conditions
+times <- seq(0, 60, by = 0.01)
+y0_plus  <- c(V = unname(fp["V"]) + 0.01, R = unname(fp["R"]))
+y0_minus <- c(V = unname(fp["V"]) - 0.01, R = unname(fp["R"]))
 
-print(compare_plot)
+opts <- list(method = "lsoda", rtol = 1e-10, atol = 1e-12)
+out1 <- as.data.frame(ode(y0_plus,  times, fhn, p, rtol = 1e-10, atol = 1e-12))
+out2 <- as.data.frame(ode(y0_minus, times, fhn, p, rtol = 1e-10, atol = 1e-12))
+
+sep_df <- data.frame(
+  time = out1$time,
+  separation = sqrt((out1$V - out2$V)^2 + (out1$R - out2$R)^2)
+)
+sep_df <- sep_df[sep_df$separation > 0, ]
+sep_df$logsep <- log(sep_df$separation)
+
+# Fit only during the early growth phase (separation still small)
+fit_df <- sep_df[sep_df$separation < 0.15 * max(sep_df$separation), ]
+fit_df <- fit_df[seq_len(which.max(fit_df$separation)), ]
+fit <- lm(logsep ~ time, data = fit_df)
+lambda_est <- coef(fit)[["time"]]
+
+cat("Estimated exponent from simulation:", lambda_est, "\n")
+cat("Re(eigenvalue) at fixed point:     ", lambda_local, "\n")
+
+ggplot(sep_df, aes(time, logsep)) +
+  geom_line(colour = "darkblue") +
+  geom_line(data = fit_df, aes(y = predict(fit)), colour = "red",
+            linetype = "dashed", linewidth = 1) +
+  labs(title = "Separation of nearby trajectories (FitzHugh-Nagumo, I = -0.4)",
+       subtitle = sprintf("Fitted slope = %.3f; Re(eigenvalue) = %.3f",
+                          lambda_est, lambda_local),
+       x = "Time", y = "log(separation)") +
+  theme_minimal()
+
+# Phase portrait
+ggplot() +
+  geom_path(data = out1, aes(V, R), colour = "darkblue") +
+  geom_point(aes(fp["V"], fp["R"]), colour = "red", size = 2) +
+  labs(title = "Spiral out to limit cycle", x = "V", y = "R") +
+  theme_minimal()
 
 ```
 
@@ -316,7 +343,7 @@ This framework guides therapeutic strategies. Anti-arrhythmic drugs often work b
 
 ## Sensitive Dependence and the Seeds of Chaos
 
-While two-dimensional continuous systems cannot exhibit chaos, they can display **sensitive dependence on initial conditions** near certain structures. Consider trajectories near a saddle point—nearby trajectories diverge exponentially along the unstable manifold while converging along the stable manifold. This creates effective unpredictability: small measurement errors in initial conditions lead to large differences in subsequent behavior.
+While two-dimensional continuous systems cannot exhibit chaos, they can display **sensitive dependence on initial conditions** near certain structures. Consider trajectories near a saddle point nearby trajectories diverge exponentially along the unstable manifold while converging along the stable manifold. This creates effective unpredictability: small measurement errors in initial conditions lead to large differences in subsequent behavior.
 
 The **Lyapunov exponent** quantifies this sensitivity, measuring the average exponential rate of trajectory separation:
 
@@ -416,22 +443,14 @@ The logarithmic plot of trajectory separation reveals exponential divergence nea
 
 This demonstrates a crucial distinction between local sensitivity and global chaos. Two-dimensional systems can exhibit transient sensitivity near saddle points or unstable cycles, but bounded trajectories ultimately converge to attractors where sensitivity vanishes. True chaos requires sustained sensitivity, impossible in two dimensions.
 
-
 As we approach the limits of two-dimensional dynamics, we encounter phenomena hinting at higher-dimensional complexity. **Homoclinic orbits**—trajectories that leave and return to the same saddle point—create intricate phase space structures. When parameters vary, these orbits can undergo homoclinic bifurcations, spawning complex dynamics including saddle-node bifurcations of periodic orbits and the sudden appearance or disappearance of limit cycles.
 
 Systems exhibiting homoclinic tangencies (where stable and unstable manifolds touch tangentially) display particularly rich behavior. Small parameter changes can create infinite cascades of period-doubling bifurcations—each periodic orbit splitting into two as parameters vary. While individual systems remain non-chaotic, the bifurcation sequence converges to what would be a chaotic attractor in the three-dimensional version of the system.
 
 These structures provide crucial preparation for understanding chaos in higher dimensions. The geometric concepts—stable and unstable manifolds, homoclinic connections, bifurcation cascades—extend directly to three-dimensional systems where they generate strange attractors and sustained chaotic dynamics.
 
-
 ## Beyond Two Dimensions
 
-Our exploration of two-dimensional systems reveals both their richness and their limitations. We have encountered limit cycles creating self-sustained oscillations, Hopf bifurcations generating rhythms from steady states, relaxation oscillations with multiple time scales, and sensitive dependence near unstable structures. Yet the Poincaré-Bendixson theorem constrains us—true chaos remains forbidden.
+Our exploration of two-dimensional systems reveals both their richness and their limitations. We have encountered limit cycles creating self-sustained oscillations, Hopf bifurcations generating rhythms from steady states, relaxation oscillations with multiple time scales, and sensitive dependence near unstable structures. Yet the Poincaré-Bendixson theorem constrains us—true chaos remains forbidden. This limitation disappears in three dimensions, where the topological constraints vanish. Trajectories can weave around each other without crossing, stable and unstable manifolds can intersect transversely creating homoclinic tangles, and strange attractors with fractal structure emerge. The concepts developed in two dimensions—phase space geometry, stability analysis, bifurcation theory, Lyapunov exponents—provide the essential foundation for understanding these higher-dimensional phenomena.
 
-This limitation disappears in three dimensions, where the topological constraints vanish. Trajectories can weave around each other without crossing, stable and unstable manifolds can intersect transversely creating homoclinic tangles, and strange attractors with fractal structure emerge. The concepts developed in two dimensions—phase space geometry, stability analysis, bifurcation theory, Lyapunov exponents—provide the essential foundation for understanding these higher-dimensional phenomena.
-
-The cardiac system, in reality, involves far more than two variables. Spatial extent, multiple ionic currents, autonomic modulation, and mechanical coupling create high-dimensional dynamics where chaos becomes possible. The two-dimensional models serve as conceptual frameworks, isolating essential mechanisms while acknowledging that full complexity requires higher-dimensional analysis.
-
-As we prepare to venture into three dimensions and beyond, we carry with us the geometric intuition developed here—the ability to read phase portraits, understand how stability changes create new behaviors, recognize the signatures of different attractors, and appreciate how simple rules generate complex patterns. The two-dimensional phase plane has been our training ground, preparing us for the even more exotic and beautiful structures that await in the full richness of nonlinear dynamics.
-
-The journey from fixed points to limit cycles to the edge of chaos reveals a profound truth: complexity emerges not from complicated equations but from nonlinear feedback between simple elements. Two coupled variables, properly connected, generate rhythms, transitions, and the seeds of unpredictability. This principle extends throughout nature—from molecules to cells to organisms to ecosystems—wherever feedback creates the dynamic patterns underlying life itself.
+As we prepare to get into three dimensions and more, we carry with us the geometric intuition developed here—the ability to read phase portraits, understand how stability changes create new behaviors, recognize the signatures of different attractors, and appreciate how simple rules generate complex patterns. The two-dimensional phase plane has been our training ground, preparing us for the even more exotic and beautiful structures that await in the full richness of nonlinear dynamics. The journey from fixed points to limit cycles to the edge of chaos shows that **complexity emerges not from complicated equations but from nonlinear feedback between simple elements**. Two coupled variables, properly connected, generate rhythms, transitions, and the seeds of unpredictability. This principle extends throughout nature—from molecules to cells to organisms to ecosystems wherever feedback creates the dynamic patterns underlying life itself.
